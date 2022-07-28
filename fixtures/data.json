@@ -1,0 +1,36 @@
+{
+   "add_license_data": {
+    "software_name": "Apache",
+    "license_name": "Apache 0.2",
+    "version": "0.2",
+    "license_compatible_with": "",
+    "license_not_compatible_with": "",
+    "is_active": true,
+    "disclaimer": "disclaimer: shall mean athis License.",
+    "definition": "definition: shall mean an indivns granted by this License.",
+    "grant_of_license": "shall mean as granted by this License.",
+    "grant_of_patent_license": "shssions granted by this License.",
+    "redistribution": "shall meions granted by this License.",
+    "trademarks": "shall mean this License.",
+    "license_url": "license_url",
+    "released_date": "2016-07-22"
+},
+
+  "update_license_data": {
+    "software_name": "Apache License 0.2",
+    "license_name": "Apache 0.2",
+    "version": "0.2",
+    "license_compatible_with": "GPLv3",
+    "license_not_compatible_with": "GPLv2",
+    "is_active": true,
+    "disclaimer": "shall mean athis License.",
+    "definition": "shall mean an indivns granted by this License.",
+    "grant_of_license": "shall mean as granted by this License.",
+    "grant_of_patent_license": "shssions granted by this License.",
+    "redistribution": "shall meions granted by this License.",
+    "trademarks": "shall mean this License.",
+    "license_url": "license_url",
+    "released_date": "2015-07-22"
+}
+
+}
