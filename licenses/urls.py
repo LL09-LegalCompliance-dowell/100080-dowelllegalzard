@@ -7,5 +7,5 @@ from .views import (
 urlpatterns = [
     path('login/', dowell_login, name="dowell_login"),
     path('licenses/', SoftwareLicenseList.as_view(), name="software_license"),
-    path('licenses/<int:license_id>/', SoftwareLicenseDetail.as_view(), name="software_license_detail"),
+    path('licenses/<str:license_id>/', SoftwareLicenseDetail.as_view(), name="software_license_detail"),
 ]
