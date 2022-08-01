@@ -1,21 +1,29 @@
 from django.db import models
+from DowellLicenseProject import settings
+import uuid
 
 class SoftwareLicense(models.Model):
-    license_id = models.IntegerField(primary_key=True)
+    license_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     software_name = models.CharField(max_length=100)
     license_name = models.CharField(max_length=100)
     version = models.CharField(max_length=15)
-    license_compatible_with = models.TextField(default = "")
-    license_not_compatible_with = models.TextField(default = "")
     released_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     disclaimer = models.TextField()
     definition = models.TextField()
-    grant_of_license = models.TextField()
+    grant_of_copy_right_license = models.TextField()
     grant_of_patent_license = models.TextField()
     redistribution = models.TextField()
     trademarks = models.TextField()
-    license_url = models.CharField(max_length=255, default = "#")
+    license_url = models.URLField(max_length=255, null=True)
+    extra_note = models.TextField(default="")
+    image = models.ImageField(upload_to='license/images', null = True)
+    submission_of_contributions = models.TextField(default= "")
+    limitation_of_liability = models.TextField(default = "")
+    accepting_warranty_or_additional_liability = models.TextField(default = "")
+    source_code = models.TextField(default = "")
+    basic_permission = models.TextField(default = "")
+    scope = models.TextField(default = "")
 
 
     class Meta:
@@ -32,9 +40,44 @@ class SoftwareLicense(models.Model):
         """
 
 
+class LicenseCompatibility(models.Model):
+    software_license = models.ForeignKey(
+        SoftwareLicense,
+        related_name="compatibilities",
+        on_delete = models.CASCADE
+        )
+    license_type = models.CharField(max_length=150)
+    is_compatible = models.BooleanField(default=False)
+
+    def __repr__(self) -> str:
+        return f"<LicenseCompatibility: license type: {self.license_type}, is_compatible: {self.is_compatible}>"
+
+    @staticmethod
+    def build_compatible_license_type(software_license:SoftwareLicense,is_compatible:bool,data:str) -> list:
+        """Create list of license compatible or non compatible object
+         and return result
+        """
+        # Split non compatible license type
+        license_type_list  = data.split(",")
+        license_compatibilities = []
+        
+        # Loop over license type
+        # Create license not compatible object
+        # And add to not_compatible_list_obj
+        for license_type in license_type_list:
+            license_compatibilities.append(
+                LicenseCompatibility(
+                    software_license = software_license,
+                    license_type = license_type,
+                    is_compatible = is_compatible
+                    )
+                )
+        return license_compatibilities
+    
+    
 
 class SoftwareLicenseAgreement(models.Model):
-    license_agreement_id = models.IntegerField(primary_key=True)
+    license_agreement_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     date_of_execution_of_document = models.DateField()
     party_1_entity_type = models.CharField(max_length= 50)
     party_1_full_name = models.CharField(max_length= 150)

@@ -3,11 +3,13 @@ import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import datetime
+from django.db import transaction
+import uuid
 
 from licenses.models import (
     SoftwareLicense,
-    SoftwareLicenseAgreement
+    SoftwareLicenseAgreement,
+    LicenseCompatibility
 )
 from licenses.serializers import (
     SoftwareLicenseSerializer
@@ -63,22 +65,38 @@ class SoftwareLicenseList(APIView):
             request_data = request.data
             request_data["is_active"] = True
 
+            # Get compatible and non compatible license type
+            license_not_compatible_with = request_data['license_not_compatible_with']
+            license_compatible_with = request_data['license_compatible_with']
+
+            # delete license_not_compatible_with 
+            # and license_compatible_with field
+            # from request_data object to enable 
+            # clean data validation on SoftwareLicenseSerializer
+            del request_data['license_not_compatible_with']
+            del request_data['license_compatible_with']
+
             # Convert release date string (yyyy-mm-dd)
             # to date object
             request_data["released_date"] = date.fromisoformat(request_data["released_date"])
-
-            # Get compatibility permutation
-            request_data["license_compatible_with"] = "change data"
-            request_data["license_not_compatible_with"] = "change data"
-
-            # Commit data into database
             serializer = SoftwareLicenseSerializer(data=request_data)
-            serializer.is_valid()
-            license = serializer.save()
+
+            with transaction.atomic():
+                # Commit data to database
+                serializer.is_valid()
+                software_license = serializer.save()
+
+                # Add new license compatible
+                # and non compatible type
+                add_compatible_and_non_compatible_license_type(
+                    software_license,
+                    license_not_compatible_with,
+                    license_compatible_with
+                    )
 
 
             return Response(
-                {"license": serializer.to_representation(license)},
+                {"license": serializer.to_representation(software_license)},
                 status=status.HTTP_201_CREATED
                 )
 
@@ -123,34 +141,51 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             # Get license
-            license = SoftwareLicense.objects.get(license_id = license_id)
-
+            software_license = SoftwareLicense.objects.get(license_id = license_id)
             request_data = request.data
-            request_data["is_active"] = True
+            
+            # Get compatible and non compatible license type
+            license_not_compatible_with = request_data['license_not_compatible_with']
+            license_compatible_with = request_data['license_compatible_with']
 
+            # delete license_not_compatible_with 
+            # and license_compatible_with field
+            # from request_data object to enable 
+            # clean data validation on SoftwareLicenseSerializer
+            del request_data['license_not_compatible_with']
+            del request_data['license_compatible_with']
 
             # Convert release date string (yyyy-mm-dd)
             # to date object
             request_data["released_date"] = date.fromisoformat(request_data["released_date"])
 
-            # Get compatibility permutation
-            request_data["license_compatible_with"] = "change data"
-            request_data["license_not_compatible_with"] = "change data"
-
-            # Update and Commit data into database
-            serializer = SoftwareLicenseSerializer(license, data=request_data)
-            if serializer.is_valid():
-                license = serializer.save()
-                return Response(
-                    {"license": serializer.to_representation(license)},
-                    status=status.HTTP_200_OK
-                )
+            with transaction.atomic():
+                # Update and Commit data into database
+                serializer = SoftwareLicenseSerializer(software_license, data=request_data)           
+                if serializer.is_valid():
+                    software_license = serializer.save()
                 
-            # The code below will
-            # execute if serializer.is_valid() if false     
-            return Response({"error_msg": "Invalid data input"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
+                # Delete previous license compatible
+                # and non compatible type
+                compatibilities = LicenseCompatibility.objects.filter(
+                    software_license = software_license
+                    )
+                for compatible in compatibilities:
+                    compatible.delete()
+
+                # Add new license compatible
+                # and non compatible type
+                add_compatible_and_non_compatible_license_type(
+                    software_license,
+                    license_not_compatible_with,
+                    license_compatible_with
+                    )
+
+                    
+            return Response(
+                {"license": serializer.to_representation(software_license)},
+                status=status.HTTP_200_OK
+            )
 
         # The code below will
         # execute when error occur
@@ -161,6 +196,8 @@ class SoftwareLicenseDetail(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
+
+
 
 
     def delete(self, request, license_id, format = None):
@@ -183,6 +220,31 @@ class SoftwareLicenseDetail(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
+
+
+def add_compatible_and_non_compatible_license_type(
+    software_license,
+    license_not_compatible_with,
+    license_compatible_with):
+
+    # Add license non compatible with
+    if license_not_compatible_with:
+        license_not_compatible_list = LicenseCompatibility.build_compatible_license_type(
+            software_license,
+            False,
+            license_not_compatible_with
+            )
+        LicenseCompatibility.objects.bulk_create(license_not_compatible_list)
+
+    # Add license compatible with
+    if license_compatible_with:
+        license_compatible_list = LicenseCompatibility.build_compatible_license_type(
+            software_license,
+            True,
+            license_compatible_with
+            )
+        LicenseCompatibility.objects.bulk_create(license_compatible_list)
+
 
 
 
