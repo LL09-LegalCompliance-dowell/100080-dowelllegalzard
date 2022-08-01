@@ -42,7 +42,7 @@ class LicensesTest(TestCase):
         self.assertEqual(response.status_code, 201)
 
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'Apache')
+        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.0')
 
 
 
@@ -57,7 +57,7 @@ class LicensesTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'Apache')
+        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.0')
 
 
 
@@ -90,7 +90,7 @@ class LicensesTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'Apache License 0.2')
+        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.2')
 
 
     def test_delete_license(self):
