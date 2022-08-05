@@ -1,79 +1,117 @@
+from unicodedata import category
 from django.db import models
 from DowellLicenseProject import settings
 import uuid
+
+# Preset common attributes
+class CommonAttribute(models.Model):
+    name = models.CharField(max_length=150, null=False, unique=True)
+    code = models.CharField(max_length=150, null=False, unique=True)
+
+    class Meta:
+        db_table = "common_attributes"
+
+    def __str__(self) -> str:
+        return f"<name({self.name}), code({self.code})>"
+
+    def __repr__(self) -> str:
+        return f"<CommonAttribute: name({self.name}), code({self.code})>"
+
+
+class Attribute(models.Model):
+    name = models.CharField(max_length=150, null=False, unique=True)
+    common_attribute = models.ForeignKey(
+        CommonAttribute,
+        related_name="attribute_list",
+        on_delete = models.SET_NULL,
+        null = True
+        )
+
+    class Meta:
+        db_table = "attributes"
+
+    def __str__(self) -> str:
+        return f"<name({self.name})>"
+
+    def __repr__(self) -> str:
+        return f"<Attribute: name({self.name})>"
+
 
 class SoftwareLicense(models.Model):
     license_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     software_name = models.CharField(max_length=100)
     license_name = models.CharField(max_length=100)
     version = models.CharField(max_length=15)
+    type_of_license = models.CharField(max_length=150, default="")
+    description = models.TextField()
+    disclaimer = models.TextField()
+    risk_for_choosing_license = models.TextField()
+    limitation_of_liability = models.TextField(default = "")
+    license_url = models.URLField(max_length=255, null=True)
+    image = models.ImageField(upload_to='license/images', null = True)
+    recommendation = models.TextField(default="")
     released_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
-    disclaimer = models.TextField()
-    definition = models.TextField()
-    grant_of_copy_right_license = models.TextField()
-    grant_of_patent_license = models.TextField()
-    redistribution = models.TextField()
-    trademarks = models.TextField()
-    license_url = models.URLField(max_length=255, null=True)
-    extra_note = models.TextField(default="")
-    image = models.ImageField(upload_to='license/images', null = True)
-    submission_of_contributions = models.TextField(default= "")
-    limitation_of_liability = models.TextField(default = "")
-    accepting_warranty_or_additional_liability = models.TextField(default = "")
-    source_code = models.TextField(default = "")
-    basic_permission = models.TextField(default = "")
-    scope = models.TextField(default = "")
 
 
     class Meta:
         db_table = "software_licenses"
 
     def __str__(self) -> str:
-        return f"<License Name: {self.license_name}, Version: {self.version}, Software Name: {self.software_name}>"
+        return f"<license_name({self.license_name}), version({self.version}), software_name({self.software_name})>"
 
 
     def __repr__(self) -> str:
-        return f"""
-        SoftwareLicense Object:
-        <License Name: {self.license_name}, Version: {self.version}, Software Name: {self.software_name}>
-        """
+        return f"<SoftwareLicense: license_name({self.license_name}), version({self.version}), software_name({self.software_name})>"
+
+class LicenseAttribute(models.Model):
+    description = models.TextField(null=True)
+    software_license = models.ForeignKey(
+        SoftwareLicense,
+        related_name="license_attribute_list",
+        on_delete = models.CASCADE
+        )
+    # Mapping LicenseAttribute to
+    # constant / common attribute define
+    attribute = models.ForeignKey(
+        Attribute,
+        related_name="license_attribute_list",
+        on_delete = models.CASCADE
+        )
+
+
+    class Meta:
+        db_table = "license_attributes"
 
 
 class LicenseCompatibility(models.Model):
+    license_type = models.CharField(max_length=150)
+    percentage_of_comaptibility = models.IntegerField(default=0)
+    is_compatible = models.BooleanField(default=False)
     software_license = models.ForeignKey(
         SoftwareLicense,
         related_name="compatibilities",
         on_delete = models.CASCADE
         )
-    license_type = models.CharField(max_length=150)
-    is_compatible = models.BooleanField(default=False)
 
     def __repr__(self) -> str:
         return f"<LicenseCompatibility: license type: {self.license_type}, is_compatible: {self.is_compatible}>"
 
-    @staticmethod
-    def build_compatible_license_type(software_license:SoftwareLicense,is_compatible:bool,data:str) -> list:
-        """Create list of license compatible or non compatible object
-         and return result
-        """
-        # Split non compatible license type
-        license_type_list  = data.split(",")
-        license_compatibilities = []
-        
-        # Loop over license type
-        # Create license not compatible object
-        # And add to not_compatible_list_obj
-        for license_type in license_type_list:
-            license_compatibilities.append(
-                LicenseCompatibility(
-                    software_license = software_license,
-                    license_type = license_type,
-                    is_compatible = is_compatible
-                    )
-                )
-        return license_compatibilities
-    
+
+class LicenseType(models.Model):
+    category = models.CharField(max_length=150, null=False, unique=True)
+    licenses = models.JSONField()
+
+    class Meta:
+        db_table = "license_types"
+
+    def __str__(self) -> str:
+        return f"<category({self.category}), licenses({self.licenses})>"
+
+    def __repr__(self) -> str:
+        return f"<LicenseType: category({self.category}), licenses({self.licenses})>"
+
+
     
 
 class SoftwareLicenseAgreement(models.Model):

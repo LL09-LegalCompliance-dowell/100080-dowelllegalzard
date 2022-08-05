@@ -1,48 +1,41 @@
 {
    "add_license_data": {
-    "software_name": "GNU GPL v 2.0",
-    "license_name": "GNU GPL v 2.0",
-    "version": "0.2",
-    "license_compatible_with": "GPLv3, GPLv2 (or any later version), LGPLv3, LGPLv2.1",
-    "license_not_compatible_with": "Academic Free License, version 1.1.",
-    "is_active": true,
-    "disclaimer": "shall mean an individual or Legal Entity exercising permissions.",
-    "definition": "shall mean an individual or Legal Entity exercising permissiLicense.",
-    "grant_of_copy_right_license": "shall mean an individuermissions granted by this License.",
-    "grant_of_patent_license": "shall mean an individuions granted by this License.",
-    "redistribution": "shall mean an individual or Legal Entiy this License.",
-    "trademarks": "shall mean an individual or Legal Entity ehis License.",
-    "license_url": "https://directory.fsf.org/wiki/License:Sleepycat",
-    "released_date": "2021-07-22",
-    "extra_note": " licenses used by early v the GNU Debugger and the GNU C Compiler.",
-    "submission_of_contributions": "The initial GPL",
-    "limitation_of_liability": "limitation_of_liability",
-    "source_code": "source_code",
-    "basic_permission": "basic_permission",
-    "scope": "scope"
-  },
+    "software_name": "APACHE",
+    "license_name": "APACHE 2.0",
+    "version": "2.0",
+    "type_of_license": "PERMISSIVE",
+
+    "description": "The 2.0 version of the Apache License, approved by the ASF in 2004, All packages produced by the ASF are implicitly licensed under the Apache License, Version 2.0, unless otherwise explicitly stated.",
+
+    "disclaimer": "Copyright [yyyy] [name of copyright owner] Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
+
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache License 2.0 with GPL v2 Another aspect to consider is that a contributor can modify the code and then sell it as proprietary software",
+
+    "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10"
+},
   
 "update_license_data": {
-    "software_name": "GNU GPL v 2.2",
-    "license_name": "GNU GPL v 2.2",
-    "version": "0.2",
-    "license_compatible_with": "GPLv3, GPLv2 (or any later version), LGPLv3, LGPLv2.1",
-    "license_not_compatible_with": "Academic Free License, version 1.1.",
-    "is_active": true,
-    "disclaimer": "shall mean an individual or Legal Entity exercising permissions.",
-    "definition": "shall mean an individual or Legal Entity exercising permissiLicense.",
-    "grant_of_copy_right_license": "shall mean an individuermissions granted by this License.",
-    "grant_of_patent_license": "shall mean an individuions granted by this License.",
-    "redistribution": "shall mean an individual or Legal Entiy this License.",
-    "trademarks": "shall mean an individual or Legal Entity ehis License.",
-    "license_url": "https://directory.fsf.org/wiki/License:Sleepycat",
-    "released_date": "2022-07-22",
-    "extra_note": " licenses used by early v the GNU Debugger and the GNU C Compiler.",
-    "submission_of_contributions": "The initial GPL",
-    "limitation_of_liability": "limitation_of_liability",
-    "source_code": "source_code",
-    "basic_permission": "basic_permission",
-    "scope": "scope"
-  }
+    "software_name": "APACHE",
+    "license_name": "APACHE 2.1",
+    "version": "2.1",
+    "type_of_license": "PERMISSIVE",
+
+    "description": "The 2.0 version of the Apache License, approved by the ASF in 2004, All packages produced by the ASF are implicitly licensed under the Apache License, Version 2.0, unless otherwise explicitly stated.",
+
+    "disclaimer": "you may not use this file except in compliance with the License You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
+
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache License 2.0 with GPL v2 Another aspect to consider is that a contributor can modify the code and then sell it as proprietary software",
+
+    "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+    
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "0.2",
+    "released_date": "2015-05-10",
+    "is_active": true
+}
 
 }
