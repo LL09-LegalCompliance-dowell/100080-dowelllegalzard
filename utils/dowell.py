@@ -2,11 +2,14 @@ import requests
 import json
 from datetime import datetime
 
+# DO NOT CHANGE THE CONSTANTS
 SOFTWARE_AGREEMENT_COLLECTION = "software_agreements"
 SOFTWARE_LICENSE_COLLECTION = "software_licenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
 LICENSE_OF_TYPES_COLLECTION = "license_types"
+DATABASE = "license"
+CLUSTER = "cluster"
 
 
 def get_event_id():
@@ -46,20 +49,11 @@ def get_event_id():
     return r.text
 
 
-document_name = "agreement"
-document_data = {
-    "name":"Worlako vs George",
-    "title":"License agreement",
-    "test":"This is just a test agreement"
-    }
 
 def save_document(
     collection:str,
     document_name:str,
-    document_data:dict,
-    is_update = False,
-    object_id = None # _id of document, when performing 
-    # update operation
+    value:dict,
     ):
     url = "http://100002.pythonanywhere.com/" 
 
@@ -67,20 +61,58 @@ def save_document(
 
     # Build request data or payload
     payload = json.dumps({
-        "cluster": "license",
-        "database": "license",
+        "cluster": CLUSTER,
+        "database": DATABASE,
         "collection": collection,
         "document": document_name,
         "team_member_ID": "10008002",
         "function_ID": "ABCDE",
-        "command": "update" if is_update else "insert",
+        "command": "insert",
         "field": {
             "eventId" : get_event_id(),
-            document_name : document_data
+            document_name : value
             },
-        "update_field": {
-            "order_nos": 21
+
+        "update_field": {},  
+        "platform": "bangalore"
+        
+    })
+
+    # Setup request headers
+    headers = {
+        'Content-Type': 'application/json'
+        }
+
+
+    # Send POST request to server
+    response = requests.request("POST", url, headers=headers, data=payload)
+    return response
+
+
+def update_document(
+    collection:str,
+    document_name:str,
+    new_value:dict,
+    id
+    ):
+    url = "http://100002.pythonanywhere.com/" 
+
+    # searchstring="ObjectId"+"("+"'"+"6139bd4969b0c91866e40551"+"'"+")"
+
+    # Build request data or payload
+    payload = json.dumps({
+        "cluster": CLUSTER,
+        "database": DATABASE,
+        "collection": collection,
+        "document": document_name,
+        "team_member_ID": "10008002",
+        "function_ID": "ABCDE",
+        "command": "update",
+        "field": {
+            '_id': id
             },
+
+        "update_field": new_value,
             
         "platform": "bangalore"
         
@@ -98,13 +130,14 @@ def save_document(
 
 
 
-def targeted_population(database, collection, fields, period):
+
+def targeted_population(collection, fields, period):
 
     url = 'http://100032.pythonanywhere.com/api/targeted_population/'
     database_details = {
         'database_name': 'mongodb',
         'collection': collection,
-        'database': database,
+        'database': DATABASE,
         'fields': fields
     }
 
