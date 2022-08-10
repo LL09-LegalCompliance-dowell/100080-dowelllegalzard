@@ -1,5 +1,5 @@
 [{
-    "category": "PERMISSIVE",
+    "name": "PERMISSIVE",
     "licenses": [
         "PUBLIC DOMAIN",
         "MIT/XII",
@@ -8,7 +8,7 @@
     ]
 },
 {
-    "category": "WEAKLY COPYLEFT",
+    "name": "WEAKLY COPYLEFT",
     "licenses": [
         "LGPLv2.1",
         "LGPL2.1+",
@@ -17,7 +17,7 @@
     ]
 },
 {
-    "category": "STRONGLY COPYLEFT",
+    "name": "STRONGLY COPYLEFT",
     "licenses": [
         "GPLv2",
         "GPL2+",
@@ -25,7 +25,7 @@
     ]
 },
 {
-    "category": "NETWORK PROTECTION",
+    "name": "NETWORK PROTECTION",
     "licenses": [
         "Affero GPL v3"
     ]

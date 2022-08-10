@@ -38,12 +38,12 @@ class SoftwareLicenseList(APIView):
     """
     def get(self, request, format=None):
         try:
-            licenses = SoftwareLicense.objects.all()
+            licenses_ = SoftwareLicense.objects.all()
             # Initialize serialize object
             serializer = SoftwareLicenseSerializer()
-
+            licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_]
             return Response({
-                "licenses": [serializer.to_representation(license) for license in licenses]
+                "licenses": licenses
             },
             status=status.HTTP_200_OK
             )
@@ -72,11 +72,13 @@ class SoftwareLicenseList(APIView):
 
             # Commit data to database
             serializer.is_valid()
-            software_license = serializer.save()
+            document, status_code = serializer.save()
+
+
 
             return Response(
-                {"license": serializer.to_representation(software_license)},
-                status=status.HTTP_201_CREATED
+                {"license": document},
+                status=status_code
                 )
 
         # The code below will
@@ -100,7 +102,7 @@ class SoftwareLicenseDetail(APIView):
             license = SoftwareLicense.objects.get(license_id = license_id)
             # Serialize data
             serializer = SoftwareLicenseSerializer()
-            data = serializer.to_representation(license)
+            data = serializer.to_representation(license.document, license.id)
 
             return Response({"license": data}, status=status.HTTP_200_OK)
 
@@ -120,7 +122,7 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             # Get license
-            software_license = SoftwareLicense.objects.get(license_id = license_id)
+            license = SoftwareLicense.objects.get(license_id = license_id)
             request_data = request.data
 
             # Convert release date string (yyyy-mm-dd)
@@ -128,14 +130,20 @@ class SoftwareLicenseDetail(APIView):
             request_data["released_date"] = date.fromisoformat(request_data["released_date"])
 
             # Update and Commit data into database
-            serializer = SoftwareLicenseSerializer(software_license, data=request_data)
+            serializer = SoftwareLicenseSerializer(license, data=request_data)
             if serializer.is_valid():
-                software_license = serializer.save()            
+                document, status_code = serializer.update(license, serializer.validated_data)            
+                
+                return Response(
+                    {"license": document},
+                    status = status_code
+                    )
 
-            return Response(
-                {"license": serializer.to_representation(software_license)},
-                status=status.HTTP_200_OK
-            )
+            else:
+                return Response({"error_msg": f"{e}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
 
         # The code below will
         # execute when error occur

@@ -54,7 +54,7 @@ class LicensesTest(TestCase):
         json_data = response.json()["license"]
 
         # Retrieve license
-        response = self.client.get(f'/api/licenses/{json_data["license_id"]}/')
+        response = self.client.get(f'/api/licenses/{json_data["_id"]}/')
         self.assertEqual(response.status_code, 200)
 
         json_data = response.json()["license"]
@@ -85,7 +85,7 @@ class LicensesTest(TestCase):
 
         # Update license
         response = self.client.put(
-            f'/api/licenses/{json_data["license_id"]}/',
+            f'/api/licenses/{json_data["_id"]}/',
             self.fixture['update_license_data'],
             content_type='application/json'
             )
@@ -104,7 +104,7 @@ class LicensesTest(TestCase):
 
         # Delete license
         response = self.client.delete(
-            f'/api/licenses/{json_data["license_id"]}/'
+            f'/api/licenses/{json_data["_id"]}/'
             )
 
         self.assertEqual(response.status_code, 204)

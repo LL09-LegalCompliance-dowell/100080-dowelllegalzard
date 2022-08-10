@@ -1,5 +1,7 @@
 from email.policy import default
 from rest_framework import serializers
+from rest_framework.renderers import JSONRenderer
+import json
 from licenses.models import (
     SoftwareLicense,
     SoftwareLicenseAgreement,
@@ -140,47 +142,64 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     # or
     # license_not_compatible_with_lookup = ["GPLv2", "GPL2+"]
 
+    def to_representation(self, document:dict, id):
+
+        if "_id" not in document: document['_id'] = id
+        return document
+
 
     def create(self, validated_data):
         """
         Create and return new software license.
         """
+        status_code = 201
+        document = {}
+
+        # format date back to iso format
+        validated_data['released_date'] = validated_data['released_date'].isoformat()
 
         # Create license on localhost
         SoftwareLicense.objects.create(document = validated_data)
         # Retrieve license and return license
-        response_ = SoftwareLicense.objects.last()
+        license = SoftwareLicense.objects.last()
+        document = self.to_representation(license.document, license.license_id)
+        
 
 
         # # Create license on remote server
         # response_ = save_document(
         #     collection= SOFTWARE_LICENSE_COLLECTION,
         #     document_name= "software_licence",
-        #     document_data= validated_data
+        #     value= validated_data
         # )
 
-        return response_
+        return document, status_code
 
 
     def update(self, instance, validated_data):
         """
         Update and return software license.
         """
+        status_code = 200
+        document = {}
+
+        # format date back to iso format
+        validated_data['released_date'] = validated_data['released_date'].isoformat()
 
         # Update localhost 
         instance.document = validated_data
         instance.save()
-        response_ = instance
+        document = self.to_representation(instance.document, instance.id)
 
+        
         # # Update license on remote server
         # response_ = save_document(
         #     collection= SOFTWARE_LICENSE_COLLECTION,
         #     document_name= "software_licence",
-        #     document_data= validated_data,
-        #     is_update= True
+        #     new_value= validated_data,
         # )
 
-        return response_
+        return document, status_code
 
 
 class LicenseAttributeHelperSerializer(serializers.Serializer):
