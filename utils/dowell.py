@@ -20,6 +20,12 @@ DATABASE = "license"
 CLUSTER = "license"
 
 
+def format_document_id(id:str):
+    """ format and return mongodb object id
+       "ObjectId"+"("+"'"+"6139bd4969b0c91866e40551"+"'"+")"
+    """
+    return "ObjectId"+"("+"'"+id+"'"+")"
+
 def get_event_id():
     dd=datetime.now()
     time=dd.strftime("%d:%m:%Y,%H:%M:%S")
@@ -65,7 +71,7 @@ def save_document(
     ):
     url = "http://100002.pythonanywhere.com/" 
 
-    # searchstring="ObjectId"+"("+"'"+"6139bd4969b0c91866e40551"+"'"+")"
+    # searchstring = format_document_id("6139bd4969b0c91866e40551")
 
     # Build request data or payload
     payload = json.dumps({
@@ -105,7 +111,7 @@ def update_document(
     ):
     url = "http://100002.pythonanywhere.com/" 
 
-    # searchstring="ObjectId"+"("+"'"+"6139bd4969b0c91866e40551"+"'"+")"
+    # searchstring = format_document_id("6139bd4969b0c91866e40551")
 
     # Build request data or payload
     payload = json.dumps({
