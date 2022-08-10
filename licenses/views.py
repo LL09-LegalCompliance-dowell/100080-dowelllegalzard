@@ -8,8 +8,7 @@ import uuid
 
 from licenses.models import (
     SoftwareLicense,
-    SoftwareLicenseAgreement,
-    LicenseCompatibility
+    SoftwareLicenseAgreement
 )
 from licenses.serializers import (
     SoftwareLicenseSerializer
@@ -171,33 +170,6 @@ class SoftwareLicenseDetail(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
-
-
-def add_compatible_and_non_compatible_license_type(
-    software_license,
-    license_not_compatible_with,
-    license_compatible_with):
-
-    # Add license non compatible with
-    if license_not_compatible_with:
-        license_not_compatible_list = LicenseCompatibility.build_compatible_license_type(
-            software_license,
-            False,
-            license_not_compatible_with
-            )
-        LicenseCompatibility.objects.bulk_create(license_not_compatible_list)
-
-    # Add license compatible with
-    if license_compatible_with:
-        license_compatible_list = LicenseCompatibility.build_compatible_license_type(
-            software_license,
-            True,
-            license_compatible_with
-            )
-        LicenseCompatibility.objects.bulk_create(license_compatible_list)
-
-
-
 
             
 

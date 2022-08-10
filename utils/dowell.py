@@ -6,7 +6,6 @@ SOFTWARE_AGREEMENT_COLLECTION = "software_agreements"
 SOFTWARE_LICENSE_COLLECTION = "software_licenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
-LICENSE_ATTRIBUTE_COLLECTION = "license_attributes"
 LICENSE_OF_TYPES_COLLECTION = "license_types"
 
 
@@ -54,7 +53,14 @@ document_data = {
     "test":"This is just a test agreement"
     }
 
-def save_document(collection:str, document_name:str, document_data:dict):
+def save_document(
+    collection:str,
+    document_name:str,
+    document_data:dict,
+    is_update = False,
+    object_id = None # _id of document, when performing 
+    # update operation
+    ):
     url = "http://100002.pythonanywhere.com/" 
 
     # searchstring="ObjectId"+"("+"'"+"6139bd4969b0c91866e40551"+"'"+")"
@@ -67,7 +73,7 @@ def save_document(collection:str, document_name:str, document_data:dict):
         "document": document_name,
         "team_member_ID": "10008002",
         "function_ID": "ABCDE",
-        "command": "insert",
+        "command": "update" if is_update else "insert",
         "field": {
             "eventId" : get_event_id(),
             document_name : document_data
@@ -90,8 +96,6 @@ def save_document(collection:str, document_name:str, document_data:dict):
     response = requests.request("POST", url, headers=headers, data=payload)
     return response
 
-
-save_licenses()
 
 
 def targeted_population(database, collection, fields, period):
