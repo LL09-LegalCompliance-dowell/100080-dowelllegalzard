@@ -9,7 +9,7 @@ COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
 LICENSE_OF_TYPES_COLLECTION = "license_types"
 DATABASE = "license"
-CLUSTER = "cluster"
+CLUSTER = "license"
 
 
 def get_event_id():
