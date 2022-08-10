@@ -3,11 +3,19 @@ import json
 from datetime import datetime
 
 # DO NOT CHANGE THE CONSTANTS
+# COLLECTIONS
 SOFTWARE_AGREEMENT_COLLECTION = "software_agreements"
 SOFTWARE_LICENSE_COLLECTION = "software_licenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
 LICENSE_OF_TYPES_COLLECTION = "license_types"
+# DOCUMENTS
+SOFTWARE_AGREEMENT_DOCUMENT_NAME = "agreement"
+SOFTWARE_LICENSE_DOCUMENT_NAME = "license"
+COMMON_ATTRIBUTE_DOCUMENT_NAME = "common_attribute"
+ATTRIBUTE_DOCUMENT_NAME = "attribute"
+LICENSE_OF_TYPES_DOCUMENT_NAME = "license_type"
+# SERVER
 DATABASE = "license"
 CLUSTER = "license"
 
