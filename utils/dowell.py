@@ -63,7 +63,6 @@ def get_event_id():
     return r.text
 
 
-
 def save_document(
     collection:str,
     document_name:str,
@@ -141,8 +140,6 @@ def update_document(
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
     return response
-
-
 
 
 def targeted_population(collection, fields, period):

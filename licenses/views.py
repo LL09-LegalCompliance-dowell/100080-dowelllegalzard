@@ -15,7 +15,6 @@ from licenses.serializers import (
 )
 
 
-
 # Create your views here.
 def dowell_login(username, password):
     url = "http://100014.pythonanywhere.com/api/login/"
@@ -36,12 +35,12 @@ def dowell_login(username, password):
 class SoftwareLicenseList(APIView):
     """ List all and create software license
     """
-    def get(self, request, format=None):
+    def get(self, request, limit, offset, format=None):
         try:
-            licenses_ = SoftwareLicense.objects.all()
+            licenses_query = SoftwareLicense.objects.all()
             # Initialize serialize object
             serializer = SoftwareLicenseSerializer()
-            licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_]
+            licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
             return Response({
                 "licenses": licenses
             },
@@ -83,6 +82,39 @@ class SoftwareLicenseList(APIView):
 
         # The code below will
         # execute when error occur
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+
+class SoftwareLicenseSearch(APIView):
+    """ Load linceses base on search term
+    """
+    def get(self, request, limit, offset, format=None):
+        try:
+            # Retrieve licenses 
+            search_term = request.GET.get("search_term", "")
+            licenses_query = SoftwareLicense.objects.filter(
+                document__license_name__icontains = search_term
+                )[offset: limit]
+
+
+            # Initialize serialize object
+            serializer = SoftwareLicenseSerializer()
+            licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
+
+            return Response({
+                "licenses": licenses
+            },
+            status=status.HTTP_200_OK
+            )
+
+        # The code below will
+        # execute when error occur            
         except Exception as e:
             print(f"{e}")
             return Response({
@@ -180,4 +212,75 @@ class SoftwareLicenseDetail(APIView):
                 )
 
             
+class SoftwareLicenseSearch(APIView):
+    """ Load linceses base on search term
+    """
+    def get(self, request, limit, offset, format=None):
+        try:
+            # Retrieve licenses 
+            search_term = request.GET.get("search_term", "")
+            licenses_query = SoftwareLicense.objects.filter(
+                document__license_name__icontains = search_term
+                )[offset: limit]
+
+
+            # Initialize serialize object
+            serializer = SoftwareLicenseSerializer()
+            licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
+
+            return Response({
+                "licenses": licenses
+            },
+            status=status.HTTP_200_OK
+            )
+
+        # The code below will
+        # execute when error occur            
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+
+class CheckLicenseCompatibility(APIView):
+    """ Check for two licnese and return True if 
+        license_one == license_two
+    """
+
+    def post(self, request, format=None):
+        is_compatible = False
+        try:
+            
+            license_one_id = request.POST.get("license_one_id", "")
+            license_two_id = request.POST.get("license_two_id", "")
+             # Retrieve licenses 
+            licenses_one = SoftwareLicense.objects.get(pk = license_one_id)
+            licenses_two = SoftwareLicense.objects.get(pk = license_two_id)
+
+            # Check, if license_one is compatible with license_two
+            license_compatible_with_lookup = licenses_two.document["license_compatible_with_lookup"]
+            if licenses_one.document["license_name"] in license_compatible_with_lookup:
+                is_compatible = True
+
+
+            return Response({
+                "is_compatible": is_compatible
+            },
+            status=status.HTTP_200_OK
+            )
+
+        # The code below will
+        # execute when error occur            
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+
 
