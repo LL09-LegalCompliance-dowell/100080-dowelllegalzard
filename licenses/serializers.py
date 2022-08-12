@@ -10,12 +10,28 @@ from licenses.models import (
     LicenseAttribute
 )
 from utils.dowell import (
+    fetch_document,
     save_document,
+    update_document,
+
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_LICENSE_COLLECTION,
     COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
     LICENSE_TYPE_COLLECTION,
+
+    SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+    SOFTWARE_LICENSE_DOCUMENT_NAME,
+    COMMON_ATTRIBUTE_DOCUMENT_NAME,
+    ATTRIBUTE_DOCUMENT_NAME,
+    LICENSE_TYPE_DOCUMENT_NAME,
+
+    SOFTWARE_AGREEMENT_KEY,
+    SOFTWARE_LICENSE_KEY,
+    COMMON_ATTRIBUTE_KEY,
+    ATTRIBUTE_MAIN_KEY,
+    LICENSE_MAIN_KEY
+
     )
 
 
@@ -152,54 +168,78 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         """
         Create and return new software license.
         """
-        status_code = 201
-        document = {}
+        status_code = 500
+        response_json = {}
 
         # format date back to iso format
         validated_data['released_date'] = validated_data['released_date'].isoformat()
 
-        # Create license on localhost
-        SoftwareLicense.objects.create(document = validated_data)
-        # Retrieve license and return license
-        license = SoftwareLicense.objects.last()
-        document = self.to_representation(license.document, license.license_id)
+        # # Create license on localhost
+        # SoftwareLicense.objects.create(document = validated_data)
+        # # Retrieve license and return license
+        # license = SoftwareLicense.objects.last()
+        # if license:
+        #     status_code = 201
+        #     response_json = self.to_representation(license.document, license.license_id)
         
 
+        # Create license on remote server
+        response_json = save_document(
+            collection= SOFTWARE_LICENSE_COLLECTION,
+            document= SOFTWARE_LICENSE_DOCUMENT_NAME,
+            key= SOFTWARE_LICENSE_KEY,
+            value= validated_data
+        )
 
-        # # Create license on remote server
-        # response_ = save_document(
-        #     collection= SOFTWARE_LICENSE_COLLECTION,
-        #     document_name= "software_licence",
-        #     value= validated_data
-        # )
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection= SOFTWARE_LICENSE_COLLECTION,
+                document= SOFTWARE_LICENSE_DOCUMENT_NAME,
+                fields={"_id": response_json["inserted_id"]}
+                )
 
-        return document, status_code
+        return response_json, status_code
 
 
-    def update(self, instance, validated_data):
+    def update(self, license_id, validated_data):
         """
         Update and return software license.
         """
-        status_code = 200
-        document = {}
+        status_code = 500
+        response_json = {}
 
         # format date back to iso format
         validated_data['released_date'] = validated_data['released_date'].isoformat()
 
         # Update localhost 
-        instance.document = validated_data
-        instance.save()
-        document = self.to_representation(instance.document, instance.id)
+        # Retrieve license
+        # license = SoftwareLicense.objects.get(license_id = license_id)
+        # license.document = validated_data
+        # license.save()
+        # response_json = self.to_representation(license.document, license.id)
 
         
         # # Update license on remote server
-        # response_ = save_document(
-        #     collection= SOFTWARE_LICENSE_COLLECTION,
-        #     document_name= "software_licence",
-        #     new_value= validated_data,
-        # )
+        response_json = update_document(
+            collection= SOFTWARE_LICENSE_COLLECTION,
+            document= SOFTWARE_LICENSE_DOCUMENT_NAME,
+            key= SOFTWARE_LICENSE_KEY,
+            new_value= validated_data,
+            id= license_id
+        )
 
-        return document, status_code
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection= SOFTWARE_LICENSE_COLLECTION,
+                document= SOFTWARE_LICENSE_DOCUMENT_NAME,
+                fields={"_id": license_id}
+                )
+
+        return response_json, status_code
 
 
 class LicenseAttributeHelperSerializer(serializers.Serializer):
