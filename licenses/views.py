@@ -70,7 +70,7 @@ class SoftwareLicenseList(APIView):
                 fields={}
                 )
 
-            return Response({response_json},
+            return Response(response_json,
             status=status.HTTP_200_OK
             )
 
@@ -126,6 +126,7 @@ class SoftwareLicenseSearch(APIView):
             limit = int(request.GET.get("limit", "10"))
             offset = int(request.GET.get("offset", "0"))
             search_term = request.GET.get("search_term", "")
+            print(search_term)
             response_json = {}
 
             # Localhost
@@ -147,7 +148,7 @@ class SoftwareLicenseSearch(APIView):
                 fields= { "license_name": f"/{search_term}/" }
                 )
 
-            return Response({response_json},
+            return Response(response_json,
             status=status.HTTP_200_OK
             )
 

@@ -227,54 +227,7 @@ def targeted_population(collection, fields, period):
     response = requests.post(url, json=request_data,headers=headers)
     return response.text
 
-new_data = {
-    "software_name": "APACHE",
-    "license_name": "APACHE 2.0",
-    "version": "2.0",
-    "type_of_license": "PERMISSIVE",
 
-    "description": "The 2.0 version of the Apache License, approved by the ASF in 2004, All packages produced by the ASF are implicitly licensed under the Apache License, Version 2.0, unless otherwise explicitly stated.",
-
-    "disclaimer": "Copyright [yyyy] [name of copyright owner] Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
-
-    "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-
-    "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
-
-    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
-    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
-    "recommendation": "2.0",
-    "released_date": "2022-05-10",
-    "license_attributes": [],
-    "license_compatibility": [],
-    "license_compatible_with_lookup": [],
-    "license_not_compatible_with_lookup": []
-}
-
-
-update_data = {
-    "software_name": "APACHE",
-    "license_name": "APACHE 2.0",
-    "version": "2.0",
-    "type_of_license": "PERMISSIVE",
-
-    "description": "The 2.0 version of the Apache License, approved by the ASF in 2004, All packages produced by the ASF are implicitly licensed under the Apache License, Version 2.0, unless otherwise explicitly stated.",
-
-    "disclaimer": "Copyright [yyyy] [name of copyright owner] Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
-
-    "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-
-    "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
-
-    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
-    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
-    "recommendation": "2.0",
-    "released_date": "2022-05-10",
-    "license_attributes": [],
-    "license_compatibility": [],
-    "license_compatible_with_lookup": ["APACHE 2.0"],
-    "license_not_compatible_with_lookup": []
-}
 
 
 if __name__ == "__main__":
