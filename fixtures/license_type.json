@@ -1,0 +1,33 @@
+[{
+    "name": "PERMISSIVE",
+    "licenses": [
+        "PUBLIC DOMAIN",
+        "MIT/XII",
+        "BSD",
+        "APACHE 2.0"
+    ]
+},
+{
+    "name": "WEAKLY COPYLEFT",
+    "licenses": [
+        "LGPLv2.1",
+        "LGPL2.1+",
+        "LGPLv3 or LGPLv3+",
+        "MPL 1.1"
+    ]
+},
+{
+    "name": "STRONGLY COPYLEFT",
+    "licenses": [
+        "GPLv2",
+        "GPL2+",
+        "GPLv3 or GPLv3+"
+    ]
+},
+{
+    "name": "NETWORK PROTECTION",
+    "licenses": [
+        "Affero GPL v3"
+    ]
+}
+]

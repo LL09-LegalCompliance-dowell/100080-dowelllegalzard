@@ -42,7 +42,8 @@ class LicensesTest(TestCase):
         self.assertEqual(response.status_code, 201)
 
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.0')
+        self.assertEqual(json_data['software_name'], 'APACHE')
+        self.assertEqual(json_data['license_name'], 'APACHE 2.0')
 
 
 
@@ -53,11 +54,12 @@ class LicensesTest(TestCase):
         json_data = response.json()["license"]
 
         # Retrieve license
-        response = self.client.get(f'/api/licenses/{json_data["license_id"]}/')
+        response = self.client.get(f'/api/licenses/{json_data["_id"]}/')
         self.assertEqual(response.status_code, 200)
 
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.0')
+        self.assertEqual(json_data['software_name'], 'APACHE')
+        self.assertEqual(json_data['license_name'], 'APACHE 2.0')
 
 
 
@@ -83,14 +85,15 @@ class LicensesTest(TestCase):
 
         # Update license
         response = self.client.put(
-            f'/api/licenses/{json_data["license_id"]}/',
+            f'/api/licenses/{json_data["_id"]}/',
             self.fixture['update_license_data'],
             content_type='application/json'
             )
 
         self.assertEqual(response.status_code, 200)
         json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'GNU GPL v 2.2')
+        self.assertEqual(json_data['version'], '2.1')
+        self.assertEqual(json_data['license_name'], 'APACHE 2.1')
 
 
     def test_delete_license(self):
@@ -101,7 +104,7 @@ class LicensesTest(TestCase):
 
         # Delete license
         response = self.client.delete(
-            f'/api/licenses/{json_data["license_id"]}/'
+            f'/api/licenses/{json_data["_id"]}/'
             )
 
         self.assertEqual(response.status_code, 204)
