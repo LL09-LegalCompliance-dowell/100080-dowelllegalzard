@@ -1,12 +1,14 @@
 import json
-from django.test import TestCase, Client
+import unittest
 from pathlib import Path
 import os
+import requests
 BASE_DIR = Path(__file__).resolve().parent.parent
+global_id = ""
 
 
 
-class LicensesTest(TestCase):
+class LicensesTest(unittest.TestCase):
 
     def setUp(self) -> None:
         super().setUp()
@@ -22,90 +24,89 @@ class LicensesTest(TestCase):
         with open(file_path) as file:
             self.fixture = json.load(file)
 
-        # initialize web client object
-        self.client = Client()
+        self.base_url = "http://127.0.0.1:8000/"
 
-
-    def add_new_software_license(self):
-        # Create license
-        return self.client.post(
-            '/api/licenses/',
-            self.fixture['add_license_data'],
-            content_type="application/json"
-            )
-
-    
+    def create_license(self):
+        return requests.request(
+            "POST",
+            self.base_url+'api/licenses/',
+            headers={'Content-Type': 'application/json'},
+            data=self.fixture['add_license_data'])
 
     def test_add_software_license(self):
-        # Create license
-        response = self.add_new_software_license()
-        self.assertEqual(response.status_code, 201)
+        res = self.create_license()
+        self.assertEqual(res.status_code, 201)
 
-        json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'APACHE')
-        self.assertEqual(json_data['license_name'], 'APACHE 2.0')
+        # get data
+        data_json = res.json()
+        print(data_json)
+        data = data_json["data"]
+        licence = data[0]["agreement"]
+
+        self.assertTrue(data_json["isSuccess"])
+        self.assertEqual(licence['software_name'], 'APACHE')
+        self.assertEqual(licence['license_name'], 'APACHE 2.0')
+        global_id = licence['_id']
 
 
 
-    def test_retrieve_license(self):
-        # Create license
-        response = self.add_new_software_license()
-        self.assertEqual(response.status_code, 201)
-        json_data = response.json()["license"]
+    def _test_retrieve_license(self):
 
         # Retrieve license
-        response = self.client.get(f'/api/licenses/{json_data["_id"]}/')
-        self.assertEqual(response.status_code, 200)
+        res = requests.request(
+            "GET",
+            f'{self.base_url}api/licenses/{global_id}/',
+            headers={"Content-Type": "application/json"})
 
-        json_data = response.json()["license"]
-        self.assertEqual(json_data['software_name'], 'APACHE')
-        self.assertEqual(json_data['license_name'], 'APACHE 2.0')
+        # get data
+        data_json = res.json()
+        data = data_json["data"]
+        licence = data[0]["agreement"]
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data_json["isSuccess"])
+        self.assertEqual(licence['software_name'], 'APACHE')
+        self.assertEqual(licence['license_name'], 'APACHE 2.0')
 
 
 
-    def test_retrieve_all_license(self):
-        # Create license
-        response = self.add_new_software_license()
-        self.assertEqual(response.status_code, 201)
-
+    def _test_retrieve_all_license(self):
         # Retrieve all license
-        response = self.client.get(f'/api/licenses/')
+        res = requests.request(
+            "GET",
+            f'{self.base_url}api/licenses/{global_id}/',
+            headers={"Content-Type: application/json"})
 
-        json_data_list = response.json()["licenses"]
+        # get data
+        data_json = res.json()
+        data = data_json["data"]
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json_data_list), 1)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data_json["isSuccess"])
+        self.assertTrue(len(data))
     
 
-    def test_update_license(self):
-        # Create license
-        response = self.add_new_software_license()
-        self.assertEqual(response.status_code, 201)
-        json_data = response.json()["license"]
-
+    def _test_update_license(self):
         # Update license
-        response = self.client.put(
-            f'/api/licenses/{json_data["_id"]}/',
-            self.fixture['update_license_data'],
-            content_type='application/json'
-            )
+        res = requests.request(
+            "PUT",
+            f'{self.base_url}api/licenses/{global_id}',
+            headers={"Content-Type": "application/json"},
+            data=self.fixture['update_license_data'])
 
-        self.assertEqual(response.status_code, 200)
-        json_data = response.json()["license"]
-        self.assertEqual(json_data['version'], '2.1')
-        self.assertEqual(json_data['license_name'], 'APACHE 2.1')
+        # get data
+        data_json = res.json()
+        data = data_json["data"]
+        licence = data[0]["agreement"]
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(licence['version'], '2.1')
+        self.assertEqual(licence['license_name'], 'APACHE 2.1')
+        self.assertTrue(len(licence['license_compatible_with_lookup']))
 
 
-    def test_delete_license(self):
-        # Create license
-        response = self.add_new_software_license()
-        self.assertEqual(response.status_code, 201)
-        json_data = response.json()["license"]
 
-        # Delete license
-        response = self.client.delete(
-            f'/api/licenses/{json_data["_id"]}/'
-            )
 
-        self.assertEqual(response.status_code, 204)
+if __name__ == "__main__":
+    unittest.main()
 
