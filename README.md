@@ -153,6 +153,20 @@ The API will return three error types when requests fail:
 }
 ```
 
+#### POST /api/licenses/
+
+- General:
+  - Check for compatibility between two software license with the submitted json data, return true if compatible else return false.
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_one_id": "62f640b91a2da145efa2e990", "license_two_id": "62f782a6f8a0224b84f5f280", "action_type": "check-compatibility" } '`
+
+- You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
+
+```
+{
+    "is_compatible": true
+}
+```
+
 #### GET /api/licenses/{license_id}/
 
 - General:
