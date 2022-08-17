@@ -367,23 +367,56 @@ class SoftwareLicenseAgreementSerializer(serializers.Serializer):
         """
         Create and return new software agreement.
         """
-        # Create software agreement on localhost
-        SoftwareLicenseAgreementSerializer.objects.create(document = validated_data)
-        # Retrieve license and return license
-        software_license = SoftwareLicenseAgreementSerializer.objects.last()
 
         # Create software agreement on remote server
-        save_document()
+        response_json = save_document(
+            collection= SOFTWARE_AGREEMENT_COLLECTION,
+            document= SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key= SOFTWARE_AGREEMENT_KEY,
+            value= validated_data
+        )
 
 
-        return software_license
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection= SOFTWARE_AGREEMENT_COLLECTION,
+                document= SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"_id": response_json["inserted_id"]}
+                )
+
+        return response_json, status_code
 
 
-    def update(self, instance, validated_data):
+    def update(self, agreement_id, validated_data):
         """
         Update and return software agreement.
         """
+        status_code = 500
+        response_json = {}
 
-        instance.document = validated_data
-        instance.save()
-        return instance
+        # format date back to iso format
+        validated_data['date_of_execution_of_document'] = validated_data['date_of_execution_of_document'].isoformat()
+
+        
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection= SOFTWARE_AGREEMENT_COLLECTION,
+            document= SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key= SOFTWARE_AGREEMENT_KEY,
+            new_value= validated_data,
+            id= agreement_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection= SOFTWARE_AGREEMENT_COLLECTION,
+                document= SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"_id": agreement_id}
+                )
+
+        return response_json, status_code
+
