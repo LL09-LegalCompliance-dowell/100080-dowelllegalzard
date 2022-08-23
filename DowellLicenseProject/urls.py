@@ -21,19 +21,20 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Dowell License Compliance API",
-      default_version='v1',
-      description="Dowell License Compliance",
-      terms_of_service="https://www.dowell.com/policies/terms/",
-      contact=openapi.Contact(email="contact@dowell.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny],
+    openapi.Info(
+        title="Dowell License Compliance API",
+        default_version='v1',
+        description="Dowell License Compliance",
+        terms_of_service="https://www.dowell.com/policies/terms/",
+        contact=openapi.Contact(email="contact@dowell.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('licenses.urls')),
+    path('api/', include('agreements.urls')),
 ]

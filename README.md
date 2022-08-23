@@ -35,78 +35,141 @@ The API will return three error types when requests fail:
 ```{
     "isSuccess": true,
     "data": [
-
         {
-            "_id": "62f6261530c60549604b8392",
-            "eventId": "FB1010000000166029876850946178",
-            "agreement": {
-                "software_name": "Sample 1",
+            "_id": "63047b62b3a9611686cdcd56",
+            "eventId": "FB1010000000166123810354118614",
+            "softwarelicense": {
+                "software_name": "SAMPLE 1",
                 "license_name": "LGPLv2.1",
                 "version": "2.0",
                 "type_of_license": "WEAKLY COPYLEFT",
-                "description": "The 2.0 version of the Apache.",
-                "disclaimer": "Copyright .",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory.",
+                "description": "The 2.0 version of the BSD License",
+                "disclaimer": "Disclamer copyright",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+                "limitation_of_liability": "In no event and under no legal",
                 "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "recommendation": "2.0",
                 "released_date": "2022-05-10",
                 "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
+                "license_attributes": [
+                    "definition",
+                    "limitation_of_liability",
+                    "disclaimer",
+                    "recommendation",
+                    "trademark"
+                ],
+                "license_compatibility": [
+                    {
+                        "license": "PUBLIC DOMAIN",
+                        "percentage_of_comaptibility": "45",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "MIT/XII",
+                        "percentage_of_comaptibility": "70",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "BSD",
+                        "percentage_of_comaptibility": "60",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "APACHE 2.0",
+                        "percentage_of_comaptibility": "90",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPLv2",
+                        "percentage_of_comaptibility": "80",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPL2+",
+                        "percentage_of_comaptibility": "95",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPLv3 or GPLv3+",
+                        "percentage_of_comaptibility": "100",
+                        "is_compatible": false
+                    }
+                ],
                 "license_compatible_with_lookup": [
+                    "PUBLIC DOMAIN",
+                    "MIT/XII",
+                    "BSD",
                     "APACHE 2.0"
                 ],
-                "license_not_compatible_with_lookup": []
+                "license_not_compatible_with_lookup": [
+                    "GPLv2",
+                    "GPL2+",
+                    "GPLv3 or GPLv3+"
+                ]
             }
         },
         {
-            "_id": "62f640b91a2da145efa2e990",
-            "eventId": "FB1010000000166030558754942381",
-            "agreement": {
-                "software_name": "Sample 2",
-                "license_name": "GPLv2",
-                "version": "2.0",
-                "type_of_license": "STRONGLY COPYLEFT",
-                "description": "The 2.0 version of the Apache.",
-                "disclaimer": "Copyright .",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory.",
-                "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
-                "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
-                "recommendation": "2.0",
-                "released_date": "2022-05-10",
-                "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
-                "license_compatible_with_lookup": [
-                    "APACHE 2.0"
-                ],
-                "license_not_compatible_with_lookup": []
-            }
-        },
-        {
-            "_id": "62f782a6f8a0224b84f5f280",
-            "eventId": "FB1010000000166038799759333038",
-            "agreement": {
-                "software_name": "APACHE",
-                "license_name": "APACHE 2.0",
-                "version": "2.0",
+            "_id": "63047c5ebecabe8233cdcd4c",
+            "eventId": "FB1010000000166123835456631894",
+            "softwarelicense": {
+                "software_name": "SAMPLE 2",
+                "license_name": "BSD",
+                "version": "3.0",
                 "type_of_license": "PERMISSIVE",
-                "description": "The 2.0 version of the Apache License",
-                "disclaimer": "Copyright",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory",
+                "description": "The 2.0 version of the BSD License",
+                "disclaimer": "Disclamer copyright",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine BSD with.",
+                "limitation_of_liability": "In no event and under no legal",
                 "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "recommendation": "2.0",
                 "released_date": "2022-05-10",
                 "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
-                "license_compatible_with_lookup": [],
-                "license_not_compatible_with_lookup": []
+                "license_attributes": [
+                    "definition",
+                    "limitation_of_liability",
+                    "disclaimer",
+                    "recommendation",
+                    "trademark",
+                    "scope"
+                ],
+                "license_compatibility": [
+                    {
+                        "license": "LGPLv2.1",
+                        "percentage_of_comaptibility": "45",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "LGPL2.1+",
+                        "percentage_of_comaptibility": "70",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "LGPLv3 or LGPLv3+",
+                        "percentage_of_comaptibility": "60",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "MPL 1.1",
+                        "percentage_of_comaptibility": "90",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "Affero GPL v3",
+                        "percentage_of_comaptibility": "80",
+                        "is_compatible": false
+                    }
+                ],
+                "license_compatible_with_lookup": [
+                    "LGPLv2.1",
+                    "LGPL2.1+",
+                    "LGPLv3 or LGPLv3+",
+                    "MPL 1.1"
+                ],
+                "license_not_compatible_with_lookup": [
+                    "Affero GPL v3"
+                ]
             }
         }
     ]
@@ -117,7 +180,8 @@ The API will return three error types when requests fail:
 
 - General:
   - Creates a new software license using the submitted json data, Returns the detail of the created license, success value, and event id.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "software_name": "Sample 2", "license_name": "GPLv2", "version": "2.0", "type_of_license": "STRONGLY COPYLEFT", "description": "The 2.0 version of the Apache.", "disclaimer": "Copyright .", "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache", "limitation_of_liability": "In no event and under no legal theory.", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [], "license_compatibility": [], "license_compatible_with_lookup": [ "APACHE 2.0" ], "license_not_compatible_with_lookup": [] }'`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 1", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
+
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
 ```
@@ -125,28 +189,77 @@ The API will return three error types when requests fail:
     "isSuccess": true,
     "data": [
         {
-            "_id": "62f6261530c60549604b8392",
-            "eventId": "FB1010000000166029876850946178",
-            "agreement": {
-                "software_name": "Sample 1",
+            "_id": "63047b62b3a9611686cdcd56",
+            "eventId": "FB1010000000166123810354118614",
+            "softwarelicense": {
+                "software_name": "SAMPLE 1",
                 "license_name": "LGPLv2.1",
                 "version": "2.0",
                 "type_of_license": "WEAKLY COPYLEFT",
-                "description": "The 2.0 version of the Apache.",
-                "disclaimer": "Copyright .",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory.",
+                "description": "The 2.0 version of the BSD License",
+                "disclaimer": "Disclamer copyright",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+                "limitation_of_liability": "In no event and under no legal",
                 "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "recommendation": "2.0",
                 "released_date": "2022-05-10",
                 "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
+                "license_attributes": [
+                    "definition",
+                    "limitation_of_liability",
+                    "disclaimer",
+                    "recommendation",
+                    "trademark"
+                ],
+                "license_compatibility": [
+                    {
+                        "license": "PUBLIC DOMAIN",
+                        "percentage_of_comaptibility": "45",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "MIT/XII",
+                        "percentage_of_comaptibility": "70",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "BSD",
+                        "percentage_of_comaptibility": "60",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "APACHE 2.0",
+                        "percentage_of_comaptibility": "90",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPLv2",
+                        "percentage_of_comaptibility": "80",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPL2+",
+                        "percentage_of_comaptibility": "95",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPLv3 or GPLv3+",
+                        "percentage_of_comaptibility": "100",
+                        "is_compatible": false
+                    }
+                ],
                 "license_compatible_with_lookup": [
+                    "PUBLIC DOMAIN",
+                    "MIT/XII",
+                    "BSD",
                     "APACHE 2.0"
                 ],
-                "license_not_compatible_with_lookup": []
+                "license_not_compatible_with_lookup": [
+                    "GPLv2",
+                    "GPL2+",
+                    "GPLv3 or GPLv3+"
+                ]
             }
         }
     ]
@@ -157,13 +270,18 @@ The API will return three error types when requests fail:
 
 - General:
   - Check for compatibility between two software license with the submitted json data, return true if compatible else return false.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_one_id": "62f640b91a2da145efa2e990", "license_two_id": "62f782a6f8a0224b84f5f280", "action_type": "check-compatibility" } '`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_one_id": "63047b62b3a9611686cdcd56", "license_two_id": "63047c5ebecabe8233cdcd4c", "action_type": "check-compatibility" } '`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
 ```
 {
-    "is_compatible": true
+    "is_compatible": true,
+    "percentage_of_comaptibility": 45,
+    "disclaimer": "Disclamer copyright",
+    "recommendation": "2.0",
+    "license_one": "LGPLv2.1",
+    "license_two": "BSD"
 }
 ```
 
@@ -171,34 +289,83 @@ The API will return three error types when requests fail:
 
 - General:
   - Returns a list of software licenses objects, and success value
-- Sample: `curl http://127.0.0.1:8000/api/licenses/62f6261530c60549604b8392/` or open link in a browser
+- Sample: `curl http://127.0.0.1:8000/api/licenses/63047b62b3a9611686cdcd56/` or open link in a browser
 
 ```{
     "isSuccess": true,
     "data": [
         {
-            "_id": "62f6261530c60549604b8392",
-            "eventId": "FB1010000000166029876850946178",
-            "agreement": {
-                "software_name": "Sample 1",
+            "_id": "63047b62b3a9611686cdcd56",
+            "eventId": "FB1010000000166123810354118614",
+            "softwarelicense": {
+                "software_name": "SAMPLE 1",
                 "license_name": "LGPLv2.1",
                 "version": "2.0",
                 "type_of_license": "WEAKLY COPYLEFT",
-                "description": "The 2.0 version of the Apache.",
-                "disclaimer": "Copyright .",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory.",
+                "description": "The 2.0 version of the BSD License",
+                "disclaimer": "Disclamer copyright",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+                "limitation_of_liability": "In no event and under no legal",
                 "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "recommendation": "2.0",
                 "released_date": "2022-05-10",
                 "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
+                "license_attributes": [
+                    "definition",
+                    "limitation_of_liability",
+                    "disclaimer",
+                    "recommendation",
+                    "trademark"
+                ],
+                "license_compatibility": [
+                    {
+                        "license": "PUBLIC DOMAIN",
+                        "percentage_of_comaptibility": "45",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "MIT/XII",
+                        "percentage_of_comaptibility": "70",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "BSD",
+                        "percentage_of_comaptibility": "60",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "APACHE 2.0",
+                        "percentage_of_comaptibility": "90",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPLv2",
+                        "percentage_of_comaptibility": "80",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPL2+",
+                        "percentage_of_comaptibility": "95",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPLv3 or GPLv3+",
+                        "percentage_of_comaptibility": "100",
+                        "is_compatible": false
+                    }
+                ],
                 "license_compatible_with_lookup": [
+                    "PUBLIC DOMAIN",
+                    "MIT/XII",
+                    "BSD",
                     "APACHE 2.0"
                 ],
-                "license_not_compatible_with_lookup": []
+                "license_not_compatible_with_lookup": [
+                    "GPLv2",
+                    "GPL2+",
+                    "GPLv3 or GPLv3+"
+                ]
             }
         }
     ]
@@ -209,34 +376,83 @@ The API will return three error types when requests fail:
 
 - General:
   - Fully update the software license of the given ID if it exists. Returns the updated data, success value, to update the frontend.
-- `curl http://127.0.0.1:8000/api/licenses/62f6261530c60549604b8392/ -X PUT -H "Content-Type: application/json" -d ' { "software_name": "Owner Solt", "license_name": "LGPLv3 or LGPLv3+", "version": "3.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the Apache.", "disclaimer": "Copyright .", "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache", "limitation_of_liability": "In no event and under no legal theory.", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [], "license_compatibility": [], "license_compatible_with_lookup": [ "APACHE 2.0" ], "license_not_compatible_with_lookup": [] }'`
+- `curl http://127.0.0.1:8000/api/licenses/63047b62b3a9611686cdcd56/ -X PUT -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 25", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
 
 ```{
     "isSuccess": true,
     "data": [
         {
-            "_id": "62f6261530c60549604b8392",
-            "eventId": "FB1010000000166029876850946178",
-            "agreement": {
-                "software_name": "Sample 1",
+            "_id": "63047b62b3a9611686cdcd56",
+            "eventId": "FB1010000000166123810354118614",
+            "softwarelicense": {
+                "software_name": "SAMPLE 25",
                 "license_name": "LGPLv2.1",
                 "version": "2.0",
                 "type_of_license": "WEAKLY COPYLEFT",
-                "description": "The 2.0 version of the Apache.",
-                "disclaimer": "Copyright .",
-                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache",
-                "limitation_of_liability": "In no event and under no legal theory.",
+                "description": "The 2.0 version of the BSD License",
+                "disclaimer": "Disclamer copyright",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+                "limitation_of_liability": "In no event and under no legal",
                 "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
                 "recommendation": "2.0",
                 "released_date": "2022-05-10",
                 "is_active": true,
-                "license_attributes": [],
-                "license_compatibility": [],
+                "license_attributes": [
+                    "definition",
+                    "limitation_of_liability",
+                    "disclaimer",
+                    "recommendation",
+                    "trademark"
+                ],
+                "license_compatibility": [
+                    {
+                        "license": "PUBLIC DOMAIN",
+                        "percentage_of_comaptibility": "45",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "MIT/XII",
+                        "percentage_of_comaptibility": "70",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "BSD",
+                        "percentage_of_comaptibility": "60",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "APACHE 2.0",
+                        "percentage_of_comaptibility": "90",
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPLv2",
+                        "percentage_of_comaptibility": "80",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPL2+",
+                        "percentage_of_comaptibility": "95",
+                        "is_compatible": false
+                    },
+                    {
+                        "license": "GPLv3 or GPLv3+",
+                        "percentage_of_comaptibility": "100",
+                        "is_compatible": false
+                    }
+                ],
                 "license_compatible_with_lookup": [
+                    "PUBLIC DOMAIN",
+                    "MIT/XII",
+                    "BSD",
                     "APACHE 2.0"
                 ],
-                "license_not_compatible_with_lookup": []
+                "license_not_compatible_with_lookup": [
+                    "GPLv2",
+                    "GPL2+",
+                    "GPLv3 or GPLv3+"
+                ]
             }
         }
     ]

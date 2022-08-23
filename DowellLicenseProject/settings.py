@@ -20,16 +20,17 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "100080.pythonanywhere.com"]
 # Application definition
 
 INSTALLED_APPS = [
-    #default apps
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #project apps
+    # project apps
     'rest_framework',
     'licenses',
+    'agreements',
 ]
 
 MIDDLEWARE = [

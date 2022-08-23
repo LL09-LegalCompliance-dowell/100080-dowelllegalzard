@@ -19,17 +19,11 @@ from utils.dowell import (
     COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
     LICENSE_TYPE_DOCUMENT_NAME,
+    RECORD_PER_PAGE
 )
 
-from licenses.models import (
-    SoftwareLicense,
-    SoftwareLicenseAgreement
-)
-from licenses.serializers import (
-    SoftwareLicenseSerializer
-)
-
-RECORD_PER_PAGE = 10
+from licenses.models import SoftwareLicense
+from licenses.serializers import SoftwareLicenseSerializer
 
 # Create your views here.
 
@@ -99,11 +93,15 @@ class SoftwareLicenseList(APIView):
 
     def post(self, request, format=None):
         try:
-            from datetime import date
-            request_data = request.data
-            action_type = request_data["action_type"]
             response_json = {}
             status_code = 500
+
+            from datetime import date
+            request_data = request.data
+
+            action_type = ""
+            if "action_type" in request_data:
+                action_type = request_data["action_type"]
 
             if action_type == "check-compatibility":
                 response_json, status_code = self.check_license_compatibility(
@@ -142,6 +140,7 @@ class SoftwareLicenseList(APIView):
             license_one == license_two
         """
         is_compatible = False
+        percentage_of_comaptibility = 0
         try:
 
             license_one_id = request.data.get("license_one_id", "")
@@ -154,7 +153,7 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"_id": license_one_id}
             )
-            license_one = license_one_json["data"][0]['agreement']
+            license_one = license_one_json["data"][0]['softwarelicense']
 
             # Get license two
             license_two_json = fetch_document(
@@ -164,13 +163,28 @@ class SoftwareLicenseList(APIView):
             )
 
             # Get license compatible list
-            license_two = license_two_json["data"][0]['agreement']
-            license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
+            license_two = license_two_json["data"][0]['softwarelicense']
+            license_compatibility = license_two["license_compatibility"]
 
-            if license_one["license_name"] in license_compatible_with_lookup:
-                is_compatible = True
+            # Check for compatibility
+            for compatible in license_compatibility:
+                if license_one["license_name"]\
+                    == compatible['license']\
+                        and compatible["is_compatible"]:
 
-            return {"is_compatible": is_compatible}, status.HTTP_200_OK
+                    is_compatible = compatible["is_compatible"]
+                    percentage_of_comaptibility = compatible["percentage_of_comaptibility"]
+                    is_compatible = compatible["is_compatible"]
+
+            return ({
+                "is_compatible": is_compatible,
+                "percentage_of_comaptibility": percentage_of_comaptibility,
+                "disclaimer": license_two["disclaimer"],
+                "recommendation": license_two["recommendation"],
+                "license_one": license_one["license_name"],
+                "license_two": license_two["license_name"]
+
+            }), status.HTTP_200_OK
 
         # The code below will
         # execute when error occur
@@ -220,144 +234,6 @@ class SoftwareLicenseList(APIView):
 
 
 class SoftwareLicenseDetail(APIView):
-    """
-     Retrieve , update and delete software license
-    """
-
-    def get(self, request, license_id, format=None):
-        try:
-            # # Localhost
-            # license = SoftwareLicense.objects.get(license_id = license_id)
-            # # Serialize data
-            # serializer = SoftwareLicenseSerializer()
-            # data = serializer.to_representation(license.document, license.id)
-
-            # Retrieve license on remote server
-            response_json = fetch_document(
-                collection=SOFTWARE_LICENSE_COLLECTION,
-                document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_id}
-            )
-            return Response(response_json, status=status.HTTP_200_OK)
-
-        # The code below will
-        # execute when error occur
-        except Exception as e:
-            print(f"{e}")
-            return Response({
-                "error_msg": f"{e}"
-            },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-    def put(self, request, license_id, format=None):
-        try:
-            from datetime import date
-            request_data = request.data
-
-            # Convert release date string (yyyy-mm-dd)
-            # to date object
-            request_data["released_date"] = date.fromisoformat(
-                request_data["released_date"])
-
-            # Update and Commit data into database
-            serializer = SoftwareLicenseSerializer(
-                license_id, data=request_data)
-            if serializer.is_valid():
-                response_json, status_code = serializer.update(
-                    license_id, serializer.validated_data)
-
-                return Response(
-                    response_json,
-                    status=status_code
-                )
-
-            else:
-                return Response({"error_msg": f"{e}"},
-                                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                                )
-
-        # The code below will
-        # execute when error occur
-        except Exception as e:
-            print(f"{e}")
-            return Response({
-                "error_msg": f"{e}"
-            },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-
-class SoftwareLicenseAgreementList(APIView):
-    """ List all and create software license
-    """
-
-    def get(self, request, format=None):
-        try:
-
-            limit = int(request.GET.get("limit", "10"))
-            offset = int(request.GET.get("offset", "0"))
-
-            # # Localhost
-            # licenses_query = SoftwareLicense.objects.all()[offset:limit]
-            # # Initialize serialize object
-            # serializer = SoftwareLicenseSerializer()
-            # licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
-            # response_json = {"data": license}
-
-            # Retrieve license on remote server
-            response_json = fetch_document(
-                collection=SOFTWARE_LICENSE_COLLECTION,
-                document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={}
-            )
-
-            return Response(response_json,
-                            status=status.HTTP_200_OK
-                            )
-
-        # The code below will
-        # execute when error occur
-        except Exception as e:
-            print(f"{e}")
-            return Response({
-                "error_msg": f"{e}"
-            },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-    def post(self, request, format=None):
-        try:
-            from datetime import date
-            request_data = request.data
-            request_data["is_active"] = True
-
-            # Convert release date string (yyyy-mm-dd)
-            # to date object
-            request_data["released_date"] = date.fromisoformat(
-                request_data["released_date"])
-            serializer = SoftwareLicenseSerializer(data=request_data)
-
-            # Commit data to database
-            serializer.is_valid()
-            response_json, status_code = serializer.save()
-
-            return Response(response_json,
-                            status=status_code
-                            )
-
-        # The code below will
-        # execute when error occur
-        except Exception as e:
-            print(f"{e}")
-            return Response({
-                "error_msg": f"{e}"
-            },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-
-class SoftwareLicenseAgreementDetail(APIView):
     """
      Retrieve , update and delete software license
     """
