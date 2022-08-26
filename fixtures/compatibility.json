@@ -1,0 +1,12 @@
+ [
+    {
+        "license": "APACHE 2.0",
+        "percentage_of_comaptibility": "80",
+        "is_compatible": false
+     },
+     {
+        "license": "GPLv2",
+        "percentage_of_comaptibility": "80",
+        "is_compatible": true
+     }
+ ]

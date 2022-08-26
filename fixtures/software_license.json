@@ -1,0 +1,144 @@
+[
+
+
+{
+    "software_name": "SAMPLE 1",
+    "license_name": "LGPLv2.1",
+    "version": "2.0",
+    "type_of_license": "WEAKLY COPYLEFT",
+    "description": "The 2.0 version of the BSD License",
+    "disclaimer": "Disclamer copyright",
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+    "limitation_of_liability": "In no event and under no legal",
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "definition",
+        "limitation_of_liability",
+        "disclaimer",
+        "recommendation",
+        "trademark"
+    ],
+    "license_compatibility": [
+        {
+            "license": "PUBLIC DOMAIN",
+            "percentage_of_comaptibility": 45,
+            "is_compatible": true
+        },
+        {
+            "license": "MIT/XII",
+            "percentage_of_comaptibility": 70,
+            "is_compatible": true
+        },
+        {
+            "license": "BSD",
+            "percentage_of_comaptibility": 60,
+            "is_compatible": true
+        },
+        {
+            "license": "APACHE 2.0",
+            "percentage_of_comaptibility": 90,
+            "is_compatible": true
+        },
+        {
+            "license": "GPLv2",
+            "percentage_of_comaptibility": 80,
+            "is_compatible": false
+        },
+        {
+            "license": "GPL2+",
+            "percentage_of_comaptibility": 95,
+            "is_compatible": false
+        },
+        {
+            "license": "GPLv3 or GPLv3+",
+            "percentage_of_comaptibility": 100,
+            "is_compatible": false
+        }
+    ],
+    "license_compatible_with_lookup": [
+        "PUBLIC DOMAIN",
+        "MIT/XII",
+        "BSD",
+        "APACHE 2.0"
+    ],
+    "license_not_compatible_with_lookup": [
+        "GPLv2",
+        "GPL2+",
+        "GPLv3 or GPLv3+"       
+    ]
+},
+
+{
+    "software_name": "SAMPLE 2",
+    "license_name": "BSD",
+    "version": "3.0",
+    "type_of_license": "PERMISSIVE",
+    "description": "The 2.0 version of the BSD License",
+    "disclaimer": "Disclamer copyright",
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine BSD with.",
+    "limitation_of_liability": "In no event and under no legal",
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+         "definition",
+        "limitation_of_liability",
+        "disclaimer",
+        "recommendation",
+        "trademark",
+        "scope"       
+    ],
+    "license_compatibility": [
+        {
+            "license": "LGPLv2.1",
+            "percentage_of_comaptibility": 45,
+            "is_compatible": true
+        },
+        {
+            "license": "LGPL2.1+",
+            "percentage_of_comaptibility": 70,
+            "is_compatible": true
+        },
+        {
+            "license": "LGPLv3 or LGPLv3+",
+            "percentage_of_comaptibility": 60,
+            "is_compatible": true
+        },
+        {
+            "license": "MPL 1.1",
+            "percentage_of_comaptibility": 90,
+            "is_compatible": true
+        },
+        {
+            "license": "Affero GPL v3",
+            "percentage_of_comaptibility": 80,
+            "is_compatible": false
+        }
+    ],
+    "license_compatible_with_lookup": [
+        "LGPLv2.1",
+        "LGPL2.1+",
+        "LGPLv3 or LGPLv3+",
+        "MPL 1.1"
+    ],
+    "license_not_compatible_with_lookup": [
+        "Affero GPL v3"       
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+]
