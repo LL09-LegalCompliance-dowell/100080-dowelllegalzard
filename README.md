@@ -26,6 +26,8 @@ The API will return three error types when requests fail:
 
 ### Endpoints
 
+### Software License
+
 #### GET /api/licenses/
 
 - General:
@@ -453,6 +455,381 @@ The API will return three error types when requests fail:
                     "GPL2+",
                     "GPLv3 or GPLv3+"
                 ]
+            }
+        }
+    ]
+}
+```
+
+### Software Agreement Policy
+
+#### GET /api/agreements/
+
+- General:
+  - Returns a list of software agreements objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/agreements/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "63076817b171c30837335384",
+            "eventId": "785455899666558884",
+            "agreement": {
+                "date_of_execution_of_document": "2022-10-20T00:00:00+00:00",
+                "party_1_entity_type": "Organization",
+                "party_1_full_name": "Dowell Research 1",
+                "party_1_postal_address": "P.O.BOX 45, India",
+                "party_1_jurisdiction_incorporated": "sample law",
+                "party_1_registration_number": "RS5428888",
+                "party_1_registrar_office_address": "sample office address",
+                "party_1_principal_place_of_business": "India",
+                "party_2_entity_type": "Organization",
+                "party_2_full_name": "Organization Name",
+                "party_2_postal_address": "P.O.BOX 87",
+                "party_2_jurisdiction_incorporated": "USA",
+                "party_2_registration_number": "459996665",
+                "party_2_registrar_office_address": "Some where in USA",
+                "party_2_principal_place_of_business": "USA",
+                "charges_payable": 245.0,
+                "software_document_identification": "My software sample",
+                "contract_effective_date": "2022-10-29T00:00:00+00:00",
+                "minimum_terms_apply": "2",
+                "is_software_form_specified": false,
+                "software_form": "yes",
+                "is_non_material_defects_count_as_software_defects": true,
+                "ways_defect_affect_software": "miss handle",
+                "is_set_of_exclusions_included": false,
+                "exclusions_apply": "nil",
+                "software_specification": "software spic",
+                "can_software_specification_be_varied_by_the_parties": false,
+                "terms_of_contract_duration": "4",
+                "is_inline_copy_right_remove": true,
+                "is_term_of_contract_indefinite": false,
+                "contract_termination_date": "2023-05-20T00:00:00+00:00",
+                "events_that_will_cause_contract_to_be_terminated": "miss handle",
+                "number_of_license_to_be_deliver": 5,
+                "software_delivery_channel": "Github",
+                "software_delivery_period": "4",
+                "what_did_licensor_supply_to_the_licensee": "CRM software",
+                "purpose_of_supply": "request by licensee",
+                "when_should_invoice_be_issued": "After getting requirement from licensee",
+                "invoicing_date": "2022-10-20T00:00:00+00:00",
+                "period_for_payment_of_invoices": "15 days",
+                "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00",
+                "invoice_payment_method": "via payoner",
+                "interest_rate_apply_to_late_payment": 2.5,
+                "optional_element_warranty": "nil",
+                "is_warranty_relate_to_a_specific_period": true,
+                "period_apply_to_warranty": "2 year",
+                "scope_of_warranty": "Entire maintenance of software",
+                "jurisdictional_coverage_of_warranty": "india law",
+                "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software",
+                "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
+                "are_there_limitations_on_right_to_modify": false,
+                "limitations_on_right_to_modify_specification": "nil",
+                "termination_notice_period_apply": true,
+                "is_termination_period_expirable": true,
+                "relevant_termination_period": "3 month",
+                "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service",
+                "time_frame_for_the_notice_period": "1 month",
+                "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com",
+                "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com",
+                "law_governs_document": "law 1",
+                "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
+                "will_the_contract_signed_by_party_1_contracting_entity": true,
+                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "full_name_of_party_1_signatory": "party 1 name",
+                "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "full_name_of_party_1_witness": "witness 1 name",
+                "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "will_the_contract_signed_by_pary_2_contracting_entity": true,
+                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "full_name_of_party_2_signatory": "party 2 name",
+                "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00",
+                "full_name_of_party_2_witness": "witness 2 name",
+                "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00"
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/agreements/
+
+- General:
+  - Creates a new software agreement using the submitted json data, Returns the detail of the created agreement, success value, and event id.
+- `curl http://127.0.0.1:8000/api/agreements/ -X POST -H "Content-Type: application/json" -d '{ "date_of_execution_of_document": "2022-10-20T00:00:00+00:00", "party_1_entity_type": "Organization", "party_1_full_name": "Dowell Research 1", "party_1_postal_address": "P.O.BOX 45, India", "party_1_jurisdiction_incorporated": "sample law", "party_1_registration_number": "RS5428888", "party_1_registrar_office_address": "sample office address", "party_1_principal_place_of_business": "India", "party_2_entity_type": "Organization", "party_2_full_name": "Organization Name", "party_2_postal_address": "P.O.BOX 87", "party_2_jurisdiction_incorporated": "USA", "party_2_registration_number": "459996665", "party_2_registrar_office_address": "Some where in USA", "party_2_principal_place_of_business": "USA", "charges_payable": 245.0, "software_document_identification": "My software sample", "contract_effective_date": "2022-10-29T00:00:00+00:00", "minimum_terms_apply": "2", "is_software_form_specified": false, "software_form": "yes", "is_non_material_defects_count_as_software_defects": true, "ways_defect_affect_software": "miss handle", "is_set_of_exclusions_included": false, "exclusions_apply": "nil", "software_specification": "software spic", "can_software_specification_be_varied_by_the_parties": false, "terms_of_contract_duration": "4", "is_inline_copy_right_remove": true, "is_term_of_contract_indefinite": false, "contract_termination_date": "2023-05-20T00:00:00+00:00", "events_that_will_cause_contract_to_be_terminated": "miss handle", "number_of_license_to_be_deliver": 5, "software_delivery_channel": "Github", "software_delivery_period": "4", "what_did_licensor_supply_to_the_licensee": "CRM software", "purpose_of_supply": "request by licensee", "when_should_invoice_be_issued": "After getting requirement from licensee", "invoicing_date": "2022-10-20T00:00:00+00:00", "period_for_payment_of_invoices": "15 days", "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00", "invoice_payment_method": "via payoner", "interest_rate_apply_to_late_payment": 2.5, "optional_element_warranty": "nil", "is_warranty_relate_to_a_specific_period": true, "period_apply_to_warranty": "2 year", "scope_of_warranty": "Entire maintenance of software", "jurisdictional_coverage_of_warranty": "india law", "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software", "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false, "are_there_limitations_on_right_to_modify": false, "limitations_on_right_to_modify_specification": "nil", "termination_notice_period_apply": true, "is_termination_period_expirable": true, "relevant_termination_period": "3 month", "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service", "time_frame_for_the_notice_period": "1 month", "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com", "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com", "law_governs_document": "law 1", "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law", "will_the_contract_signed_by_party_1_contracting_entity": true, "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png", "full_name_of_party_1_signatory": "party 1 name", "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00", "full_name_of_party_1_witness": "witness 1 name", "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00", "will_the_contract_signed_by_pary_2_contracting_entity": true, "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png", "full_name_of_party_2_signatory": "party 2 name", "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00", "full_name_of_party_2_witness": "witness 2 name", "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00" } '`
+
+- You can also open the link `http://127.0.0.1:8000/api/agreements/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "63076817b171c30837335384",
+            "eventId": "785455899666558884",
+            "agreement": {
+                "date_of_execution_of_document": "2022-10-20T00:00:00+00:00",
+                "party_1_entity_type": "Organization",
+                "party_1_full_name": "Dowell Research 1",
+                "party_1_postal_address": "P.O.BOX 45, India",
+                "party_1_jurisdiction_incorporated": "sample law",
+                "party_1_registration_number": "RS5428888",
+                "party_1_registrar_office_address": "sample office address",
+                "party_1_principal_place_of_business": "India",
+                "party_2_entity_type": "Organization",
+                "party_2_full_name": "Organization Name",
+                "party_2_postal_address": "P.O.BOX 87",
+                "party_2_jurisdiction_incorporated": "USA",
+                "party_2_registration_number": "459996665",
+                "party_2_registrar_office_address": "Some where in USA",
+                "party_2_principal_place_of_business": "USA",
+                "charges_payable": 245.0,
+                "software_document_identification": "My software sample",
+                "contract_effective_date": "2022-10-29T00:00:00+00:00",
+                "minimum_terms_apply": "2",
+                "is_software_form_specified": false,
+                "software_form": "yes",
+                "is_non_material_defects_count_as_software_defects": true,
+                "ways_defect_affect_software": "miss handle",
+                "is_set_of_exclusions_included": false,
+                "exclusions_apply": "nil",
+                "software_specification": "software spic",
+                "can_software_specification_be_varied_by_the_parties": false,
+                "terms_of_contract_duration": "4",
+                "is_inline_copy_right_remove": true,
+                "is_term_of_contract_indefinite": false,
+                "contract_termination_date": "2023-05-20T00:00:00+00:00",
+                "events_that_will_cause_contract_to_be_terminated": "miss handle",
+                "number_of_license_to_be_deliver": 5,
+                "software_delivery_channel": "Github",
+                "software_delivery_period": "4",
+                "what_did_licensor_supply_to_the_licensee": "CRM software",
+                "purpose_of_supply": "request by licensee",
+                "when_should_invoice_be_issued": "After getting requirement from licensee",
+                "invoicing_date": "2022-10-20T00:00:00+00:00",
+                "period_for_payment_of_invoices": "15 days",
+                "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00",
+                "invoice_payment_method": "via payoner",
+                "interest_rate_apply_to_late_payment": 2.5,
+                "optional_element_warranty": "nil",
+                "is_warranty_relate_to_a_specific_period": true,
+                "period_apply_to_warranty": "2 year",
+                "scope_of_warranty": "Entire maintenance of software",
+                "jurisdictional_coverage_of_warranty": "india law",
+                "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software",
+                "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
+                "are_there_limitations_on_right_to_modify": false,
+                "limitations_on_right_to_modify_specification": "nil",
+                "termination_notice_period_apply": true,
+                "is_termination_period_expirable": true,
+                "relevant_termination_period": "3 month",
+                "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service",
+                "time_frame_for_the_notice_period": "1 month",
+                "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com",
+                "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com",
+                "law_governs_document": "law 1",
+                "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
+                "will_the_contract_signed_by_party_1_contracting_entity": true,
+                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "full_name_of_party_1_signatory": "party 1 name",
+                "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "full_name_of_party_1_witness": "witness 1 name",
+                "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "will_the_contract_signed_by_pary_2_contracting_entity": true,
+                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "full_name_of_party_2_signatory": "party 2 name",
+                "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00",
+                "full_name_of_party_2_witness": "witness 2 name",
+                "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00"
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/agreements/{agreement_id}/
+
+- General:
+  - Returns a list of software agreement objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/agreements/63076817b171c30837335384/` or open link in a browser
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "63076817b171c30837335384",
+            "eventId": "785455899666558884",
+            "agreement": {
+                "date_of_execution_of_document": "2022-10-20T00:00:00+00:00",
+                "party_1_entity_type": "Organization",
+                "party_1_full_name": "Dowell Research 1",
+                "party_1_postal_address": "P.O.BOX 45, India",
+                "party_1_jurisdiction_incorporated": "sample law",
+                "party_1_registration_number": "RS5428888",
+                "party_1_registrar_office_address": "sample office address",
+                "party_1_principal_place_of_business": "India",
+                "party_2_entity_type": "Organization",
+                "party_2_full_name": "Organization Name",
+                "party_2_postal_address": "P.O.BOX 87",
+                "party_2_jurisdiction_incorporated": "USA",
+                "party_2_registration_number": "459996665",
+                "party_2_registrar_office_address": "Some where in USA",
+                "party_2_principal_place_of_business": "USA",
+                "charges_payable": 245.0,
+                "software_document_identification": "My software sample",
+                "contract_effective_date": "2022-10-29T00:00:00+00:00",
+                "minimum_terms_apply": "2",
+                "is_software_form_specified": false,
+                "software_form": "yes",
+                "is_non_material_defects_count_as_software_defects": true,
+                "ways_defect_affect_software": "miss handle",
+                "is_set_of_exclusions_included": false,
+                "exclusions_apply": "nil",
+                "software_specification": "software spic",
+                "can_software_specification_be_varied_by_the_parties": false,
+                "terms_of_contract_duration": "4",
+                "is_inline_copy_right_remove": true,
+                "is_term_of_contract_indefinite": false,
+                "contract_termination_date": "2023-05-20T00:00:00+00:00",
+                "events_that_will_cause_contract_to_be_terminated": "miss handle",
+                "number_of_license_to_be_deliver": 5,
+                "software_delivery_channel": "Github",
+                "software_delivery_period": "4",
+                "what_did_licensor_supply_to_the_licensee": "CRM software",
+                "purpose_of_supply": "request by licensee",
+                "when_should_invoice_be_issued": "After getting requirement from licensee",
+                "invoicing_date": "2022-10-20T00:00:00+00:00",
+                "period_for_payment_of_invoices": "15 days",
+                "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00",
+                "invoice_payment_method": "via payoner",
+                "interest_rate_apply_to_late_payment": 2.5,
+                "optional_element_warranty": "nil",
+                "is_warranty_relate_to_a_specific_period": true,
+                "period_apply_to_warranty": "2 year",
+                "scope_of_warranty": "Entire maintenance of software",
+                "jurisdictional_coverage_of_warranty": "india law",
+                "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software",
+                "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
+                "are_there_limitations_on_right_to_modify": false,
+                "limitations_on_right_to_modify_specification": "nil",
+                "termination_notice_period_apply": true,
+                "is_termination_period_expirable": true,
+                "relevant_termination_period": "3 month",
+                "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service",
+                "time_frame_for_the_notice_period": "1 month",
+                "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com",
+                "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com",
+                "law_governs_document": "law 1",
+                "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
+                "will_the_contract_signed_by_party_1_contracting_entity": true,
+                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "full_name_of_party_1_signatory": "party 1 name",
+                "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "full_name_of_party_1_witness": "witness 1 name",
+                "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "will_the_contract_signed_by_pary_2_contracting_entity": true,
+                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "full_name_of_party_2_signatory": "party 2 name",
+                "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00",
+                "full_name_of_party_2_witness": "witness 2 name",
+                "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00"
+            }
+        }
+    ]
+}
+```
+
+#### PUT /api/licenses/{license_id}/
+
+- General:
+  - Fully update the software agreement of the given ID if it exists. Returns the updated data, success value, to update the frontend.
+- `curl http://127.0.0.1:8000/api/agreements/63047b62b3a9611686cdcd56/ -X PUT -H "Content-Type: application/json" -d ' { "date_of_execution_of_document": "2022-10-20T00:00:00+00:00", "party_1_entity_type": "Individual", "party_1_full_name": "Dowell Research 1", "party_1_postal_address": "P.O.BOX 45, India", "party_1_jurisdiction_incorporated": "sample law", "party_1_registration_number": "RS5428888", "party_1_registrar_office_address": "sample office address", "party_1_principal_place_of_business": "India", "party_2_entity_type": "Organization", "party_2_full_name": "Organization Name", "party_2_postal_address": "P.O.BOX 87", "party_2_jurisdiction_incorporated": "USA", "party_2_registration_number": "459996665", "party_2_registrar_office_address": "Some where in USA", "party_2_principal_place_of_business": "USA", "charges_payable": 245.0, "software_document_identification": "My software sample", "contract_effective_date": "2022-10-29T00:00:00+00:00", "minimum_terms_apply": "2", "is_software_form_specified": false, "software_form": "yes", "is_non_material_defects_count_as_software_defects": true, "ways_defect_affect_software": "miss handle", "is_set_of_exclusions_included": false, "exclusions_apply": "nil", "software_specification": "software spic", "can_software_specification_be_varied_by_the_parties": false, "terms_of_contract_duration": "4", "is_inline_copy_right_remove": true, "is_term_of_contract_indefinite": false, "contract_termination_date": "2023-05-20T00:00:00+00:00", "events_that_will_cause_contract_to_be_terminated": "miss handle", "number_of_license_to_be_deliver": 5, "software_delivery_channel": "Github", "software_delivery_period": "4", "what_did_licensor_supply_to_the_licensee": "CRM software", "purpose_of_supply": "request by licensee", "when_should_invoice_be_issued": "After getting requirement from licensee", "invoicing_date": "2022-10-20T00:00:00+00:00", "period_for_payment_of_invoices": "15 days", "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00", "invoice_payment_method": "via payoner", "interest_rate_apply_to_late_payment": 2.5, "optional_element_warranty": "nil", "is_warranty_relate_to_a_specific_period": true, "period_apply_to_warranty": "2 year", "scope_of_warranty": "Entire maintenance of software", "jurisdictional_coverage_of_warranty": "india law", "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software", "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false, "are_there_limitations_on_right_to_modify": false, "limitations_on_right_to_modify_specification": "nil", "termination_notice_period_apply": true, "is_termination_period_expirable": true, "relevant_termination_period": "3 month", "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service", "time_frame_for_the_notice_period": "1 month", "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com", "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com", "law_governs_document": "law 1", "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law", "will_the_contract_signed_by_party_1_contracting_entity": true, "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png", "full_name_of_party_1_signatory": "party 1 name", "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00", "full_name_of_party_1_witness": "witness 1 name", "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00", "will_the_contract_signed_by_pary_2_contracting_entity": true, "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png", "full_name_of_party_2_signatory": "party 2 name", "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00", "full_name_of_party_2_witness": "witness 2 name", "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00" }'`
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "63076817b171c30837335384",
+            "eventId": "785455899666558884",
+            "agreement": {
+                "date_of_execution_of_document": "2022-10-20T00:00:00+00:00",
+                "party_1_entity_type": "Individual",
+                "party_1_full_name": "Dowell Research 1",
+                "party_1_postal_address": "P.O.BOX 45, India",
+                "party_1_jurisdiction_incorporated": "sample law",
+                "party_1_registration_number": "RS5428888",
+                "party_1_registrar_office_address": "sample office address",
+                "party_1_principal_place_of_business": "India",
+                "party_2_entity_type": "Organization",
+                "party_2_full_name": "Organization Name",
+                "party_2_postal_address": "P.O.BOX 87",
+                "party_2_jurisdiction_incorporated": "USA",
+                "party_2_registration_number": "459996665",
+                "party_2_registrar_office_address": "Some where in USA",
+                "party_2_principal_place_of_business": "USA",
+                "charges_payable": 245.0,
+                "software_document_identification": "My software sample",
+                "contract_effective_date": "2022-10-29T00:00:00+00:00",
+                "minimum_terms_apply": "2",
+                "is_software_form_specified": false,
+                "software_form": "yes",
+                "is_non_material_defects_count_as_software_defects": true,
+                "ways_defect_affect_software": "miss handle",
+                "is_set_of_exclusions_included": false,
+                "exclusions_apply": "nil",
+                "software_specification": "software spic",
+                "can_software_specification_be_varied_by_the_parties": false,
+                "terms_of_contract_duration": "4",
+                "is_inline_copy_right_remove": true,
+                "is_term_of_contract_indefinite": false,
+                "contract_termination_date": "2023-05-20T00:00:00+00:00",
+                "events_that_will_cause_contract_to_be_terminated": "miss handle",
+                "number_of_license_to_be_deliver": 5,
+                "software_delivery_channel": "Github",
+                "software_delivery_period": "4",
+                "what_did_licensor_supply_to_the_licensee": "CRM software",
+                "purpose_of_supply": "request by licensee",
+                "when_should_invoice_be_issued": "After getting requirement from licensee",
+                "invoicing_date": "2022-10-20T00:00:00+00:00",
+                "period_for_payment_of_invoices": "15 days",
+                "effective_date_for_invoice_payment": "2022-10-25T00:00:00+00:00",
+                "invoice_payment_method": "via payoner",
+                "interest_rate_apply_to_late_payment": 2.5,
+                "optional_element_warranty": "nil",
+                "is_warranty_relate_to_a_specific_period": true,
+                "period_apply_to_warranty": "2 year",
+                "scope_of_warranty": "Entire maintenance of software",
+                "jurisdictional_coverage_of_warranty": "india law",
+                "circumstances_in_which_licensor_may_exercise_its_rights": "when licenee miss handle software",
+                "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
+                "are_there_limitations_on_right_to_modify": false,
+                "limitations_on_right_to_modify_specification": "nil",
+                "termination_notice_period_apply": true,
+                "is_termination_period_expirable": true,
+                "relevant_termination_period": "3 month",
+                "circumstances_in_which_a_party_may_terminate_for_breach": "un-satisfaction of service",
+                "time_frame_for_the_notice_period": "1 month",
+                "contact_details_to_sent_contractual_notices_to_the_licensor": "example1@sample.com",
+                "contact_details_to_sent_contractual_notices_to_the_licensee": "example2@sample.com",
+                "law_governs_document": "law 1",
+                "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
+                "will_the_contract_signed_by_party_1_contracting_entity": true,
+                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "full_name_of_party_1_signatory": "party 1 name",
+                "party_1_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "full_name_of_party_1_witness": "witness 1 name",
+                "party_1_witness_date_of_signing_contract": "2022-11-02T00:00:00+00:00",
+                "will_the_contract_signed_by_pary_2_contracting_entity": true,
+                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "full_name_of_party_2_signatory": "party 2 name",
+                "party_2_date_of_signing_contract": "2022-11-05T00:00:00+00:00",
+                "full_name_of_party_2_witness": "witness 2 name",
+                "party_2_witness_date_of_signing_contract": "2022-11-05T00:00:00+00:00"
             }
         }
     ]
