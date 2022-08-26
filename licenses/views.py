@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
+from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
@@ -113,6 +114,13 @@ class SoftwareLicenseList(APIView):
                 # to date object
                 request_data["released_date"] = date.fromisoformat(
                     request_data["released_date"])
+
+                # # Save image [image_url]
+                # if request_data['image_url']:
+                #     filename, file_extension, file_path =\
+                #         upload_img(
+                #             request_data['image_url'])
+
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
@@ -240,6 +248,7 @@ class SoftwareLicenseDetail(APIView):
 
     def get(self, request, license_id, format=None):
         try:
+            print("callings")
             # # Localhost
             # license = SoftwareLicense.objects.get(license_id = license_id)
             # # Serialize data
@@ -252,6 +261,7 @@ class SoftwareLicenseDetail(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"_id": license_id}
             )
+            print("response_json: ", response_json)
             return Response(response_json, status=status.HTTP_200_OK)
 
         # The code below will

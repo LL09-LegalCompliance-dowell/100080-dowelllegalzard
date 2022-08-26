@@ -1,10 +1,11 @@
 from urllib import response
 from django.shortcuts import render
-import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework import status
 from django.db import transaction
+from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
@@ -12,6 +13,7 @@ from utils.dowell import (
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     RECORD_PER_PAGE
 )
+
 
 from agreements.serializers import SoftwareAgreementSerializer
 
@@ -47,7 +49,7 @@ class SoftwareAgreementList(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def post(self, request, format=None):
+    def post(self, request: Request, format=None):
         try:
             from datetime import date
             request_data = request.data
@@ -80,12 +82,28 @@ class SoftwareAgreementList(APIView):
             request_data["contract_effective_date"] = date.fromisoformat(
                 request_data["contract_effective_date"])
 
+            # # Save image [part 1 signatory]
+            # if request_data['party_1_signatory_scanned_copy_url']:
+            #     filename, file_extension, file_path =\
+            #         upload_img(
+            #             request_data['party_1_signatory_scanned_copy_url'])
+
+            # # Save image [part 2 signatory]
+            # if request_data['party_2_signatory_scanned_copy_url']:
+            #     filename, file_extension, file_path =\
+            #         upload_img(
+            #             request_data['party_2_signatory_scanned_copy_url'])
+
             # Create serializer object
             serializer = SoftwareAgreementSerializer(data=request_data)
 
             # Commit data to database
-            serializer.is_valid()
-            response_json, status_code = serializer.save()
+            response_json = {}
+            status_code = 500
+            if serializer.is_valid():
+                response_json, status_code = serializer.save()
+            else:
+                response_json = serializer.errors
 
             return Response(response_json,
                             status=status_code

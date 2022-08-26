@@ -1,6 +1,5 @@
-from email.policy import default
+from datetime import datetime
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
 import json
 from utils.dowell import (
     fetch_document,
@@ -114,6 +113,39 @@ class SoftwareAgreementSerializer(serializers.Serializer):
         Create and return new software agreement.
         """
 
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+
+        validated_data["effective_date_for_invoice_payment"]\
+            = validated_data["effective_date_for_invoice_payment"].isoformat()
+
+        validated_data["party_1_date_of_signing_contract"]\
+            = validated_data["party_1_date_of_signing_contract"].isoformat()
+
+        validated_data["party_1_witness_date_of_signing_contract"]\
+            = validated_data["party_1_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_date_of_signing_contract"]\
+            = validated_data["party_2_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_witness_date_of_signing_contract"]\
+            = validated_data["party_2_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["invoicing_date"]\
+            = validated_data["invoicing_date"].isoformat()
+
+        validated_data["contract_termination_date"]\
+            = validated_data["contract_termination_date"].isoformat()
+
+        validated_data["contract_effective_date"]\
+            = validated_data["contract_effective_date"].isoformat()
+
+        validated_data["charges_payable"] = float(
+            validated_data["charges_payable"])
+
+        validated_data["interest_rate_apply_to_late_payment"] = float(
+            validated_data["interest_rate_apply_to_late_payment"])
+
         # Create software agreement on remote server
         response_json = save_document(
             collection=SOFTWARE_AGREEMENT_COLLECTION,
@@ -130,7 +162,7 @@ class SoftwareAgreementSerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"_id": response_json["inserted_id"]}
             )
-
+        print(response_json)
         return response_json, status_code
 
     def update(self, agreement_id, validated_data):
@@ -141,7 +173,38 @@ class SoftwareAgreementSerializer(serializers.Serializer):
         response_json = {}
 
         # format date back to iso format
-        validated_data['date_of_execution_of_document'] = validated_data['date_of_execution_of_document'].isoformat()
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+
+        validated_data["effective_date_for_invoice_payment"]\
+            = validated_data["effective_date_for_invoice_payment"].isoformat()
+
+        validated_data["party_1_date_of_signing_contract"]\
+            = validated_data["party_1_date_of_signing_contract"].isoformat()
+
+        validated_data["party_1_witness_date_of_signing_contract"]\
+            = validated_data["party_1_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_date_of_signing_contract"]\
+            = validated_data["party_2_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_witness_date_of_signing_contract"]\
+            = validated_data["party_2_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["invoicing_date"]\
+            = validated_data["invoicing_date"].isoformat()
+
+        validated_data["contract_termination_date"]\
+            = validated_data["contract_termination_date"].isoformat()
+
+        validated_data["contract_effective_date"]\
+            = validated_data["contract_effective_date"].isoformat()
+
+        validated_data["charges_payable"] = float(
+            validated_data["charges_payable"])
+
+        validated_data["interest_rate_apply_to_late_payment"] = float(
+            validated_data["interest_rate_apply_to_late_payment"])
 
         # Update software agreement on remote server
         response_json = update_document(

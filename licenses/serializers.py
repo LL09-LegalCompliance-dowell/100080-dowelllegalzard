@@ -1,6 +1,4 @@
-from email.policy import default
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
 import json
 from licenses.models import (
     SoftwareLicense,
