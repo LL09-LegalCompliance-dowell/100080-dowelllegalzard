@@ -1,51 +1,45 @@
 import json
-from django.test import TestCase, Client
 from pathlib import Path
 import os
+from django.test import TestCase
+#import unittest
+import requests
+from licenses.serializers import SoftwareLicenseSerializer
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-class LicensesTest(TestCase):
+class LicensesTestCase(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
 
         # format file path
-        # for cross platform compatability
         file_path = os.path.join(
             os.path.join(BASE_DIR, 'fixtures'),
             'data.json'
-            )
-        
+        )
+
         # load json data payload
         with open(file_path) as file:
             self.fixture = json.load(file)
 
         # initialize web client object
-        self.client = Client()
-
-
-    def add_new_software_license(self):
-        # Create license
-        return self.client.post(
-            '/api/licenses/',
-            self.fixture['add_license_data'],
-            content_type="application/json"
-            )
-
-    
+        self.client = requests
 
     def test_add_software_license(self):
         # Create license
+        res = self.client.post(
+            '/api/licenses/',
+            self.fixture['add_license_data'],
+            content_type="application/json"
+        )
         response = self.add_new_software_license()
         self.assertEqual(response.status_code, 201)
 
         json_data = response.json()["license"]
         self.assertEqual(json_data['software_name'], 'APACHE')
         self.assertEqual(json_data['license_name'], 'APACHE 2.0')
-
-
 
     def test_retrieve_license(self):
         # Create license
@@ -61,8 +55,6 @@ class LicensesTest(TestCase):
         self.assertEqual(json_data['software_name'], 'APACHE')
         self.assertEqual(json_data['license_name'], 'APACHE 2.0')
 
-
-
     def test_retrieve_all_license(self):
         # Create license
         response = self.add_new_software_license()
@@ -75,7 +67,6 @@ class LicensesTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(json_data_list), 1)
-    
 
     def test_update_license(self):
         # Create license
@@ -88,13 +79,12 @@ class LicensesTest(TestCase):
             f'/api/licenses/{json_data["_id"]}/',
             self.fixture['update_license_data'],
             content_type='application/json'
-            )
+        )
 
         self.assertEqual(response.status_code, 200)
         json_data = response.json()["license"]
         self.assertEqual(json_data['version'], '2.1')
         self.assertEqual(json_data['license_name'], 'APACHE 2.1')
-
 
     def test_delete_license(self):
         # Create license
@@ -105,7 +95,6 @@ class LicensesTest(TestCase):
         # Delete license
         response = self.client.delete(
             f'/api/licenses/{json_data["_id"]}/'
-            )
+        )
 
         self.assertEqual(response.status_code, 204)
-

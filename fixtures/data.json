@@ -1,6 +1,6 @@
 {
    "add_license_data": {
-    "software_name": "APACHE",
+    "software_name": "SAMPLE 1",
     "license_name": "APACHE 2.0",
     "version": "2.0",
     "type_of_license": "PERMISSIVE",
@@ -19,7 +19,7 @@
 },
   
 "update_license_data": {
-    "software_name": "APACHE",
+    "software_name": "SAMPLE 1",
     "license_name": "APACHE 2.1",
     "version": "2.1",
     "type_of_license": "PERMISSIVE",
@@ -36,6 +36,7 @@
     "license_compatible_with_lookup": ["APACHE 2.0"],
     "license_not_compatible_with_lookup": []
 },
+
 "compatibility_check":{
     "license_one_id": "62f640b91a2da145efa2e990",
     "license_two_id": "62f782a6f8a0224b84f5f280",
