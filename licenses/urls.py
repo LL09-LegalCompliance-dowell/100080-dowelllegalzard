@@ -9,6 +9,6 @@ app_name = "licenses"
 urlpatterns = [
     path('login/', dowell_login, name="dowell_login"),
     path('licenses/', SoftwareLicenseList.as_view(), name="licenses"),
-    path('licenses/<str:license_id>/',
+    path('licenses/<str:license_name>/',
          SoftwareLicenseDetail.as_view(), name="license_detail"),
 ]

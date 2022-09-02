@@ -9,6 +9,7 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
+    format_id,
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_LICENSE_COLLECTION,
     COMMON_ATTRIBUTE_COLLECTION,
@@ -151,15 +152,15 @@ class SoftwareLicenseList(APIView):
         percentage_of_comaptibility = 0
         try:
 
-            license_one_id = request.data.get("license_one_id", "")
-            license_two_id = request.data.get("license_two_id", "")
+            license_one_name = request.data.get("license_one_name", "")
+            license_two_name = request.data.get("license_two_name", "")
 
             # Retrieve license on remote server
             # Get license two
             license_one_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_one_id}
+                fields={"softwarelicense.license_name": license_one_name}
             )
             license_one = license_one_json["data"][0]['softwarelicense']
 
@@ -167,7 +168,7 @@ class SoftwareLicenseList(APIView):
             license_two_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_two_id}
+                fields={"softwarelicense.license_name": license_two_name}
             )
 
             # Get license compatible list
@@ -206,29 +207,17 @@ class SoftwareLicenseList(APIView):
         """ Load linceses base on search term
         """
         try:
-
+            print("I was called")
             limit = RECORD_PER_PAGE
             offset = int(request.GET.get("offset", "0"))
             search_term = request.GET.get("search_term", "")
-            print(search_term)
             response_json = {}
-
-            # Localhost
-            # # Retrieve licenses
-            # licenses_query = SoftwareLicense.objects.filter(
-            #     document__license_name__icontains = search_term
-            #     )[offset: limit]
-
-            # # Initialize serialize object
-            # serializer = SoftwareLicenseSerializer()
-            # licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
-            # response_json = {"data": licenses}
 
             # Retrieve license on remote server
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"agreement.license_name": {
+                fields={"softwarelicense.license_name": {
                     "$regex": f"{search_term}", "$options": "i"}}
             )
 
@@ -246,9 +235,8 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
 
-    def get(self, request, license_id, format=None):
+    def get(self, request, license_name, format=None):
         try:
-            print("callings")
             # # Localhost
             # license = SoftwareLicense.objects.get(license_id = license_id)
             # # Serialize data
@@ -259,7 +247,7 @@ class SoftwareLicenseDetail(APIView):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_id}
+                fields={"softwarelicense.license_name": license_name}
             )
             print("response_json: ", response_json)
             return Response(response_json, status=status.HTTP_200_OK)
@@ -274,7 +262,7 @@ class SoftwareLicenseDetail(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def put(self, request, license_id, format=None):
+    def put(self, request, license_name, format=None):
         try:
             from datetime import date
             request_data = request.data
@@ -286,10 +274,10 @@ class SoftwareLicenseDetail(APIView):
 
             # Update and Commit data into database
             serializer = SoftwareLicenseSerializer(
-                license_id, data=request_data)
+                license_name, data=request_data)
             if serializer.is_valid():
                 response_json, status_code = serializer.update(
-                    license_id, serializer.validated_data)
+                    license_name, serializer.validated_data)
 
                 return Response(
                     response_json,

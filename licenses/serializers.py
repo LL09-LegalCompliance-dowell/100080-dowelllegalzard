@@ -51,7 +51,7 @@ class LicenseTypeSerializer(serializers.Serializer):
 
 
 class CommonAttributeSerializer(serializers.Serializer):
-    """ CommonAttribute collection contains
+    """ common_attribute collection contains
         attributes common to all licenses.
         these attributes are created by the admin or the end user
         with unique code 
@@ -74,7 +74,7 @@ class CommonAttributeSerializer(serializers.Serializer):
 
 
 class AttributeSerializer(serializers.Serializer):
-    """ Attribute collection contains
+    """ attribute collection contains
         all possible licenses attribute.
         these attributes are created and
         pre-configured by the admin or the end user.
@@ -195,7 +195,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, license_id, validated_data):
+    def update(self, license_name, validated_data):
         """
         Update and return software license.
         """
@@ -218,7 +218,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             document=SOFTWARE_LICENSE_DOCUMENT_NAME,
             key=SOFTWARE_LICENSE_KEY,
             new_value=validated_data,
-            id=license_id
+            license_name=license_name
         )
 
         if response_json["isSuccess"]:
@@ -227,7 +227,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_id}
+                fields={"softwarelicense.license_name": license_name}
             )
 
         return response_json, status_code

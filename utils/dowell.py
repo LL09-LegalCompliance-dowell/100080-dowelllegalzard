@@ -46,6 +46,10 @@ CLUSTER = "license"
 RECORD_PER_PAGE = 10
 
 
+def format_id(id):
+    return f"ObjectId"+"("+"'{id}'"+")"
+
+
 def get_event_id():
     dd = datetime.now()
     time = dd.strftime("%d:%m:%Y,%H:%M:%S")
@@ -122,7 +126,8 @@ def update_document(
     document: str,
     key: str,
     new_value: dict,
-    id
+    id="",
+    license_name=""
 ):
     url = "http://100002.pythonanywhere.com/"
 
@@ -136,7 +141,8 @@ def update_document(
         "function_ID": get_function_id(collection),
         "command": "update",
         "field": {
-            '_id': id
+            "softwarelicense.license_name": license_name
+            # '_id': id
         },
         "update_field": {key: new_value},
         "platform": "bangalore"
@@ -182,6 +188,7 @@ def fetch_document(
 
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.content)
     return response.json()
 
 

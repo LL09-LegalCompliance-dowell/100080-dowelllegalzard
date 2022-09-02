@@ -272,7 +272,7 @@ The API will return three error types when requests fail:
 
 - General:
   - Check for compatibility between two software license with the submitted json data, return true if compatible else return false.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_one_id": "63047b62b3a9611686cdcd56", "license_two_id": "63047c5ebecabe8233cdcd4c", "action_type": "check-compatibility" } '`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_one_name": "LGPLv2.1", "license_two_name": "BSD", "action_type": "check-compatibility" } '`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
@@ -287,11 +287,11 @@ The API will return three error types when requests fail:
 }
 ```
 
-#### GET /api/licenses/{license_id}/
+#### GET /api/licenses/{license_name}/
 
 - General:
   - Returns a list of software licenses objects, and success value
-- Sample: `curl http://127.0.0.1:8000/api/licenses/63047b62b3a9611686cdcd56/` or open link in a browser
+- Sample: `curl http://127.0.0.1:8000/api/licenses/LGPLv2.1/` or open link in a browser
 
 ```{
     "isSuccess": true,
@@ -374,11 +374,11 @@ The API will return three error types when requests fail:
 }
 ```
 
-#### PUT /api/licenses/{license_id}/
+#### PUT /api/licenses/{license_name}/
 
 - General:
   - Fully update the software license of the given ID if it exists. Returns the updated data, success value, to update the frontend.
-- `curl http://127.0.0.1:8000/api/licenses/63047b62b3a9611686cdcd56/ -X PUT -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 25", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
+- `curl http://127.0.0.1:8000/api/licenses/LGPLv2.1/ -X PUT -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 25", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
 
 ```{
     "isSuccess": true,
@@ -455,6 +455,50 @@ The API will return three error types when requests fail:
                     "GPL2+",
                     "GPLv3 or GPLv3+"
                 ]
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/licenses/?search_term=mit&action_type=search
+
+- General:
+  - Search the software license by license. Return query result.
+- `curl http://127.0.0.1:8000/api/licenses/?search_term=mit&action_type=search -X GET`
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "630db14a2eb7c2571343a9fb",
+            "eventId": "FB1010000000016618417215307426",
+            "softwarelicense": {
+                "software_name": "MIT",
+                "license_name": "MIT",
+                "version": "1",
+                "type_of_license": "Permissive",
+                "description": "nil",
+                "disclaimer": "nil",
+                "risk_for_choosing_license": "nil",
+                "limitation_of_liability": "nil",
+                "license_url": "https://sample.com/img.png",
+                "image_url": "https://sample.com/img.png",
+                "recommendation": "nil",
+                "released_date": "2022-05-10",
+                "is_active": true,
+                "license_attributes": [
+                    "Obtain copyright notice",
+                    "Right to Use, copy, distribute",
+                    "Right to modify",
+                    "Right to Publish",
+                    "Right to sublicense and sell copies",
+                    "Limitations",
+                    "No Warranty"
+                ],
+                "license_compatibility": [],
+                "license_compatible_with_lookup": [],
+                "license_not_compatible_with_lookup": []
             }
         }
     ]
