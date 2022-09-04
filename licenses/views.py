@@ -150,15 +150,15 @@ class SoftwareLicenseList(APIView):
         percentage_of_comaptibility = 0
         try:
 
-            license_one_name = request.data.get("license_one_name", "")
-            license_two_name = request.data.get("license_two_name", "")
+            license_event_id_one = request.data.get("license_event_id_one", "")
+            license_event_id_two = request.data.get("license_event_id_two", "")
 
             # Retrieve license on remote server
             # Get license two
             license_one_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"softwarelicense.license_name": license_one_name}
+                fields={"eventId": license_event_id_one}
             )
             license_one = license_one_json["data"][0]['softwarelicense']
 
@@ -166,7 +166,7 @@ class SoftwareLicenseList(APIView):
             license_two_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"softwarelicense.license_name": license_two_name}
+                fields={"eventId": license_event_id_two}
             )
 
             # Get license compatible list
@@ -233,7 +233,7 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
 
-    def get(self, request, license_name, format=None):
+    def get(self, request, event_id, format=None):
         try:
             # # Localhost
             # license = SoftwareLicense.objects.get(license_id = license_id)
@@ -245,7 +245,7 @@ class SoftwareLicenseDetail(APIView):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"softwarelicense.license_name": license_name}
+                fields={"eventId": event_id}
             )
 
             return Response(response_json, status=status.HTTP_200_OK)
@@ -260,7 +260,7 @@ class SoftwareLicenseDetail(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def put(self, request, license_name, format=None):
+    def put(self, request, event_id, format=None):
         try:
             from datetime import date
             request_data = request.data
@@ -272,10 +272,10 @@ class SoftwareLicenseDetail(APIView):
 
             # Update and Commit data into database
             serializer = SoftwareLicenseSerializer(
-                license_name, data=request_data)
+                event_id, data=request_data)
             if serializer.is_valid():
                 response_json, status_code = serializer.update(
-                    license_name, serializer.validated_data)
+                    event_id, serializer.validated_data)
 
                 return Response(
                     response_json,
@@ -283,7 +283,7 @@ class SoftwareLicenseDetail(APIView):
                 )
 
             else:
-                return Response({"error_msg": f"{e}"},
+                return Response({"error_msg": f"{serializer.errors}"},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )
 

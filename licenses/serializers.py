@@ -47,68 +47,6 @@ class LicenseTypeSerializer(serializers.Serializer):
     licenses = serializers.ListField()
 
 
-class CommonAttributeSerializer(serializers.Serializer):
-    """ common_attribute collection contains
-        attributes common to all licenses.
-        these attributes are created by the admin or the end user
-        with unique code 
-        eg.
-        [
-            {
-                _id: 9494955eyfhry,
-                "name": "Grant of Copyright License.",
-                "code": "G_Copyright"
-            },
-            {
-                _id: 50504955eyfhry,
-                "name": "Trademark",
-                "code": "Trademark"
-            }
-        ]
-    """
-    name = serializers.CharField(max_length=150)
-    code = serializers.CharField(max_length=150)
-
-
-class AttributeSerializer(serializers.Serializer):
-    """ attribute collection contains
-        all possible licenses attribute.
-        these attributes are created and
-        pre-configured by the admin or the end user.
-
-        usage: when creating a license the  user will have the option
-        to select and add this attribute to the software license
-
-        eg.
-        [
-            {
-                _id: 949495885,
-                "name": "Conveying Modified Source Versions",
-                "common_attribute": {
-
-                    _id: 50504955eyfhry,
-                    "name": "Grant of Copyright License",
-                    "code": "G_Copyright"
-
-                    }
-            },
-            {
-                _id: 949495885,
-                "name": "Patents.",
-                "common_attribute": {
-
-                    _id: 50504955eyfhry,
-                    "name": "Trademark",
-                    "code": "Trademark"
-
-                    }
-            },
-        ]
-    """
-    name = serializers.CharField(max_length=150)
-    common_attribute = serializers.JSONField()
-
-
 class SoftwareLicenseSerializer(serializers.Serializer):
     """ Validate attribute, create and update
         software license document
@@ -188,13 +126,13 @@ class SoftwareLicenseSerializer(serializers.Serializer):
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={
-                    "softwarelicense.license_name": validated_data["license_name"]
+                    "eventId": response_json["event_id"]
                 }
             )
 
         return response_json, status_code
 
-    def update(self, license_name, validated_data):
+    def update(self, event_id, validated_data):
         """
         Update and return software license.
         """
@@ -217,7 +155,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             document=SOFTWARE_LICENSE_DOCUMENT_NAME,
             key=SOFTWARE_LICENSE_KEY,
             new_value=validated_data,
-            license_name=license_name
+            event_id=event_id
         )
 
         if response_json["isSuccess"]:
@@ -226,7 +164,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"softwarelicense.license_name": license_name}
+                fields={"eventId": event_id}
             )
 
         return response_json, status_code

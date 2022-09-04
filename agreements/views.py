@@ -123,14 +123,14 @@ class SoftwareAgreementDetail(APIView):
      Retrieve , update and delete software license
     """
 
-    def get(self, request, agreement_id, format=None):
+    def get(self, request, event_id, format=None):
         try:
 
             # Retrieve license on remote server
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"_id": agreement_id}
+                fields={"eventId": event_id}
             )
 
             return Response(response_json, status=status.HTTP_200_OK)
@@ -143,7 +143,7 @@ class SoftwareAgreementDetail(APIView):
                 "error_msg": f"{e}"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def put(self, request, agreement_id, format=None):
+    def put(self, request, event_id, format=None):
         try:
             from datetime import date
             request_data = request.data
@@ -179,11 +179,11 @@ class SoftwareAgreementDetail(APIView):
 
             # Update and Commit data into database
             serializer = SoftwareAgreementSerializer(
-                agreement_id, data=request_data)
+                event_id, data=request_data)
 
             if serializer.is_valid():
                 response_json, status_code = serializer.update(
-                    agreement_id, serializer.validated_data)
+                    event_id, serializer.validated_data)
 
                 return Response(
                     response_json,
