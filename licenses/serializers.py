@@ -15,17 +15,14 @@ from utils.dowell import (
     SOFTWARE_LICENSE_COLLECTION,
     COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
-    LICENSE_TYPE_COLLECTION,
 
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
-    LICENSE_TYPE_DOCUMENT_NAME,
 
     SOFTWARE_LICENSE_KEY,
     COMMON_ATTRIBUTE_KEY,
     ATTRIBUTE_MAIN_KEY,
-    LICENSE_MAIN_KEY
 
 )
 
@@ -190,7 +187,9 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": response_json["inserted_id"]}
+                fields={
+                    "softwarelicense.license_name": validated_data["license_name"]
+                }
             )
 
         return response_json, status_code

@@ -14,13 +14,11 @@ from utils.dowell import (
     SOFTWARE_LICENSE_COLLECTION,
     COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
-    LICENSE_TYPE_COLLECTION,
 
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
-    LICENSE_TYPE_DOCUMENT_NAME,
     RECORD_PER_PAGE
 )
 
@@ -249,7 +247,7 @@ class SoftwareLicenseDetail(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"softwarelicense.license_name": license_name}
             )
-            print("response_json: ", response_json)
+
             return Response(response_json, status=status.HTTP_200_OK)
 
         # The code below will
