@@ -1,0 +1,227 @@
+[
+
+
+{
+    "software_name": "Apache",
+    "license_name": "Apache",
+    "version": "2",
+    "type_of_license": "Permissive",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definition",
+        "Grant of Copyright License",
+        "Grant of Patent License",
+        "Redistribution",
+        "Submission of Contributions",
+        "Trademarks",
+        "Disclaimer of Warranty"
+    ],
+    "license_compatibility": [{
+        "nil": "nil"
+    }],
+    "license_compatible_with_lookup": ["nil"],
+    "license_not_compatible_with_lookup": ["nil"]
+},
+
+{
+    "software_name": "BSD Caluse 3",
+    "license_name": "BSD Caluse 3",
+    "version": "3",
+    "type_of_license": "Permissive",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definition",
+        "Grant of Copyright License",
+        "Grant of Patent License",
+        "Redistribution",
+        "Submission of Contributions",
+        "Trademarks",
+        "Disclaimer of Warranty"
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+},
+
+{
+    "software_name": "GNUGPLv1",
+    "license_name": "GNUGPLv1",
+    "version": "1",
+    "type_of_license": "Copyleft",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definition",
+        "Basic Conditions",
+        "Modification", 
+        "Conditions for Copy and Distribution",
+        "Rights to Copy, Modify, Sublicense, or Distribute",
+        "Acceptance of Terms and Conditions", 
+        "Redistribution",
+        "Legal Implications",
+        "Geographical Distribution Limitation", 
+        "Publishing revised and/or new versions", 
+        "Permission", 
+        "No Warranty", 
+        "Liability"
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+},
+
+{
+    "software_name": "GNUGPLv3",
+    "license_name": "GNUGPLv3",
+    "version": "3",
+    "type_of_license": "Copyleft",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definitions",
+        "Source Code",
+        "Basic Permissions", 
+        "Protecting Users' Legal Rights From Anti-Circumvention Law", 
+        "Conveying Verbatim Copies", 
+        "Conveying Modified Source Versions", 
+        "Conveying Non-Source Forms", 
+        "Additional Terms", 
+        "Termination", 
+        "Acceptance Not Required for Having Copies", 
+        "Automatic Licensing of Downstream Recipients", 
+        "Patents", 
+        "No Surrender of Others", 
+        "Freedom Use with the GNU Affero General Public License", 
+        "Revised Versions of this License", 
+        "Disclaimer of Warranty", 
+        "Limitation of Liability", 
+        "Interpretation of Sections 15 and 16"
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+},
+
+{
+    "software_name": "Artistic 2.0",
+    "license_name": "Artistic 2.0",
+    "version": "2",
+    "type_of_license": "Permissive",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definitions",
+        "Permission for Use and Modification Without Distribution",
+        "Permissions for Redistribution of the Standard Version",
+        "Distribution of Modified Versions of the Package as Source",
+        "Distribution of Compiled Forms of the Standard Version or Modified Versions without the Source",
+        "Aggregating or Linking the Package",
+        "Items That are Not Considered Part of a Modified Version",
+        "General Provisions,"
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+},
+
+{
+    "software_name": "MIT",
+    "license_name": "MIT",
+    "version": "1",
+    "type_of_license": "Permissive",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Obtain copyright notice",                                         
+        "Right to Use, copy, distribute",
+        "Right to modify",                                                              
+        "Right to Publish",                                                              
+        "Right to sublicense and sell copies",  
+        "Limitations",
+        "No Warranty" 
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+},
+
+{
+    "software_name": "MPL-2.0",
+    "license_name": "MPL-2.0",
+    "version": "2",
+    "type_of_license": "Copyleft",
+    "description": "nil",
+    "disclaimer": "nil",
+    "risk_for_choosing_license": "nil",
+    "limitation_of_liability": "nil",
+    "license_url": "https://sample.com/img.png",
+    "image_url": "https://sample.com/img.png",
+    "recommendation": "nil",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "Definitions", 
+        "License Grants and Conditions",
+        "Responsibilities",
+        "Inability to comply due to Statute or Regulation",
+        "Termination",
+        "Disclaimer of Warranty",
+        "Limitation of Liability",
+        "Litigation",
+        "Miscellaneous",
+        "Versions of the License"
+    ],
+    "license_compatibility": [],
+    "license_compatible_with_lookup": [],
+    "license_not_compatible_with_lookup": []
+}
+
+
+
+
+
+]

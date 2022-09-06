@@ -9,17 +9,16 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
+    format_id,
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_LICENSE_COLLECTION,
     COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
-    LICENSE_TYPE_COLLECTION,
 
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
-    LICENSE_TYPE_DOCUMENT_NAME,
     RECORD_PER_PAGE
 )
 
@@ -151,15 +150,15 @@ class SoftwareLicenseList(APIView):
         percentage_of_comaptibility = 0
         try:
 
-            license_one_id = request.data.get("license_one_id", "")
-            license_two_id = request.data.get("license_two_id", "")
+            license_event_id_one = request.data.get("license_event_id_one", "")
+            license_event_id_two = request.data.get("license_event_id_two", "")
 
             # Retrieve license on remote server
             # Get license two
             license_one_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_one_id}
+                fields={"eventId": license_event_id_one}
             )
             license_one = license_one_json["data"][0]['softwarelicense']
 
@@ -167,7 +166,7 @@ class SoftwareLicenseList(APIView):
             license_two_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_two_id}
+                fields={"eventId": license_event_id_two}
             )
 
             # Get license compatible list
@@ -206,29 +205,17 @@ class SoftwareLicenseList(APIView):
         """ Load linceses base on search term
         """
         try:
-
+            print("I was called")
             limit = RECORD_PER_PAGE
             offset = int(request.GET.get("offset", "0"))
             search_term = request.GET.get("search_term", "")
-            print(search_term)
             response_json = {}
-
-            # Localhost
-            # # Retrieve licenses
-            # licenses_query = SoftwareLicense.objects.filter(
-            #     document__license_name__icontains = search_term
-            #     )[offset: limit]
-
-            # # Initialize serialize object
-            # serializer = SoftwareLicenseSerializer()
-            # licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
-            # response_json = {"data": licenses}
 
             # Retrieve license on remote server
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"agreement.license_name": {
+                fields={"softwarelicense.license_name": {
                     "$regex": f"{search_term}", "$options": "i"}}
             )
 
@@ -246,9 +233,8 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
 
-    def get(self, request, license_id, format=None):
+    def get(self, request, event_id, format=None):
         try:
-            print("callings")
             # # Localhost
             # license = SoftwareLicense.objects.get(license_id = license_id)
             # # Serialize data
@@ -259,9 +245,9 @@ class SoftwareLicenseDetail(APIView):
             response_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                fields={"_id": license_id}
+                fields={"eventId": event_id}
             )
-            print("response_json: ", response_json)
+
             return Response(response_json, status=status.HTTP_200_OK)
 
         # The code below will
@@ -274,7 +260,7 @@ class SoftwareLicenseDetail(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def put(self, request, license_id, format=None):
+    def put(self, request, event_id, format=None):
         try:
             from datetime import date
             request_data = request.data
@@ -286,10 +272,10 @@ class SoftwareLicenseDetail(APIView):
 
             # Update and Commit data into database
             serializer = SoftwareLicenseSerializer(
-                license_id, data=request_data)
+                event_id, data=request_data)
             if serializer.is_valid():
                 response_json, status_code = serializer.update(
-                    license_id, serializer.validated_data)
+                    event_id, serializer.validated_data)
 
                 return Response(
                     response_json,
@@ -297,7 +283,7 @@ class SoftwareLicenseDetail(APIView):
                 )
 
             else:
-                return Response({"error_msg": f"{e}"},
+                return Response({"error_msg": f"{serializer.errors}"},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )
 

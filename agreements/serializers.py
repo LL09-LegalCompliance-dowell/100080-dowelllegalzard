@@ -160,12 +160,12 @@ class SoftwareAgreementSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"_id": response_json["inserted_id"]}
+                fields={"eventId": response_json["event_id"]}
             )
         print(response_json)
         return response_json, status_code
 
-    def update(self, agreement_id, validated_data):
+    def update(self, event_id, validated_data):
         """
         Update and return software agreement.
         """
@@ -212,7 +212,7 @@ class SoftwareAgreementSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            id=agreement_id
+            event_id=event_id
         )
 
         if response_json["isSuccess"]:
@@ -221,7 +221,7 @@ class SoftwareAgreementSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"_id": agreement_id}
+                fields={"eventId": event_id}
             )
 
         return response_json, status_code

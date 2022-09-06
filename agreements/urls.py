@@ -7,6 +7,6 @@ from .views import (
 app_name = "agreements"
 urlpatterns = [
     path('agreements/', SoftwareAgreementList.as_view(), name="agreements"),
-    path('agreements/<str:agreement_id>/',
+    path('agreements/<str:event_id>/',
          SoftwareAgreementDetail.as_view(), name="agreement_detail"),
 ]
