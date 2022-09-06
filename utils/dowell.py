@@ -8,34 +8,34 @@ SOFTWARE_AGREEMENT_COLLECTION = "agreement"
 SOFTWARE_LICENSE_COLLECTION = "softwarelicenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
-LICENSE_TYPE_COLLECTION = "license_types"
+# LICENSE_TYPE_COLLECTION = "license_types"
 
 # DOCUMENTS
 SOFTWARE_AGREEMENT_DOCUMENT_NAME = "agreements"
 SOFTWARE_LICENSE_DOCUMENT_NAME = "softwarelicense"
-COMMON_ATTRIBUTE_DOCUMENT_NAME = "common_attribute"
-ATTRIBUTE_DOCUMENT_NAME = "attribute"
-LICENSE_TYPE_DOCUMENT_NAME = "license_type"
+COMMON_ATTRIBUTE_DOCUMENT_NAME = "common_attributes"
+ATTRIBUTE_DOCUMENT_NAME = "attributes"
+# LICENSE_TYPE_DOCUMENT_NAME = "license_type"
 
 # DOCUMENT KEY
 SOFTWARE_AGREEMENT_KEY = "agreement"
 SOFTWARE_LICENSE_KEY = "softwarelicense"
-COMMON_ATTRIBUTE_KEY = "common_attribute"
-ATTRIBUTE_MAIN_KEY = "attribute"
-LICENSE_MAIN_KEY = "license_type"
+COMMON_ATTRIBUTE_KEY = "common_attributes"
+ATTRIBUTE_MAIN_KEY = "attributes"
+# LICENSE_MAIN_KEY = "license_type"
 
 # TEAM ID
 SOFTWARE_AGREEMENT_TEAM_ID = "10008002"
 SOFTWARE_LICENSE_TEAM_ID = "10008001"
-# COMMON_ATTRIBUTE_TEAM_ID = ""
-# ATTRIBUTE_MAIN_TEAM_ID = ""
+COMMON_ATTRIBUTE_TEAM_ID = "10008005"
+ATTRIBUTE_MAIN_TEAM_ID = "10008004"
 # LICENSE_MAIN_TEAM_ID = ""
 
 # FUNCTION ID
 SOFTWARE_AGREEMENT_FUNC_ID = "ABCDE"
 SOFTWARE_LICENSE_FUNC_ID = "ABCDE"
-# COMMON_ATTRIBUTE_FUNC_ID = ""
-# ATTRIBUTE_MAIN_FUNC_ID = ""
+COMMON_ATTRIBUTE_FUNC_ID = "ABCDE"
+ATTRIBUTE_MAIN_FUNC_ID = "ABCDE"
 # LICENSE_MAIN_FUNC_ID = ""
 
 # SERVER
@@ -44,6 +44,10 @@ CLUSTER = "license"
 
 # RECORD LOAD
 RECORD_PER_PAGE = 10
+
+
+def format_id(id):
+    return f"ObjectId"+"("+"'{id}'"+")"
 
 
 def get_event_id():
@@ -89,6 +93,7 @@ def save_document(
     value: dict,
 ):
     url = "http://100002.pythonanywhere.com/"
+    event_id = get_event_id()
 
     # Build request data or payload
     payload = json.dumps({
@@ -100,7 +105,7 @@ def save_document(
         "function_ID": get_function_id(collection),
         "command": "insert",
         "field": {
-            "eventId": get_event_id(),
+            "eventId": event_id,
             key: value
         },
         "update_field": {"update_field": "nil"},
@@ -114,7 +119,9 @@ def save_document(
 
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
-    return response.json()
+    json_data = response.json()
+    json_data['event_id'] = event_id
+    return json_data
 
 
 def update_document(
@@ -122,7 +129,8 @@ def update_document(
     document: str,
     key: str,
     new_value: dict,
-    id
+    id="",
+    event_id=""
 ):
     url = "http://100002.pythonanywhere.com/"
 
@@ -136,7 +144,8 @@ def update_document(
         "function_ID": get_function_id(collection),
         "command": "update",
         "field": {
-            '_id': id
+            'eventId': event_id,
+            # '_id': id
         },
         "update_field": {key: new_value},
         "platform": "bangalore"
@@ -182,6 +191,7 @@ def fetch_document(
 
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.content)
     return response.json()
 
 
@@ -243,8 +253,15 @@ def get_team_id(collection):
 
     if collection == SOFTWARE_AGREEMENT_COLLECTION:
         team_id = SOFTWARE_AGREEMENT_TEAM_ID
+
     elif collection == SOFTWARE_LICENSE_COLLECTION:
         team_id = SOFTWARE_LICENSE_TEAM_ID
+
+    elif collection == COMMON_ATTRIBUTE_COLLECTION:
+        team_id = COMMON_ATTRIBUTE_TEAM_ID
+
+    elif collection == ATTRIBUTE_COLLECTION:
+        team_id = ATTRIBUTE_MAIN_TEAM_ID
 
     return team_id
 
@@ -254,8 +271,15 @@ def get_function_id(collection):
 
     if collection == SOFTWARE_AGREEMENT_COLLECTION:
         func_id = SOFTWARE_AGREEMENT_FUNC_ID
+
     elif collection == SOFTWARE_LICENSE_COLLECTION:
         func_id = SOFTWARE_LICENSE_FUNC_ID
+
+    elif collection == COMMON_ATTRIBUTE_COLLECTION:
+        func_id = COMMON_ATTRIBUTE_FUNC_ID
+
+    elif collection == ATTRIBUTE_COLLECTION:
+        func_id = ATTRIBUTE_MAIN_FUNC_ID
 
     return func_id
 
