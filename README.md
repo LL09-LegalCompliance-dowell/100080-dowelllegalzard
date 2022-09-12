@@ -879,3 +879,226 @@ The API will return three error types when requests fail:
     ]
 }
 ```
+
+### Attibutes
+
+#### GET /api/commonattributes/
+
+- General:
+  - Returns a list of common attribute objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/commonattributes/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631852cef0ec12a84b24ad90",
+            "eventId": "FB1010000000166253844055620553",
+            "common_attributes": {
+                "name": "Grant of Copyright License",
+                "code": "G_Copyright"
+            }
+        },
+        {
+            "_id": "631852e9eae6baeed824ae55",
+            "eventId": "FB1010000000166253846754137218",
+            "common_attributes": {
+                "name": "Grant of Patent License",
+                "code": "G_Patent"
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/commonattributes/{event_id}/
+
+- General:
+  - Returns a list of common attribute object, and success value
+- Sample: `curl http://127.0.0.1:8000/api/commonattributes/FB1010000000166253846754137218/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631852e9eae6baeed824ae55",
+            "eventId": "FB1010000000166253846754137218",
+            "common_attributes": {
+                "name": "Grant of Patent License",
+                "code": "G_Patent"
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/commonattributes/
+
+- General:
+  - Creates a new common attribute using the submitted json data, Returns the detail of the created common attribute, success value, and event id.
+- `curl http://127.0.0.1:8000/api/commonattributes/ -X POST -H "Content-Type: application/json" -d '{ "name": "Grant of Copyright License", "code": "G_Copyright" } '`
+
+- You can also open the link `http://127.0.0.1:8000/api/commonattributes/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631852e9eae6baeed824ae55",
+            "eventId": "FB1010000000166253846754137218",
+            "common_attributes": {
+                "name": "Grant of Patent License",
+                "code": "G_Patent"
+            }
+        }
+    ]
+}
+```
+
+#### PUT /api/commonattributes/{:event_id}
+
+- General:
+  - Creates a new common attribute using the submitted json data, Returns the detail of the created common attribute, success value, and event id.
+- `curl http://127.0.0.1:8000/api/commonattributes/FB1010000000166253846754137218/ -X PUT -H "Content-Type: application/json" -d '{ "name": "Grant of Copyright License", "code": "G_Copyright" } '`
+
+- You can also open the link `http://127.0.0.1:8000/api/commonattributes/FB1010000000166253846754137218/` in a browser and perform the put operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631852e9eae6baeed824ae55",
+            "eventId": "FB1010000000166253846754137218",
+            "common_attributes": {
+                "name": "Grant of Copyright License",
+                "code": "G_Copyright"
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/attributes/
+
+- General:
+  - Returns a list of attribute objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/attributes/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631495bb99c608329b714832",
+            "eventId": "FB1010000000166229342959770951",
+            "attributes": {
+                "name": "Conveying Modified Source Versions",
+                "common_attribute": {
+                    "_id": "63146f1699c608329b714706",
+                    "eventId": "FB1010000000166228353751007912",
+                    "name": "sample 1",
+                    "code": "sample_code_1"
+                }
+            }
+        },
+        {
+            "_id": "631496c6865bf7cf8a714743",
+            "eventId": "FB1010000000166229369651486177",
+            "attributes": {
+                "name": "Conveying Modified Source Versions",
+                "common_attribute": {
+                    "_id": "63146d2799c608329b7146ed",
+                    "eventId": "FB1010000000166228304251473167",
+                    "name": "sample 2",
+                    "code": "sample_code_12"
+                }
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/attributes/{event_id}/
+
+- General:
+  - Returns a list of attribute object, and success value
+- Sample: `curl http://127.0.0.1:8000/api/attributes/FB1010000000166229342959770951/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631495bb99c608329b714832",
+            "eventId": "FB1010000000166229342959770951",
+            "attributes": {
+                "name": "Conveying Modified Source Versions",
+                "common_attribute": {
+                    "_id": "63146f1699c608329b714706",
+                    "eventId": "FB1010000000166228353751007912",
+                    "name": "sample 1",
+                    "code": "sample_code_1"
+                }
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/attributes/
+
+- General:
+  - Creates a new attribute using the submitted json data, Returns the detail of the created attribute, success value, and event id.
+- `curl http://127.0.0.1:8000/api/attributes/ -X POST -H "Content-Type: application/json" -d '{ "name": "Conveying Modified Source Versions", "common_attribute": { "_id": "63146d2799c608329b7146ed", "eventId": "FB1010000000166228304251473167", "name": "sample 2", "code": "sample_code_12" }'`
+
+- You can also open the link `http://127.0.0.1:8000/api/attributes/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631496c6865bf7cf8a714743",
+            "eventId": "FB1010000000166229369651486177",
+            "attributes": {
+                "name": "Conveying Modified Source Versions",
+                "common_attribute": {
+                    "_id": "63146d2799c608329b7146ed",
+                    "eventId": "FB1010000000166228304251473167",
+                    "name": "sample 2",
+                    "code": "sample_code_12"
+                }
+            }
+        }
+    ]
+}
+```
+
+#### PUT /api/attributes/{event_id}/
+
+- General:
+  - Creates a new attribute using the submitted json data, Returns the detail of the created attribute, success value, and event id.
+- `curl http://127.0.0.1:8000/api/attributes/FB1010000000166229369651486177/ -X PUT -H "Content-Type: application/json" -d '{ "name": "Conveying Modified Source Versions", "common_attribute": { "_id": "63146d2799c608329b7146ed", "eventId": "FB1010000000166228304251473167", "name": "sample 2", "code": "sample_code_12" } }'`
+
+- You can also open the link `http://127.0.0.1:8000/api/attributes/FB1010000000166229369651486177/` in a browser and perform the put operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "631496c6865bf7cf8a714743",
+            "eventId": "FB1010000000166229369651486177",
+            "attributes": {
+                "name": "Conveying Modified Source Versions",
+                "common_attribute": {
+                    "_id": "63146d2799c608329b7146ed",
+                    "eventId": "FB1010000000166228304251473167",
+                    "name": "sample 2",
+                    "code": "sample_code_12"
+                }
+            }
+        }
+    ]
+}
+```
