@@ -1102,3 +1102,81 @@ The API will return three error types when requests fail:
     ]
 }
 ```
+
+#### GET /api/contacts/
+
+- General:
+  - Returns a list of contact us objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/contacts/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+{
+            "_id": "6323cbb0002f0020a7730e9e",
+            "eventId": "FB1010000000166329028254989355",
+            "contacts": {
+                "first_name": "sample",
+                "last_name": "sample 1",
+                "email": "sample@sample.com",
+                "phone_number": "000-000-0000",
+                "message": "sample message",
+                "search_term": "sample sample-sample@sample.com 000-000-0000"
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/contacts/{event_id}/
+
+- General:
+  - Returns a list of contact us object, and success value
+- Sample: `curl http://127.0.0.1:8000/api/contacts/FB1010000000166329028254989355/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "6323cbb0002f0020a7730e9e",
+            "eventId": "FB1010000000166329028254989355",
+            "contacts": {
+                "first_name": "sample",
+                "last_name": "sample 1",
+                "email": "sample@sample.com",
+                "phone_number": "000-000-0000",
+                "message": "sample message",
+                "search_term": "sample sample-sample@sample.com 000-000-0000"
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/contacts/
+
+- General:
+  - Creates a new contact us using the submitted json data, Returns the detail of the created contact us, success value, and event id.
+- `curl http://127.0.0.1:8000/api/contacts/ -X POST -H "Content-Type: application/json" -d '{ "first_name": "sample", "last_name": "sample 1", "email": "sample@sample.com", "phone_number": "000-000-0000", "message": "sample message" }'`
+
+- You can also open the link `http://127.0.0.1:8000/api/contacts/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "6323cbb0002f0020a7730e9e",
+            "eventId": "FB1010000000166329028254989355",
+            "contacts": {
+                "first_name": "sample",
+                "last_name": "sample 1",
+                "email": "sample@sample.com",
+                "phone_number": "000-000-0000",
+                "message": "sample message",
+                "search_term": "sample sample-sample@sample.com 000-000-0000"
+            }
+        }
+    ]
+}
+```

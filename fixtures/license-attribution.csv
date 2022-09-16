@@ -1,43 +1,4 @@
 Attributes,Attribute_Code,Attribute_ID
-Definition,Define,10001
-Grant of Copyright License,G_Copyright,10002
-Grant of Patent License,G_Patent,10003
-Redistribution.,R_Dis,10004
-Submission of Contributions,Contribute,10005
-Trademarks,Trademark,10006
-Disclaimer of Warranty,Warranty_Disclaimer,10007
-Definition,Define,10008
-Grant of Copyright License,G_Copyright,10009
- Grant of Patent License,G_Patent,10010
-Redistribution,R_Dis,10011
-Submission of Contributions,Contribute,10012
-Trademarks,Trademark,10013
-Disclaimer of Warranty,Warranty_Disclaimer,10014
-Definition,Define,10015
-Basic Conditions ,Conditions,10016
-Modification ,Modify,10017
-Conditions for Copy and Distribution ,Conditions_C&D,10018
-"Rights to Copy, Modify, Sublicense, or Distribute ",Rights_CMSD,10019
-Acceptance of Terms and Conditions ,T&C,10020
-Redistribution,R_Dis,10021
-Legal Implications,Legal_Implication,10022
- Geographical Distribution Limitation ,GD_Limits,10023
-Publishing revised and/or new versions ,Publish_Revised_Newversions,10024
-Permission ,Permit,10025
-No Warranty ,No_Warranty_Disclaimer,10026
-Liability,Liability_Disclaimer,10027
-Definitions,Define,10028
-Source Code,SC,10029
-Basic Permissions ,Permit,10030
-Protecting Users' Legal Rights From Anti-Circumvention Law ,Legal_Implication,10031
-Conveying Verbatim Copies ,Verbatim_Copy,10032
-Conveying Modified Source Versions ,Revised_Modified_Version,10033
-Conveying Non-Source Forms ,Non_Source,10034
-Additional Terms ,T&C,10035
-Termination ,terminate,10036
-Acceptance Not Required for Having Copies ,No_Copies,10037
-Automatic Licensing of Downstream Recipients ,Licensing,10038
-Patents ,G_Patent,10039
 No Surrender of Others' ,,10040
 Freedom Use with the GNU Affero General Public License ,GNU_Compatlible,10041
 Revised Versions of this License ,Revised_Modified_Version,10042
@@ -52,11 +13,11 @@ Distribution of Compiled Forms of the Standard Version or Modified Versions with
 Aggregating or Linking the Package,,10051
 Items That are Not Considered Part of a Modified Version,,10052
 General Provisions,GP,10053
-Obtain copyright notice                                    ,G_Copyright,10054
+Obtain copyright notice,G_Copyright,10054
 "Right to Use, copy, distribute",Permits_UCD,10055
-Right to modify                                                        ,Permits_M,10056
-Right to Publish                                                              ,Permits_P,10057
-Right to sublicense and sell copies  ,Licensing,10058
+Right to modify,Permits_M,10056
+Right to Publish,Permits_P,10057
+Right to sublicense and sell copies,Licensing,10058
  Limitations ,Limits,10059
 No Warranty , No_Warranty_Disclaimer,10060
 Definitions ,Define,10061

@@ -40,4 +40,8 @@ urlpatterns = [
     path('api/', include('licenses.urls')),
     path('api/', include('agreements.urls')),
     path('api/', include('attributes.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/', include('attachments.urls')),
+    path('api/', include('contacts.urls')),
+]\
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

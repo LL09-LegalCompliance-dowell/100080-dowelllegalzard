@@ -32,9 +32,10 @@ def optimise_upload_img(file_path, extension):
 
 def upload_img(file):
     """Save image and optimize the size of the image
-       return (filename, file_extension, file_path)
+       return (filename, actual_filename, file_extension, file_path)
     """
     file_path = ""
+    actual_filename = ""
     new_filename = ""
     file_extension = ""
     try:
@@ -42,6 +43,8 @@ def upload_img(file):
         file_extension = file.name.split(".")[1].lower()
         # Get storage path
         root_path = os.path.join(settings.MEDIA_ROOT, 'images/')
+
+        actual_filename = file.name
 
         # Build file path
         root_path = root_path.replace("\\", "/")
@@ -64,7 +67,14 @@ def upload_img(file):
 
     except Exception as e:
         print(str(e))
-        return ""
+        return {}
 
     else:
-        return (new_filename, file_extension, file_path)
+        return {
+            "file_data": {
+                "filename": new_filename,
+                "actual_filename": actual_filename,
+                "file_extension": file_extension,
+                "file_path": file_path
+            }
+        }

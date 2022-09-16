@@ -74,8 +74,7 @@ class CommonAttributeList(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    # SEARCH FOR LICENSES HERE
-
+    # SEARCH FOR COMMOM ATTRIBUTE HERE
     def search_common_attribute(self, request, format=None):
         """ Load common attribute base on search term
         """
@@ -85,7 +84,7 @@ class CommonAttributeList(APIView):
             search_term = request.GET.get("search_term", "")
             response_json = {}
 
-            # Retrieve license on remote server
+            # Retrieve COMMON ATTRIBUTE on remote server
             response_json = fetch_document(
                 collection=COMMON_ATTRIBUTE_COLLECTION,
                 document=COMMON_ATTRIBUTE_DOCUMENT_NAME,
@@ -216,7 +215,7 @@ class AttributeList(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    # SEARCH FOR LICENSES HERE
+    # SEARCH FOR ATTRIBUTE HERE
 
     def search_attribute(self, request, format=None):
         """ Load attribute base on search term
@@ -227,7 +226,7 @@ class AttributeList(APIView):
             search_term = request.GET.get("search_term", "")
             response_json = {}
 
-            # Retrieve license on remote server
+            # Retrieve ATTRIBUTE on remote server
             response_json = fetch_document(
                 collection=ATTRIBUTE_COLLECTION,
                 document=ATTRIBUTE_DOCUMENT_NAME,
