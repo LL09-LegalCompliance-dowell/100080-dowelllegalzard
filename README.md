@@ -1180,3 +1180,20 @@ The API will return three error types when requests fail:
     ]
 }
 ```
+
+#### POST /api/attachments/
+
+- General:
+  - Upload a new file into the filesystems using the submitted json data, Returns the detail of the file uploaded and, success value.
+- You can also open the link `http://127.0.0.1:8000/api/attachments/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "file_data": {
+        "filename": "img_99347a0b-646d-47ce-82f7-43df2bbf2031.png",
+        "actual_filename": "working-hours-06-09-2022.PNG",
+        "file_extension": "png"
+    }
+}
+```
