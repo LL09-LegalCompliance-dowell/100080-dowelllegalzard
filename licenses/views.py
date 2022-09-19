@@ -70,13 +70,6 @@ class SoftwareLicenseList(APIView):
 
                 status_code = status.HTTP_200_OK
 
-            # # Localhost
-            # licenses_query = SoftwareLicense.objects.all()[offset:limit]
-            # # Initialize serialize object
-            # serializer = SoftwareLicenseSerializer()
-            # licenses = [serializer.to_representation(license.document, license.license_id) for license in licenses_query]
-            # response_json = {"data": license}
-
             return Response(
                 response_json,
                 status=status_code)
@@ -98,6 +91,7 @@ class SoftwareLicenseList(APIView):
 
             from datetime import date
             request_data = request.data
+            license_
 
             action_type = ""
             if "action_type" in request_data:
@@ -116,9 +110,7 @@ class SoftwareLicenseList(APIView):
 
                 # # Save image [image_url]
                 # if request_data['image_url']:
-                #     filename, file_extension, file_path =\
-                #         upload_img(
-                #             request_data['image_url'])
+                #     data = upload_img(request_data['image_url'])
 
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
