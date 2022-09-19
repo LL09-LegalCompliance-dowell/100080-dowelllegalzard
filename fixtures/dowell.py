@@ -13,7 +13,6 @@ SOFTWARE_AGREEMENT_COLLECTION = "agreement"
 SOFTWARE_LICENSE_COLLECTION = "softwarelicenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
-CONTACT_COLLECTION = "contact"
 # LICENSE_TYPE_COLLECTION = "license_types"
 
 # DOCUMENTS
@@ -21,7 +20,6 @@ SOFTWARE_AGREEMENT_DOCUMENT_NAME = "agreements"
 SOFTWARE_LICENSE_DOCUMENT_NAME = "softwarelicense"
 COMMON_ATTRIBUTE_DOCUMENT_NAME = "common_attributes"
 ATTRIBUTE_DOCUMENT_NAME = "attributes"
-CONTACT_DOCUMENT_NAME = "contacts"
 # LICENSE_TYPE_DOCUMENT_NAME = "license_type"
 
 # DOCUMENT KEY
@@ -29,7 +27,6 @@ SOFTWARE_AGREEMENT_KEY = "agreement"
 SOFTWARE_LICENSE_KEY = "softwarelicense"
 COMMON_ATTRIBUTE_KEY = "common_attributes"
 ATTRIBUTE_MAIN_KEY = "attributes"
-CONTACT_KEY = "contacts"
 # LICENSE_MAIN_KEY = "license_type"
 
 # TEAM ID
@@ -37,12 +34,14 @@ SOFTWARE_AGREEMENT_TEAM_ID = "10008002"
 SOFTWARE_LICENSE_TEAM_ID = "10008001"
 COMMON_ATTRIBUTE_TEAM_ID = "10008005"
 ATTRIBUTE_MAIN_TEAM_ID = "10008004"
-CONTACT_TEAM_ID = "10008702"
 # LICENSE_MAIN_TEAM_ID = ""
 
 # FUNCTION ID
-DEFAULT_FUNC_ID = "ABCDE"
-
+SOFTWARE_AGREEMENT_FUNC_ID = "ABCDE"
+SOFTWARE_LICENSE_FUNC_ID = "ABCDE"
+COMMON_ATTRIBUTE_FUNC_ID = "ABCDE"
+ATTRIBUTE_MAIN_FUNC_ID = "ABCDE"
+# LICENSE_MAIN_FUNC_ID = ""
 
 # SERVER
 DATABASE = "license"
@@ -268,9 +267,6 @@ def get_team_id(collection):
     elif collection == ATTRIBUTE_COLLECTION:
         team_id = ATTRIBUTE_MAIN_TEAM_ID
 
-    elif collection == CONTACT_COLLECTION:
-        team_id = CONTACT_TEAM_ID
-
     return team_id
 
 
@@ -278,19 +274,16 @@ def get_function_id(collection):
     func_id = ""
 
     if collection == SOFTWARE_AGREEMENT_COLLECTION:
-        func_id = DEFAULT_FUNC_ID
+        func_id = SOFTWARE_AGREEMENT_FUNC_ID
 
     elif collection == SOFTWARE_LICENSE_COLLECTION:
-        func_id = DEFAULT_FUNC_ID
+        func_id = SOFTWARE_LICENSE_FUNC_ID
 
     elif collection == COMMON_ATTRIBUTE_COLLECTION:
-        func_id = DEFAULT_FUNC_ID
+        func_id = COMMON_ATTRIBUTE_FUNC_ID
 
     elif collection == ATTRIBUTE_COLLECTION:
-        func_id = DEFAULT_FUNC_ID
-
-    elif collection == CONTACT_COLLECTION:
-        func_id = DEFAULT_FUNC_ID
+        func_id = ATTRIBUTE_MAIN_FUNC_ID
 
     return func_id
 

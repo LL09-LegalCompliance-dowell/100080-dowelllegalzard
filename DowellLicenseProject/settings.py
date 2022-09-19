@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'licenses',
     'agreements',
     'attributes',
+    'attachments',
+    'contacts',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +114,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = str(os.path.join(get_storage_path(DEBUG), 'static'))
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = str(os.path.join(get_storage_path(DEBUG), 'media'))
