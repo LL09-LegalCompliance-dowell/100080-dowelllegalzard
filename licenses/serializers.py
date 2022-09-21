@@ -59,10 +59,10 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     version = serializers.CharField(max_length=15)
     type_of_license = serializers.CharField(max_length=150)
     short_description = serializers.CharField(
-        max_length=300, default="", allow_blank=True, required=False)
+        max_length=500, default="", allow_blank=True, required=False)
     description = serializers.CharField(
-        max_length=2000, default="", allow_blank=True, required=False)
-    disclaimer = serializers.CharField(max_length=2000, default="")
+        max_length=10000, default="", allow_blank=True, required=False)
+    disclaimer = serializers.CharField(max_length=10000, default="")
     risk_for_choosing_license = serializers.CharField(max_length=2000)
     limitation_of_liability = serializers.CharField(max_length=2000)
     license_url = serializers.URLField(max_length=255)
