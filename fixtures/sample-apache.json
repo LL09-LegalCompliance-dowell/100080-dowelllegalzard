@@ -1,0 +1,197 @@
+[
+    {
+                "license_name": "Apache License<V.1.0>",
+                "features": [],
+                "version": "1.0",
+                "type_of_license": "Permissive",
+                "short_description": "The 1.0 version of the Apache License, approved by the ASF in 2004,All packages produced by the ASF are implicitly licensed under the Apache License, Version 1.0, unless otherwise explicitly stated.",
+                "description": "",
+                "disclaimer": "Copyright [yyyy] [name of copyright owner],Licensed under the Apache License, Version 1.0 (the License);you may not use this file except in compliance with the License.You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-1.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an AS IS BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache License 2.0 with GPL v2 Another aspect to consider is that a contributor can modify the code and then sell it as proprietary software",
+                "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+                "license_url": "https://www.apache.org/licenses/LICENSE-1.0",
+                "logo_detail": {
+                    "filename": "img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                    "actual_filename": "apache-logo.png",
+                    "file_extension": "png"
+                },
+                "other_links": [
+                    {
+                        "description": "Text version",
+                        "url": "https://www.apache.org/licenses/LICENSE-1.0.txt"
+                    },
+                    {
+                        "description": "SPDX short identifier",
+                        "url": "https://spdx.org/licenses/Apache-1.0.html"
+                    },
+                    {
+                        "description": "OSI Approved License",
+                        "url": "https://opensource.org/licenses/Apache-1.0"
+                    }
+                ],
+                "recommendation": "77",
+                "released_date": "2022-05-10",
+                "is_active": true,
+                "license_attributes":{
+                    "heading": "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+                    "attributes":[
+                    "Definitions",
+                    "Grant of Copyright License",
+                    "Grant of Patent License",
+                    "Redistribution",
+                    "Submission of Contributions",
+                    "Trademarks",
+                    "Disclaimer of Warranty",
+                    "Limitation of Liability",
+                    "Accepting Warranty or Additional Liability"
+                ]
+                },
+                "license_compatibility": [
+                    {
+                        "license": "GPL V3",
+                        "percentage_of_comaptibility": 77,
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPL/LGPL v1 and v2",
+                        "percentage_of_comaptibility": 0,
+                        "is_compatible": false
+                    }
+                ],
+                "license_compatible_with_lookup": [
+                    "GPL V3"
+                ],
+                "license_not_compatible_with_lookup": [
+                    "GPL/LGPL v1 and v2"
+                ]
+            
+        },
+
+    {
+                "license_name": "Apache License<V.1.1>",
+                "features": [],
+                "version": "1.1",
+                "type_of_license": "Permissive",
+                "short_description": "The 1.0 version of the Apache License, approved by the ASF in 2000,All packages produced by the ASF are implicitly licensed under the Apache License, Version 1.0, unless otherwise explicitly stated.",
+                "description": "",
+                "disclaimer": "",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache License 1.1 with GPL v2 Another aspect to consider is that a contributor can modify the code and then sell it as proprietary software",
+                "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+                "license_url": "https://www.apache.org/licenses/LICENSE-1.1",
+                "logo_detail": {
+                    "filename": "img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                    "actual_filename": "apache-logo.png",
+                    "file_extension": "png"
+                },
+                "other_links": [
+                    {
+                        "description": "Text version",
+                        "url": "https://www.apache.org/licenses/LICENSE-1.1"
+                    }
+                ],
+                "recommendation": "60",
+                "released_date": "2022-05-10",
+                "is_active": true,
+                "license_attributes":{
+                    "heading": "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+                    "attributes":[
+                    "Definitions",
+                    "Grant of Copyright License",
+                    "Grant of Patent License",
+                    "Redistribution",
+                    "Submission of Contributions",
+                    "Trademarks",
+                    "Disclaimer of Warranty",
+                    "Limitation of Liability",
+                    "Accepting Warranty or Additional Liability"
+                ]
+                },
+                "license_compatibility": [
+                    {
+                        "license": "GPL V3",
+                        "percentage_of_comaptibility": 77,
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPL/LGPL v1 and v2",
+                        "percentage_of_comaptibility": 0,
+                        "is_compatible": false
+                    }
+                ],
+                "license_compatible_with_lookup": [
+                    "GPL V3"
+                ],
+                "license_not_compatible_with_lookup": [
+                    "GPL/LGPL v1 and v2"
+                ]
+            
+        },
+        
+        {
+                "license_name": "Apache License<V.2.0>",
+                "features": [],
+                "version": "2.0",
+                "type_of_license": "Permissive",
+                "short_description": "The 2.0 version of the Apache License, approved by the ASF in 2004,All packages produced by the ASF are implicitly licensed under the Apache License, Version 2.0, unless otherwise explicitly stated.",
+                "description": "",
+                "disclaimer": "Copyright [yyyy] [name of copyright owner],Licensed under the Apache License, Version 2.0 (the License);you may not use this file except in compliance with the License.You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an AS IS BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
+                "risk_for_choosing_license": "One thing to consider is that you cannot combine Apache License 2.0 with GPL v2 Another aspect to consider is that a contributor can modify the code and then sell it as proprietary software",
+                "limitation_of_liability": "In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+                "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+                "logo_detail": {
+                    "filename": "img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                    "actual_filename": "apache-logo.png",
+                    "file_extension": "png"
+                },
+                "other_links": [
+                    {
+                        "description": "Text version",
+                        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    },
+                    {
+                        "description": "SPDX short identifier",
+                        "url": "https://spdx.org/licenses/Apache-2.0.html"
+                    },
+                    {
+                        "description": "OSI Approved License",
+                        "url": "https://opensource.org/licenses/Apache-2.0"
+                    }
+                ],
+                "recommendation": "77",
+                "released_date": "2022-05-10",
+                "is_active": true,
+                "license_attributes":{
+                    "heading": "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+                    "attributes":[
+                    "Definitions",
+                    "Grant of Copyright License",
+                    "Grant of Patent License",
+                    "Redistribution",
+                    "Submission of Contributions",
+                    "Trademarks",
+                    "Disclaimer of Warranty",
+                    "Limitation of Liability",
+                    "Accepting Warranty or Additional Liability"
+                ]
+                },
+                "license_compatibility": [
+                    {
+                        "license": "GPL V3",
+                        "percentage_of_comaptibility": 77,
+                        "is_compatible": true
+                    },
+                    {
+                        "license": "GPL/LGPL v1 and v2",
+                        "percentage_of_comaptibility": 0,
+                        "is_compatible": false
+                    }
+                ],
+                "license_compatible_with_lookup": [
+                    "GPL V3"
+                ],
+                "license_not_compatible_with_lookup": [
+                    "GPL/LGPL v1 and v2"
+                ]
+            
+        }
+]
