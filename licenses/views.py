@@ -19,7 +19,8 @@ from utils.dowell import (
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
-    RECORD_PER_PAGE
+    RECORD_PER_PAGE,
+    BASE_IMAGE_URL
 )
 
 from licenses.models import SoftwareLicense
@@ -68,6 +69,7 @@ class SoftwareLicenseList(APIView):
                     fields={}
                 )
 
+                response_json = self.add_license_logo_url(response_json)
                 status_code = status.HTTP_200_OK
 
             return Response(
@@ -91,7 +93,6 @@ class SoftwareLicenseList(APIView):
 
             from datetime import date
             request_data = request.data
-            license_
 
             action_type = ""
             if "action_type" in request_data:
@@ -107,10 +108,6 @@ class SoftwareLicenseList(APIView):
                 # to date object
                 request_data["released_date"] = date.fromisoformat(
                     request_data["released_date"])
-
-                # # Save image [image_url]
-                # if request_data['image_url']:
-                #     data = upload_img(request_data['image_url'])
 
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
@@ -219,6 +216,35 @@ class SoftwareLicenseList(APIView):
             print(f"{e}")
             return {"error_msg": f"{e}"}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
+    @staticmethod
+    def add_license_logo_url(response_data):
+        data_list = response_data['data']
+        new_data_list = []
+
+        for data in data_list:
+            softwarelicense = data['softwarelicense']
+            # this code only execute
+            # if the license object
+            # does not have logo_detail field
+            if "logo_detail" not in softwarelicense:
+                new_data_list.append(data)
+                continue
+
+            logo_detail = softwarelicense['logo_detail']
+            logo_detail['url'] = f'{BASE_IMAGE_URL}{logo_detail["filename"]}'
+
+            # update license logo detail
+            softwarelicense['logo_detail'] = logo_detail
+
+            # add licence to new data list
+            data['softwarelicense'] = softwarelicense
+            new_data_list.append(data)
+
+        if new_data_list:
+            response_data['data'] = new_data_list
+
+        return response_data
+
 
 class SoftwareLicenseDetail(APIView):
     """
@@ -240,6 +266,8 @@ class SoftwareLicenseDetail(APIView):
                 fields={"eventId": event_id}
             )
 
+            response_json = SoftwareLicenseList.add_license_logo_url(
+                response_json)
             return Response(response_json, status=status.HTTP_200_OK)
 
         # The code below will

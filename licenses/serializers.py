@@ -1,3 +1,6 @@
+from email.policy import default
+from importlib.metadata import requires
+from urllib import request
 from rest_framework import serializers
 import json
 from licenses.models import (
@@ -51,20 +54,24 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     """ Validate attribute, create and update
         software license document
     """
-    software_name = serializers.CharField(max_length=100)
     license_name = serializers.CharField(max_length=100)
+    features = serializers.ListField(default=[])
     version = serializers.CharField(max_length=15)
     type_of_license = serializers.CharField(max_length=150)
-    description = serializers.CharField(max_length=2000, default="")
-    disclaimer = serializers.CharField(max_length=2000, default="")
+    short_description = serializers.CharField(
+        max_length=500, default="", allow_blank=True, required=False)
+    description = serializers.CharField(
+        max_length=10000, default="", allow_blank=True, required=False)
+    disclaimer = serializers.CharField(max_length=10000, default="")
     risk_for_choosing_license = serializers.CharField(max_length=2000)
     limitation_of_liability = serializers.CharField(max_length=2000)
     license_url = serializers.URLField(max_length=255)
-    image_url = serializers.URLField(max_length=255)
+    other_links = serializers.ListField(default=[])
+    logo_detail = serializers.DictField()
     recommendation = serializers.CharField(max_length=2000, default="")
     released_date = serializers.DateField()
     is_active = serializers.BooleanField(default=True)
-    license_attributes = serializers.ListField(default=[])
+    license_attributes = serializers.DictField()
     license_compatibility = serializers.ListField(default=[])
     license_compatible_with_lookup = serializers.ListField(default=[])
     license_not_compatible_with_lookup = serializers.ListField(default=[])
@@ -141,6 +148,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
 
         # format date back to iso format
         validated_data['released_date'] = validated_data['released_date'].isoformat()
+        print("passed")
 
         # Update localhost
         # Retrieve license
