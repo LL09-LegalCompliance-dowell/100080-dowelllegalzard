@@ -30,13 +30,6 @@
         }
 
 
-        .tnc {
-            padding: 4px 20px 0px 0px;
-            text-align: left !important;
-            margin-top:10px;
-            font-size: 10px;
-        }
-
         .attribute{
             font-weight: bold;
             margin-bottom: 8px;
@@ -49,27 +42,6 @@
             /* Set the hr color */
             color: #333; /* old IE */
             background-color: #fff; /* Modern Browsers */
-        }
-
-        td.container > div {
-            width: 100%;
-            height: 100%;
-            overflow:hidden;
-        }
-
-        td.container {
-          margin-top: 0px;
-          margin-bottom: 0px;
-          height:28px;
-          text-align: left;
-          width: 500;
-          padding-left:5px;
-          vertical-align: center;
-        }
-        th {
-          margin-top: 0px;
-          margin-bottom: 0px;
-          height:28px;
         }
 
 
@@ -97,7 +69,7 @@
         }
 
         .border-bottom {
-            border-bottom:solid 1px #808080;
+            border-bottom:solid 1px #000;
         }
 
         .border-right {
@@ -124,11 +96,9 @@
                 <tbody>
                     <tr>
                         
-                        <td  width="100%">
-                            <h3>END USER LICENSE AGREEMENT</h3>
-                        </td>                       
-
-
+                        <td align="center"  width="100%">
+                            <h3><u>END USER LICENSE AGREEMENT</u></h3>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -140,39 +110,32 @@
 
 
 
-    <div style="margin-top: 20px;" class="main-container">
-
-
-
-        <div class='quotation-details'>
+    <div class="main-container">
+        <div>
 
           <table  style="font-size:12px; padding-top:5px ; " width="500" border="0" class="" >
               <thead>
                 <tr>
-                    <th class="container"></th>
+                    <th class=""></th>
                 </tr>
              </thead>
              <tbody >
                  
-                 <tr height="20px">
+                 <tr>
                      
-                    <td class="container">
+                    <td class="">
                        <div>
                            <strong>IMPORTANT INFORMATION PLEASE READ CAREFULLY</strong>
                            <p>
                                The herein contained {{software_product_license_name}} License Agreement (“License” or “EULA”) shall be considered a legally binding agreement between You (as an individual or an entity, who then shall, within the constraints of this agreement, be referred to as “You” or “Your”) and {{software_product_license_name}} for the use of the specified software application of {{software_product}}, which may include related printed material, media and any other components and/or software modules, including but not limited to required drivers (“Product”). Other aspects of the Product may also include, but are not limited to, software updates and any upgrades necessary that {{software_product_license_name}} may supply to You or make available to You, or that You could obtain after the initial copy of the Product, and as such that said items are not accompanied by a separate license agreement or terms of use.
-                           
-                               BY WAY OF THE INSTALLATION, COPYING, DOWNLOADING, ACCESSING OR OTHERWISE USE OF THIS PRODUCT, YOU ARE AGREEING TO BE LEGALLY BOUND BY THE HEREIN CONTAINED TERMS OF THIS {{software_product_license_name_uc}} LICENSE AGREEMENT. IF YOU DO NOT AGREE TO BE BOUND BY THE TERMS OF THIS EULA, YOU THEN HAVE NO RIGHTS TO THE PRODUCT AND SHOULD THEREFORE NOT INSTALL, COPY, DOWNLOAD, ACCESS NOR USE THE PRODUCT. 
-                               
-                               This Product is hereby protected by copyright laws, as well as any other intellectual property laws. This Product is licensed and not sold.
                             </p>
                         </div>
                     </td>
                 </tr>
 
-                <tr height="20px">
+                <tr>
                      
-                    <td class="container">
+                    <td class="">
                        <div>
                            <p>
                                BY WAY OF THE INSTALLATION, COPYING, DOWNLOADING, ACCESSING OR OTHERWISE USE OF THIS PRODUCT, YOU ARE AGREEING TO BE LEGALLY BOUND BY THE HEREIN CONTAINED TERMS OF THIS {{software_product_license_name_uc}} LICENSE AGREEMENT. IF YOU DO NOT AGREE TO BE BOUND BY THE TERMS OF THIS EULA, YOU THEN HAVE NO RIGHTS TO THE PRODUCT AND SHOULD THEREFORE NOT INSTALL, COPY, DOWNLOAD, ACCESS NOR USE THE PRODUCT.
@@ -182,9 +145,8 @@
                 </tr>
 
 
-                <tr height="20px">
-                     
-                    <td class="container">
+                <tr> 
+                    <td class="">
                        <div>
                            <p>
                                This Product is hereby protected by copyright laws, as well as any other intellectual property laws. This Product is licensed and not sold.
@@ -193,89 +155,97 @@
                     </td>
                 </tr>
 
-                 <tr height="20px">
+                <ol>
+                 <tr>
                      
-                    <td class="container">
+                    <td class="">
+                        
+                            <li class="attribute"></li>LICENSE GRANT</li>
+                            <div>
+                                {{software_product_license_name}} shall grant to You a non-exclusive license for the use and installation of the Product subject to all the terms and conditions set forth herein. Furthermore, this EULA shall also govern any and all software upgrades provided by {{software_product_license_name}} that would replace, over write and/or supplement the original installed version of the Product, unless those other upgrades are covered under a separate license, at which those terms of that license will govern.
+                            </div>         
 
-                        <div>
-                            <ol>
-                                <li class="attribute">LICENSE GRANT</li>
-                                <div>
-                                    {{software_product_license_name}} shall grant to You a non-exclusive license for the use and installation of the Product subject to all the terms and conditions set forth herein. Furthermore, this EULA shall also govern any and all software upgrades provided by {{software_product_license_name}} that would replace, over write and/or supplement the original installed version of the Product, unless those other upgrades are covered under a separate license, at which those terms of that license will govern.
-                                </div>
- 
-                                <li class="attribute">TERMINATION</li>
-                                <div>
-                                    Should you breach this EULA at any time, Your right to the use of the Product will then immediately terminate and shall terminate without any notice being given. However, all provisions of this EULA, with the exception of the License Grant contained within paragraph one (1), will remain in effect and thus shall survive termination. Upon termination of the License Grant, You MUST destroy any and all copies of the Product.
-                                </div>
- 
-                                <li class="attribute">COPYRIGHT</li>
-                                <div>
-                                    The aforementioned Product is protected by copyright and other intellectual property laws and treaties, and as such all rights, title, and interest in and to the content offered, including but not limited to, any photographs, images, video animation, text, and music, that may be incorporated as part of the offered content. Such offered content is protected by copyright laws and international treaty provisions. Therefore, offered content must be treated as any other copyrighted material, with the exception that it is allowable for You to make copies as provided by the License. However, printed material, which may accompany any offered content, may not be copied.
-                                </div>
+                            <li class="attribute"></li>TERMINATION</li>
+                            <div>
+                                Should you breach this EULA at any time, Your right to the use of the Product will then immediately terminate and shall terminate without any notice being given. However, all provisions of this EULA, with the exception of the License Grant contained within paragraph one (1), will remain in effect and thus shall survive termination. Upon termination of the License Grant, You MUST destroy any and all copies of the Product.
+                            </div>
+                    
+                            <li class="attribute"></li>COPYRIGHT</li>
+                            <div>
+                                The aforementioned Product is protected by copyright and other intellectual property laws and treaties, and as such all rights, title, and interest in and to the content offered, including but not limited to, any photographs, images, video animation, text, and music, that may be incorporated as part of the offered content. Such offered content is protected by copyright laws and international treaty provisions. Therefore, offered content must be treated as any other copyrighted material, with the exception that it is allowable for You to make copies as provided by the License. However, printed material, which may accompany any offered content, may not be copied.
+                            </div>
 
 
-                                <li class="attribute">RESTRICTIONS ON USE</li>
+                            <li class="attribute">RESTRICTIONS ON USE</li>
+                            <div>
+                                <p>As a Licensee, You may not:</p>
                                 <div>
-                                    <p>As a Licensee, You may not:</p>
-                                    <div>
-                                        <ol>
-                                            <li>Make use of the offered content on more than one computer at a time, without prior purchase of additional licenses;</li>
-                                            <li>You may not share, distribute, lend, lease, sublicense or otherwise make available, in any manner whatsoever, to any third party the offered content;</li>
-                                            <li>Modify, adapt, create derivative works from or translate any part of the offered content other than what may be used within Your work in accordance with this License;</li>
-                                            <li>Reverse engineer, decompile or disassemble the offered content, nor attempt to locate or obtain its source code;</li>
-                                            <li>Attempt to alter or remove any trademark, copyright or other proprietary notice contained within the offered content; or</li>
-                                            <li>Make use of any offered content in any manner not stipulated within this EULA or the documentation accompanying the offered content.</li>
-                                        </ol>
-                                    </div>
+                                    <ol>
+                                        <li>Make use of the offered content on more than one computer at a time, without prior purchase of additional licenses;</li>
+                                        <li>You may not share, distribute, lend, lease, sublicense or otherwise make available, in any manner whatsoever, to any third party the offered content;</li>
+                                        <li>Modify, adapt, create derivative works from or translate any part of the offered content other than what may be used within Your work in accordance with this License;</li>
+                                        <li>Reverse engineer, decompile or disassemble the offered content, nor attempt to locate or obtain its source code;</li>
+                                        <li>Attempt to alter or remove any trademark, copyright or other proprietary notice contained within the offered content; or</li>
+                                        <li>Make use of any offered content in any manner not stipulated within this EULA or the documentation accompanying the offered content.</li>
+                                    </ol>
                                 </div>
-
-                                <li class="attribute">UPDATES</li>
-                                <div>
-                                    {{software_product_license_name}} may find the need from time to time to make available to all license holders updates for the offered content, in accordance with the herein contained terms and conditions of this EULA. It shall be at the sole discretion of {{software_product_license_name}} to make conditional releases of said upgrade to You upon your acceptance of another EULA or execution of another separate agreement. Should you elect to install and make use of these updates, you are therefore agreeing to be subject to all applicable license, terms and conditions of this EULA and/or any other agreement.
-                                </div>
-
-                                <li class="attribute">DISCLAIMER OF WARRANTY</li>
-                                <div>
-                                    With regard and with relationship to the maximum extent permitted by applicable law, {{software_product_license_name}}, and if applicable, its suppliers shall provide the Product and any support services, if needed, related to the Product, and hereunto disclaim all warranties and conditions, either express, implied or statutory, which may include, but are not limited to, any implied warranties or conditions of merchantability, of suitability for a specified purpose, that it contains absolute accuracy or completeness of responses, of results, and of any lack of negligence or lack of workmanlike effort, all with respect to the Product, and the provision of or failure to provide Support Services. FURTHERMORE, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, OR NON-INFRINGEMENT WITH REGARDS TO THE HEREIN CONTAINED PRODUCT. THE ENTIRE RISK AS TO THE QUALITY OF OR PERFORMANCE OF THE PRODUCT AND SUPPORT SERVICES, IF ANY, REST WITH YOU.
-                                </div>
-
-                                <li class="attribute">LIMITATION OF LIABILITY AND REMEDIES</li>
-                                <div>
-                                    In spite of any damages that you may or may not incur for any reason, which may include, but are not limited to, any and all direct or general damages, the entire liability of {{software_product_license_name}} and/or any of its suppliers covered under the herein contained provisions of this EULA, along with Your exclusive remedy with regards to all of the foregoing, shall hereby be limited to the greater of the amount actually paid by you for this Product or the amount of $[LIABILITY_REMEDY_AMOUNT]. Therefore, the aforementioned limitations, exclusions and any disclaimers shall apply to the maximum extent allowable by law, even should any proposed remedy fail its essential purpose.
-                                </div>
-
-                                <li class="attribute">EXPORT CONTROLS</li>
-                                <div>
-                                    By clicking on the install button, you hereby agree that you will comply with any and all applicable export laws, restrictions and all regulations of the U.S. Department of Commerce, U.S. Department of Treasury, and any other U.S. or foreign agency or authority with regards to this provision of the EULA. You expressly agree not to export or re-export, nor allow the export or re-export of the offered content in violation of any such law, restriction or regulation, including without limitation, export or re-export to any country subject to any and all applicable U.S. trade embargoes or to any prohibited destination, in any group specified in the current “Supplement No. 1 to Part 740 or the Commerce Control List specified in the then current Supplement No. 1 to Part 738 of the U.S. Export Administration Regulations (or any successor supplement or regulations).”
-                                </div>
-
-                                <li class="attribute">U.S. GOVERNMENT END USERS</li>
-                                <div>
-                                    The offered content is licensed by the U.S. Government with RESTRICTED RIGHTS. The use, duplication of, or the disclosure by the U.S. Government, shall be subject to restrictions in accordance with DFARS 252.227-7013 of the Technical Data and Computer Software clause, and 48 DCR 52.227-19 of the Commercial Computer Software clause, as applicable.
-                                </div>
-
-                                <li class="attribute">MISCELLANEOUS</li>
-                                <div>
-                                    This EULA, in its entirety, shall be legally binding upon and inure to the benefit of {{software_product_license_name}} and You, our respective successors and permitted assigns. Should any of this provision be deemed invalid or unenforceable, such determination will not affect the validity or enforceability of any other provision contained herein. If there is any waiver of any breach or failure to enforce any of the provisions contained herein, it shall not be deemed as a future waiver of said terms or a waiver of any other provision of this EULA. Any waiver, supplementation, modification or amendment to any provision of this EULA, shall only be effective when done so in writing and signed off by {{software_product_license_name}} and You. This EULA shall be governed solely by the laws of the {{state_law_applies}} and of the United States. Should any action arise out of or in relation to this EULA, such action may be brought exclusively in the appropriate federal or state court in {{license_jurisdiction_city}}, {{license_jurisdiction_state}}, and as such, you and {{software_product_license_name}} irrevocable consent to the jurisdiction of said court and venue for {{license_jurisdiction_city}}, {{license_jurisdiction_state}}.
-                                </div>
-
-                                <li class="attribute">CONTACT INFORMATION</li>
-                                <div>
-                                    {{license_representative_name}}
-                                    {{license_representative_address}}
-                                    {{license_representative_city}}, {{party_1_jurisdiction_incorporated}} {{party_1_postal_address}}
-                                    
-                                    {{license_representative_phone}}
-                                    {{license_representative_email}}
-                                </div>
-
-                            </ol>
-                        </div>
- 
+                            </div>     
                     </td>
 
                 </tr>
+
+                <tr>
+                     
+                    <td class="">
+                    
+                            <li class="attribute">UPDATES</li>
+                            <div>
+                                {{software_product_license_name}} may find the need from time to time to make available to all license holders updates for the offered content, in accordance with the herein contained terms and conditions of this EULA. It shall be at the sole discretion of {{software_product_license_name}} to make conditional releases of said upgrade to You upon your acceptance of another EULA or execution of another separate agreement. Should you elect to install and make use of these updates, you are therefore agreeing to be subject to all applicable license, terms and conditions of this EULA and/or any other agreement.
+                            </div>
+                    
+                            <li class="attribute">DISCLAIMER OF WARRANTY</li>
+                            <div>
+                                With regard and with relationship to the maximum extent permitted by applicable law, {{software_product_license_name}}, and if applicable, its suppliers shall provide the Product and any support services, if needed, related to the Product, and hereunto disclaim all warranties and conditions, either express, implied or statutory, which may include, but are not limited to, any implied warranties or conditions of merchantability, of suitability for a specified purpose, that it contains absolute accuracy or completeness of responses, of results, and of any lack of negligence or lack of workmanlike effort, all with respect to the Product, and the provision of or failure to provide Support Services. FURTHERMORE, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, OR NON-INFRINGEMENT WITH REGARDS TO THE HEREIN CONTAINED PRODUCT. THE ENTIRE RISK AS TO THE QUALITY OF OR PERFORMANCE OF THE PRODUCT AND SUPPORT SERVICES, IF ANY, REST WITH YOU.
+                            </div>
+                    
+                            <li class="attribute">LIMITATION OF LIABILITY AND REMEDIES</li>
+                            <div>
+                                In spite of any damages that you may or may not incur for any reason, which may include, but are not limited to, any and all direct or general damages, the entire liability of {{software_product_license_name}} and/or any of its suppliers covered under the herein contained provisions of this EULA, along with Your exclusive remedy with regards to all of the foregoing, shall hereby be limited to the greater of the amount actually paid by you for this Product or the amount of $[LIABILITY_REMEDY_AMOUNT]. Therefore, the aforementioned limitations, exclusions and any disclaimers shall apply to the maximum extent allowable by law, even should any proposed remedy fail its essential purpose.
+                            </div>
+                    
+                            <li class="attribute">EXPORT CONTROLS</li>
+                            <div>
+                                By clicking on the install button, you hereby agree that you will comply with any and all applicable export laws, restrictions and all regulations of the U.S. Department of Commerce, U.S. Department of Treasury, and any other U.S. or foreign agency or authority with regards to this provision of the EULA. You expressly agree not to export or re-export, nor allow the export or re-export of the offered content in violation of any such law, restriction or regulation, including without limitation, export or re-export to any country subject to any and all applicable U.S. trade embargoes or to any prohibited destination, in any group specified in the current “Supplement No. 1 to Part 740 or the Commerce Control List specified in the then current Supplement No. 1 to Part 738 of the U.S. Export Administration Regulations (or any successor supplement or regulations).”
+                            </div>
+                    
+                            <li class="attribute">U.S. GOVERNMENT END USERS</li>
+                            <div>
+                                The offered content is licensed by the U.S. Government with RESTRICTED RIGHTS. The use, duplication of, or the disclosure by the U.S. Government, shall be subject to restrictions in accordance with DFARS 252.227-7013 of the Technical Data and Computer Software clause, and 48 DCR 52.227-19 of the Commercial Computer Software clause, as applicable.
+                            </div>
+                    
+                            <li class="attribute">MISCELLANEOUS</li>
+                            <div>
+                                This EULA, in its entirety, shall be legally binding upon and inure to the benefit of {{software_product_license_name}} and You, our respective successors and permitted assigns. Should any of this provision be deemed invalid or unenforceable, such determination will not affect the validity or enforceability of any other provision contained herein. If there is any waiver of any breach or failure to enforce any of the provisions contained herein, it shall not be deemed as a future waiver of said terms or a waiver of any other provision of this EULA. Any waiver, supplementation, modification or amendment to any provision of this EULA, shall only be effective when done so in writing and signed off by {{software_product_license_name}} and You. This EULA shall be governed solely by the laws of the {{state_law_applies}} and of the United States. Should any action arise out of or in relation to this EULA, such action may be brought exclusively in the appropriate federal or state court in {{license_jurisdiction_city}}, {{license_jurisdiction_state}}, and as such, you and {{software_product_license_name}} irrevocable consent to the jurisdiction of said court and venue for {{license_jurisdiction_city}}, {{license_jurisdiction_state}}.
+                            </div>
+                    
+                            <li class="attribute">CONTACT INFORMATION</li>
+                            <div>
+                                {{license_representative_name}}</br>
+                                {{license_representative_address}}</br>
+                                {{license_representative_city}}</br> 
+                                {{party_1_jurisdiction_incorporated}}</br>
+                                {{party_1_postal_address}}</br>
+                                
+                                {{license_representative_phone}}</br>
+                                {{license_representative_email}}
+                            </div>
+                    
+                            
+                        
+                    </td>
+
+                </tr>
+            </ol> 
 
 
              </tbody>
