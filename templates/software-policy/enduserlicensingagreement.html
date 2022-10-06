@@ -2,26 +2,21 @@
 <html>
 
 <head>
-    <title>{{software_document_identification}}</title>
+    <title>{{software_product_license_name}}-{{software_product}}</title>
 
     <style type="text/css">
         body {
             font-weight: 200;
-            font-size: 12px;
+            font-size: 13px;
             padding-top: 0px;
             margin-top: 0px;
+            font-family: 'Times New Roman', Times, serif;
         }
         .header {
             font-size: 18px;
             font-weight: 100;
             text-align: center;
             color: #000;
-        }
-
-        .invoice_number {
-            font-size: 13px;
-            font-weight: 80;
-            padding: 10px 20px 0px 20px;
         }
 
         .title {
@@ -34,16 +29,6 @@
             color: #007cae;
         }
 
-        .details-bill-to {
-            padding: 10px 10px 0px 0px;
-            text-align: left !important;
-        }
-
-        .details-ship-to {
-            padding: 10px 10px 0px 0px;
-            text-align: right !important;
-        }
-
 
         .tnc {
             padding: 4px 20px 0px 0px;
@@ -52,17 +37,10 @@
             font-size: 10px;
         }
 
-        .letterhead {
-            padding: 0px 6px 0px 0px;
-            text-align: right !important;
-            font-size: 13px;
-            margin-top:40px;
-        }
-
-        .balance-due-detail {
-            padding: 0px 6px 0px 0px;
-            text-align: right !important;
-            font-size: 15px;
+        .attribute{
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-top: 32px;
         }
 
         .hrItem {
@@ -83,6 +61,10 @@
           margin-top: 0px;
           margin-bottom: 0px;
           height:28px;
+          text-align: left;
+          width: 500;
+          padding-left:5px;
+          vertical-align: center;
         }
         th {
           margin-top: 0px;
@@ -124,8 +106,8 @@
 
         @page{
             margin: 0px;
-            margin-left:25px;
-            margin-right:25px;
+            margin-left:100px;
+            margin-right:100px;
             margin-top:25px;
         }
 
@@ -138,44 +120,14 @@
     <header>
 
         <div>
-            <table>
+            <table width="500">
                 <tbody>
                     <tr>
                         
-                        <td  width="60%">
-                            <img height="{{business_information_json.logo_on_invoice_height}}" width="{{business_information_json.logo_on_invoice_width}}"  src="{{business_logo_url}}" />
-
+                        <td  width="100%">
+                            <h3>END USER LICENSE AGREEMENT</h3>
                         </td>                       
-                        <td width="40%">
-                          <div  class='letterhead'>
-                            <strong style="font-size:25px;">{{job_order_json.document_title}}</strong><br/>
-                            {% if business_name_not_empty %}
-                             {{business_information_json.business_name}}<br/>
-                            {% endif %}
 
-                            {% if office_location_not_empty %}
-                             {{business_information_json.office_location}}<br/>
-                            {% endif %}
-                            {% if business_information_json.addition_office_location_detail %}
-                             {{business_information_json.addition_office_location_detail}}<br/>
-                            {% endif %}
-                            {% if phone_not_empty %}
-                             Tel: {{business_information_json.zip_code}}{{business_information_json.fmt_phone}} {% if business_information_json.fmt_phone_2 %},{{business_information_json.zip_code}}{{business_information_json.fmt_phone_2}}{% endif %}<br/>
-                            {% endif %}
-                            {% if fax_not_empty %}
-                             Fax: {{business_information_json.fax}}<br/>
-                            {% endif %}
-                            {% if email_not_empty %}
-                             Email: {{business_information_json.email}}<br/>
-                            {% endif %}
-                            {% if website_not_empty %}
-                             Website: {{business_information_json.website}}<br/>
-                            {% endif %}
-            
-                          </div>
-
-                            
-                        </td>
 
                     </tr>
 
@@ -190,358 +142,156 @@
 
     <div style="margin-top: 20px;" class="main-container">
 
-        <table>
-            <tbody>
-                <tr>
-                    <!--CUSTOMER INFO OR BILL TO-->
-                    <td  width="60%">
-
-                        <div  class='details-bill-to'>
-                            <label style="color:#838383;">Bill To:</label> <br/>
-                            {{job_order_json.customer_name}} <br/>
-                            Phone:  {{job_order_json.phone}} <br/>
-                            {%if job_order_json.attention_name %}
-                            Attention:  {{job_order_json.attention_name}} {%if job_order_json.att_phone %} | {{job_order_json.att_phone}} {%endif%} <br/>
-                            {%endif%}
-
-                            {% if make_invoice_prepared_by_visible_on_invoice %}
-                            {{business_information_json.we_term_prepared_by_as}}:  {{job_order_json.estimate_prepared_by}} <br/> 
-                            {% endif %}
-
-                            {% if make_sales_personel_visible_on_invoice %}
-                            Sales personnel:  {{job_order_json.assignee_or_sales_personel}} <br/>
-                            {% endif %}
-
-                            {{job_order_json.billing_type_for_print_out}} date: {{ job_order_json.quotation_created_datetime }}<br/>
-                            {% if make_invoice_due_date_visible_on_invoice %}
-                            {% if invoice_due_date_format_id_greater_than_1 %}
-                            Due date: {{ job_order_json.invoice_or_quote_due_datetime }}<br/>
-                            {% endif %}
-                            {% endif %}
-                            {{job_order_json.site_name}}
-
-                        </div>   
-
-                    </td>
-
-
-
-                    <!--SHIPPING ADDRESS-->
-                    <td  width="40%">
-                        {% if show_shipping_address %}
-                        <div  class='details-ship-to'>
-                            <label style="color:#838383;">Ship To:</label> <br/>
-                            {{job_order_json.shipping_attention_to}}<br/>
-                            {%if job_order_json.shipping_attention_to_phone %}{{job_order_json.shipping_attention_to_phone}}<br/>{%endif%}
-                            {%if job_order_json.shipping_address_1 %}{{job_order_json.shipping_address_1}}<br/>{%endif%}
-                            {%if job_order_json.shipping_address_2 %}{{job_order_json.shipping_address_2}}<br/>{%endif%}
-                            {%if job_order_json.shipping_city_or_town %}{{job_order_json.shipping_city_or_town}},{%endif%}
-                            {%if job_order_json.shipping_state_or_province %}{{job_order_json.shipping_state_or_province}},{%endif%}
-                            {%if job_order_json.shipping_zip_or_postal_code %}{{job_order_json.shipping_zip_or_postal_code}}{%endif%}
-                            <br/>
-                            {%if job_order_json.shipping_country %}{{job_order_json.shipping_country}}<br/>{%endif%}
-
-                        </div>
-                        {%endif%}
-
-                        <div  class='details-ship-to'>
-                            {%if total_meter_run %}Total Mass: {{total_meter_run}} kg<br/>{%endif%}
-                            {%if roof_pitch_in_degree %}Roof Pitch: {{roof_pitch_in_degree}} deg<br/>{%endif%}
-                            {%if roof_area_in_sqm %}Roof Area: {{roof_area_in_sqm}} sqm<br/>{%endif%}
-                            {%if floor_area_in_sqm %}Floor Area: {{floor_area_in_sqm}} sqm<br/>{%endif%}
-                            {%if trusses_centres_in_m %}Max Truss Centres: {{trusses_centres_in_m}} mm<br/>{%endif%}
-                            {%if purlin_centres_in_m %}Max Purlin Centres: {{purlin_centres_in_m}} mm<br/>{%endif%}
-                            {%if trusses_overhang_in_m %}Max Truss Overhang: {{trusses_overhang_in_m}} mm{%endif%}
-                        </div>                        
-
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
-
-
-        <div style="margin-top: 6px;margin-bottom: 6px;" class='wrapper'>
-
-            <table>
-                <tbody>
-                    <tr>
-                        
-                        <td>
-                            <div class='header'>
-                               <p style="text-align: left; padding: 10px 20px 0px 0px;" class='invoice_number'><strong>{{job_order_json.billing_type_for_print_out}} #:</strong> {{job_order_json.invoice_number}}</p>
-                            </div>
-
-                        </td>                       
-                        <td>
-                            
-                            <div class='header'>
-                               <p style="text-align: right; padding: 10px 0px 0px 20px;" class='invoice_number'><strong>{{job_order_json.material_gauge_and_description}}</strong></p>
-                                
-                            </div>
-                            
-                        </td>
-
-                    </tr>
-
-                </tbody>
-            </table> 
-        <div>
-
-
 
 
         <div class='quotation-details'>
 
-          <table  style="font-size:12px; padding-top:5px ; " width="700" border="0" class="" >
+          <table  style="font-size:12px; padding-top:5px ; " width="500" border="0" class="" >
               <thead>
                 <tr>
-                 
-          
-                    <th class="border-head border-left border-right container" style="text-align: left;padding-left:5px;width: 330;font-size:12px;">Item Description</th>
-                    <th class="border-head border-right container" style="text-align: center; width: 65;font-size:12px;">Unit</th>
-                    <th class="border-head border-right container" style="text-align: center; width: 75;font-size:12px;">Quantity</th>
-                    <th class="border-head border-right container" style="text-align: right;padding-right:10px; width: 110;font-size:12px;">Price</th>
-                    <th class="border-head border-right container" style="text-align: right;padding-right:5px;width: 130;font-size:12px;">Amount</th>
-
+                    <th class="container"></th>
                 </tr>
              </thead>
              <tbody >
                  
-               {% for detail in panel_detail_list %}
+                 <tr height="20px">
+                     
+                    <td class="container">
+                       <div>
+                           <strong>IMPORTANT INFORMATION PLEASE READ CAREFULLY</strong>
+                           <p>
+                               The herein contained {{software_product_license_name}} License Agreement (“License” or “EULA”) shall be considered a legally binding agreement between You (as an individual or an entity, who then shall, within the constraints of this agreement, be referred to as “You” or “Your”) and {{software_product_license_name}} for the use of the specified software application of {{software_product}}, which may include related printed material, media and any other components and/or software modules, including but not limited to required drivers (“Product”). Other aspects of the Product may also include, but are not limited to, software updates and any upgrades necessary that {{software_product_license_name}} may supply to You or make available to You, or that You could obtain after the initial copy of the Product, and as such that said items are not accompanied by a separate license agreement or terms of use.
+                           
+                               BY WAY OF THE INSTALLATION, COPYING, DOWNLOADING, ACCESSING OR OTHERWISE USE OF THIS PRODUCT, YOU ARE AGREEING TO BE LEGALLY BOUND BY THE HEREIN CONTAINED TERMS OF THIS {{software_product_license_name_uc}} LICENSE AGREEMENT. IF YOU DO NOT AGREE TO BE BOUND BY THE TERMS OF THIS EULA, YOU THEN HAVE NO RIGHTS TO THE PRODUCT AND SHOULD THEREFORE NOT INSTALL, COPY, DOWNLOAD, ACCESS NOR USE THE PRODUCT. 
+                               
+                               This Product is hereby protected by copyright laws, as well as any other intellectual property laws. This Product is licensed and not sold.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr height="20px">
+                     
+                    <td class="container">
+                       <div>
+                           <p>
+                               BY WAY OF THE INSTALLATION, COPYING, DOWNLOADING, ACCESSING OR OTHERWISE USE OF THIS PRODUCT, YOU ARE AGREEING TO BE LEGALLY BOUND BY THE HEREIN CONTAINED TERMS OF THIS {{software_product_license_name_uc}} LICENSE AGREEMENT. IF YOU DO NOT AGREE TO BE BOUND BY THE TERMS OF THIS EULA, YOU THEN HAVE NO RIGHTS TO THE PRODUCT AND SHOULD THEREFORE NOT INSTALL, COPY, DOWNLOAD, ACCESS NOR USE THE PRODUCT.
+                           </p>
+                       </div>
+                    </td>
+                </tr>
+
+
+                <tr height="20px">
+                     
+                    <td class="container">
+                       <div>
+                           <p>
+                               This Product is hereby protected by copyright laws, as well as any other intellectual property laws. This Product is licensed and not sold.
+                           </p>
+                       </div>
+                    </td>
+                </tr>
 
                  <tr height="20px">
                      
-                     <td class="border-left border-right container" style="text-align: left;width: 330;padding-left:5px;vertical-align: center;font-size:11px;">
+                    <td class="container">
+
                         <div>
-                            {{detail.item_description}}
+                            <ol>
+                                <li class="attribute">LICENSE GRANT</li>
+                                <div>
+                                    {{software_product_license_name}} shall grant to You a non-exclusive license for the use and installation of the Product subject to all the terms and conditions set forth herein. Furthermore, this EULA shall also govern any and all software upgrades provided by {{software_product_license_name}} that would replace, over write and/or supplement the original installed version of the Product, unless those other upgrades are covered under a separate license, at which those terms of that license will govern.
+                                </div>
+ 
+                                <li class="attribute">TERMINATION</li>
+                                <div>
+                                    Should you breach this EULA at any time, Your right to the use of the Product will then immediately terminate and shall terminate without any notice being given. However, all provisions of this EULA, with the exception of the License Grant contained within paragraph one (1), will remain in effect and thus shall survive termination. Upon termination of the License Grant, You MUST destroy any and all copies of the Product.
+                                </div>
+ 
+                                <li class="attribute">COPYRIGHT</li>
+                                <div>
+                                    The aforementioned Product is protected by copyright and other intellectual property laws and treaties, and as such all rights, title, and interest in and to the content offered, including but not limited to, any photographs, images, video animation, text, and music, that may be incorporated as part of the offered content. Such offered content is protected by copyright laws and international treaty provisions. Therefore, offered content must be treated as any other copyrighted material, with the exception that it is allowable for You to make copies as provided by the License. However, printed material, which may accompany any offered content, may not be copied.
+                                </div>
+
+
+                                <li class="attribute">RESTRICTIONS ON USE</li>
+                                <div>
+                                    <p>As a Licensee, You may not:</p>
+                                    <div>
+                                        <ol>
+                                            <li>Make use of the offered content on more than one computer at a time, without prior purchase of additional licenses;</li>
+                                            <li>You may not share, distribute, lend, lease, sublicense or otherwise make available, in any manner whatsoever, to any third party the offered content;</li>
+                                            <li>Modify, adapt, create derivative works from or translate any part of the offered content other than what may be used within Your work in accordance with this License;</li>
+                                            <li>Reverse engineer, decompile or disassemble the offered content, nor attempt to locate or obtain its source code;</li>
+                                            <li>Attempt to alter or remove any trademark, copyright or other proprietary notice contained within the offered content; or</li>
+                                            <li>Make use of any offered content in any manner not stipulated within this EULA or the documentation accompanying the offered content.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <li class="attribute">UPDATES</li>
+                                <div>
+                                    {{software_product_license_name}} may find the need from time to time to make available to all license holders updates for the offered content, in accordance with the herein contained terms and conditions of this EULA. It shall be at the sole discretion of {{software_product_license_name}} to make conditional releases of said upgrade to You upon your acceptance of another EULA or execution of another separate agreement. Should you elect to install and make use of these updates, you are therefore agreeing to be subject to all applicable license, terms and conditions of this EULA and/or any other agreement.
+                                </div>
+
+                                <li class="attribute">DISCLAIMER OF WARRANTY</li>
+                                <div>
+                                    With regard and with relationship to the maximum extent permitted by applicable law, {{software_product_license_name}}, and if applicable, its suppliers shall provide the Product and any support services, if needed, related to the Product, and hereunto disclaim all warranties and conditions, either express, implied or statutory, which may include, but are not limited to, any implied warranties or conditions of merchantability, of suitability for a specified purpose, that it contains absolute accuracy or completeness of responses, of results, and of any lack of negligence or lack of workmanlike effort, all with respect to the Product, and the provision of or failure to provide Support Services. FURTHERMORE, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, OR NON-INFRINGEMENT WITH REGARDS TO THE HEREIN CONTAINED PRODUCT. THE ENTIRE RISK AS TO THE QUALITY OF OR PERFORMANCE OF THE PRODUCT AND SUPPORT SERVICES, IF ANY, REST WITH YOU.
+                                </div>
+
+                                <li class="attribute">LIMITATION OF LIABILITY AND REMEDIES</li>
+                                <div>
+                                    In spite of any damages that you may or may not incur for any reason, which may include, but are not limited to, any and all direct or general damages, the entire liability of {{software_product_license_name}} and/or any of its suppliers covered under the herein contained provisions of this EULA, along with Your exclusive remedy with regards to all of the foregoing, shall hereby be limited to the greater of the amount actually paid by you for this Product or the amount of $[LIABILITY_REMEDY_AMOUNT]. Therefore, the aforementioned limitations, exclusions and any disclaimers shall apply to the maximum extent allowable by law, even should any proposed remedy fail its essential purpose.
+                                </div>
+
+                                <li class="attribute">EXPORT CONTROLS</li>
+                                <div>
+                                    By clicking on the install button, you hereby agree that you will comply with any and all applicable export laws, restrictions and all regulations of the U.S. Department of Commerce, U.S. Department of Treasury, and any other U.S. or foreign agency or authority with regards to this provision of the EULA. You expressly agree not to export or re-export, nor allow the export or re-export of the offered content in violation of any such law, restriction or regulation, including without limitation, export or re-export to any country subject to any and all applicable U.S. trade embargoes or to any prohibited destination, in any group specified in the current “Supplement No. 1 to Part 740 or the Commerce Control List specified in the then current Supplement No. 1 to Part 738 of the U.S. Export Administration Regulations (or any successor supplement or regulations).”
+                                </div>
+
+                                <li class="attribute">U.S. GOVERNMENT END USERS</li>
+                                <div>
+                                    The offered content is licensed by the U.S. Government with RESTRICTED RIGHTS. The use, duplication of, or the disclosure by the U.S. Government, shall be subject to restrictions in accordance with DFARS 252.227-7013 of the Technical Data and Computer Software clause, and 48 DCR 52.227-19 of the Commercial Computer Software clause, as applicable.
+                                </div>
+
+                                <li class="attribute">MISCELLANEOUS</li>
+                                <div>
+                                    This EULA, in its entirety, shall be legally binding upon and inure to the benefit of {{software_product_license_name}} and You, our respective successors and permitted assigns. Should any of this provision be deemed invalid or unenforceable, such determination will not affect the validity or enforceability of any other provision contained herein. If there is any waiver of any breach or failure to enforce any of the provisions contained herein, it shall not be deemed as a future waiver of said terms or a waiver of any other provision of this EULA. Any waiver, supplementation, modification or amendment to any provision of this EULA, shall only be effective when done so in writing and signed off by {{software_product_license_name}} and You. This EULA shall be governed solely by the laws of the {{state_law_applies}} and of the United States. Should any action arise out of or in relation to this EULA, such action may be brought exclusively in the appropriate federal or state court in {{license_jurisdiction_city}}, {{license_jurisdiction_state}}, and as such, you and {{software_product_license_name}} irrevocable consent to the jurisdiction of said court and venue for {{license_jurisdiction_city}}, {{license_jurisdiction_state}}.
+                                </div>
+
+                                <li class="attribute">CONTACT INFORMATION</li>
+                                <div>
+                                    {{license_representative_name}}
+                                    {{license_representative_address}}
+                                    {{license_representative_city}}, {{party_1_jurisdiction_incorporated}} {{party_1_postal_address}}
+                                    
+                                    {{license_representative_phone}}
+                                    {{license_representative_email}}
+                                </div>
+
+                            </ol>
                         </div>
-
-                     </td>
-
-                     <td class="border-right container" style="text-align: center;width: 65;vertical-align: center;font-size:11px;">{{detail.unit}}</td>
-                     <td class="border-right container" style="text-align: center;width: 75;vertical-align: center;font-size:12px;">{{detail.qty}}</td>
-                     <td class="border-right container" style="text-align: right;padding-right:10px;width: 110;vertical-align: center;font-size:12px;">{{detail.rate}}</td>
-                     <td class="border-right container" style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{detail.amount}}</td>
-
-
-
-                 </tr>
-               {% endfor %}
-
-
-
-             </tbody>
-            
-             <tbody>
-
-            
-                <tr>
-                     
-                     <td class="border-top" colspan="4" style="text-align: right;vertical-align: center;padding-right:10px;font-size:12px;">Subtotal</td>
-                     <td class="border-top border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{sub_total_amount}}</td>
-
-                 </tr>
-
-                {%if include_labour %}
-                <tr>
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{labour_description}}</td>
-                     <td class="container border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{labour_amount}}</td>
-                 </tr>
-                {%endif%}
-
-                {%if include_discount %}
-                <tr>
-                     
-                     
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{discount_description}}</td>
-                     <td class="container border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">-{{discount_amount}}</td>
-
-                 </tr>
-                {%endif%}
-
-
-                
-                {% for tax_display_name, tax_amount in tax_or_vat_amount_dict.items %}
-                <tr>
-                     
-                     
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{tax_display_name}}</td>
-                     <td class="border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{tax_amount}}</td>
-
-                 </tr>
-                 {% endfor %}
-
-
-
-                {%if include_shipping %}
-                <tr>
-                     
-                    
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{shipping_description}}</td>
-                     <td class="border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{shipping_amount}}</td>
-
-                 </tr>
-                <tr>
-                     
-                     
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{tax_on_shipping_description}}</td>
-                     <td class="border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{tax_on_shipping_amount}}</td>
-
-                 </tr>
-                {%endif%}
-
-                {%if include_custom_duty %}
-                <tr>
-                     
-                    
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{custom_duty_description}}</td>
-                     <td class="border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{custom_duty_amount}}</td>
-
-                 </tr>
-                {%endif%}
-
-                {%if apply_tax_on_transportation %}
-                {%else%}
-                {%if include_transportation %}
-                 <tr>
-                    
-                     <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">{{transport.item_description}}</td>
-                     <td class="border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{transport.amount}}</td>
-
-                  </tr>
-                {%endif%}
-                {%endif%}
-
-                <tr>
-                     
-                     <td colspan="4" style="text-align: right;vertical-align: center;padding-right:10px;font-size:12px;"><strong>Total</strong></td>
-                     <td class="border-bottom border-top border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;"><strong>{{total_incl_vat_amount}}{{currency.iso_code_used}}</strong></td>
-
-                 </tr>
-
-                 {%if invoice_paid_as_sales %}
-                  <tr>
-                    <td colspan="4" style="text-align: right; vertical-align: center;padding-right:10px;font-size:12px;">Amount Paid</td>
-                     <td class="border-bottom border-left border-right"  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{invoice_amount_paid}}{{currency.iso_code_used}}</td>
-                  </tr>
-                {%endif%}
-            
-             </tbody>
-
-          </table>
-
-          {%if has_optional_item%}
-          <table  style="font-size: 14px; padding-top:5px ; " width="700" border="0" class="" >
-              <thead>
-                <tr>
-                 
-          
-                    <th class="container border-bottom" style="text-align: left;padding-left:5px;width: 700;font-size:12px;">OPTIONAL ITEMS & SERVICES</th>
-                    <th class="container border-bottom" style="text-align: center; width: 65;font-size:12px;"></th>
-                    <th class="container border-bottom" style="text-align: center; width: 75;font-size:12px;"></th>
-                    <th class="container border-bottom" style="text-align: right;padding-right:10px; width: 110;font-size:12px;"></th>
-                    <th class="container border-bottom" style="text-align: right;padding-right:5px;width: 130;font-size:12px;"></th>
+ 
+                    </td>
 
                 </tr>
-             </thead>
-             <tbody >
-                 
-               {% for detail in optional_item_detail_list %}
-
-                 <tr>
-                     
-                     <td class="border-left container" style="text-align: left;width: 330;padding-left:5px;vertical-align: center;font-size:11px;">
-                        <div>
-                            {{detail.item_description}}
-                        </div>
-
-                     </td>
-                     <td colspan="2" class="container" style="text-align: center;width: 140;vertical-align: center;font-size:12px;">{{detail.qty}}/{{detail.unit}}</td>
-                     <td class="container" style="text-align: right;padding-right:10px;width: 110;vertical-align: center;font-size:12px;">{{detail.rate}}</td>
-                     <td class="container border-right" style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;">{{detail.amount}}{{currency.iso_code_used}}</td>
-
-
-
-                 </tr>
-               {% endfor %}
-
-                 <tr>
-                     <td colspan="5" class="container border-bottom border-right border-left" style="text-align: center;width: 65;vertical-align: center;font-size:11px;"></td>
-                 </tr>
 
 
              </tbody>
-          
+            
+
 
           </table>
-
-
-
-          <!--Grand Total-->
-          <table  style="font-size: 15px; padding-top:5px ; " width="700" border="0" class="" >
-              <thead>
-                <tr>
-                    <th class="container" style="text-align: left;padding-left:5px;width: 570;font-size:12px;"></th>
-                    <th class="container" style="text-align: left;padding-left:5px;width: 130;font-size:12px;"></th>
-                </tr>
-             </thead>
-             <tbody >
-                 <tr>
-                     <td style="text-align: right;vertical-align: center;padding-right:10px;font-size:12px;"><strong>Grand Total</strong></td>
-                     <td class=""  style="text-align: right;padding-right:5px;width: 130;vertical-align: center;font-size:12px;"><strong>{{total_incl_vat_amount_plus_optional_amount}}{{currency.iso_code_used}}</strong></td>
-                </tr>
-             </tbody>
-          </table>
-          <!--End ofGrand Total-->
-
-          
-          {%endif%}
-        <div  class='tnc'>
-          <br/>
-          <br/>
-
-            {% if make_terms_and_condition_visible_on_invoice %}
-             <strong>{{business_information_json.terms_and_condition_header}}</strong> <br/>
-             {% for terms in terms_and_condition_list %}
-             {{terms}}<br/>
-             {% endfor %}
-            {% endif %}
-
-            {% if show_service_specific_warranty_on_invoice %}
-             <br/><strong>{{service_category.service_specific_warranty}}</strong> <br/>
-            {% endif %}
-
-
-            {% if make_bank_detail_visible_on_invoice %}
-             <br/><strong>{{business_information_json.payment_method_detail_header}}:</strong><br/>
-             {% for payment_method in payment_method_detail_list %}
-             {{payment_method}}<br/>
-             {% endfor %}
-            {% endif %} 
-
-
-            {% if enable_signature_on_quote_or_invoice %}
-             <br/>Signature:_______________________________________<br/>
-            {% endif %} 
-
-
-            {% if business_information_json.thank_you_for_business_memo %}
-             <br/><br/>{{business_information_json.thank_you_for_business_memo}}<br/>
-            {% endif %} 
-           
-            
-            
-        </div>
-
-
-
 
 
 
         </div>
+    
 
-</div>
+
+
+    </div>
 
 
 

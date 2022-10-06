@@ -11,9 +11,34 @@ from utils.dowell import (
     SOFTWARE_AGREEMENT_KEY
 
 )
+from . generate_policy_pdf_document import create_pdf_document
+
+context = {
+    "_id":"dldndeoe-eeldld-eldlld-3344",
+    "software_product_license_name": "Apache v2.0",
+    "software_product": "Friends Packet",
+    "software_product_license_name_uc": "Packet 400",
+    "liability_remedy_amount": "2000.00",
+    "state_law_applies": "India",
+    "license_jurisdiction_city": "Mubai",
+    "license_jurisdiction_state": "India",
+    "license_representative_name": "Charu",
+    "license_representative_address": "784 state road",
+    "license_representative_city": "Mubai",
+    "license_representative_state": "India",
+    "license_representative_zipcode": "00245",
+    "license_representative_phone": "02154555555",
+    "license_representative_email": "sample@sample.com"
+    }
+
+create_pdf_document(context, "enduserlicensingagreement.html")
 
 
-class SoftwareAgreementSerializer(serializers.Serializer):
+
+
+
+
+class SoftwareLicensePolicySerializer(serializers.Serializer):
     """ Validate attribute, create and update software
         license agreement document
     """
@@ -86,6 +111,7 @@ class SoftwareAgreementSerializer(serializers.Serializer):
     circumstances_in_which_a_party_may_terminate_for_breach = serializers.CharField(
         max_length=255)
     time_frame_for_the_notice_period = serializers.CharField(max_length=50)
+    
     contact_details_to_sent_contractual_notices_to_the_licensor = serializers.CharField(
         max_length=255)
     contact_details_to_sent_contractual_notices_to_the_licensee = serializers.CharField(
@@ -107,6 +133,20 @@ class SoftwareAgreementSerializer(serializers.Serializer):
     party_2_date_of_signing_contract = serializers.DateField()
     full_name_of_party_2_witness = serializers.CharField(max_length=150)
     party_2_witness_date_of_signing_contract = serializers.DateField()
+
+    software_product_license_name = serializers.CharField(max_length=150)
+    software_product = serializers.CharField(max_length=150)
+    software_product_license_name_uc = serializers.CharField(max_length=150)
+    liability_remedy_amount = serializers.CharField(max_length=150)
+    state_law_applies = serializers.CharField(max_length=150)
+    license_jurisdiction_city = serializers.CharField(max_length=150)
+    license_jurisdiction_state = serializers.CharField(max_length=150)
+    license_representative_address = serializers.CharField(max_length=150)
+    license_representative_city = serializers.CharField(max_length=150)
+    license_representative_state = serializers.CharField(max_length=150)
+    license_representative_zipcode = serializers.CharField(max_length=150)
+    license_representative_phone = serializers.CharField(max_length=150)
+    license_representative_email = serializers.CharField(max_length=150)
 
     def create(self, validated_data):
         """
@@ -146,6 +186,12 @@ class SoftwareAgreementSerializer(serializers.Serializer):
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
 
+
+        # Generate pdf document
+        filename = create_pdf_document(validated_data, "softwarelicensepolicy.html")
+        validated_data['pdf_policy_generated_name'] = filename
+
+
         # Create software agreement on remote server
         response_json = save_document(
             collection=SOFTWARE_AGREEMENT_COLLECTION,
@@ -162,7 +208,7 @@ class SoftwareAgreementSerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": response_json["event_id"]}
             )
-        print(response_json)
+
         return response_json, status_code
 
     def update(self, event_id, validated_data):
@@ -205,6 +251,132 @@ class SoftwareAgreementSerializer(serializers.Serializer):
 
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
+
+
+        # Generate pdf document
+        filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
+        validated_data['pdf_document_generated'] = filename
+
+
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
+
+class EulaSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        end-user-license-agreement document
+    """
+
+    software_product_license_name = serializers.CharField(max_length=150)
+    software_product = serializers.CharField(max_length=150)
+    software_product_license_name_uc = serializers.CharField(max_length=150)
+    liability_remedy_amount = serializers.CharField(max_length=150)
+    state_law_applies = serializers.CharField(max_length=150)
+    license_jurisdiction_city = serializers.CharField(max_length=150)
+    license_jurisdiction_state = serializers.CharField(max_length=150)
+    license_representative_name = serializers.CharField(max_length=150)
+    license_representative_address = serializers.CharField(max_length=150)
+    license_representative_city = serializers.CharField(max_length=150)
+    license_representative_state = serializers.CharField(max_length=150)
+    license_representative_zipcode = serializers.CharField(max_length=150)
+    license_representative_phone = serializers.CharField(max_length=150)
+    license_representative_email = serializers.CharField(max_length=150)
+
+
+    def create(self, validated_data):
+        """
+        Create and return new software agreement.
+        """
+
+        # Generate pdf document
+        filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
+        validated_data['pdf_policy_generated_name'] = filename
+
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            value=validated_data
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return software agreement.
+        """
+        status_code = 500
+        response_json = {}
+
+        # format date back to iso format
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+
+        validated_data["effective_date_for_invoice_payment"]\
+            = validated_data["effective_date_for_invoice_payment"].isoformat()
+
+        validated_data["party_1_date_of_signing_contract"]\
+            = validated_data["party_1_date_of_signing_contract"].isoformat()
+
+        validated_data["party_1_witness_date_of_signing_contract"]\
+            = validated_data["party_1_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_date_of_signing_contract"]\
+            = validated_data["party_2_date_of_signing_contract"].isoformat()
+
+        validated_data["party_2_witness_date_of_signing_contract"]\
+            = validated_data["party_2_witness_date_of_signing_contract"].isoformat()
+
+        validated_data["invoicing_date"]\
+            = validated_data["invoicing_date"].isoformat()
+
+        validated_data["contract_termination_date"]\
+            = validated_data["contract_termination_date"].isoformat()
+
+        validated_data["contract_effective_date"]\
+            = validated_data["contract_effective_date"].isoformat()
+
+        validated_data["charges_payable"] = float(
+            validated_data["charges_payable"])
+
+        validated_data["interest_rate_apply_to_late_payment"] = float(
+            validated_data["interest_rate_apply_to_late_payment"])
+
+
+        # Generate pdf document
+        filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
+        validated_data['pdf_document_generated'] = filename
+
+
 
         # Update software agreement on remote server
         response_json = update_document(

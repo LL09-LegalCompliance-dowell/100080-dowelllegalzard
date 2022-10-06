@@ -1116,10 +1116,8 @@ The API will return three error types when requests fail:
             "_id": "6323cbb0002f0020a7730e9e",
             "eventId": "FB1010000000166329028254989355",
             "contacts": {
-                "first_name": "sample",
-                "last_name": "sample 1",
+                "full_name": "sample",
                 "email": "sample@sample.com",
-                "phone_number": "000-000-0000",
                 "message": "sample message",
                 "search_term": "sample sample-sample@sample.com 000-000-0000"
             }
@@ -1141,12 +1139,10 @@ The API will return three error types when requests fail:
             "_id": "6323cbb0002f0020a7730e9e",
             "eventId": "FB1010000000166329028254989355",
             "contacts": {
-                "first_name": "sample",
-                "last_name": "sample 1",
+                "full_name": "sample",
                 "email": "sample@sample.com",
-                "phone_number": "000-000-0000",
                 "message": "sample message",
-                "search_term": "sample sample-sample@sample.com 000-000-0000"
+                "search_term": "sample-sample@sample.com"
             }
         }
     ]
@@ -1157,7 +1153,7 @@ The API will return three error types when requests fail:
 
 - General:
   - Creates a new contact us using the submitted json data, Returns the detail of the created contact us, success value, and event id.
-- `curl http://127.0.0.1:8000/api/contacts/ -X POST -H "Content-Type: application/json" -d '{ "first_name": "sample", "last_name": "sample 1", "email": "sample@sample.com", "phone_number": "000-000-0000", "message": "sample message" }'`
+- `curl http://127.0.0.1:8000/api/contacts/ -X POST -H "Content-Type: application/json" -d '{ "full_name": "sample", "email": "sample@sample.com", "message": "sample message"}'`
 
 - You can also open the link `http://127.0.0.1:8000/api/contacts/` in a browser and perform the post operation
 
@@ -1169,12 +1165,37 @@ The API will return three error types when requests fail:
             "_id": "6323cbb0002f0020a7730e9e",
             "eventId": "FB1010000000166329028254989355",
             "contacts": {
-                "first_name": "sample",
-                "last_name": "sample 1",
+                "full_name": "sample",
                 "email": "sample@sample.com",
-                "phone_number": "000-000-0000",
                 "message": "sample message",
-                "search_term": "sample sample-sample@sample.com 000-000-0000"
+                "search_term": "sample-sample@sample.com"
+            }
+        }
+    ]
+}
+```
+
+
+#### PUT /api/contacts/{event_id}/
+
+- General:
+  - Update contact us using the submitted json data, Returns the detail of the updated contact us, success value, and event id.
+- `curl http://127.0.0.1:8000/api/contacts/FB1010000000166329028254989355/ -X POST -H "Content-Type: application/json" -d '{ "full_name": "Some Sample", "email": "sample@sample.com", "message": "sample message"}'`
+
+- You can also open the link `http://127.0.0.1:8000/api/contacts/FB1010000000166329028254989355/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "6323cbb0002f0020a7730e9e",
+            "eventId": "FB1010000000166329028254989355",
+            "contacts": {
+                "full_name": "Some Sample",
+                "email": "sample@sample.com",
+                "message": "sample message",
+                "search_term": "Some Sample-sample@sample.com"
             }
         }
     ]
