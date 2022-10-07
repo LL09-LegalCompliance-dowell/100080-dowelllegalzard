@@ -1,12 +1,12 @@
 from django.urls import path
 from .views import (
-    SoftwareAgreementList,
-    SoftwareAgreementDetail
+    AgreementComplianceList,
+    AgreementComplianceDetail
 )
 
 app_name = "agreements"
 urlpatterns = [
-    path('agreements/', SoftwareAgreementList.as_view(), name="agreements"),
+    path('agreements/', AgreementComplianceList.as_view(), name="agreements"),
     path('agreements/<str:event_id>/',
-         SoftwareAgreementDetail.as_view(), name="agreement_detail"),
+         AgreementComplianceDetail.as_view(), name="agreement_detail"),
 ]

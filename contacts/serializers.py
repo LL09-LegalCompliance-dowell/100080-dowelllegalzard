@@ -15,18 +15,13 @@ class ContactSerializer(serializers.Serializer):
     """ Create and update contact us
         eg.
         {
-            "first_name": "sample",
-            "last_name": "sample 1",
+            "full_name": "sample ",
             "email": "sample@sample.com",
-            "phone_number":"000-000-0000",
             "message": "sample message",
-            "search_term": "sample sample 1-sample@sample.com-000-000-0000"
         }
     """
-    first_name = serializers.CharField(max_length=50)
-    last_name = serializers.CharField(max_length=50)
+    full_name = serializers.CharField(max_length=50)
     email = serializers.CharField(max_length=50)
-    phone_number = serializers.CharField(max_length=50)
     message = serializers.CharField(max_length=5000)
 
     def create(self, validated_data):
@@ -34,11 +29,10 @@ class ContactSerializer(serializers.Serializer):
         status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
         # Create contact on remote server
-        search_term = f"{validated_data['first_name']} {validated_data['first_name']}-"
-        search_term += f"{validated_data['email']} {validated_data['phone_number']}"
+        search_term = f"{validated_data['full_name']} {validated_data['email']}"
         validated_data['search_term'] = search_term
 
-        print(validated_data)
+        
         response_json = save_document(
             collection=CONTACT_COLLECTION,
             document=CONTACT_DOCUMENT_NAME,
@@ -61,8 +55,7 @@ class ContactSerializer(serializers.Serializer):
     def update(self, event_id, validated_data):
 
         # # Update contact on remote server
-        search_term = f"{validated_data['first_name']} {validated_data['first_name']}-"
-        search_term += f"{validated_data['email']} {validated_data['phone_number']}"
+        search_term = f"{validated_data['full_name']} {validated_data['email']}"
         validated_data['search_term'] = search_term
         response_json = update_document(
             collection=CONTACT_COLLECTION,

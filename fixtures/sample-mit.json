@@ -1,6 +1,7 @@
 [
     {
                 "license_name": "MIT License <MIT-0>",
+                "spdx_identifier": "MIT-0",
                 "features": [
                     "FSF Approved",
                     "OSI Approved"
@@ -58,5 +59,67 @@
                     "GPL/LGPL v1 and v2"
                 ]
             
-        }
+        },
+
+        {
+            "license_name": "X11 License",
+            "spdx_identifier": "MIT-0",
+            "features": [
+                "FSF Approved",
+                "OSI Approved"
+            ],
+            "version": "X11",
+            "type_of_license": "Permissive",
+            "short_description": "X11 is the current version of the X Window System, the de facto standard graphical engine for Linux and other Unix-like operating systems. It was developed at MIT.",
+            "description": "",
+            "disclaimer": "IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+            "risk_for_choosing_license": "The MIT No Attribution or MIT-0 license is a modification to the usual MIT license that removes the requirement for attribution. 1. The MIT License does not cover explicitly the patents rights 2. The MIT License does not cover explicitly the trademarks restrictions",
+            "limitation_of_liability": "IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+            "license_url": "https://opensource.org/licenses/MIT",
+            "logo_detail": {
+                "filename": "img_7d9d26f3-7ee8-45a2-8604-4ca011c15267.png",
+                "actual_filename": "mit-logo.png",
+                "file_extension": "png"
+            },
+            "other_links": [
+                {
+                    "description": "SPDX identifier",
+                    "url": "https://spdx.org/licenses/MIT.html"
+                }
+            ],
+            "recommendation": "This is same as MIT, but with no advertising clause added. Clause- Except as contained in this notice, the name(s) of the above copyright holders shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization. Meaning - This license is identical to the MIT License, but with an extra sentence that prohibits using the copyright holders' names for advertising or promotional purposes without written permission.",
+            "released_date": "2022-05-10",
+            "is_active": true,
+            "license_attributes":{
+                "heading": "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+                "attributes":[
+                "Obtain copyright notice",
+                "Right to Use, copy, distribute",
+                "Right to modify",
+                "Right to Publish",
+                "Right to sublicense and sell copies",
+                "Limitations",
+                "No Warranty"
+            ]
+            },
+            "license_compatibility": [
+                {
+                    "license": "GPL V3",
+                    "percentage_of_comaptibility": 0,
+                    "is_compatible": true
+                },
+                {
+                    "license": "GPL/LGPL v1 and v2",
+                    "percentage_of_comaptibility": 0,
+                    "is_compatible": false
+                }
+            ],
+            "license_compatible_with_lookup": [
+                "GPL V3"
+            ],
+            "license_not_compatible_with_lookup": [
+                "GPL/LGPL v1 and v2"
+            ]
+        
+    }
 ]
