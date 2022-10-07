@@ -125,3 +125,29 @@ class ContactDetail(APIView):
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    def put(self, request,  event_id, format=None):
+        try:
+            response_json = {}
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            request_data = request.data
+            
+            serializer = ContactSerializer(event_id, data=request_data)
+
+            # Commit data to database
+            if serializer.is_valid():
+                response_json, status_code = serializer.update(event_id, serializer.validated_data)
+
+            return Response(response_json,
+                            status=status_code
+                            )
+
+        # The code below will
+        # execute when error occur
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}"
+            },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

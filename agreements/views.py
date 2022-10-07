@@ -15,10 +15,10 @@ from utils.dowell import (
 )
 
 
-from agreements.serializers import SoftwareAgreementSerializer
+from agreements.serializers import SoftwareLicensePolicySerializer
 
 
-class SoftwareAgreementList(APIView):
+class AgreementComplianceList(APIView):
     """ List all and create software agreements policy
     """
 
@@ -95,7 +95,7 @@ class SoftwareAgreementList(APIView):
             #             request_data['party_2_signatory_scanned_copy_url'])
 
             # Create serializer object
-            serializer = SoftwareAgreementSerializer(data=request_data)
+            serializer = SoftwareLicensePolicySerializer(data=request_data)
 
             # Commit data to database
             response_json = {}
@@ -118,7 +118,7 @@ class SoftwareAgreementList(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class SoftwareAgreementDetail(APIView):
+class AgreementComplianceDetail(APIView):
     """
      Retrieve , update and delete software license
     """
@@ -178,7 +178,7 @@ class SoftwareAgreementDetail(APIView):
                 request_data["contract_effective_date"])
 
             # Update and Commit data into database
-            serializer = SoftwareAgreementSerializer(
+            serializer = SoftwareLicensePolicySerializer(
                 event_id, data=request_data)
 
             if serializer.is_valid():
