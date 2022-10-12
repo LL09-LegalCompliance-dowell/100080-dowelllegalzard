@@ -13,6 +13,34 @@ from utils.dowell import (
 )
 
 
+from . generate_policy_pdf_document import create_pdf_document
+
+
+# sample 
+context = {
+    "_id":"dldndeoe-eeldld-eldlld-3344",
+    "software_product_license_name": "Apache v2.0",
+    "software_product": "Friends Packet",
+    "software_product_license_name_uc": "Packet 400",
+    "liability_remedy_amount": "2000.00",
+    "state_law_applies": "India",
+    "license_jurisdiction_city": "Mubai",
+    "license_jurisdiction_state": "India",
+    "license_representative_name": "Charu",
+    "license_representative_address": "784 state road",
+    "license_representative_city": "Mubai",
+    "license_representative_state": "India",
+    "license_representative_zipcode": "00245",
+    "license_representative_phone": "02154555555",
+    "license_representative_email": "sample@sample.com"
+    }
+
+create_pdf_document(context, "end-user-licensing-agreement.html")
+
+
+
+
+
 
 class SoftwareLicensePolicySerializer(serializers.Serializer):
     """ Validate attribute, create and update software
@@ -282,9 +310,9 @@ class EulaSerializer(serializers.Serializer):
         Create and return new software agreement.
         """
 
-        # Generate pdf document
-        filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
-        validated_data['pdf_policy_generated_name'] = filename
+        # # Generate pdf document
+        # filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
+        # validated_data['pdf_policy_generated_name'] = filename
 
 
         # Create software agreement on remote server
@@ -348,9 +376,9 @@ class EulaSerializer(serializers.Serializer):
             validated_data["interest_rate_apply_to_late_payment"])
 
 
-        # Generate pdf document
-        filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
-        validated_data['pdf_document_generated'] = filename
+        # # Generate pdf document
+        # filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
+        # validated_data['pdf_document_generated'] = filename
 
 
 
