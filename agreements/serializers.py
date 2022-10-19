@@ -17,30 +17,6 @@ from utils.dowell import (
 from .generate_agreement_compliance_pdf import create_pdf_document
 
 
-# sample 
-context = {
-    "_id":"dldndeoe-eeldld-eldlld-3344",
-    "software_product_license_name": "Apache v2.0",
-    "software_product": "Friends Packet",
-    "software_product_license_name_uc": "Packet 400",
-    "liability_remedy_amount": "2000.00",
-    "state_law_applies": "India",
-    "license_jurisdiction_city": "Mubai",
-    "license_jurisdiction_state": "India",
-    "license_representative_name": "Charu",
-    "license_representative_address": "784 state road",
-    "license_representative_city": "Mubai",
-    "license_representative_state": "India",
-    "license_representative_zipcode": "00245",
-    "license_representative_phone": "02154555555",
-    "license_representative_email": "sample@sample.com"
-    }
-
-# create_pdf_document(context)
-
-
-
-
 
 
 class SoftwareLicensePolicySerializer(serializers.Serializer):
@@ -297,7 +273,7 @@ class EulaSerializer(serializers.Serializer):
     software_product_license_name = serializers.CharField(max_length=150)
     software_product_license_name_uc = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
 
-    liability_remedy_amount = serializers.DecimalField(default = 0)
+    liability_remedy_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
     state_law_applies = serializers.CharField(max_length=150)
     jurisdiction_city = serializers.CharField(max_length=150)
     jurisdiction_state = serializers.CharField(max_length=150)
@@ -320,6 +296,9 @@ class EulaSerializer(serializers.Serializer):
 
         validated_data["date_of_commencement"]\
             = validated_data["date_of_commencement"].isoformat()
+
+        validated_data["liability_remedy_amount"] = float(
+            validated_data["liability_remedy_amount"])
 
 
         # Create software agreement on remote server
@@ -356,7 +335,8 @@ class EulaSerializer(serializers.Serializer):
         validated_data["date_of_commencement"]\
             = validated_data["date_of_commencement"].isoformat()
 
-
+        validated_data["liability_remedy_amount"] = float(
+            validated_data["liability_remedy_amount"])
 
         # Update software agreement on remote server
         response_json = update_document(

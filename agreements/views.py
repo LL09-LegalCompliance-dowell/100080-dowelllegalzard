@@ -199,15 +199,17 @@ class AgreementComplianceDetail(APIView):
 
             if request_data['agreement_compliance_type'] == "software-license-policy":
                 response_json, status_code = self.update_software_license_policy(
-                    request_data,
-                    response_json,
-                    status_code)
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
 
             elif request_data['agreement_compliance_type'] == "eula":
                 response_json, status_code = self.update_eula(
-                    request_data,
-                    response_json,
-                    status_code)
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
 
             return Response(response_json, status=status_code)
 
@@ -309,10 +311,6 @@ class AgreementComplianceDetail(APIView):
 
         # return result
         return response_json, status_code
-
-
-
-
 
 
 
