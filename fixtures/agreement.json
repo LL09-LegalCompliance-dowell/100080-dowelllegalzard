@@ -1,5 +1,6 @@
 {
-    "date_of_execution_of_document": "2022-10-20",
+    "agreement_compliance_type": "software-license-policy",
+    "date_of_execution_of_document": "2025-10-20",
     "party_1_entity_type": "Individual",
     "party_1_full_name": "Dowell Research 1",
     "party_1_postal_address": "P.O.BOX 45, India",
@@ -14,7 +15,7 @@
     "party_2_registration_number": "459996665",
     "party_2_registrar_office_address": "Some where in USA",
     "party_2_principal_place_of_business": "USA",
-    "charges_payable": 245.00,
+    "charges_payable": 245.0,
     "software_document_identification": "My software sample",
     "contract_effective_date": "2022-10-29",
     "minimum_terms_apply": "2",

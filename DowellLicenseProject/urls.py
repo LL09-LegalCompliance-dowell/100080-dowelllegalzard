@@ -19,6 +19,7 @@ from django.urls import path, re_path, include
 from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
+from agreements.views import load_public_agreement_compliance, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,8 @@ urlpatterns = [
     path('api/', include('attributes.urls')),
     path('api/', include('attachments.urls')),
     path('api/', include('contacts.urls')),
+    path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
+    path('', index, name="index")
 ]\
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
