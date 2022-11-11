@@ -12,9 +12,32 @@ from utils.dowell import (
     SOFTWARE_AGREEMENT_KEY
 
 )
-
-
 from .generate_agreement_compliance_pdf import create_pdf_document
+
+# data = {
+#             "_id": "62f61602d8e350aa754b84c7",
+#             "eventId": "FB1010000000001660294653510514",
+#             "agreement": {
+#                 "agreement_compliance_type": "eula",
+#                 "date_of_execution_of_document": "2025-10-20",
+#                 "party_1_entity_type": "Individual",
+#                 "party_1_full_name": "Dowell Research 1",
+#                 "party_1_postal_address": "P.O.BOX 45, India",
+#                 "party_1_jurisdiction_incorporated": "sample law",
+#                 "party_1_registration_number": "RS5428888",
+#                 "party_1_registrar_office_address": "sample office address",
+#                 "party_1_principal_place_of_business": "India",
+#                 "party_2_entity_type": "Organization",
+#                 "party_2_full_name": "Organization Name",
+#                 "party_2_postal_address": "P.O.BOX 87",
+#                 "party_2_jurisdiction_incorporated": "USA",
+#                 "party_2_registration_number": "459996665",
+#                 "party_2_registrar_office_address": "Some where in USA",
+#                 "party_2_principal_place_of_business": "USA"
+#             }
+#         }
+
+# create_pdf_document(data)
 
 
 
@@ -156,10 +179,6 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
             validated_data["interest_rate_apply_to_late_payment"])
 
 
-        # # Generate pdf document
-        # filename = create_pdf_document(validated_data, "softwarelicensepolicy.html")
-        # validated_data['pdf_policy_generated_name'] = filename
-
 
         # Create software agreement on remote server
         response_json = save_document(
@@ -177,6 +196,9 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": response_json["event_id"]}
             )
+
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
 
         return response_json, status_code
 
@@ -245,6 +267,9 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": event_id}
             )
+
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
 
         return response_json, status_code
 
@@ -318,6 +343,9 @@ class EulaSerializer(serializers.Serializer):
                 fields={"eventId": response_json["event_id"]}
             )
 
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
+
         return response_json, status_code
 
     def update(self, event_id, validated_data):
@@ -356,4 +384,153 @@ class EulaSerializer(serializers.Serializer):
                 fields={"eventId": event_id}
             )
 
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
+
         return response_json, status_code
+
+
+
+class MOUSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        MOU document
+    """
+
+    PERIOD_MENTIONED = (("Days", "Days"), ("Months", "Months"), ("Years", "Years"))
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    date_of_execution_of_document = serializers.DateField()
+    party_1_entity_type = serializers.CharField(max_length=50)
+    party_1_full_name = serializers.CharField(max_length=150)
+    party_1_address_line_1 = serializers.CharField(max_length=255)
+    party_1_address_line_2 = serializers.CharField(max_length=255)
+    party_1_address_line_3 = serializers.CharField(max_length=255)
+    party_1_zipcode = serializers.CharField(max_length=20)
+    party_1_state = serializers.CharField(max_length=50)
+    party_1_country = serializers.CharField(max_length=50)
+    # party_1_period_mentioned = serializers.CharField(choices = PERIOD_MENTIONED)
+    party_2_entity_type = serializers.CharField(max_length=50)
+    party_2_full_name = serializers.CharField(max_length=150)
+    party_2_address_line_1 = serializers.CharField(max_length=255)
+    party_2_address_line_2 = serializers.CharField(max_length=255)
+    party_2_address_line_3 = serializers.CharField(max_length=255)
+    party_2_zipcode = serializers.CharField(max_length=20)
+    party_2_state = serializers.CharField(max_length=50)
+    party_2_country = serializers.CharField(max_length=50)
+    # party_2_period_mentioned = serializers.CharField(max_length=50, choices = PERIOD_MENTIONED)
+    what_will_be_the_purpose_of_this_mou = serializers.CharField(max_length=1000)
+    what_is_the_objective_of_this_mou = serializers.CharField(max_length=1000)
+    date_of_commencement = serializers.DateField()
+    date_of_termination = serializers.DateField()
+    # period_for_notice_in_case_of_cancellation_or_amendment = serializers.CharField(choices = PERIOD_MENTIONED)
+
+    state_of_laws_use_as_governing_laws = serializers.CharField(max_length=50)
+    state_of_laws_for_governing_laws_in_case_of_reimbursement = serializers.CharField(max_length=50)
+    number_of_parties_enter_this_mou = serializers.CharField(max_length=255)
+    mou_include_confidentiality = serializers.BooleanField(default=False)
+    mou_retrict_working_with_competitors = serializers.BooleanField(default=False)
+    
+    party_2_entity_type = serializers.CharField(max_length=50)
+    party_2_full_name = serializers.CharField(max_length=150)
+    party_2_postal_address = serializers.CharField(max_length=255)
+    party_2_jurisdiction_incorporated = serializers.CharField(max_length=150)
+    party_2_registration_number = serializers.CharField(max_length=50)
+    party_2_registrar_office_address = serializers.CharField(max_length=255)
+    party_2_principal_place_of_business = serializers.CharField(max_length=255)
+
+    company_details_nature_of_company = serializers.CharField(max_length=150)
+    software_product = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+    software_product_license_name = serializers.CharField(max_length=150)
+    software_product_license_name_uc = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+
+    liability_remedy_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    state_law_applies = serializers.CharField(max_length=150)
+    jurisdiction_city = serializers.CharField(max_length=150)
+    jurisdiction_state = serializers.CharField(max_length=150)
+    date_of_commencement = serializers.DateField()
+    is_maintenance_or_support_available_for_app = serializers.BooleanField(default=False)
+    will_it_state_number_of_maintenance_and_schedules = serializers.BooleanField(default=False)
+    at_which_point_will_users_be_bound_by_terms = serializers.CharField(max_length=150)
+    will_users_be_able_to_install_app_on_multiple_device = serializers.BooleanField(default=False)
+    violations_that_enable_app_provider_to_cancel_agreement = serializers.CharField(max_length=300)
+
+
+    def create(self, validated_data):
+        """
+        Create and return new software agreement.
+        """
+
+        # format date back to iso format
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+
+        validated_data["date_of_commencement"]\
+            = validated_data["date_of_commencement"].isoformat()
+
+        validated_data["liability_remedy_amount"] = float(
+            validated_data["liability_remedy_amount"])
+
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            value=validated_data
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return software agreement.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+
+        validated_data["date_of_commencement"]\
+            = validated_data["date_of_commencement"].isoformat()
+
+        validated_data["liability_remedy_amount"] = float(
+            validated_data["liability_remedy_amount"])
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+            # Generate pdf
+            create_pdf_document(response_json['data'][0])
+            
+        return response_json, status_code
+
