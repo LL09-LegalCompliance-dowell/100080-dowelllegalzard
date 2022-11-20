@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'attributes',
     'attachments',
     'contacts',
+    'license_comparision'
 ]
 
 MIDDLEWARE = [
