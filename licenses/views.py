@@ -158,9 +158,28 @@ class SoftwareLicenseList(APIView):
                 fields={"eventId": license_event_id_two}
             )
 
+            
+            # Get licence comparision
+            identifier = f"{license_event_id_one}-{license_event_id_two}"
+            license_comparison_json = fetch_document(
+                collection=ATTRIBUTE_COLLECTION,
+                document=ATTRIBUTE_DOCUMENT_NAME,
+                fields={
+                    "attributes.identifier":{"$regex": identifier, "$options": "i"},
+                    "attributes.attribute_type": "comparisions"
+                    })
+            license_comparison = {}
+            print(license_comparison_json)
+            if license_comparison_json["data"]:
+                license_comparison = license_comparison_json["data"][0]["attributes"]
+
+                
+
             # Get license compatible list
             license_two = license_two_json["data"][0]['softwarelicense']
             license_compatibility = license_two["license_compatibility"]
+
+            
 
             # Check for compatibility
             for compatible in license_compatibility:
@@ -172,13 +191,16 @@ class SoftwareLicenseList(APIView):
                     percentage_of_comaptibility = compatible["percentage_of_comaptibility"]
                     is_compatible = compatible["is_compatible"]
 
+            
+
             return ({
                 "is_compatible": is_compatible,
                 "percentage_of_comaptibility": percentage_of_comaptibility,
                 "disclaimer": license_two["disclaimer"],
                 "recommendation": license_two["recommendation"],
                 "license_one": license_one["license_name"],
-                "license_two": license_two["license_name"]
+                "license_two": license_two["license_name"],
+                "license_comparison": license_comparison
 
             }), status.HTTP_200_OK
 

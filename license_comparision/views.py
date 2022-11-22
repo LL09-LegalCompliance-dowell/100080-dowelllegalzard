@@ -88,7 +88,7 @@ class ComparisionList(APIView):
 
 
             request_data['attribute_type'] = "comparisions"
-            request_data['indentifier'] = f"{license_1_event_id}+{license_2_event_id},{license_2_event_id}+{license_1_event_id}"
+            request_data['identifier'] = f"{license_1_event_id}-{license_2_event_id},{license_2_event_id}-{license_1_event_id}"
             request_data['license_1_logo_url'] = license_1_logo_url
             request_data['license_2_logo_url'] = license_2_logo_url
             request_data['license_1_name'] = license_1["license_name"]
