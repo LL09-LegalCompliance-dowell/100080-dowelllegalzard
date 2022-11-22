@@ -18,7 +18,7 @@ class ComparisionSerializer(serializers.Serializer):
     """
 
     attribute_type = serializers.CharField(max_length=200)
-    indentifier = serializers.CharField(max_length=1000)
+    identifier = serializers.CharField(max_length=1000)
     license_1_event_id = serializers.CharField(max_length=255)
     license_2_event_id = serializers.CharField(max_length=255)
     license_1_logo_url = serializers.URLField()
