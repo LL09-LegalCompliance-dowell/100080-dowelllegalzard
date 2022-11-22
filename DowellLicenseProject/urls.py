@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/', include('attributes.urls')),
     path('api/', include('attachments.urls')),
     path('api/', include('contacts.urls')),
+    path('api/', include('license_comparision.urls')),
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
     path('', index, name="index")
 ]\
