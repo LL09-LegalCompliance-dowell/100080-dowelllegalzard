@@ -9,10 +9,7 @@ from utils.dowell import (
 
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-    SOFTWARE_AGREEMENT_KEY,
-    ATTRIBUTE_COLLECTION,
-    ATTRIBUTE_DOCUMENT_NAME,
-    ATTRIBUTE_MAIN_KEY
+    SOFTWARE_AGREEMENT_KEY
 
 )
 from .generate_agreement_compliance_pdf import create_pdf_document
