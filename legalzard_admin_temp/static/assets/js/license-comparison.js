@@ -94,7 +94,7 @@ const loadTable = () => {
     const tableSpinnerEl = document.getElementById("table-spinner");
     const tableBodyEl = document.getElementById("table-body");
 
-    fetch("/provider", {
+    fetch("/api/comparisons/", {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     }).then(function(response){
@@ -109,9 +109,10 @@ const loadTable = () => {
     
         let content = "";
         let index = 0;
-        for (let provider of jsonData){
+        console.log(jsonData);
+        for (let license_compared of jsonData.data){
             index += 1;
-            content += tableContent(index, provider);
+            content += tableContent(index, license_compared);
         }
 
         tableSpinnerEl.style.display = "none";
@@ -129,16 +130,24 @@ const loadTable = () => {
 
 }
 
-const tableContent = (index, provider) => {
+const tableContent = (index, license_compared) => {
+    compared = license_compared["attributes"]
+    console.log(compared);
     return `
             <tr>
                   <th scope="row">${index}</th>
-                  <td>${provider.id}</td>
-                  <td>${provider.name}</td>
-                  <td style="width: 10px;">
+                  <td>
+                      ${compared.license_1_name}(${compared.license_1_version})&nbsp;&nbsp;&nbsp;vs&nbsp;&nbsp;&nbsp;
+                      ${compared.license_2_name}(${compared.license_2_version})</td>
+                  <td>
+                      <img src="${compared.license_1_logo_url}" height="70px" alt="${compared.license_1_name}">
+                      &nbsp;&nbsp;&nbsp;vs&nbsp;&nbsp;&nbsp;
+                      <img src="${compared.license_2_logo_url}" height="70px" alt="${compared.license_2_name}">
+                  </td>
+                  <td style="">
 
                     <div class="btn-group" role="group" aria-label="action">
-                        <button type="button" data-id="${provider.id}" data-name="${provider.name}" class="btn btn-primary  edit-data">edit</button>
+                        <a target="_blank" href="/temp-admin/comparison-categories/${license_compared.eventId}/" data-id="${license_compared.eventId}"  class="btn btn-primary">view category</a>
                     </div>
 
                   </td>

@@ -56,14 +56,14 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if is_provider %}-{%else%}collapsed{%endif%}" href="{% url 'legalzard_admin_temp:licenses'  %}">
+        <a class="nav-link {% if is_licenses %}-{%else%}collapsed{%endif%}" href="{% url 'legalzard_admin_temp:licenses'  %}">
           <i class="bi bi-box-seam"></i>
           <span>Licenses</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if is_truck %}-{%else%}collapsed{%endif%}" href="{% url 'legalzard_admin_temp:comparisons'  %}">
+        <a class="nav-link {% if is_comparisons %}-{%else%}collapsed{%endif%}" href="{% url 'legalzard_admin_temp:comparisons'  %}">
           <i class="bi bi-arrows-angle-contract"></i>
           <span>Comparisons</span>
         </a>

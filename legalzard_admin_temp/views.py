@@ -8,6 +8,7 @@ def index(request):
     context = {
         "licenses_count": 0,
         "comparison_count": 0,
+        "is_dashboard": True
     }
     return render(
             request=request,
@@ -21,7 +22,9 @@ def licenses(request):
     return render(
             request=request,
             template_name="licenses/license-list.html",
-            context={}
+            context={
+                "is_licenses": True
+                }
             )
 
 
@@ -29,5 +32,17 @@ def comparisons(request):
     return render(
             request=request,
             template_name="comparison/comparison-list.html",
-            context={}
+            context={
+                "is_comparisons": True
+                }
+            )
+
+def comparison_categories(request,comparison_event_id):
+    return render(
+            request=request,
+            template_name="comparison/comparison-category-list.html",
+            context={
+                "is_comparisons": True,
+                "comparison_event_id": comparison_event_id
+                }
             )
