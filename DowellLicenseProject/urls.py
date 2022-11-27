@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/', include('contacts.urls')),
     path('api/', include('license_comparision.urls')),
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
+    path('temp-admin/', include('legalzard_admin_temp.urls')),
     path('', index, name="index")
 ]\
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\

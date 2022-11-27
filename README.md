@@ -1218,3 +1218,358 @@ The API will return three error types when requests fail:
     }
 }
 ```
+
+
+
+### Licenses Comparison API
+
+
+#### GET /api/comparisons/
+
+- General:
+  - Returns a list of license compared objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/comparisons/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "637c621567b305d5f898ed0b",
+            "eventId": "FB1010000000166909595159447637",
+            "attributes": {
+                "attribute_type": "comparisions",
+                "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                "license_1_event_id": "FB1010000000166184126356826496",
+                "license_2_event_id": "FB1010000000016618418385506453",
+                "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_e1f47ce3-de18-491f-ab27-9e73ee0988a0.png",
+                "license_1_name": "Apache License<V.2.0>",
+                "license_2_name": "Mozilla Public License 2.0",
+                "license_1_version": "2.0",
+                "license_2_version": "2.0",
+                "comparisions": [
+                    {
+                        "category": "Code Is Protected By Copy Right",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "bf973166-f37b-428c-b869-23ad164014eb"
+                    },
+                    {
+                        "category": "Code can be use in close project",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "Yes"
+                        },
+                        "_id": "822502c9-6129-416b-baf0-0312e5d77236"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "8b4db3b8-22a7-4226-a91c-bd7d3301d075"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "ca6a97b0-409b-4856-ba22-d1fc55a87956"
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+#### GET /api/comparisons/{event_id}/
+
+- General:
+  - Returns specific license compared object, and success value
+- Sample: `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/` or open link in a browser
+
+```{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "637c621567b305d5f898ed0b",
+            "eventId": "FB1010000000166909595159447637",
+            "attributes": {
+                "attribute_type": "comparisions",
+                "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                "license_1_event_id": "FB1010000000166184126356826496",
+                "license_2_event_id": "FB1010000000016618418385506453",
+                "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_e1f47ce3-de18-491f-ab27-9e73ee0988a0.png",
+                "license_1_name": "Apache License<V.2.0>",
+                "license_2_name": "Mozilla Public License 2.0",
+                "license_1_version": "2.0",
+                "license_2_version": "2.0",
+                "comparisions": [
+                    {
+                        "category": "Code Is Protected By Copy Right",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "bf973166-f37b-428c-b869-23ad164014eb"
+                    },
+                    {
+                        "category": "Code can be use in close project",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "Yes"
+                        },
+                        "_id": "822502c9-6129-416b-baf0-0312e5d77236"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "8b4db3b8-22a7-4226-a91c-bd7d3301d075"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "ca6a97b0-409b-4856-ba22-d1fc55a87956"
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/comparisons/
+
+- General:
+  - Creates a new license compared object using the submitted json data, Returns the detail of the created license compared object, success value, and event id.
+- `curl http://127.0.0.1:8000/api/comparisons/ -X POST -H "Content-Type: application/json" -d '{ "license_1_event_id": "FB101000000001661841838550645", "license_2_event_id": "FB10100000001661841263568264"}'`
+
+- You can also open the link `http://127.0.0.1:8000/api/comparisons/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "637c621567b305d5f898ed0b",
+            "eventId": "FB1010000000166909595159447637",
+            "attributes": {
+                "attribute_type": "comparisions",
+                "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                "license_1_event_id": "FB1010000000166184126356826496",
+                "license_2_event_id": "FB1010000000016618418385506453",
+                "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_e1f47ce3-de18-491f-ab27-9e73ee0988a0.png",
+                "license_1_name": "Apache License<V.2.0>",
+                "license_2_name": "Mozilla Public License 2.0",
+                "license_1_version": "2.0",
+                "license_2_version": "2.0",
+                "comparisions": []
+}
+```
+
+
+### License Category Comparisons
+
+#### GET /api/comparisons/{event_id}/
+
+- General:
+  - Returns a list of category comparisons objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/` or open link in a browser
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "637c621567b305d5f898ed0b",
+            "eventId": "FB1010000000166909595159447637",
+            "attributes": {
+                "attribute_type": "comparisions",
+                "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                "license_1_event_id": "FB1010000000166184126356826496",
+                "license_2_event_id": "FB1010000000016618418385506453",
+                "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+                "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_e1f47ce3-de18-491f-ab27-9e73ee0988a0.png",
+                "license_1_name": "Apache License<V.2.0>",
+                "license_2_name": "Mozilla Public License 2.0",
+                "license_1_version": "2.0",
+                "license_2_version": "2.0",
+                "comparisions": [
+                    {
+                        "category": "Code Is Protected By Copy Right",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "bf973166-f37b-428c-b869-23ad164014eb"
+                    },
+                    {
+                        "category": "Code can be use in close project",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "Yes"
+                        },
+                        "_id": "822502c9-6129-416b-baf0-0312e5d77236"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "8b4db3b8-22a7-4226-a91c-bd7d3301d075"
+                    },
+                    {
+                        "category": "Code That Uses The Software Can Be Sold Commercially",
+                        "licience_1": {
+                            "name": "Apache License<V.2.0>",
+                            "comparision_value": "Yes"
+                        },
+                        "licience_2": {
+                            "name": "Mozilla Public License 2.0",
+                            "comparision_value": "No"
+                        },
+                        "_id": "ca6a97b0-409b-4856-ba22-d1fc55a87956"
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+#### POST /api/comparisons/{event_id}/
+
+- General:
+  - Creates a new license category comparison object using the submitted json data, Returns the detail of the created comparison object, success value, and event id.
+- `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/ -X POST -H "Content-Type: application/json" -d '{ "action_type": "add-license-category-comparison",
+    "comparision":{
+        "category": "Code That Uses The Software Can Be Sold Commercially",
+        "licience_1":{
+            "name": "Apache License<V.2.0>",
+            "comparision_value": "Yes"
+        },
+        "licience_2":{
+            "name": "Mozilla Public License 2.0",
+            "comparision_value": "No"
+        }
+    }
+}'`
+
+- You can also open the link `http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+
+    "category": "Code That Uses The Software Can Be Sold Commercially",
+    "licience_1": {
+        "name": "Apache License<V.2.0>",
+        "comparision_value": "Yes"
+    },
+    "licience_2": {
+        "name": "Mozilla Public License 2.0",
+        "comparision_value": "No"
+    },
+    "_id": "ca6a97b0-409b-4856-ba22-d1fc55a87956"
+                    
+}
+```
+
+
+#### PUT /api/comparisons/{event_id}/
+
+- General:
+  - Update license category comparison object using the submitted json data, Returns the detail of the created comparison object, success value, and event id.
+- `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/ -X POST -H "Content-Type: application/json" -d '{
+    "action_type": "update-license-category-comparison",
+    "comparision_id": "bf973166-f37b-428c-b869-23ad164014eb",
+    "comparision":{
+        "category": "Code Is Protected By Copy Right",
+        "licience_1":{
+            "name": "Apache License<V.2.0>",
+            "comparision_value": "Yes"
+        },
+        "licience_2":{
+            "name": "Mozilla Public License 2.0",
+            "comparision_value": "No"
+        }
+    }
+}
+'`
+
+- You can also open the link `http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/` in a browser and perform the post operation
+
+```
+{
+    "isSuccess": true,
+    "category": "Code Is Protected By Copy Right",
+    "licience_1":{
+        "name": "Apache License<V.2.0>",
+        "comparision_value": "Yes"
+    },
+    "licience_2":{
+        "name": "Mozilla Public License 2.0",
+        "comparision_value": "No"
+    },
+    "_id": "bf973166-f37b-428c-b869-23ad164014eb"
+                    
+}
+```
