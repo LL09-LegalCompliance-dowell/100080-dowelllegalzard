@@ -27,7 +27,7 @@ class ComparisionSerializer(serializers.Serializer):
     license_2_name = serializers.CharField(max_length=150)
     license_1_version = serializers.CharField(max_length=50)
     license_2_version = serializers.CharField(max_length=50)
-    comparisions = serializers.ListField()
+    comparisons = serializers.ListField()
 
 
     def create(self, validated_data):
@@ -77,13 +77,6 @@ class ComparisionSerializer(serializers.Serializer):
 
         if response_json["isSuccess"]:
             status_code = 200
-            # Retrieve comparision
-            response_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={"eventId": event_id}
-            )
-
 
 
         return response_json, status_code

@@ -97,7 +97,7 @@ class ComparisionList(APIView):
             request_data['license_2_version'] = license_2["version"]
             request_data['license_1_event_id'] = license_1_event_id
             request_data['license_2_event_id'] = license_2_event_id
-            request_data['comparisions'] = []
+            request_data['comparisons'] = []
 
             serializer = ComparisionSerializer(data=request_data)
 
@@ -169,7 +169,7 @@ class ComparisionDetail(APIView):
         try:
 
             request_data = request.data
-            comparision = request_data["comparision"]
+            comparison = request_data["comparison"]
 
             action_type = ""
             if "action_type" in request_data:
@@ -183,11 +183,20 @@ class ComparisionDetail(APIView):
             )
             license_comparison = response_json["data"][0]["attributes"]
 
+            
+            # move this block of code
+            # Delete attribute name comparisions
+            if "comparisions" in license_comparison:
+                del license_comparison["comparisions"]
+                license_comparison["comparisons"] = []
+            # move this block of code
+
+
 
             if action_type == "add-license-category-comparison":
 
-                comparision['_id'] = str(uuid.uuid4())
-                license_comparison["comparisions"].append(comparision)
+                comparison['_id'] = str(uuid.uuid4())
+                license_comparison["comparisons"].append(comparison)
 
 
                 # Update
@@ -198,7 +207,10 @@ class ComparisionDetail(APIView):
                         event_id, serializer.validated_data)
 
                     return Response(
-                        response_json,
+                        {
+                        "isSuccess": response_json["isSuccess"],
+                        "comparison": comparison
+                        },
                         status=status_code
                     )
 
@@ -209,22 +221,22 @@ class ComparisionDetail(APIView):
                 
             elif action_type == "update-license-category-comparison":
 
-                temp_comparisions = []
-                comparision_id = request_data["comparision_id"]
+                temp_comparisons = []
+                comparison_id = request_data["comparison_id"]
 
-                for data in license_comparison["comparisions"]:
+                for data in license_comparison["comparisons"]:
 
-                    if comparision_id == data["_id"]:
+                    if comparison_id == data["_id"]:
 
                         # Update license comparison object
-                        comparision_new = {**data, **comparision}
-                        temp_comparisions.append(comparision_new)
+                        comparison_new = {**data, **comparison}
+                        temp_comparisons.append(comparison_new)
 
                     else:
-                        temp_comparisions.append(data)
+                        temp_comparisons.append(data)
 
                 # Update list of license comparison object
-                license_comparison["comparisions"] = temp_comparisions
+                license_comparison["comparisons"] = temp_comparisons
 
 
                 # Update
@@ -235,7 +247,10 @@ class ComparisionDetail(APIView):
                         event_id, serializer.validated_data)
 
                     return Response(
-                        response_json,
+                        {
+                        "isSuccess": response_json["isSuccess"],
+                        "comparison": comparison_new
+                        },
                         status=status_code
                     )
 

@@ -1518,18 +1518,18 @@ The API will return three error types when requests fail:
 ```
 {
     "isSuccess": true,
-
-    "category": "Code That Uses The Software Can Be Sold Commercially",
-    "licience_1": {
-        "name": "Apache License<V.2.0>",
-        "comparision_value": "Yes"
-    },
-    "licience_2": {
-        "name": "Mozilla Public License 2.0",
-        "comparision_value": "No"
-    },
-    "_id": "ca6a97b0-409b-4856-ba22-d1fc55a87956"
-                    
+    "comparison": {
+        "category": "Code That Uses The Software Can Be Sold Commercially",
+        "licence_1": {
+            "name": "Apache License<V.2.0>",
+            "comparison_value": "Yes"
+        },
+        "licence_2": {
+            "name": "Mozilla Public License 2.0",
+            "comparison_value": "No"
+        },
+        "_id": "23d48791-07cc-47b5-8470-b59bba76773b"
+    }
 }
 ```
 
@@ -1540,7 +1540,7 @@ The API will return three error types when requests fail:
   - Update license category comparison object using the submitted json data, Returns the detail of the created comparison object, success value, and event id.
 - `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/ -X POST -H "Content-Type: application/json" -d '{
     "action_type": "update-license-category-comparison",
-    "comparision_id": "bf973166-f37b-428c-b869-23ad164014eb",
+    "comparision_id": "d38b9497-c207-4288-a1f0-31ca8e9a1fad",
     "comparision":{
         "category": "Code Is Protected By Copy Right",
         "licience_1":{
@@ -1560,16 +1560,17 @@ The API will return three error types when requests fail:
 ```
 {
     "isSuccess": true,
-    "category": "Code Is Protected By Copy Right",
-    "licience_1":{
-        "name": "Apache License<V.2.0>",
-        "comparision_value": "Yes"
-    },
-    "licience_2":{
-        "name": "Mozilla Public License 2.0",
-        "comparision_value": "No"
-    },
-    "_id": "bf973166-f37b-428c-b869-23ad164014eb"
-                    
+    "comparison": {
+        "category": "Code Is Protected By Copy Right",
+        "licence_1": {
+            "name": "Apache License<V.2.0>",
+            "comparison_value": "Yes"
+        },
+        "licence_2": {
+            "name": "Mozilla Public License 2.0",
+            "comparison_value": "No"
+        },
+        "_id": "d38b9497-c207-4288-a1f0-31ca8e9a1fad"
+    }
 }
 ```
