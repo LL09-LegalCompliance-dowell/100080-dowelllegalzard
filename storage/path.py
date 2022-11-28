@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class DevelopmentStorage:
-    _path: str = f"/home/100080/100080-dowelllegalzard/vol/web"
+    _path: str = f"/home/worlako/100080/100080-dowelllegalzard/vol/web"
 
     def __str__(self) -> str:
         return f"{self._path}"

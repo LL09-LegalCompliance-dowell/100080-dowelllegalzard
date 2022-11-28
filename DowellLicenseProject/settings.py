@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'attributes',
     'attachments',
     'contacts',
-    'license_comparision'
+    'license_comparision',
+    'legalzard_admin_temp',
 ]
 
 MIDDLEWARE = [

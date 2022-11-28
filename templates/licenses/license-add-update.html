@@ -1,0 +1,206 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Comparisons|legalzard{% endblock %}
+
+{% block main %}
+<div class="pagetitle">
+  <h1 id="license-action-type" data-action-type="{{action_type}}">{{action_type}} License</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'legalzard_admin_temp:dashboard'  %}">Home</a></li>
+      <li class="breadcrumb-item active">Licenses</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">  
+
+      <div class="col-lg-8">
+
+
+        <div class="col-lg-8">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Upload license image</h5>
+
+              <div class="row mb-3">
+                <div class="col-sm-12">
+                  <input class="form-control" type="file" id="formFile">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="col-lg-12">
+
+          <div style="height: 450px;" class="card">
+            <div   class="card-body">
+              <h5 class="card-title">Description</h5>
+
+              <!-- Quill Editor Default -->
+              <div style="height:70%;" class="quill-editor-default">
+
+
+
+              </div>
+              <!-- End Quill Editor Default -->
+
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Quill Editor Bubble</h5>
+
+              <!-- Quill Editor Bubble -->
+              <p>Select some text to display options in poppovers</p>
+              <div class="quill-editor-bubble">
+                <p>Hello World!</p>
+                <p>This is Quill <strong>bubble</strong> editor</p>
+              </div>
+              <!-- End Quill Editor Bubble -->
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Quill Editor Full</h5>
+
+              <!-- Quill Editor Full -->
+              <p>Quill editor with full toolset</p>
+              <div class="quill-editor-full">
+                <p>Hello World!</p>
+                <p>This is Quill <strong>full</strong> editor</p>
+              </div>
+              <!-- End Quill Editor Full -->
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">License name</label>
+                  <input type="text" class="form-control" id="inputNanme4">
+                </div>
+
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Version</label>
+                  <input type="email" class="form-control" id="inputEmail4">
+                </div>
+
+                <div class="col-12">
+                  <label for="inputPassword4" class="form-label">Type of license</label>
+                  <input type="password" class="form-control" id="inputPassword4">
+                </div>
+
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">License url</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">Recommendation %</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">License attributes</h5>
+
+              <textarea class="col-lg-12" rows="4">
+
+              </textarea>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">License compatible with lookup</h5>
+
+              <textarea class="col-lg-12" rows="4">
+
+              </textarea>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">License not compatible with lookup</h5>
+
+              <textarea class="col-lg-12" rows="4">
+
+              </textarea>
+
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+  </section>
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/assets/js/licenses.js"></script>
+<script>
+
+
+
+
+</script>
+
+
+{% endblock %}
