@@ -4,9 +4,7 @@ let index = 0;
 let updateIndex = 0;
 let actionType = "";
 document.addEventListener("DOMContentLoaded", function(event){
-
-    const providerNameEl = document.querySelector("#provider-name");
-    const cardFormTitleEl = document.querySelector("#card-form-title");
+    
     const formSaveBtnEl = document.querySelector("#btn-save-category-comparison");
 
 

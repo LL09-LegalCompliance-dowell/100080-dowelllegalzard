@@ -27,6 +27,25 @@ def licenses(request):
                 }
             )
 
+def add_license(request):
+    return render(
+            request=request,
+            template_name="licenses/license-add-update.html",
+            context={
+                "is_licenses": True,
+                "action_type": "Add"
+                }
+            )
+
+def update_license(request):
+    return render(
+            request=request,
+            template_name="licenses/license-add-update.html",
+            context={
+                "is_licenses": True,
+                "action_type": "Update"
+                }
+            )
 
 def comparisons(request):
     return render(
@@ -46,3 +65,6 @@ def comparison_categories(request,comparison_event_id):
                 "comparison_event_id": comparison_event_id
                 }
             )
+
+
+
