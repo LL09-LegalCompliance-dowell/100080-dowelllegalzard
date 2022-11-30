@@ -9,15 +9,11 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
-    format_id,
-    SOFTWARE_AGREEMENT_COLLECTION,
+    
     SOFTWARE_LICENSE_COLLECTION,
-    COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
 
-    SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-    COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
@@ -193,8 +189,6 @@ class SoftwareLicenseList(APIView):
 
             return ({
                 "is_compatible": is_compatible,
-                "license_one": license_one["license_name"],
-                "license_two": license_two["license_name"],
                 "license_comparison": license_comparison
 
             }), status.HTTP_200_OK

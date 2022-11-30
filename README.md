@@ -278,12 +278,36 @@ The API will return three error types when requests fail:
 
 ```
 {
-    "is_compatible": true,
-    "percentage_of_comaptibility": 45,
-    "disclaimer": "Disclamer copyright",
-    "recommendation": "2.0",
-    "license_one": "LGPLv2.1",
-    "license_two": "BSD"
+    "is_compatible": false,
+    "license_comparison": {
+        "attribute_type": "comparisions",
+        "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+        "license_1_event_id": "FB1010000000166184126356826496",
+        "license_2_event_id": "FB1010000000016618418385506453",
+        "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_585981ab-f2b2-4b35-9ce3-aa4934ee136b.png",
+        "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_e1f47ce3-de18-491f-ab27-9e73ee0988a0.png",
+        "license_1_name": "Apache License<V.2.0>",
+        "license_2_name": "Mozilla Public License 2.0",
+        "license_1_version": "2.0",
+        "license_2_version": "2.0",
+        "comparisons": [
+            {
+                "category": "Code Is Protected By Copy Right",
+                "licence_1": {
+                    "name": "Apache License<V.2.0>",
+                    "comparison_value": "Yes"
+                },
+                "licence_2": {
+                    "name": "Mozilla Public License 2.0",
+                    "comparison_value": "No"
+                },
+                "_id": "d38b9497-c207-4288-a1f0-31ca8e9a1fad"
+            }
+        ],
+        "percentage_of_compatibility": 78,
+        "recommendation": "power",
+        "disclaimer": "power"
+    }
 }
 ```
 
