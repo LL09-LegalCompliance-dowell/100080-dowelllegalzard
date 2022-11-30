@@ -80,7 +80,7 @@
                     <form id="license-comparison-form" class="row g-3">
 
                       <div class="col-md-6">
-                        <label id="license-1-label" for="license-1" class="form-label">License 1</label>
+                        <label id="license-1-label" for="license-1" class="form-label">License 1 <span style="color: red;">*</span></label>
                         <select required id="license-1" class="form-select">
                           <option value="0" selected disabled>--please choose--</option>
                         </select>
@@ -88,7 +88,7 @@
                       </div>
 
                       <div class="col-md-6">
-                        <label id="license-2-label" for="license-2" class="form-label">License 2</label>
+                        <label id="license-2-label" for="license-2" class="form-label">License 2 <span style="color: red;">*</span></label>
                         <select required id="license-2" class="form-select">
                           <option value="0" selected disabled>--please choose--</option>
                         </select>
@@ -96,6 +96,22 @@
                         <p id="license-2-error" style="color: red; display: none;">License 2 required</p>
                       </div>
 
+                      <div class="col-md-4">
+                        <label id="" for="percentage-of-compatibility" class="form-label">Percentage of compatibility <span style="color: red;">*</span></label>
+                        <input type="number" class="form-control" id="percentage-of-compatibility" placeholder="">
+                        <p id="percentage-of-compatibility-error" style="color: red; display: none;">Percentage of compatibility required</p>
+                      </div>
+
+
+                      <div class="col-md-12">
+                        <label for="recommendation" class="form-label">Recommendation</label>
+                        <textarea class="form-control" id="recommendation" rows="4"></textarea>
+                      </div>
+
+                      <div class="col-md-12">
+                        <label id="license-1-label" for="disclaimer" class="form-label">Disclaimer</label>
+                        <textarea class="form-control" id="disclaimer" id="disclaimer" rows="4"></textarea>
+                      </div>
                     </form>
 
               </div>
