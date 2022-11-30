@@ -77,11 +77,11 @@ class ComparisionList(APIView):
             license_1 = self.get_license(license_1_event_id)["data"][0]["softwarelicense"]
             license_2 = self.get_license(license_2_event_id)["data"][0]["softwarelicense"]
 
-            license_1_logo_url = ""
+            license_1_logo_url = "#"
             if "logo_detail" in license_1:
                 license_1_logo_url = license_1["logo_detail"]["url"]
 
-            license_2_logo_url = ""
+            license_2_logo_url = "#"
             if "logo_detail" in license_1:
                 license_2_logo_url = license_2["logo_detail"]["url"]
 
@@ -97,14 +97,22 @@ class ComparisionList(APIView):
             request_data['license_2_version'] = license_2["version"]
             request_data['license_1_event_id'] = license_1_event_id
             request_data['license_2_event_id'] = license_2_event_id
-            request_data['comparisions'] = []
+            request_data['percentage_of_compatibility'] = int(request_data['percentage_of_compatibility'])
+            request_data['comparisons'] = []
 
             serializer = ComparisionSerializer(data=request_data)
 
             # Commit data to database
-            print("working")
-            serializer.is_valid()
-            response_json, status_code = serializer.save()
+            if serializer.is_valid():
+                response_json, status_code = serializer.save()
+
+            else:
+                print(f"{serializer.errors}")
+                return Response({
+                    "error_msg": f"{serializer.errors}"
+                },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )                
 
             return Response(response_json,
                             status=status_code
@@ -169,7 +177,6 @@ class ComparisionDetail(APIView):
         try:
 
             request_data = request.data
-            comparision = request_data["comparision"]
 
             action_type = ""
             if "action_type" in request_data:
@@ -183,11 +190,20 @@ class ComparisionDetail(APIView):
             )
             license_comparison = response_json["data"][0]["attributes"]
 
+            
+            # move this block of code
+            # Delete attribute name comparisions
+            if "comparisions" in license_comparison:
+                del license_comparison["comparisions"]
+                license_comparison["comparisons"] = []
+            # move this block of code
+
+
 
             if action_type == "add-license-category-comparison":
-
-                comparision['_id'] = str(uuid.uuid4())
-                license_comparison["comparisions"].append(comparision)
+                comparison = request_data["comparison"]
+                comparison['_id'] = str(uuid.uuid4())
+                license_comparison["comparisons"].append(comparison)
 
 
                 # Update
@@ -198,7 +214,10 @@ class ComparisionDetail(APIView):
                         event_id, serializer.validated_data)
 
                     return Response(
-                        response_json,
+                        {
+                        "isSuccess": response_json["isSuccess"],
+                        "comparison": comparison
+                        },
                         status=status_code
                     )
 
@@ -208,23 +227,24 @@ class ComparisionDetail(APIView):
                                     )
                 
             elif action_type == "update-license-category-comparison":
+                comparison = request_data["comparison"]
+                temp_comparisons = []
 
-                temp_comparisions = []
-                comparision_id = request_data["comparision_id"]
+                comparison_id = request_data["comparison_id"]
 
-                for data in license_comparison["comparisions"]:
+                for data in license_comparison["comparisons"]:
 
-                    if comparision_id == data["_id"]:
+                    if comparison_id == data["_id"]:
 
                         # Update license comparison object
-                        comparision_new = {**data, **comparision}
-                        temp_comparisions.append(comparision_new)
+                        comparison_new = {**data, **comparison}
+                        temp_comparisons.append(comparison_new)
 
                     else:
-                        temp_comparisions.append(data)
+                        temp_comparisons.append(data)
 
                 # Update list of license comparison object
-                license_comparison["comparisions"] = temp_comparisions
+                license_comparison["comparisons"] = temp_comparisons
 
 
                 # Update
@@ -235,9 +255,58 @@ class ComparisionDetail(APIView):
                         event_id, serializer.validated_data)
 
                     return Response(
-                        response_json,
+                        {
+                        "isSuccess": response_json["isSuccess"],
+                        "comparison": comparison_new
+                        },
                         status=status_code
                     )
+
+            elif action_type == "update-license-comparison":
+
+                license_1_event_id = request_data['license_1_event_id']
+                license_2_event_id = request_data['license_2_event_id']
+
+                
+                license_1 = ComparisionList.get_license(license_1_event_id)["data"][0]["softwarelicense"]
+                license_2 = ComparisionList.get_license(license_2_event_id)["data"][0]["softwarelicense"]
+
+                license_1_logo_url = "#"
+                if "logo_detail" in license_1:
+                    license_1_logo_url = license_1["logo_detail"]["url"]
+
+                license_2_logo_url = "#"
+                if "logo_detail" in license_1:
+                    license_2_logo_url = license_2["logo_detail"]["url"]
+
+                print(str(int(request_data['percentage_of_compatibility'])))
+                license_comparison['identifier'] = f"{license_1_event_id}-{license_2_event_id},{license_2_event_id}-{license_1_event_id}"
+                license_comparison['license_1_logo_url'] = license_1_logo_url
+                license_comparison['license_2_logo_url'] = license_2_logo_url
+                license_comparison['license_1_name'] = license_1["license_name"]
+                license_comparison['license_2_name'] = license_2["license_name"]
+                license_comparison['license_1_version'] = license_1["version"]
+                license_comparison['license_2_version'] = license_2["version"]
+                license_comparison['license_1_event_id'] = license_1_event_id
+                license_comparison['license_2_event_id'] = license_2_event_id
+                license_comparison['percentage_of_compatibility'] = int(request_data['percentage_of_compatibility'])
+                license_comparison['recommendation'] = request_data['recommendation']
+                license_comparison['disclaimer'] = request_data['disclaimer']
+
+                # Update
+                serializer = ComparisionSerializer(
+                    event_id, data=license_comparison)
+                if serializer.is_valid():
+                    response_json, status_code = serializer.update(
+                        event_id, serializer.validated_data)
+
+                    return Response(
+                        {
+                        "isSuccess": response_json["isSuccess"]
+                        },
+                        status=status_code
+                    )
+
 
                 else:
                     return Response({"error_msg": f"{serializer.errors}"},

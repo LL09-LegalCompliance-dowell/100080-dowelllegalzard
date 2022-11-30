@@ -7,7 +7,7 @@ from .views import (
 
 app_name = "license_comparision"
 urlpatterns = [
-    path('comparisions/', ComparisionList.as_view(), name="comparisions"),
-    path('comparisions/<str:event_id>/',
-         ComparisionDetail.as_view(), name="comparision_detail"),
+    path('comparisons/', ComparisionList.as_view(), name="comparisons"),
+    path('comparisons/<str:event_id>/',
+         ComparisionDetail.as_view(), name="comparisons_detail"),
 ]

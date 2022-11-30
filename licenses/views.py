@@ -9,15 +9,11 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
-    format_id,
-    SOFTWARE_AGREEMENT_COLLECTION,
+    
     SOFTWARE_LICENSE_COLLECTION,
-    COMMON_ATTRIBUTE_COLLECTION,
     ATTRIBUTE_COLLECTION,
 
-    SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-    COMMON_ATTRIBUTE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
@@ -136,7 +132,6 @@ class SoftwareLicenseList(APIView):
             license_one == license_two
         """
         is_compatible = False
-        percentage_of_comaptibility = 0
         try:
 
             license_event_id_one = request.data.get("license_event_id_one", "")
@@ -168,8 +163,9 @@ class SoftwareLicenseList(APIView):
                     "attributes.identifier":{"$regex": identifier, "$options": "i"},
                     "attributes.attribute_type": "comparisions"
                     })
+
+
             license_comparison = {}
-            print(license_comparison_json)
             if license_comparison_json["data"]:
                 license_comparison = license_comparison_json["data"][0]["attributes"]
 
@@ -188,18 +184,11 @@ class SoftwareLicenseList(APIView):
                         and compatible["is_compatible"]:
 
                     is_compatible = compatible["is_compatible"]
-                    percentage_of_comaptibility = compatible["percentage_of_comaptibility"]
-                    is_compatible = compatible["is_compatible"]
 
             
 
             return ({
                 "is_compatible": is_compatible,
-                "percentage_of_comaptibility": percentage_of_comaptibility,
-                "disclaimer": license_two["disclaimer"],
-                "recommendation": license_two["recommendation"],
-                "license_one": license_one["license_name"],
-                "license_two": license_two["license_name"],
                 "license_comparison": license_comparison
 
             }), status.HTTP_200_OK
