@@ -1,5 +1,6 @@
 let index = 0;
 let updateIndex = 0;
+let license_compared_data_list = [];
 
 document.addEventListener("DOMContentLoaded", function(event){
 
@@ -14,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function(event){
 
         const formEl = document.querySelector("#license-comparison-form");
         formEl.setAttribute("data-method-type", "POST");
+        formEl.setAttribute("data-action-type", "");
         formEl.setAttribute("data-endpoint", "/api/comparisons/");
-        // formEl.setAttribute("data-comparison-id", "");
     }
 
 
@@ -35,8 +36,12 @@ const saveDataToDatabase = (event) =>{
     const errorContentEl = document.querySelector("#error-content");
     const endpoint = formEl.getAttribute("data-endpoint");
     const methodType = formEl.getAttribute("data-method-type");
+    const actionType = formEl.getAttribute("data-action-type");
     const license1EventId = document.querySelector("#license-1").value;
     const license2EventId = document.querySelector("#license-2").value;
+    const percentageOfCompatibility = document.querySelector("#percentage-of-compatibility").value;
+    const recommendation = document.querySelector("#recommendation").value;
+    const disclaimer = document.querySelector("#disclaimer").value;
     const btnSaveData = document.querySelector("#btn-save-license-comparison");
 
 
@@ -53,10 +58,15 @@ const saveDataToDatabase = (event) =>{
 
 
         const data = {
+            action_type: actionType,
             license_1_event_id: license1EventId,
-            license_2_event_id: license2EventId
+            license_2_event_id: license2EventId,
+            percentage_of_compatibility: percentageOfCompatibility,
+            recommendation: recommendation,
+            disclaimer: disclaimer,
         }
 
+        console.log(data)
 
         fetch(endpoint, {
             method: methodType,
@@ -93,15 +103,7 @@ const saveDataToDatabase = (event) =>{
                 tableBodyEl.innerHTML = `${tableBodyEl.innerHTML}${content}`;
 
             }else{
-
-                // const trEl = document.getElementById(`comparison-${comparison_category._id}`)
-                // const content = tableContentWithOutTR(index, comparison_category, updateIndex);
-
-                // const replacement = document.createElement('tr')
-                // replacement.setAttribute("id", `comparison-${comparison_category._id}`)
-                // replacement.innerHTML = content;
-                // trEl.replaceWith(replacement);
-
+                window.location.reload();
             }
 
 
@@ -109,7 +111,7 @@ const saveDataToDatabase = (event) =>{
             btnSaveData.innerHTML = "Save";
             btnSaveData.disabled = false;
             document.getElementById("btn-close-modal").click();
-            // listenToEditBtn();
+            listenToEditBtn();
 
 
         }).catch(function(err){
@@ -154,8 +156,9 @@ const loadTable = () => {
     
         let content = "";
         index = 0;
+        license_compared_data_list = jsonData.data;
 
-        for (let license_compared of jsonData.data){
+        for (let license_compared of license_compared_data_list){
             index += 1;
             content += tableContent(index, license_compared);
         }
@@ -163,7 +166,7 @@ const loadTable = () => {
         tableSpinnerEl.style.display = "none";
         tableBodyEl.innerHTML = content;
         document.getElementById("btn-add-new").style.display = "inline-block";
-        // listenToEditBtn();
+        listenToEditBtn();
         
 
     }).catch(function(err){
@@ -230,10 +233,11 @@ const tableContent = (index, license_compared) => {
                       &nbsp;&nbsp;&nbsp;vs&nbsp;&nbsp;&nbsp;
                       <img src="${compared.license_2_logo_url}" height="50px" alt="${compared.license_2_name}">
                   </td>
-                  <td style="">
+                  <td style="width: 20px">
 
                     <div class="btn-group" role="group" aria-label="action">
-                        <a target="_blank" href="/temp-admin/comparison-categories/${license_compared.eventId}/" data-id="${license_compared.eventId}"  class="btn btn-primary">view category</a>
+                        <a target="_blank" href="/temp-admin/comparison-categories/${license_compared.eventId}/" data-id="${license_compared.eventId}"  class="btn btn-secondary">view category</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#add-and-update-license-comparison" data-id="${license_compared.eventId}"  class="btn btn-primary edit-data">Edit</a>
                     </div>
 
                   </td>
@@ -247,30 +251,31 @@ const listenToEditBtn = () => {
     editEls.forEach(function(element){
         element.onclick = function(event){
             const id = this.getAttribute("data-id")
+            updateIndex = 0;
 
-            // load provider for update
-            fetch(`/provider/${id}`,{
-                method:"GET",
-                headers: {"Content-Type": "application/jsons"}
-            }).then(function(response){
-                if (response.status === 200){
-                    return response.json();
+            for (let license_compared of license_compared_data_list){
+                updateIndex += 1;
+
+                if (license_compared.eventId === id){
+                    const data = license_compared['attributes'];
+                    const cardFormTitleEl = document.querySelector("#modal-title");
+                    const formEl = document.querySelector("#license-comparison-form");
+                    formEl.setAttribute("data-method-type", "PUT");
+                    formEl.setAttribute("data-action-type", "update-license-comparison");
+                    formEl.setAttribute("data-event-id", license_compared.eventId);
+                    const url = "/api/comparisons/"+license_compared.eventId+"/";
+                    formEl.setAttribute("data-endpoint", url);
+
+                    
+                    document.querySelector("#license-1").value = data.license_1_event_id;
+                    document.querySelector("#license-2").value = data.license_2_event_id;
+                    document.querySelector("#percentage-of-compatibility").value = data.percentage_of_compatibility;
+                    document.querySelector("#recommendation").value = data.recommendation;
+                    document.querySelector("#disclaimer").value = data.disclaimer;
+                    cardFormTitleEl.textContent = "Update License Compare";
+                    break;
                 }
-            }).then(function(jsonData){
-
-                const formContainerEl = document.querySelector("#form-container");
-                const providerNameEl = document.querySelector("#provider-name");
-                const cardFormTitleEl = document.querySelector("#card-form-title");
-                const formEl = document.querySelector("#form");
-                document.querySelector("#provider-name").value = jsonData.name;
-
-                formContainerEl.style.display = "block";
-                cardFormTitleEl.textContent = "Update Provider";
-                providerNameEl.textContent = "";
-                formEl.setAttribute("data-method-type", "PUT");
-                formEl.setAttribute("data-endpoint", `/provider/${id}`);
-
-            })
+            }
 
         }
     })
@@ -282,8 +287,10 @@ const validateInput = () => {
     let isValid = true;
     const license1 = document.querySelector("#license-1").value;
     const license2 = document.querySelector("#license-2").value;
+    const percentageOfCompatibility = document.querySelector("#percentage-of-compatibility").value;
     const license1ErorEl = document.querySelector("#license-1-error");
     const license2ErorEl = document.querySelector("#license-2-error");
+    const percentageOfCompatibilityErrorErorEl = document.querySelector("#percentage-of-compatibility-error");
 
     if (license1 === "0"){
         isValid = false;
@@ -297,6 +304,13 @@ const validateInput = () => {
         license2ErorEl.style.display = "block";
     }else{
         license2ErorEl.style.display = "none";
+    }
+
+    if (percentageOfCompatibility === "0" || percentageOfCompatibility === ""){
+        isValid = false;
+        percentageOfCompatibilityErrorErorEl.style.display = "block";
+    }else{
+        percentageOfCompatibilityErrorErorEl.style.display = "none";
     }
 
 
