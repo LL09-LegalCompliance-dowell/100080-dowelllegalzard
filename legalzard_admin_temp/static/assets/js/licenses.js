@@ -1,7 +1,15 @@
 let index = 0;
 let updateIndex = 0;
+let fileData = {};
 
 document.addEventListener("DOMContentLoaded", function(event){
+
+    const licenseImageEl = document.getElementById("license-image");
+    const tableBodyEl = document.getElementById("table-body");
+    if(licenseImageEl){
+        licenseImageEl.onchange = uploadFile;
+    }
+
 
     // const btnSaveEl = document.querySelector("#btn-save-license-comparison");
 
@@ -22,10 +30,65 @@ document.addEventListener("DOMContentLoaded", function(event){
     // btnSaveEl.onclick = saveDataToDatabase;
 
     // loadLicenseDropdown();
-    loadTable();
+
+    if(tableBodyEl){
+        loadTable();
+    }
 
 
 })
+
+
+const uploadFile = (event) => {
+
+    const licenseImageEl = document.getElementById("license-image");
+    const processingImageSpinnerEl = document.getElementById("processing-image");
+    const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
+    const licenseImageViewEl = document.getElementById("license-image-view");
+
+    const formData = new FormData()
+    formData.append('file', licenseImageEl.files[0])
+    
+
+    if (licenseImageEl.files && licenseImageEl.files[0]) {
+
+        // preview image selected
+        licenseImageViewContainerEl.style.display = "block"
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            licenseImageViewEl.setAttribute("src", e.target.result);
+        };
+        reader.readAsDataURL(licenseImageEl.files[0]);
+
+
+        // BEGIN Processs image
+        processingImageSpinnerEl.style.display = "block";
+        fetch('/api/attachments/', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            processingImageSpinnerEl.style.display = "none";
+            if (response.status === 200){
+                return response.json();
+            }
+    
+        }).then(jsonData => {
+            fileData = jsonData.file_data;
+            console.log(fileData);
+            
+    
+        }).catch(err => {
+    
+            console.log(err);
+            processingImageSpinnerEl.style.display = "none";
+        })
+        // END process images
+
+
+      }
+
+
+}
 
 const saveDataToDatabase = (event) =>{
     event.preventDefault();

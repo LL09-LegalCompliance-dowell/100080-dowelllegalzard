@@ -69,30 +69,11 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     other_links = serializers.ListField(default=[])
     logo_detail = serializers.DictField()
     recommendation = serializers.CharField(max_length=2000, default="")
-    released_date = serializers.DateField()
     is_active = serializers.BooleanField(default=True)
     license_attributes = serializers.DictField()
-    license_compatibility = serializers.ListField(default=[])
     license_compatible_with_lookup = serializers.ListField(default=[])
     license_not_compatible_with_lookup = serializers.ListField(default=[])
 
-    # LICENSE COMPATIBILITY DOCUMENT
-    # license_compatibility =[
-    #     {
-    #      "license": "APACHE 2.0",
-    #      "percentage_of_comaptibility": "80",
-    #      "is_compatible": False,
-    #     },
-    #     {
-    #      "license": "GPLv2",
-    #      "percentage_of_comaptibility": "80",
-    #      "is_compatible": True,
-    #     }
-    # ]
-
-    # license_compatible_with_lookup = ["GPLv2", "LGPLv2.1"]
-    # or
-    # license_not_compatible_with_lookup = ["GPLv2", "GPL2+"]
 
     def to_representation(self, document: dict, id):
 
