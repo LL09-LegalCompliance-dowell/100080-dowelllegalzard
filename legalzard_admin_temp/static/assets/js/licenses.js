@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     const tableBodyEl = document.getElementById("table-body");
     if(licenseImageEl){
         licenseImageEl.onchange = uploadFile;
+
+        loadLicenseDropdown();
     }
 
 
@@ -89,6 +91,7 @@ const uploadFile = (event) => {
 
 
 }
+
 
 const saveDataToDatabase = (event) =>{
     event.preventDefault();
@@ -243,8 +246,6 @@ const loadTable = () => {
 
 const loadLicenseDropdown = () => {
    
-    const tableSpinnerEl = document.getElementById("table-spinner");
-    const tableBodyEl = document.getElementById("table-body");
 
     fetch("/api/licenses/", {
         method: "GET",
@@ -252,23 +253,20 @@ const loadLicenseDropdown = () => {
     }).then(function(response){
         if (response.status === 200){
             return response.json();
-        }else{
-            tableSpinnerEl.style.display = "none";
         }
-
     }).then(function(jsonData){
 
     
         let content = '<option  selected disabled value="0">--please choose--</option>';
-        const licence1El = document.getElementById("license-1");
-        const licence2El = document.getElementById("license-2");
+        const licenseNotCompatibleWithEl = document.getElementById("license-not-compatible-with");
+        const licenseCompatibleWithEl = document.getElementById("license-compatible-with");
 
         for (let license of jsonData.data){
             content += `<option value="${license.eventId}">${license.softwarelicense.license_name}(${license.softwarelicense.version})</option>`;
         }
 
-        licence1El.innerHTML = content;
-        licence2El.innerHTML = content;
+        licenseCompatibleWithEl.innerHTML = content;
+        licenseNotCompatibleWithEl.innerHTML = content;
         
 
     }).catch(function(err){
