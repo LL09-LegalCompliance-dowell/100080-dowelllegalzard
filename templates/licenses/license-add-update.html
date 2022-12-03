@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %} license|legalzard{% endblock %}
+{% block title %} {{action_type}} license|legalzard{% endblock %}
 
 {% block main %}
 <div class="pagetitle">
@@ -22,9 +22,16 @@
 
 <section class="section">
     <div class="row">  
-      
+
+      <!--Begin Error-->
+      <div id="error-container" style="display: none;" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p id="error-content">Error message!</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+     <!--End Error-->
+
       <div class="col-lg-8">
-        <form id="license-form" action="">
+        <form id="license-form" style="display: none;" action="#" data-method-type="{{method}}" data-event-id="{{license_event_id}}">
 
        
 
@@ -50,6 +57,7 @@
               </div>
               <!--END image display-->
 
+              <p id="license-image-error" style="color: red; display: none;">License image required</p>
             </div>
           </div>
 
@@ -63,7 +71,7 @@
               <h5 class="card-title">Description <span style="color: red;">*</span></h5>
 
               <!-- Quill Editor Default -->
-              <div style="height:70%;" class="quill-editor-default">
+              <div id="license-description" style="height:70%;" class="quill-editor-default">
 
 
 
@@ -86,7 +94,7 @@
 
 
               <div class="col-md-12">
-                <textarea class="form-control" id="short-description" rows="4"></textarea>
+                <textarea  class="form-control" id="short-description" rows="4"></textarea>
               </div>
 
             </div>
@@ -120,13 +128,16 @@
                   <label for="type-of-license" class="form-label">Type of license <span style="color: red;">*</span></label>
                   <select required id="type-of-license" class="form-select">
                     <option value="0" selected disabled>--please choose--</option>
+                    <option value="COPYLEFT">COPYLEFT</option>
+                    <option value="PERMISSIVE">PERMISSIVE</option>
+                    <option value="WEAKLY COPYLEFT">WEAKLY COPYLEFT</option>
                   </select>
                   <p id="type-of-license-error" style="color: red; display: none;">Type of license required</p>
                 </div>
 
                 <div class="col-12 other-info">
-                  <label for="inputAddress" class="form-label">License url <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="inputAddress">
+                  <label for="license-url" class="form-label">License url <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" id="license-url">
                   <p id="license-url-error" style="color: red; display: none;">License url required</p>
                 </div>
 
@@ -176,7 +187,7 @@
 
               <div class="col-12 other-info">
                 <label for="type-of-license" class="form-label">Attributes <span style="color: red;">*</span></label>
-                <select required id="license-attribute" class="form-select">
+                <select required multiple size="8" id="license-attribute" class="form-select">
                   <option value="0" selected disabled>--please choose--</option>
                 </select>
                 <p id="license-attribute-error" style="color: red; display: none;">Attributes required</p>
@@ -193,7 +204,7 @@
               <h5 class="card-title">License compatible with <span style="color: red;">*</span></h5>
 
               <div class="col-12 other-info">
-                <select required id="license-compatible-with" class="form-select">
+                <select  required multiple size="8" id="license-compatible-with" class="form-select">
                   <option value="0" selected disabled>--please choose--</option>
                 </select>
                 <p id="license-compatible-with-error" style="color: red; display: none;">License compatible with required</p>
@@ -208,10 +219,10 @@
 
           <div class="card">
             <div   class="card-body">
-              <h5 class="card-title">License not compatible with <span style="color: red;">*</span></h5>
+              <h5 class="card-title">License not compatible with</h5>
 
               <div class="col-12 other-info">
-                <select required id="license-not-compatible-with" class="form-select">
+                <select required multiple size="8" id="license-not-compatible-with" class="form-select">
                   <option value="0" selected disabled>--please choose--</option>
                 </select>
                 <p id="license-not-compatible-with-error" style="color: red; display: none;">License not compatible with required</p>
@@ -227,6 +238,18 @@
         </div>
 
       </form>
+
+
+
+      <!-- End page with stripped rows -->
+        <!-- Center aligned spinner -->
+        <div class="d-flex justify-content-center">
+          <div id="page-spinner" style="display: block;" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      <!-- End Center aligned spinner -->
+
 
       </div>
 

@@ -100,16 +100,19 @@ class SoftwareLicenseList(APIView):
             else:
                 request_data["is_active"] = True
 
-                # Convert release date string (yyyy-mm-dd)
-                # to date object
-                request_data["released_date"] = date.fromisoformat(
-                    request_data["released_date"])
-
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
-                serializer.is_valid()
-                response_json, status_code = serializer.save()
+                if serializer.is_valid():
+                    response_json, status_code = serializer.save()
+                    
+                else:
+                    print(serializer.errors)
+                    response_json = {
+                       "error_msg": f"{serializer.errors}" 
+                    }
+                    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
 
             return Response(response_json,
                             status=status_code
@@ -296,10 +299,6 @@ class SoftwareLicenseDetail(APIView):
             from datetime import date
             request_data = request.data
 
-            # Convert release date string (yyyy-mm-dd)
-            # to date object
-            request_data["released_date"] = date.fromisoformat(
-                request_data["released_date"])
 
             # Update and Commit data into database
             serializer = SoftwareLicenseSerializer(

@@ -62,13 +62,13 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         max_length=500, default="", allow_blank=True, required=False)
     description = serializers.CharField(
         max_length=10000, default="", allow_blank=True, required=False)
-    disclaimer = serializers.CharField(max_length=10000, default="")
-    risk_for_choosing_license = serializers.CharField(max_length=2000)
-    limitation_of_liability = serializers.CharField(max_length=2000)
+    disclaimer = serializers.CharField(max_length=10000, default="", allow_blank=True, required=False)
+    risk_for_choosing_license = serializers.CharField(max_length=2000, allow_blank=True, required=False)
+    limitation_of_liability = serializers.CharField(max_length=2000, allow_blank=True, required=False)
     license_url = serializers.URLField(max_length=255)
     other_links = serializers.ListField(default=[])
     logo_detail = serializers.DictField()
-    recommendation = serializers.CharField(max_length=2000, default="")
+    recommendation = serializers.CharField(max_length=2000, default="", allow_blank=True, required=False)
     is_active = serializers.BooleanField(default=True)
     license_attributes = serializers.DictField()
     license_compatible_with_lookup = serializers.ListField(default=[])
@@ -88,16 +88,6 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         status_code = 500
         response_json = {}
 
-        # format date back to iso format
-        validated_data['released_date'] = validated_data['released_date'].isoformat()
-
-        # # Create license on localhost
-        # SoftwareLicense.objects.create(document = validated_data)
-        # # Retrieve license and return license
-        # license = SoftwareLicense.objects.last()
-        # if license:
-        #     status_code = 201
-        #     response_json = self.to_representation(license.document, license.license_id)
 
         # Create license on remote server
         response_json = save_document(
@@ -127,16 +117,6 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         status_code = 500
         response_json = {}
 
-        # format date back to iso format
-        validated_data['released_date'] = validated_data['released_date'].isoformat()
-        print("passed")
-
-        # Update localhost
-        # Retrieve license
-        # license = SoftwareLicense.objects.get(license_id = license_id)
-        # license.document = validated_data
-        # license.save()
-        # response_json = self.to_representation(license.document, license.id)
 
         # # Update license on remote server
         response_json = update_document(
