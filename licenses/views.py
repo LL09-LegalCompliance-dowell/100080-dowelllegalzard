@@ -151,19 +151,14 @@ class SoftwareLicenseList(APIView):
 
             # Get license compatible list
             license_two = license_two_json["data"][0]['softwarelicense']
-            license_compatibility = license_two["license_compatibility"]
+            license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
 
             
 
             # Check for compatibility
-            for compatible in license_compatibility:
-                if license_one["license_name"]\
-                    == compatible['license']\
-                        and compatible["is_compatible"]:
+            if license_one["license_name"] in license_compatible_with_lookup:
+                is_compatible = True
 
-                    is_compatible = compatible["is_compatible"]
-
-            
 
             return ({
                 "is_compatible": is_compatible,
