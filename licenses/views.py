@@ -1,12 +1,7 @@
-from urllib import response
-from django.shortcuts import render
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.db import transaction
-from storage.upload import upload_img
-import uuid
 from utils.dowell import (
     fetch_document,
     
@@ -18,27 +13,7 @@ from utils.dowell import (
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
 )
-
-from licenses.models import SoftwareLicense
 from licenses.serializers import SoftwareLicenseSerializer
-
-# Create your views here.
-
-
-def dowell_login(username, password):
-    url = "http://100014.pythonanywhere.com/api/login/"
-    userurl = "http://100014.pythonanywhere.com/api/user/"
-    payload = {
-        'username': username,
-        'password': password
-    }
-    with requests.Session() as s:
-        p = s.post(url, data=payload)
-        if "Username" in p.text:
-            return p.text
-        else:
-            user = s.get(userurl)
-            return user.text
 
 
 class SoftwareLicenseList(APIView):

@@ -1,8 +1,4 @@
-from email.policy import default
-from importlib.metadata import requires
-from urllib import request
 from rest_framework import serializers
-import json
 
 from utils.dowell import (
     fetch_document,
@@ -10,9 +6,7 @@ from utils.dowell import (
     update_document,
 
     SOFTWARE_LICENSE_COLLECTION,
-
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-
     SOFTWARE_LICENSE_KEY,
 
 )

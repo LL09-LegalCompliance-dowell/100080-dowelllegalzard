@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
 
     if(licenseTagAddEl){
-        licenseTagAddEl.onclick = formatAddTag;
+        licenseTagAddEl.onclick = function(event){
+            formatAddTag("", "");
+        };
     }
 
     if(tableBodyEl){
@@ -283,9 +285,6 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license")
     const limitationOfLiability = document.querySelector("#limitation-of-liability")
     const licenseAttributeHeading = document.querySelector("#license-attribute-heading")
-    // const licenseAttribute = document.querySelector('#license-attribute');
-    // const licenseCompatibleWith = document.querySelector('#license-compatible-with');
-    // const licenseNotCompatibleWith = document.querySelector('#license-not-compatible-with');
 
 
     const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
@@ -324,6 +323,16 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         $("#license-attribute").val(license.license_attributes.attributes);
         $("#license-compatible-with").val(license.license_compatible_with_lookup);
         $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
+
+        // display license tags
+        if(license["license_tags"] !== undefined){
+
+            license.license_tags.forEach(data => {
+                const key = Object.keys(data)[0];
+                const value = data[key];
+                formatAddTag(key, value);
+            })
+        }
         
 
         document.getElementById("page-spinner").style.display = "none";
@@ -475,8 +484,6 @@ const validateInput = () => {
     for (let option of licenseAttribute) {
         licenseAttributeList.push(option.value);
     }
-    console.log(licenseCompatibleWithList)
-    console.log(licenseAttributeList)
 
 
 
@@ -534,13 +541,6 @@ const validateInput = () => {
         licenseAttributeErrorEl.style.display = "block";
     }
 
-    if (licenseCompatibleWithList){
-        licenseCompatibleWithErrorEl.style.display = "none";
-    }else{
-        isValid = false;
-        licenseCompatibleWithErrorEl.style.display = "block";
-    }
-
     if (licenseDescription === ""){
         isValid = false;
         descriptionErrorEl.style.display = "block";
@@ -561,22 +561,21 @@ const validateInput = () => {
 }
 
 
-const formatAddTag = () => {
+const formatAddTag = (key="", value="") => {
     licenseTagAddCount += 1;
     const divEl = document.createElement('div')
     const content = `
         <div style="display: inline-block;" class="col-3 other-info">
-        <input type="text"  placeholder="Enter Key" class="form-control" id="license-tags-${licenseTagAddCount}-key">
+        <input type="text"  placeholder="Enter Key" class="form-control" value="${key}" id="license-tags-${licenseTagAddCount}-key">
         </div>
 
         <div style="display: inline-block;" class="col-7 other-info">
-        <input type="text" class="form-control" placeholder="Enter Value" id="license-tags-${licenseTagAddCount}-value">
+        <input type="text" class="form-control" placeholder="Enter Value" value="${value}" id="license-tags-${licenseTagAddCount}-value">
         </div>
         <div style="display: inline-block;" class="col-1 other-info">
         <button type="button" data-tag-id="license-tags-${licenseTagAddCount}" class="btn btn-outline-danger license-tags-delete">X</button>
         </div>
     `
-    //`<div id="license-tags- class="col-12 other-info license-tags">`
 
     divEl.setAttribute('id', `license-tags-${licenseTagAddCount}`);
     divEl.setAttribute('data-tag-id', `license-tags-${licenseTagAddCount}`);
@@ -607,13 +606,15 @@ const getLicenseTagContent = () => {
     const licenseTagsEl = document.querySelectorAll(".license-tags");
     licenseTagsEl.forEach(element => {
         const tagId = element.getAttribute("data-tag-id");
-        const key = document.querySelector(`#${tagId}-key`).value;
+        let key = document.querySelector(`#${tagId}-key`).value;
         const value = document.querySelector(`#${tagId}-value`).value;
 
         if (value && key){
+
             // format data
+            key = key.replace(":", "").trim();
             const data = {};
-            data[key] = value
+            data[key] = value.trim();
 
             licenseTags.push(data);
 
