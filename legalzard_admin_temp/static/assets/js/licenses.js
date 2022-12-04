@@ -1,13 +1,14 @@
 let index = 0;
 let updateIndex = 0;
 let fileData = {};
+let licenseTagAddCount = 0;
 
 document.addEventListener("DOMContentLoaded", function(event){
 
     const licenseImageEl = document.getElementById("license-image");
     const tableBodyEl = document.getElementById("table-body");
     const licenseBtnSaveEl = document.getElementById("btn-save-license");
-    const licenseFormEl = document.getElementById("license-form");
+    const licenseTagAddEl = document.getElementById("btn-add-license-tag");
 
 
     
@@ -21,6 +22,10 @@ document.addEventListener("DOMContentLoaded", function(event){
 
     if(licenseBtnSaveEl){
         licenseBtnSaveEl.onclick = saveDataToDatabase;
+    }
+
+    if(licenseTagAddEl){
+        licenseTagAddEl.onclick = formatAddTag;
     }
 
     if(tableBodyEl){
@@ -147,6 +152,7 @@ const saveDataToDatabase = (event) =>{
             version: version,
             license_url: licenseUrl,
             type_of_license: typeOfLicense,
+            license_tags: getLicenseTagContent(),
             short_description: shortDescription,
             description: licenseDescription,
             disclaimer: disclaimer,
@@ -463,13 +469,7 @@ const validateInput = () => {
     const licenseUrl = document.querySelector("#license-url").value;
     const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
     const licenseAttribute = document.querySelectorAll("#license-attribute  option:checked");
-    const licenseCompatibleWith = document.querySelectorAll("#license-compatible-with  option:checked");
-
     
-    const licenseCompatibleWithList = [];
-    for (let option of licenseCompatibleWith) {
-        licenseCompatibleWithList.push(option.value);
-    }
 
     const licenseAttributeList = [];
     for (let option of licenseAttribute) {
@@ -559,3 +559,69 @@ const validateInput = () => {
 
     return isValid;
 }
+
+
+const formatAddTag = () => {
+    licenseTagAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-3 other-info">
+        <input type="text"  placeholder="Enter Key" class="form-control" id="license-tags-${licenseTagAddCount}-key">
+        </div>
+
+        <div style="display: inline-block;" class="col-7 other-info">
+        <input type="text" class="form-control" placeholder="Enter Value" id="license-tags-${licenseTagAddCount}-value">
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+        <button type="button" data-tag-id="license-tags-${licenseTagAddCount}" class="btn btn-outline-danger license-tags-delete">X</button>
+        </div>
+    `
+    //`<div id="license-tags- class="col-12 other-info license-tags">`
+
+    divEl.setAttribute('id', `license-tags-${licenseTagAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-tags-${licenseTagAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-tags`);
+    divEl.innerHTML = content;
+    const licenseTagsContainerEl = document.getElementById("license-tags-container")
+    licenseTagsContainerEl.appendChild(divEl);
+    deleteLicenseTag();
+}
+
+const deleteLicenseTag = () => {
+    const licenseTagsDeleteEl = document.querySelectorAll(".license-tags-delete");
+    licenseTagsDeleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+
+const getLicenseTagContent = () => {
+
+    const licenseTags = [];
+    
+    const licenseTagsEl = document.querySelectorAll(".license-tags");
+    licenseTagsEl.forEach(element => {
+        const tagId = element.getAttribute("data-tag-id");
+        const key = document.querySelector(`#${tagId}-key`).value;
+        const value = document.querySelector(`#${tagId}-value`).value;
+
+        if (value && key){
+            // format data
+            const data = {};
+            data[key] = value
+
+            licenseTags.push(data);
+
+        }
+
+
+    })
+
+    return licenseTags;
+}
+
