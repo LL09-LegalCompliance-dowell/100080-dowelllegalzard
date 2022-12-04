@@ -105,7 +105,7 @@ class SoftwareLicenseList(APIView):
                 # Commit data to database
                 if serializer.is_valid():
                     response_json, status_code = serializer.save()
-                    
+
                 else:
                     print(serializer.errors)
                     response_json = {
@@ -313,6 +313,7 @@ class SoftwareLicenseDetail(APIView):
                 )
 
             else:
+                print(serializer.errors)
                 return Response({"error_msg": f"{serializer.errors}"},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )

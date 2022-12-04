@@ -92,8 +92,8 @@ const saveDataToDatabase = (event) =>{
     const licenseEventId = formEl.getAttribute("data-event-id");
     const methodType = formEl.getAttribute("data-method-type");
  
-    const licenseDescription = document.querySelector("#license-description").textContent;
-    const shortDescription = document.querySelector("#short-description").textContent;
+    const licenseDescription = document.querySelector("#license-description").value;
+    const shortDescription = document.querySelector("#short-description").value;
     const licenseName = document.querySelector("#license-name").value;
     const version = document.querySelector("#version").value;
     const typeOfLicense = document.querySelector("#type-of-license").value;
@@ -105,8 +105,9 @@ const saveDataToDatabase = (event) =>{
     const licenseAttribute = document.querySelectorAll('#license-attribute option:checked');
     const licenseCompatibleWith = document.querySelectorAll('#license-compatible-with option:checked');
     const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
-
     const btnSaveData = document.querySelector("#btn-save-license");
+
+
 
 
     // reset error 
@@ -122,6 +123,21 @@ const saveDataToDatabase = (event) =>{
         const loading = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> saving...';
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
+
+        const licenseNotCompatibleWithList = [];
+        for (let option of licenseNotCompatibleWith) {
+            licenseNotCompatibleWithList.push(option.value);
+        } 
+        
+        const licenseCompatibleWithList = [];
+        for (let option of licenseCompatibleWith) {
+            licenseCompatibleWithList.push(option.value);
+        }
+
+        const licenseAttributeList = [];
+        for (let option of licenseAttribute) {
+            licenseAttributeList.push(option.value);
+        }
 
         // Format data
         const data = {
@@ -145,10 +161,10 @@ const saveDataToDatabase = (event) =>{
             recommendation: " ",
             license_attributes: {
                 heading: licenseAttributeHeading,
-                attributes: licenseAttribute.split(",")
+                attributes: licenseAttributeList
             },
-            license_compatible_with_lookup: licenseCompatibleWith,
-            license_not_compatible_with_lookup: licenseNotCompatibleWith
+            license_compatible_with_lookup: licenseCompatibleWithList,
+            license_not_compatible_with_lookup: licenseNotCompatibleWithList
         }
 
 
@@ -261,9 +277,10 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license")
     const limitationOfLiability = document.querySelector("#limitation-of-liability")
     const licenseAttributeHeading = document.querySelector("#license-attribute-heading")
-    const licenseAttribute = document.querySelector('#license-attribute');
-    const licenseCompatibleWith = document.querySelector('#license-compatible-with');
-    const licenseNotCompatibleWith = document.querySelector('#license-not-compatible-with');
+    // const licenseAttribute = document.querySelector('#license-attribute');
+    // const licenseCompatibleWith = document.querySelector('#license-compatible-with');
+    // const licenseNotCompatibleWith = document.querySelector('#license-not-compatible-with');
+
 
     const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
     const licenseImageViewEl = document.getElementById("license-image-view");
@@ -282,6 +299,7 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
 
         const data = jsonData.data[0];
         const license = data.softwarelicense;
+        fileData = license.logo_detail;
 
 
         licenseDescription.innerHTML = license.description;
@@ -294,21 +312,13 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         riskForChoosingLicense.value = license.risk_for_choosing_license;
         limitationOfLiability.value = license.limitation_of_liability;
         licenseAttributeHeading.value = license.license_attributes.heading;
-        licenseImageViewEl.setAttribute("src", logo_detail.url);
+        licenseImageViewEl.setAttribute("src", license.logo_detail.url);
         licenseImageViewContainerEl.style.display = "block";
-        
-        
-        license.license_attributes.attributes.forEach(function(v) {
-            licenseAttribute.find(c => c.value == v).selected = true;
-          });
 
-        license.license_compatible_with_lookup.forEach(function(v) {
-            licenseCompatibleWith.find(c => c.value == v).selected = true;
-        });
-
-        license.license_not_compatible_with_lookup.forEach(function(v) {
-            licenseNotCompatibleWith.find(c => c.value == v).selected = true;
-          });
+        $("#license-attribute").val(license.license_attributes.attributes);
+        $("#license-compatible-with").val(license.license_compatible_with_lookup);
+        $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
+        
 
         document.getElementById("page-spinner").style.display = "none";
         document.getElementById("license-form").style.display = "block";
@@ -339,7 +349,7 @@ const loadLicenseDropdown = () => {
     }).then(function(jsonData){
 
     
-        let content = '<option  selected disabled value="0">--please choose--</option>';
+        let content = '<option selected>None</option>';
         const licenseNotCompatibleWithEl = document.getElementById("license-not-compatible-with");
         const licenseCompatibleWithEl = document.getElementById("license-compatible-with");
 
@@ -356,7 +366,7 @@ const loadLicenseDropdown = () => {
         const licenseFormEl = document.getElementById("license-form");
         const methodType = licenseFormEl.getAttribute("data-method-type")
         if(licenseFormEl){
-            
+
             if(methodType === "PUT"){
                 const licenseEventId = licenseFormEl.getAttribute("data-event-id");
                 loadLicenseDetailForUpdate(licenseEventId);
@@ -393,7 +403,7 @@ const loadCommonAttributeDropdown = () => {
     }).then(function(jsonData){
 
     
-        let content = '<option  selected disabled value="0">--please choose--</option>';
+        let content = '<option selected>None</option>';
         const licenseAttributeEl = document.getElementById("license-attribute");
 
         for (let commomAttribute of jsonData.data){
@@ -446,14 +456,28 @@ const tableContent = (index, data) => {
 const validateInput = () => {
     let isValid = true;
 
-    const licenseDescription = document.querySelector("#license-description").textContent;
+    const licenseDescription = document.querySelector("#license-description").value;
     const licenseName = document.querySelector("#license-name").value;
     const version = document.querySelector("#version").value;
     const typeOfLicense = document.querySelector("#type-of-license").value;
     const licenseUrl = document.querySelector("#license-url").value;
     const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
-    const licenseAttribute = document.querySelector("#license-attribute").value;
-    const licenseCompatibleWith = document.querySelector("#license-compatible-with").value;
+    const licenseAttribute = document.querySelectorAll("#license-attribute  option:checked");
+    const licenseCompatibleWith = document.querySelectorAll("#license-compatible-with  option:checked");
+
+    
+    const licenseCompatibleWithList = [];
+    for (let option of licenseCompatibleWith) {
+        licenseCompatibleWithList.push(option.value);
+    }
+
+    const licenseAttributeList = [];
+    for (let option of licenseAttribute) {
+        licenseAttributeList.push(option.value);
+    }
+    console.log(licenseCompatibleWithList)
+    console.log(licenseAttributeList)
+
 
 
     const licenseNameErrorEl = document.querySelector("#license-name-error");
@@ -503,18 +527,18 @@ const validateInput = () => {
     }
 
 
-    if (licenseAttribute === ""){
+    if (licenseAttributeList){
+        licenseAttributeErrorEl.style.display = "none";
+    }else{
         isValid = false;
         licenseAttributeErrorEl.style.display = "block";
-    }else{
-        licenseAttributeErrorEl.style.display = "none";
     }
 
-    if (licenseCompatibleWith === ""){
+    if (licenseCompatibleWithList){
+        licenseCompatibleWithErrorEl.style.display = "none";
+    }else{
         isValid = false;
         licenseCompatibleWithErrorEl.style.display = "block";
-    }else{
-        licenseCompatibleWithErrorEl.style.display = "none";
     }
 
     if (licenseDescription === ""){
