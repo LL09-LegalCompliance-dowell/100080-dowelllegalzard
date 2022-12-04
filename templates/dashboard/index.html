@@ -27,14 +27,25 @@
             <div class="card-body">
               <h5 class="card-title">Licenses</h5>
 
-              <div class="d-flex align-items-center">
+              <div style="display: none;" id="licenses-count-container" class="">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class="bi bi-box-seam"></i>
                 </div>
                 <div class="ps-3">
-                  <h6>{{licenses_count}}</h6>
+                  <h6 id="licenses-count">{{licenses_count}}</h6>
                 </div>
               </div>
+
+              <!-- End Table with stripped rows -->
+                <!-- Center aligned spinner -->
+                <div class="d-flex justify-content-center">
+                  <div id="licenses-count-spinner" style="display: block;" class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              <!-- End Center aligned spinner -->
+
+
             </div>
 
           </div>
@@ -48,16 +59,29 @@
             <div class="card-body">
               <h5 class="card-title">Comparisons</h5>
 
-              <div class="d-flex align-items-center">
+              <div style="display: none;" id="comparison-count-container" class="">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class="bi bi-arrows-angle-contract"></i>
                 </div>
                 <div class="ps-3">
-                  <h6>{{comparison_count}}</h6>
+                  <h6 id="comparison-count">{{comparison_count}}</h6>
 
                 </div>
               </div>
+
+              <!-- End Table with stripped rows -->
+                <!-- Center aligned spinner -->
+                <div class="d-flex justify-content-center">
+                  <div id="license-comparison-spinner" style="display: block;" class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              <!-- End Center aligned spinner -->
+
             </div>
+
+
+
 
           </div>
         </div><!-- End Comparisons Card -->
@@ -68,5 +92,18 @@
 
   </div>
 </section>
+
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/assets/js/dashboard.js"></script>
+<script>
+
+
+
+
+</script>
+
 
 {% endblock %}
