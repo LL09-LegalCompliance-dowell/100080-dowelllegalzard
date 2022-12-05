@@ -1,53 +1,15 @@
-from email.policy import default
-from importlib.metadata import requires
-from urllib import request
 from rest_framework import serializers
-import json
-from licenses.models import (
-    SoftwareLicense,
-    SoftwareLicenseAgreement,
-    CommonAttribute,
-    Attribute,
-    LicenseAttribute
-)
+
 from utils.dowell import (
     fetch_document,
     save_document,
     update_document,
 
     SOFTWARE_LICENSE_COLLECTION,
-    COMMON_ATTRIBUTE_COLLECTION,
-    ATTRIBUTE_COLLECTION,
-
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-    COMMON_ATTRIBUTE_DOCUMENT_NAME,
-    ATTRIBUTE_DOCUMENT_NAME,
-
     SOFTWARE_LICENSE_KEY,
-    COMMON_ATTRIBUTE_KEY,
-    ATTRIBUTE_MAIN_KEY,
 
 )
-
-
-class LicenseTypeSerializer(serializers.Serializer):
-    """ LicenseType collection contains
-        All the types of license
-        and their category = name
-        eg.
-        [
-            {
-                "name": "WEAKLY COPYLEFT",
-                "licenses": [ "LGPLv2.1", "LGPL2.1+"]
-            },
-            {
-                "name": "STRONGLY COPYLEFT",
-                "licenses": [ "GPLv2", "GPL2+"]
-            }
-        ]
-    """
-    name = serializers.CharField(max_length=150)
-    licenses = serializers.ListField()
 
 
 class SoftwareLicenseSerializer(serializers.Serializer):
@@ -55,44 +17,24 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         software license document
     """
     license_name = serializers.CharField(max_length=100)
-    features = serializers.ListField(default=[])
+    license_tags = serializers.ListField(default=[])
     version = serializers.CharField(max_length=15)
     type_of_license = serializers.CharField(max_length=150)
     short_description = serializers.CharField(
         max_length=500, default="", allow_blank=True, required=False)
     description = serializers.CharField(
         max_length=10000, default="", allow_blank=True, required=False)
-    disclaimer = serializers.CharField(max_length=10000, default="")
-    risk_for_choosing_license = serializers.CharField(max_length=2000)
-    limitation_of_liability = serializers.CharField(max_length=2000)
+    disclaimer = serializers.CharField(max_length=10000, default="", allow_blank=True, required=False)
+    risk_for_choosing_license = serializers.CharField(max_length=2000, allow_blank=True, required=False)
+    limitation_of_liability = serializers.CharField(max_length=2000, allow_blank=True, required=False)
     license_url = serializers.URLField(max_length=255)
-    other_links = serializers.ListField(default=[])
     logo_detail = serializers.DictField()
-    recommendation = serializers.CharField(max_length=2000, default="")
-    released_date = serializers.DateField()
+    recommendation = serializers.CharField(max_length=2000, default="", allow_blank=True, required=False)
     is_active = serializers.BooleanField(default=True)
     license_attributes = serializers.DictField()
-    license_compatibility = serializers.ListField(default=[])
     license_compatible_with_lookup = serializers.ListField(default=[])
     license_not_compatible_with_lookup = serializers.ListField(default=[])
 
-    # LICENSE COMPATIBILITY DOCUMENT
-    # license_compatibility =[
-    #     {
-    #      "license": "APACHE 2.0",
-    #      "percentage_of_comaptibility": "80",
-    #      "is_compatible": False,
-    #     },
-    #     {
-    #      "license": "GPLv2",
-    #      "percentage_of_comaptibility": "80",
-    #      "is_compatible": True,
-    #     }
-    # ]
-
-    # license_compatible_with_lookup = ["GPLv2", "LGPLv2.1"]
-    # or
-    # license_not_compatible_with_lookup = ["GPLv2", "GPL2+"]
 
     def to_representation(self, document: dict, id):
 
@@ -107,16 +49,6 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         status_code = 500
         response_json = {}
 
-        # format date back to iso format
-        validated_data['released_date'] = validated_data['released_date'].isoformat()
-
-        # # Create license on localhost
-        # SoftwareLicense.objects.create(document = validated_data)
-        # # Retrieve license and return license
-        # license = SoftwareLicense.objects.last()
-        # if license:
-        #     status_code = 201
-        #     response_json = self.to_representation(license.document, license.license_id)
 
         # Create license on remote server
         response_json = save_document(
@@ -146,16 +78,6 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         status_code = 500
         response_json = {}
 
-        # format date back to iso format
-        validated_data['released_date'] = validated_data['released_date'].isoformat()
-        print("passed")
-
-        # Update localhost
-        # Retrieve license
-        # license = SoftwareLicense.objects.get(license_id = license_id)
-        # license.document = validated_data
-        # license.save()
-        # response_json = self.to_representation(license.document, license.id)
 
         # # Update license on remote server
         response_json = update_document(
@@ -176,44 +98,3 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             )
 
         return response_json, status_code
-
-
-class LicenseAttributeHelperSerializer(serializers.Serializer):
-    """ LicenseAttributeHelper is a helper
-        class used to validate and build the dict/JSON object
-        for license_attributes property in 
-        software_licenses document.
-
-        eg.
-        {
-           "description": "The 2.0 version of the Apache License, approved by the ASF in 2004.",
-           "attribute": {
-                        _id: 949495885,
-                        "name": "Conveying Modified Source Versions",
-                        }   
-         }
-
-    """
-    description = serializers.CharField(max_length=2000, default="")
-    # Mapping LicenseAttribute to
-    # constant / common attribute define
-    attribute = serializers.JSONField()
-
-
-class LicenseCompatibilityHelperSerializer(serializers.Serializer):
-    """ LicenseCompatibilityHelper is a helper
-        class used to validate and build the dict/JSON object
-        for license_compatibility property in 
-        software_licenses document.
-
-        eg.
-        {
-           "license": "APACHE 2.0",
-           "percentage_of_comaptibility": "80",
-           "is_compatible": False,   
-         }
-
-    """
-    license = serializers.CharField(max_length=150)
-    percentage_of_comaptibility = serializers.IntegerField(default=0)
-    is_compatible = serializers.BooleanField(default=False)

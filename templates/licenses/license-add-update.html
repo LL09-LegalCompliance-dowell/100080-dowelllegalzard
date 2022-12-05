@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Comparisons|legalzard{% endblock %}
+{% block title %} {{action_type}} license|legalzard{% endblock %}
 
 {% block main %}
 <div class="pagetitle">
@@ -13,45 +13,67 @@
   </nav>
 </div><!-- End Page Title -->
 
+<style>
+
+  .other-info {
+    margin-bottom: 15px;
+  }
+</style>
+
 <section class="section">
     <div class="row">  
 
-      <div class="col-lg-8">
+      <!--Begin Error-->
+      <div id="error-container" style="display: none;" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p id="error-content">Error message!</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+     <!--End Error-->
 
+      <div class="col-lg-8">
+        <form id="license-form" style="display: none;" action="#" data-method-type="{{method}}" data-event-id="{{license_event_id}}">
+
+       
 
         <div class="col-lg-8">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Upload license image</h5>
+              <h5 class="card-title">Upload license image <span style="color: red;">*</span></h5>
 
               <div class="row mb-3">
                 <div class="col-sm-12">
-                  <input class="form-control" type="file" id="formFile">
+                  <input class="form-control" type="file" id="license-image" accept="image/png, image/gif, image/jpeg, image/jeg" >
                 </div>
               </div>
 
+              <!--BEGIN image display-->
+              <div style="display: none;" id="license-image-view-container"><img id="license-image-view" src="#" height="100px" /></div>
+           
+
+              <div id="processing-image" style="display: none;">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="visually-hidden">Proccessing image...</span> Proccessing image...
+              </div>
+              <!--END image display-->
+
+              <p id="license-image-error" style="color: red; display: none;">License image required</p>
             </div>
           </div>
 
         </div>
 
 
-
         <div class="col-lg-12">
 
-          <div style="height: 450px;" class="card">
+          <div class="card">
             <div   class="card-body">
-              <h5 class="card-title">Description</h5>
+              <h5 class="card-title">Description <span style="color: red;">*</span></h5>
 
-              <!-- Quill Editor Default -->
-              <div style="height:70%;" class="quill-editor-default">
-
-
-
+              <div class="col-md-12">
+                <textarea  class="form-control" id="license-description" rows="15"></textarea>
               </div>
-              <!-- End Quill Editor Default -->
-
+              <p id="description-error" style="color: red; display: none;">Description required</p>
             </div>
           </div>
 
@@ -64,20 +86,18 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Quill Editor Bubble</h5>
+              <h5 class="card-title">Short description</h5>
 
-              <!-- Quill Editor Bubble -->
-              <p>Select some text to display options in poppovers</p>
-              <div class="quill-editor-bubble">
-                <p>Hello World!</p>
-                <p>This is Quill <strong>bubble</strong> editor</p>
+
+              <div class="col-md-12">
+                <textarea  class="form-control" id="short-description" rows="4"></textarea>
               </div>
-              <!-- End Quill Editor Bubble -->
 
             </div>
           </div>
 
         </div>
+
 
 
 
@@ -85,57 +105,90 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Quill Editor Full</h5>
+              <h5 class="card-title">Other Information</h5>
 
-              <!-- Quill Editor Full -->
-              <p>Quill editor with full toolset</p>
-              <div class="quill-editor-full">
-                <p>Hello World!</p>
-                <p>This is Quill <strong>full</strong> editor</p>
-              </div>
-              <!-- End Quill Editor Full -->
+
+                <div  class="col-12 other-info">
+                  <label for="license-name" class="form-label">License name <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" id="license-name">
+                  <p id="license-name-error" style="color: red; display: none;">License name required</p>
+                </div>
+
+                <div class="col-12 other-info">
+                  <label for="version" class="form-label">Version <span style="color: red;">*</span></label>
+                  <input type="email" class="form-control" id="version">
+                  <p id="version-error" style="color: red; display: none;">License version required</p>
+                </div>
+
+                <div class="col-12 other-info">
+                  <label for="type-of-license" class="form-label">Type of license <span style="color: red;">*</span></label>
+                  <select required id="type-of-license" class="form-select">
+                    <option value="0" selected disabled>--please choose--</option>
+                    <option value="COPYLEFT">COPYLEFT</option>
+                    <option value="PERMISSIVE">PERMISSIVE</option>
+                    <option value="WEAKLY COPYLEFT">WEAKLY COPYLEFT</option>
+                  </select>
+                  <p id="type-of-license-error" style="color: red; display: none;">Type of license required</p>
+                </div>
+
+                <div class="col-12 other-info">
+                  <label for="license-url" class="form-label">License url <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" id="license-url">
+                  <p id="license-url-error" style="color: red; display: none;">License url required</p>
+                </div>
+
+
+
+                <div class="col-md-12 other-info">
+                  <label for="disclaimer" class="form-label">Disclaimer</label>
+                  <textarea class="form-control" id="disclaimer" rows="4"></textarea>
+                </div>
+
+
+
+                <div class="col-md-12 other-info">
+                  <label for="risk-for-choosing-license" class="form-label">Risk for choosing license</label>
+                  <textarea class="form-control" id="risk-for-choosing-license" rows="4"></textarea>
+                </div>
+
+
+
+
+                <div class="col-md-12 other-info">
+                  <label for="limitation-of-liability" class="form-label">Limitation of liability</label>
+                  <textarea class="form-control" id="limitation-of-liability" rows="4"></textarea>
+                </div>
+
+
 
             </div>
           </div>
 
 
         </div>
+
 
         <div class="col-lg-12">
 
           <div class="card">
             <div class="card-body">
+              <h5 class="card-title">License Tags</h5>
+              <div id="license-tags-container" class="col-lg-12">
 
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">License name</label>
-                  <input type="text" class="form-control" id="inputNanme4">
-                </div>
+                <!--TAGS ARE DISPLAY HERE-->
 
-                <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Version</label>
-                  <input type="email" class="form-control" id="inputEmail4">
-                </div>
 
-                <div class="col-12">
-                  <label for="inputPassword4" class="form-label">Type of license</label>
-                  <input type="password" class="form-control" id="inputPassword4">
-                </div>
+              </div>
 
-                <div class="col-12">
-                  <label for="inputAddress" class="form-label">License url</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-
-                <div class="col-12">
-                  <label for="inputAddress" class="form-label">Recommendation %</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-license-tag" class="btn btn-outline-primary">Add Tag</button>
+              </div>
             </div>
           </div>
 
 
         </div>
+
 
 
         <div class="col-lg-12">
@@ -144,9 +197,20 @@
             <div   class="card-body">
               <h5 class="card-title">License attributes</h5>
 
-              <textarea class="col-lg-12" rows="4">
+              <div  class="col-12 other-info">
+                <label for="license-attribute-heading" class="form-label">Attribute Heading <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="license-attribute-heading">
+                <p id="license-attribute-heading-error" style="color: red; display: none;">Attribute Heading required</p>
+              </div>
 
-              </textarea>
+
+              <div class="col-12 other-info">
+                <label for="type-of-license" class="form-label">Attributes <span style="color: red;">*</span></label>
+                <select required multiple size="8" id="license-attribute" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                </select>
+                <p id="license-attribute-error" style="color: red; display: none;">Attributes required</p>
+              </div>
 
             </div>
           </div>
@@ -156,11 +220,14 @@
 
           <div class="card">
             <div   class="card-body">
-              <h5 class="card-title">License compatible with lookup</h5>
+              <h5 class="card-title">Compatible Licenses</h5>
 
-              <textarea class="col-lg-12" rows="4">
-
-              </textarea>
+              <div class="col-12 other-info">
+                <select  required multiple size="8" id="license-compatible-with" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                </select>
+                <p id="license-compatible-with-error" style="color: red; display: none;">License compatible with required</p>
+              </div>
 
             </div>
           </div>
@@ -171,16 +238,36 @@
 
           <div class="card">
             <div   class="card-body">
-              <h5 class="card-title">License not compatible with lookup</h5>
+              <h5 class="card-title">Incompatible Licenses</h5>
 
-              <textarea class="col-lg-12" rows="4">
-
-              </textarea>
+              <div class="col-12 other-info">
+                <select required multiple size="8" id="license-not-compatible-with" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                </select>
+                <p id="license-not-compatible-with-error" style="color: red; display: none;">License not compatible with required</p>
+              </div>
 
             </div>
           </div>
         </div>
 
+        <div>
+          <button style="float: right;" id="btn-save-license" type="button" class="btn btn-primary">Save</button>
+          <button style="float: right; margin-right: 5px;" type="button" class="btn btn-secondary">Cancel</button>
+        </div>
+
+      </form>
+
+
+
+      <!-- End page with stripped rows -->
+        <!-- Center aligned spinner -->
+        <div class="d-flex justify-content-center">
+          <div id="page-spinner" style="display: block;" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      <!-- End Center aligned spinner -->
 
 
       </div>
