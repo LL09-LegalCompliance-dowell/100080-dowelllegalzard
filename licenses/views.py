@@ -1,12 +1,7 @@
-from urllib import response
-from django.shortcuts import render
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.db import transaction
-from storage.upload import upload_img
-import uuid
 from utils.dowell import (
     fetch_document,
     
@@ -18,27 +13,7 @@ from utils.dowell import (
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
 )
-
-from licenses.models import SoftwareLicense
 from licenses.serializers import SoftwareLicenseSerializer
-
-# Create your views here.
-
-
-def dowell_login(username, password):
-    url = "http://100014.pythonanywhere.com/api/login/"
-    userurl = "http://100014.pythonanywhere.com/api/user/"
-    payload = {
-        'username': username,
-        'password': password
-    }
-    with requests.Session() as s:
-        p = s.post(url, data=payload)
-        if "Username" in p.text:
-            return p.text
-        else:
-            user = s.get(userurl)
-            return user.text
 
 
 class SoftwareLicenseList(APIView):
@@ -100,16 +75,19 @@ class SoftwareLicenseList(APIView):
             else:
                 request_data["is_active"] = True
 
-                # Convert release date string (yyyy-mm-dd)
-                # to date object
-                request_data["released_date"] = date.fromisoformat(
-                    request_data["released_date"])
-
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
-                serializer.is_valid()
-                response_json, status_code = serializer.save()
+                if serializer.is_valid():
+                    response_json, status_code = serializer.save()
+
+                else:
+                    print(serializer.errors)
+                    response_json = {
+                       "error_msg": f"{serializer.errors}" 
+                    }
+                    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
 
             return Response(response_json,
                             status=status_code
@@ -173,19 +151,14 @@ class SoftwareLicenseList(APIView):
 
             # Get license compatible list
             license_two = license_two_json["data"][0]['softwarelicense']
-            license_compatibility = license_two["license_compatibility"]
+            license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
 
             
 
             # Check for compatibility
-            for compatible in license_compatibility:
-                if license_one["license_name"]\
-                    == compatible['license']\
-                        and compatible["is_compatible"]:
+            if license_one["license_name"] in license_compatible_with_lookup:
+                is_compatible = True
 
-                    is_compatible = compatible["is_compatible"]
-
-            
 
             return ({
                 "is_compatible": is_compatible,
@@ -296,10 +269,6 @@ class SoftwareLicenseDetail(APIView):
             from datetime import date
             request_data = request.data
 
-            # Convert release date string (yyyy-mm-dd)
-            # to date object
-            request_data["released_date"] = date.fromisoformat(
-                request_data["released_date"])
 
             # Update and Commit data into database
             serializer = SoftwareLicenseSerializer(
@@ -314,6 +283,7 @@ class SoftwareLicenseDetail(APIView):
                 )
 
             else:
+                print(serializer.errors)
                 return Response({"error_msg": f"{serializer.errors}"},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )

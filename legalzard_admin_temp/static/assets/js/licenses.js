@@ -1,71 +1,196 @@
 let index = 0;
 let updateIndex = 0;
+let fileData = {};
+let licenseTagAddCount = 0;
 
 document.addEventListener("DOMContentLoaded", function(event){
 
-    // const btnSaveEl = document.querySelector("#btn-save-license-comparison");
+    const licenseImageEl = document.getElementById("license-image");
+    const tableBodyEl = document.getElementById("table-body");
+    const licenseBtnSaveEl = document.getElementById("btn-save-license");
+    const licenseTagAddEl = document.getElementById("btn-add-license-tag");
 
 
-    // Display form
-    // document.getElementById("btn-add-new").onclick = function(event){
-    //     document.querySelector("#license-1").value = "0";
-    //     document.querySelector("#license-2").value = "0";
+    
+    if(licenseImageEl){
+        licenseImageEl.onchange = uploadFile;
+
+        loadLicenseDropdown();
+        loadCommonAttributeDropdown();
+    }
 
 
-    //     const formEl = document.querySelector("#license-comparison-form");
-    //     formEl.setAttribute("data-method-type", "POST");
-    //     formEl.setAttribute("data-endpoint", "/api/comparisons/");
-    //     // formEl.setAttribute("data-comparison-id", "");
-    // }
+    if(licenseBtnSaveEl){
+        licenseBtnSaveEl.onclick = saveDataToDatabase;
+    }
 
+    if(licenseTagAddEl){
+        licenseTagAddEl.onclick = function(event){
+            formatAddTag("", "");
+        };
+    }
 
-    // btnSaveEl.onclick = saveDataToDatabase;
-
-    // loadLicenseDropdown();
-    loadTable();
+    if(tableBodyEl){
+        loadTable();
+    }
 
 
 })
 
+
+const uploadFile = (event) => {
+
+    const licenseImageEl = document.getElementById("license-image");
+    const processingImageSpinnerEl = document.getElementById("processing-image");
+    const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
+    const licenseImageViewEl = document.getElementById("license-image-view");
+
+    const formData = new FormData()
+    formData.append('file', licenseImageEl.files[0])
+    
+
+    if (licenseImageEl.files && licenseImageEl.files[0]) {
+
+        // preview image selected
+        licenseImageViewContainerEl.style.display = "block"
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            licenseImageViewEl.setAttribute("src", e.target.result);
+        };
+        reader.readAsDataURL(licenseImageEl.files[0]);
+
+
+        // BEGIN Processs image
+        processingImageSpinnerEl.style.display = "block";
+        fetch('/api/attachments/', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            processingImageSpinnerEl.style.display = "none";
+            if (response.status === 200){
+                return response.json();
+            }
+    
+        }).then(jsonData => {
+            fileData = jsonData.file_data;
+            console.log(fileData);
+            
+    
+        }).catch(err => {
+    
+            console.log(err);
+            processingImageSpinnerEl.style.display = "none";
+        })
+        // END process images
+
+
+      }
+
+
+}
+
+
 const saveDataToDatabase = (event) =>{
     event.preventDefault();
 
-    const formEl = document.querySelector("#license-comparison-form");
+    const formEl = document.getElementById("license-form");
     const errorContainerEl = document.querySelector("#error-container");
     const errorContentEl = document.querySelector("#error-content");
-    const endpoint = formEl.getAttribute("data-endpoint");
+    const licenseEventId = formEl.getAttribute("data-event-id");
     const methodType = formEl.getAttribute("data-method-type");
-    const license1EventId = document.querySelector("#license-1").value;
-    const license2EventId = document.querySelector("#license-2").value;
-    const btnSaveData = document.querySelector("#btn-save-license-comparison");
+ 
+    const licenseDescription = document.querySelector("#license-description").value;
+    const shortDescription = document.querySelector("#short-description").value;
+    const licenseName = document.querySelector("#license-name").value;
+    const version = document.querySelector("#version").value;
+    const typeOfLicense = document.querySelector("#type-of-license").value;
+    const licenseUrl = document.querySelector("#license-url").value;
+    const disclaimer = document.querySelector("#disclaimer").value;
+    const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license").value;
+    const limitationOfLiability = document.querySelector("#limitation-of-liability").value;
+    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
+    const licenseAttribute = document.querySelectorAll('#license-attribute option:checked');
+    const licenseCompatibleWith = document.querySelectorAll('#license-compatible-with option:checked');
+    const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
+    const btnSaveData = document.querySelector("#btn-save-license");
+
+
 
 
     // reset error 
     errorContainerEl.style.display = "none";
     errorContentEl.textContent = "";
 
+    console.log("I am called")
+
     if (validateInput()){
 
+        console.log("I am valid")
         // Activate loading
         const loading = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> saving...';
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
 
+        const licenseNotCompatibleWithList = [];
+        for (let option of licenseNotCompatibleWith) {
+            licenseNotCompatibleWithList.push(option.value);
+        } 
+        
+        const licenseCompatibleWithList = [];
+        for (let option of licenseCompatibleWith) {
+            licenseCompatibleWithList.push(option.value);
+        }
 
+        const licenseAttributeList = [];
+        for (let option of licenseAttribute) {
+            licenseAttributeList.push(option.value);
+        }
+
+        // Format data
         const data = {
-            license_1_event_id: license1EventId,
-            license_2_event_id: license2EventId
+            features: [],
+            other_links: [],
+            license_name: licenseName,
+            version: version,
+            license_url: licenseUrl,
+            type_of_license: typeOfLicense,
+            license_tags: getLicenseTagContent(),
+            short_description: shortDescription,
+            description: licenseDescription,
+            disclaimer: disclaimer,
+            risk_for_choosing_license: riskForChoosingLicense,
+            limitation_of_liability: limitationOfLiability,
+            logo_detail: {
+                filename: fileData.filename,
+                actual_filename: fileData.actual_filename,
+                file_extension: fileData.file_extension,
+                url: ""
+            },
+            recommendation: " ",
+            license_attributes: {
+                heading: licenseAttributeHeading,
+                attributes: licenseAttributeList
+            },
+            license_compatible_with_lookup: licenseCompatibleWithList,
+            license_not_compatible_with_lookup: licenseNotCompatibleWithList
         }
 
 
-        fetch(endpoint, {
+        let url = "/api/licenses/";
+        if (methodType === "PUT")
+        {
+            url = "/api/licenses/"+licenseEventId+"/";
+        }
+
+
+        fetch(url, {
             method: methodType,
             body: JSON.stringify(data),
             headers: {"Content-Type": "application/json"}
         }).then(function(response){
             if (response.status === 201 || response.status === 200){
 
-                return response.json();
+                window.location.href = "/temp-admin/licenses/";
 
             }else{
 
@@ -80,37 +205,6 @@ const saveDataToDatabase = (event) =>{
 
 
             }
-
-        }).then(function(jsonData){
-
-            const tableBodyEl = document.getElementById("table-body");
-
-            index += 1;
-
-            if (methodType === "POST"){
-
-                const content = tableContent(index, jsonData.data[0]);
-                tableBodyEl.innerHTML = `${tableBodyEl.innerHTML}${content}`;
-
-            }else{
-
-                // const trEl = document.getElementById(`comparison-${comparison_category._id}`)
-                // const content = tableContentWithOutTR(index, comparison_category, updateIndex);
-
-                // const replacement = document.createElement('tr')
-                // replacement.setAttribute("id", `comparison-${comparison_category._id}`)
-                // replacement.innerHTML = content;
-                // trEl.replaceWith(replacement);
-
-            }
-
-
-            // deactivate loading
-            btnSaveData.innerHTML = "Save";
-            btnSaveData.disabled = false;
-            document.getElementById("btn-close-modal").click();
-            // listenToEditBtn();
-
 
         }).catch(function(err){
 
@@ -177,13 +271,26 @@ const loadTable = () => {
 
 }
 
+const loadLicenseDetailForUpdate = (licenseEventId) => {
 
-const loadLicenseDropdown = () => {
-   
-    const tableSpinnerEl = document.getElementById("table-spinner");
-    const tableBodyEl = document.getElementById("table-body");
+    document.getElementById("page-spinner").style.display = "block";
+    document.getElementById("license-form").style.display = "none";
+    const licenseDescription = document.querySelector("#license-description")
+    const shortDescription = document.querySelector("#short-description")
+    const licenseName = document.querySelector("#license-name")
+    const version = document.querySelector("#version")
+    const typeOfLicense = document.querySelector("#type-of-license")
+    const licenseUrl = document.querySelector("#license-url")
+    const disclaimer = document.querySelector("#disclaimer")
+    const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license")
+    const limitationOfLiability = document.querySelector("#limitation-of-liability")
+    const licenseAttributeHeading = document.querySelector("#license-attribute-heading")
 
-    fetch("/api/licenses/", {
+
+    const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
+    const licenseImageViewEl = document.getElementById("license-image-view");
+
+    fetch("/api/licenses/"+licenseEventId+"/", {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     }).then(function(response){
@@ -195,17 +302,130 @@ const loadLicenseDropdown = () => {
 
     }).then(function(jsonData){
 
+        const data = jsonData.data[0];
+        const license = data.softwarelicense;
+        fileData = license.logo_detail;
+
+
+        licenseDescription.innerHTML = license.description;
+        shortDescription.value = license.short_description;
+        licenseName.value = license.license_name;
+        version.value = license.version;
+        typeOfLicense.value = license.type_of_license;
+        licenseUrl.value = license.license_url;
+        disclaimer.value = license.disclaimer;
+        riskForChoosingLicense.value = license.risk_for_choosing_license;
+        limitationOfLiability.value = license.limitation_of_liability;
+        licenseAttributeHeading.value = license.license_attributes.heading;
+        licenseImageViewEl.setAttribute("src", license.logo_detail.url);
+        licenseImageViewContainerEl.style.display = "block";
+
+        $("#license-attribute").val(license.license_attributes.attributes);
+        $("#license-compatible-with").val(license.license_compatible_with_lookup);
+        $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
+
+        // display license tags
+        if(license["license_tags"] !== undefined){
+
+            license.license_tags.forEach(data => {
+                const key = Object.keys(data)[0];
+                const value = data[key];
+                formatAddTag(key, value);
+            })
+        }
+        
+
+        document.getElementById("page-spinner").style.display = "none";
+        document.getElementById("license-form").style.display = "block";
+
+
+
+    }).catch(function(err){
+        document.getElementById("page-spinner").style.display = "none";
+        document.getElementById("license-form").style.display = "block";
+
+    })
+
+
     
-        let content = '<option  selected disabled value="0">--please choose--</option>';
-        const licence1El = document.getElementById("license-1");
-        const licence2El = document.getElementById("license-2");
+
+}
+
+
+const loadLicenseDropdown = () => {
+
+    fetch("/api/licenses/", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    }).then(function(response){
+        if (response.status === 200){
+            return response.json();
+        }
+    }).then(function(jsonData){
+
+    
+        let content = '<option selected>None</option>';
+        const licenseNotCompatibleWithEl = document.getElementById("license-not-compatible-with");
+        const licenseCompatibleWithEl = document.getElementById("license-compatible-with");
 
         for (let license of jsonData.data){
-            content += `<option value="${license.eventId}">${license.softwarelicense.license_name}(${license.softwarelicense.version})</option>`;
+            content += `<option value="${license.softwarelicense.license_name}">${license.softwarelicense.license_name} (${license.softwarelicense.version})</option>`;
         }
 
-        licence1El.innerHTML = content;
-        licence2El.innerHTML = content;
+        licenseCompatibleWithEl.innerHTML = content;
+        licenseNotCompatibleWithEl.innerHTML = content;
+
+
+        // Load license detail
+        // methodType is PUT
+        const licenseFormEl = document.getElementById("license-form");
+        const methodType = licenseFormEl.getAttribute("data-method-type")
+        if(licenseFormEl){
+
+            if(methodType === "PUT"){
+                const licenseEventId = licenseFormEl.getAttribute("data-event-id");
+                loadLicenseDetailForUpdate(licenseEventId);
+            }else{
+                document.getElementById("license-form").style.display = "block";
+                document.getElementById("page-spinner").style.display = "none";
+            }
+
+        }
+
+        
+
+    }).catch(function(err){
+        document.getElementById("page-spinner").style.display = "none";
+
+    })
+
+
+    
+
+}
+
+
+const loadCommonAttributeDropdown = () => {
+   
+
+    fetch("/api/commonattributes/", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    }).then(function(response){
+        if (response.status === 200){
+            return response.json();
+        }
+    }).then(function(jsonData){
+
+    
+        let content = '<option selected>None</option>';
+        const licenseAttributeEl = document.getElementById("license-attribute");
+
+        for (let commomAttribute of jsonData.data){
+            content += `<option value="${commomAttribute.common_attributes.name}">${commomAttribute.common_attributes.name}</option>`;
+        }
+
+        licenseAttributeEl.innerHTML = content;
         
 
     }).catch(function(err){
@@ -217,6 +437,7 @@ const loadLicenseDropdown = () => {
     
 
 }
+
 
 const tableContent = (index, data) => {
     license = data.softwarelicense;
@@ -237,7 +458,7 @@ const tableContent = (index, data) => {
                   <td style="width: 10px;">
 
                     <div class="btn-group" role="group" aria-label="action">
-                        <a href="/api/licenses/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
+                        <a href="/temp-admin/license-edit/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
                     </div>
 
                   </td>
@@ -246,64 +467,162 @@ const tableContent = (index, data) => {
 }
 
 
-const listenToEditBtn = () => {
-    const editEls = document.querySelectorAll(".edit-data");
-    editEls.forEach(function(element){
-        element.onclick = function(event){
-            const id = this.getAttribute("data-id")
-
-            // load provider for update
-            fetch(`/provider/${id}`,{
-                method:"GET",
-                headers: {"Content-Type": "application/jsons"}
-            }).then(function(response){
-                if (response.status === 200){
-                    return response.json();
-                }
-            }).then(function(jsonData){
-
-                const formContainerEl = document.querySelector("#form-container");
-                const providerNameEl = document.querySelector("#provider-name");
-                const cardFormTitleEl = document.querySelector("#card-form-title");
-                const formEl = document.querySelector("#form");
-                document.querySelector("#provider-name").value = jsonData.name;
-
-                formContainerEl.style.display = "block";
-                cardFormTitleEl.textContent = "Update Provider";
-                providerNameEl.textContent = "";
-                formEl.setAttribute("data-method-type", "PUT");
-                formEl.setAttribute("data-endpoint", `/provider/${id}`);
-
-            })
-
-        }
-    })
-
-}
-
 
 const validateInput = () => {
     let isValid = true;
-    const license1 = document.querySelector("#license-1").value;
-    const license2 = document.querySelector("#license-2").value;
-    const license1ErorEl = document.querySelector("#license-1-error");
-    const license2ErorEl = document.querySelector("#license-2-error");
 
-    if (license1 === "0"){
-        isValid = false;
-        license1ErorEl.style.display = "block";
-    }else{
-        license1ErorEl.style.display = "none";
+    const licenseDescription = document.querySelector("#license-description").value;
+    const licenseName = document.querySelector("#license-name").value;
+    const version = document.querySelector("#version").value;
+    const typeOfLicense = document.querySelector("#type-of-license").value;
+    const licenseUrl = document.querySelector("#license-url").value;
+    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
+    const licenseAttribute = document.querySelectorAll("#license-attribute  option:checked");
+    
+
+    const licenseAttributeList = [];
+    for (let option of licenseAttribute) {
+        licenseAttributeList.push(option.value);
     }
 
-    if (license2 === "0"){
+
+
+    const licenseNameErrorEl = document.querySelector("#license-name-error");
+    const versionErrorEl = document.querySelector("#version-error");
+    const typeOfLicenseErrorEl = document.querySelector("#type-of-license-error");
+    const licenseUrlErrorEl = document.querySelector("#license-url-error");
+    const licenseAttributeHeadingErrorEl = document.querySelector("#license-attribute-heading-error");
+    const licenseAttributeErrorEl = document.querySelector("#license-attribute-error");
+    const licenseCompatibleWithErrorEl = document.querySelector("#license-compatible-with-error");
+    const descriptionErrorEl = document.querySelector("#description-error");
+    const licenseImageErrorEl = document.querySelector("#license-image-error");
+
+    if (licenseName === ""){
         isValid = false;
-        license2ErorEl.style.display = "block";
+        licenseNameErrorEl.style.display = "block";
     }else{
-        license2ErorEl.style.display = "none";
+        licenseNameErrorEl.style.display = "none";
+    }
+
+    if (version === ""){
+        isValid = false;
+        versionErrorEl.style.display = "block";
+    }else{
+        versionErrorEl.style.display = "none";
+    }
+
+    if (typeOfLicense === ""){
+        isValid = false;
+        typeOfLicenseErrorEl.style.display = "block";
+    }else{
+        typeOfLicenseErrorEl.style.display = "none";
+    }
+
+
+    if (licenseUrl === ""){
+        isValid = false;
+        licenseUrlErrorEl.style.display = "block";
+    }else{
+        licenseUrlErrorEl.style.display = "none";
+    }
+
+    if (licenseAttributeHeading === ""){
+        isValid = false;
+        licenseAttributeHeadingErrorEl.style.display = "block";
+    }else{
+        licenseAttributeHeadingErrorEl.style.display = "none";
+    }
+
+
+    if (licenseAttributeList){
+        licenseAttributeErrorEl.style.display = "none";
+    }else{
+        isValid = false;
+        licenseAttributeErrorEl.style.display = "block";
+    }
+
+    if (licenseDescription === ""){
+        isValid = false;
+        descriptionErrorEl.style.display = "block";
+    }else{
+        descriptionErrorEl.style.display = "none";
+    }
+
+    if (fileData){
+        licenseImageErrorEl.style.display = "none";
+    }else{
+        isValid = false;
+        licenseImageErrorEl.style.display = "block";       
     }
 
 
 
     return isValid;
 }
+
+
+const formatAddTag = (key="", value="") => {
+    licenseTagAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-3 other-info">
+        <input type="text"  placeholder="Enter Key" class="form-control" value="${key}" id="license-tags-${licenseTagAddCount}-key">
+        </div>
+
+        <div style="display: inline-block;" class="col-7 other-info">
+        <input type="text" class="form-control" placeholder="Enter Value" value="${value}" id="license-tags-${licenseTagAddCount}-value">
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+        <button type="button" data-tag-id="license-tags-${licenseTagAddCount}" class="btn btn-outline-danger license-tags-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-tags-${licenseTagAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-tags-${licenseTagAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-tags`);
+    divEl.innerHTML = content;
+    const licenseTagsContainerEl = document.getElementById("license-tags-container")
+    licenseTagsContainerEl.appendChild(divEl);
+    deleteLicenseTag();
+}
+
+const deleteLicenseTag = () => {
+    const licenseTagsDeleteEl = document.querySelectorAll(".license-tags-delete");
+    licenseTagsDeleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+
+const getLicenseTagContent = () => {
+
+    const licenseTags = [];
+    
+    const licenseTagsEl = document.querySelectorAll(".license-tags");
+    licenseTagsEl.forEach(element => {
+        const tagId = element.getAttribute("data-tag-id");
+        let key = document.querySelector(`#${tagId}-key`).value;
+        const value = document.querySelector(`#${tagId}-value`).value;
+
+        if (value && key){
+
+            // format data
+            key = key.replace(":", "").trim();
+            const data = {};
+            data[key] = value.trim();
+
+            licenseTags.push(data);
+
+        }
+
+
+    })
+
+    return licenseTags;
+}
+

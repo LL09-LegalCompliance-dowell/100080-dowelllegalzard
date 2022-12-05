@@ -33,17 +33,21 @@ def add_license(request):
             template_name="licenses/license-add-update.html",
             context={
                 "is_licenses": True,
-                "action_type": "Add"
+                "action_type": "Add",
+                "method": "POST",
+                "license_event_id": ""
                 }
             )
 
-def update_license(request):
+def update_license(request, license_event_id):
     return render(
             request=request,
             template_name="licenses/license-add-update.html",
             context={
                 "is_licenses": True,
-                "action_type": "Update"
+                "action_type": "Update",
+                "method": "PUT",
+                "license_event_id": license_event_id
                 }
             )
 
