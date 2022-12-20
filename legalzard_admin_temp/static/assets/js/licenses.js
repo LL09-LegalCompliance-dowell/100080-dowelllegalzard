@@ -471,7 +471,7 @@ const tableContent = (index, data) => {
 const validateInput = () => {
     let isValid = true;
 
-    const licenseDescription = document.querySelector("#license-description").value;
+    // const licenseDescription = document.querySelector("#license-description").value;
     const licenseName = document.querySelector("#license-name").value;
     const version = document.querySelector("#version").value;
     const typeOfLicense = document.querySelector("#type-of-license").value;
@@ -494,7 +494,7 @@ const validateInput = () => {
     const licenseAttributeHeadingErrorEl = document.querySelector("#license-attribute-heading-error");
     const licenseAttributeErrorEl = document.querySelector("#license-attribute-error");
     const licenseCompatibleWithErrorEl = document.querySelector("#license-compatible-with-error");
-    const descriptionErrorEl = document.querySelector("#description-error");
+    // const descriptionErrorEl = document.querySelector("#description-error");
     const licenseImageErrorEl = document.querySelector("#license-image-error");
 
     if (licenseName === ""){
@@ -541,12 +541,12 @@ const validateInput = () => {
         licenseAttributeErrorEl.style.display = "block";
     }
 
-    if (licenseDescription === ""){
-        isValid = false;
-        descriptionErrorEl.style.display = "block";
-    }else{
-        descriptionErrorEl.style.display = "none";
-    }
+    // if (licenseDescription === ""){
+    //     isValid = false;
+    //     descriptionErrorEl.style.display = "block";
+    // }else{
+    //     descriptionErrorEl.style.display = "none";
+    // }
 
     if (fileData){
         licenseImageErrorEl.style.display = "none";
