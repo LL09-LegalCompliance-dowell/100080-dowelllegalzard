@@ -2,6 +2,11 @@
 
 {% block title %} {{action_type}} license|legalzard{% endblock %}
 
+{% block headblock %}
+
+
+{% endblock %}
+
 {% block main %}
 <div class="pagetitle">
   <h1 id="license-action-type" data-action-type="{{action_type}}">{{action_type}} License</h1>
@@ -127,6 +132,8 @@
                     <option value="COPYLEFT">COPYLEFT</option>
                     <option value="PERMISSIVE">PERMISSIVE</option>
                     <option value="WEAKLY COPYLEFT">WEAKLY COPYLEFT</option>
+                    <option value="STRONG COPYLEFT">STRONG COPYLEFT</option>
+                    <option value="PUBLIC DOMAIN">PUBLIC DOMAIN</option>
                   </select>
                   <p id="type-of-license-error" style="color: red; display: none;">Type of license required</p>
                 </div>
@@ -199,17 +206,23 @@
 
               <div  class="col-12 other-info">
                 <label for="license-attribute-heading" class="form-label">Attribute Heading <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="license-attribute-heading">
+                <input type="text" class="form-control" value="TERMS AND CONDITIONS" id="license-attribute-heading">
                 <p id="license-attribute-heading-error" style="color: red; display: none;">Attribute Heading required</p>
               </div>
 
 
               <div class="col-12 other-info">
                 <label for="type-of-license" class="form-label">Attributes <span style="color: red;">*</span></label>
-                <select required multiple size="8" id="license-attribute" class="form-select">
+                <select required multiple size="8" id="license-attribute" class="form-select selectpicker">
                   <option value="0" selected disabled>--please choose--</option>
                 </select>
                 <p id="license-attribute-error" style="color: red; display: none;">Attributes required</p>
+              </div>
+
+              <div class="col-md-12 other-info">
+                <br><label for="other-license-attribute" class="form-label">Other Attribute</label>
+                <br><small>seperate attributes with comma i.e (sample1,sample2)</small>
+                <textarea class="form-control" id="other-license-attribute" rows="3"></textarea>
               </div>
 
             </div>

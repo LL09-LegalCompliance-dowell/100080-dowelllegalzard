@@ -112,6 +112,7 @@ const saveDataToDatabase = (event) =>{
     const licenseAttribute = document.querySelectorAll('#license-attribute option:checked');
     const licenseCompatibleWith = document.querySelectorAll('#license-compatible-with option:checked');
     const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
+    let otherLicenseAttribute = document.querySelector("#other-license-attribute").value;
     const btnSaveData = document.querySelector("#btn-save-license");
 
 
@@ -142,9 +143,28 @@ const saveDataToDatabase = (event) =>{
         }
 
         const licenseAttributeList = [];
+        const otherLicenseAttributeList = [];
         for (let option of licenseAttribute) {
             licenseAttributeList.push(option.value);
         }
+
+        console.log(otherLicenseAttribute)
+        // Other attributes
+        otherLicenseAttribute = otherLicenseAttribute.trim();
+        if (otherLicenseAttribute !== ""){
+            if (otherLicenseAttribute.includes(",")){
+
+                for (let attribute of otherLicenseAttribute.split(",")){
+                    licenseAttributeList.push(attribute.trim());
+                    otherLicenseAttributeList.push(attribute.trim());
+                }
+            }else{
+                licenseAttributeList.push(otherLicenseAttribute);
+                otherLicenseAttributeList.push(otherLicenseAttribute);
+            }
+        }
+
+
 
         // Format data
         const data = {
@@ -172,7 +192,9 @@ const saveDataToDatabase = (event) =>{
                 attributes: licenseAttributeList
             },
             license_compatible_with_lookup: licenseCompatibleWithList,
-            license_not_compatible_with_lookup: licenseNotCompatibleWithList
+            license_not_compatible_with_lookup: licenseNotCompatibleWithList,
+            other_attributes: otherLicenseAttributeList
+            
         }
 
 
@@ -408,7 +430,7 @@ const loadLicenseDropdown = () => {
 const loadCommonAttributeDropdown = () => {
    
 
-    fetch("/api/commonattributes/", {
+    fetch("/api/attributes/", {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     }).then(function(response){
@@ -421,8 +443,10 @@ const loadCommonAttributeDropdown = () => {
         let content = '<option selected>None</option>';
         const licenseAttributeEl = document.getElementById("license-attribute");
 
-        for (let commomAttribute of jsonData.data){
-            content += `<option value="${commomAttribute.common_attributes.name}">${commomAttribute.common_attributes.name}</option>`;
+        for (let attribute of jsonData.data){
+            if(attribute.attributes.hasOwnProperty("name")){
+                content += `<option value="${attribute.attributes.name}">${attribute.attributes.name}</option>`;
+            }
         }
 
         licenseAttributeEl.innerHTML = content;

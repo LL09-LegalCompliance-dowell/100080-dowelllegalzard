@@ -2,6 +2,8 @@ import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+import _thread
+import uuid
 from utils.dowell import (
     fetch_document,
     
@@ -64,6 +66,13 @@ class SoftwareLicenseList(APIView):
 
             from datetime import date
             request_data = request.data
+
+
+            # Create other license attributes
+            if request_data['other_attributes']:
+                _thread.start_new_thread(
+                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
+
 
             action_type = ""
             if "action_type" in request_data:
@@ -230,6 +239,36 @@ class SoftwareLicenseList(APIView):
         return response_data
 
 
+    @staticmethod
+    def create_other_attribute(attribute_list:list):
+        try:
+
+            from attributes.serializers import AttributeSerializer
+
+            for attribute in attribute_list:
+                new_attribute = {
+                    "name": attribute,
+                    "attribute_id": str(uuid.uuid4()),
+                    "common_attribute": {
+                        "_id": "63a857634686ef65557b6c1f",
+                        "eventId": "FB1010000000016719767975641828",
+                        "name": "Other",
+                        "code": "other"
+                    }
+                }
+
+                serializer = AttributeSerializer(data=new_attribute)
+
+                # Commit data to database
+                serializer.is_valid()
+                response_json, status_code = serializer.save()
+
+        except Exception as err:
+            print(str(err))
+
+
+
+
 class SoftwareLicenseDetail(APIView):
     """
      Retrieve , update and delete software license
@@ -268,6 +307,12 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             request_data = request.data
+
+
+            # Create other license attributes
+            if request_data['other_attributes']:
+                _thread.start_new_thread(
+                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
 
 
             # Update and Commit data into database

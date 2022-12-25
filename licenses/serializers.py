@@ -49,7 +49,6 @@ class SoftwareLicenseSerializer(serializers.Serializer):
         status_code = 500
         response_json = {}
 
-
         # Create license on remote server
         response_json = save_document(
             collection=SOFTWARE_LICENSE_COLLECTION,
@@ -98,3 +97,5 @@ class SoftwareLicenseSerializer(serializers.Serializer):
             )
 
         return response_json, status_code
+
+
