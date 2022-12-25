@@ -10,39 +10,7 @@ from utils.dowell import (
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     SOFTWARE_AGREEMENT_KEY,
-    ATTRIBUTE_COLLECTION,
-    ATTRIBUTE_DOCUMENT_NAME,
-    ATTRIBUTE_MAIN_KEY
-
 )
-from .generate_agreement_compliance_pdf import create_pdf_document
-
-# data = {
-#             "_id": "62f61602d8e350aa754b84c7",
-#             "eventId": "FB1010000000001660294653510514",
-#             "agreement": {
-#                 "agreement_compliance_type": "eula",
-#                 "date_of_execution_of_document": "2025-10-20",
-#                 "party_1_entity_type": "Individual",
-#                 "party_1_full_name": "Dowell Research 1",
-#                 "party_1_postal_address": "P.O.BOX 45, India",
-#                 "party_1_jurisdiction_incorporated": "sample law",
-#                 "party_1_registration_number": "RS5428888",
-#                 "party_1_registrar_office_address": "sample office address",
-#                 "party_1_principal_place_of_business": "India",
-#                 "party_2_entity_type": "Organization",
-#                 "party_2_full_name": "Organization Name",
-#                 "party_2_postal_address": "P.O.BOX 87",
-#                 "party_2_jurisdiction_incorporated": "USA",
-#                 "party_2_registration_number": "459996665",
-#                 "party_2_registrar_office_address": "Some where in USA",
-#                 "party_2_principal_place_of_business": "USA"
-#             }
-#         }
-
-# create_pdf_document(data)
-
-
 
 
 class SoftwareLicensePolicySerializer(serializers.Serializer):
@@ -200,9 +168,6 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
                 fields={"eventId": response_json["event_id"]}
             )
 
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
-
         return response_json, status_code
 
     def update(self, event_id, validated_data):
@@ -271,8 +236,6 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
                 fields={"eventId": event_id}
             )
 
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
 
         return response_json, status_code
 
@@ -346,9 +309,6 @@ class EulaSerializer(serializers.Serializer):
                 fields={"eventId": response_json["event_id"]}
             )
 
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
-
         return response_json, status_code
 
     def update(self, event_id, validated_data):
@@ -386,9 +346,6 @@ class EulaSerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": event_id}
             )
-
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
 
         return response_json, status_code
 
@@ -491,9 +448,6 @@ class MOUSerializer(serializers.Serializer):
                 fields={"eventId": response_json["event_id"]}
             )
 
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
-
         return response_json, status_code
 
     def update(self, event_id, validated_data):
@@ -531,9 +485,6 @@ class MOUSerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": event_id}
             )
-
-            # Generate pdf
-            create_pdf_document(response_json['data'][0])
             
         return response_json, status_code
 
