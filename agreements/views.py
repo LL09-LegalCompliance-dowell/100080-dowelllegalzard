@@ -81,6 +81,11 @@ class AgreementComplianceList(APIView):
                     status_code)
 
 
+            # Generate PDF document
+            if status_code >= 200 and status_code <= 299:
+                AgreementComplianceList.generate_pdf_document(response_json)
+
+
             return Response(response_json, status=status_code)
 
         # The code below will
@@ -164,6 +169,48 @@ class AgreementComplianceList(APIView):
         return response_json, status_code
 
 
+    @staticmethod
+    def generate_pdf_document(context:dict):
+        import time
+        from utils.generate_pdf import generate
+
+        try:
+            ts = time.time()
+            
+            data = context['data'][0]
+            agreement_data = data['agreement']
+
+            # load commpliance template from the filesystem
+            content = read_template(get_compliance_template_name(agreement_data['agreement_compliance_type']))
+
+            # html temporary file
+            file_name = f'{data["_id"].replace("-", "_").upper()}_{ts}'.replace(".", "_")
+            html_tmp_path = os.path.join('/tmp/', f'{file_name}.html')
+
+            # create html tmp file
+            with open(html_tmp_path, "w") as html_tmp_file:
+
+                content = content.substitute(**agreement_data)
+                html_tmp_file.write(content)
+
+                #PERMIT READ FILE
+                try:
+                    os.chmod(html_tmp_path, 0o777)
+                except Exception as e:
+                    print(str(e))
+                # END PERMIT READ FILE
+
+            # Generate PDF
+            generate(
+                html_file_abs_path_or_url=html_tmp_path, 
+                pdf_file_name=file_name)
+            
+
+        except Exception as err:
+            print(str(err))
+            pass
+
+
 
 class AgreementComplianceDetail(APIView):
     """
@@ -210,6 +257,11 @@ class AgreementComplianceDetail(APIView):
                     request_data= request_data,
                     response_json= response_json,
                     status_code= status_code)
+
+
+            # Generate PDF document
+            if status_code >= 200 and status_code <= 299:
+                AgreementComplianceList.generate_pdf_document(response_json)
 
             return Response(response_json, status=status_code)
 
