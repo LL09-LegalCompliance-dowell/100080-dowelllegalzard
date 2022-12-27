@@ -707,14 +707,11 @@ The API will return three error types when requests fail:
 
 - You can also open the link `http://127.0.0.1:8000/api/agreements/` in a browser and perform the post operation
 
+## Request body
+
+### Software Agreement
 ```
-{
-    "isSuccess": true,
-    "data": [
-        {
-            "_id": "63076817b171c30837335384",
-            "eventId": "785455899666558884",
-            "agreement": {
+ {
                 "agreement_compliance_type": "software-license-policy",
                 "date_of_execution_of_document": "2025-10-20",
                 "party_1_entity_type": "Individual",
@@ -790,10 +787,46 @@ The API will return three error types when requests fail:
                 "full_name_of_party_2_witness": "witness 2 name",
                 "party_2_witness_date_of_signing_contract": "2022-11-05"
             }
-        }
-    ]
-}
 ```
+
+### EULA
+```
+ {
+                "agreement_compliance_type": "eula",
+                "date_of_execution_of_document": "2025-10-20",
+                "party_details_full_name": "Individual and Company",
+                "party_details_company_name": "Dowell Research 1",
+                "party_details_address_line_1": "P.O.BOX 45, India",
+                "party_details_address_line_2": "sample law",
+                "party_details_address_line_3": "RS5428888",
+                "party_details_city": "Mobai",
+                "party_details_country": "India",
+                "party_details_state": "India",
+                "party_details_zipcode": "RT455",
+                "party_details_phone": "+255459996665",
+                "party_details_email": "sample@email.com",
+                "company_details_nature_of_company": "Individual",
+                "software_product": "Sample 2",
+                "software_product_license_name": "Sample Mix",
+                "software_product_license_name_uc": "",
+                "liability_remedy_amount": 2542.45,
+                "state_law_applies": "India",
+                "jurisdiction_city": "Mobai",
+                "jurisdiction_state": "India",
+                "date_of_commencement": "2025-10-20",
+                "is_maintenance_or_support_available_for_app": true,
+                "will_it_state_number_of_maintenance_and_schedules": true,
+                "at_which_point_will_users_be_bound_by_terms": "When They Download",
+                "will_users_be_able_to_install_app_on_multiple_device": false,
+                "violations_that_enable_app_provider_to_cancel_agreement": "When change software spic"
+            }
+```
+
+
+
+
+
+
 
 #### GET /api/agreements/{event_id}/
 
