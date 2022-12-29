@@ -224,7 +224,8 @@ class SoftwareLicenseList(APIView):
                 continue
 
             logo_detail = softwarelicense['logo_detail']
-            logo_detail['url'] = f'{BASE_IMAGE_URL}{logo_detail["filename"]}'
+            if "filename" in logo_detail:
+                logo_detail['url'] = f'{BASE_IMAGE_URL}{logo_detail["filename"]}'
 
             # update license logo detail
             softwarelicense['logo_detail'] = logo_detail
