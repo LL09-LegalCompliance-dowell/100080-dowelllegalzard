@@ -10,6 +10,8 @@ from DowellLicenseProject.settings import BASE_DIR
 from django.conf import settings
 import pathlib
 from django.http import FileResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 from utils.dowell import (
     fetch_document,
     get_event_id,
@@ -449,7 +451,7 @@ class AgreementComplianceDetail(APIView):
         return response_json, status_code
 
 
-
+@xframe_options_exempt
 def load_public_agreement_compliance(request, event_id:str):
     try:
 
