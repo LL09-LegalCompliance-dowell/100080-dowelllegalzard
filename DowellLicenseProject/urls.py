@@ -19,7 +19,7 @@ from django.urls import path, re_path, include
 from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
-from agreements.views import load_public_agreement_compliance, index
+from agreements.views import load_public_agreement_compliance, index, download_file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/', include('contacts.urls')),
     path('api/', include('license_comparision.urls')),
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
+    path('download/', download_file, name="agreements_download"),
     path('temp-admin/', include('legalzard_admin_temp.urls')),
     path('', index, name="index")
 ]\

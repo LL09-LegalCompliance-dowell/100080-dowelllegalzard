@@ -109,6 +109,8 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     party_2_date_of_signing_contract = serializers.DateField()
     full_name_of_party_2_witness = serializers.CharField(max_length=150)
     party_2_witness_date_of_signing_contract = serializers.DateField()
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
 
 
     def create(self, validated_data):
@@ -156,7 +158,8 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
             collection=SOFTWARE_AGREEMENT_COLLECTION,
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
-            value=validated_data
+            value=validated_data,
+            event_id = validated_data['event_id']
         )
 
         if response_json["isSuccess"]:
@@ -274,6 +277,8 @@ class EulaSerializer(serializers.Serializer):
     at_which_point_will_users_be_bound_by_terms = serializers.CharField(max_length=150)
     will_users_be_able_to_install_app_on_multiple_device = serializers.BooleanField(default=False)
     violations_that_enable_app_provider_to_cancel_agreement = serializers.CharField(max_length=300)
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
 
 
     def create(self, validated_data):
@@ -294,10 +299,11 @@ class EulaSerializer(serializers.Serializer):
 
         # Create software agreement on remote server
         response_json = save_document(
-            collection=SOFTWARE_AGREEMENT_COLLECTION,
-            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-            key=SOFTWARE_AGREEMENT_KEY,
-            value=validated_data
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
         )
 
         if response_json["isSuccess"]:
