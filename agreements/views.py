@@ -1,21 +1,24 @@
-from email import message
 import os
-from urllib import response
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import  HttpResponse
+from django.urls import reverse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
-from django.db import transaction
-from storage.upload import upload_img
-import uuid
 from DowellLicenseProject.settings import BASE_DIR
+from django.conf import settings
+import pathlib
+from django.http import FileResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 from utils.dowell import (
     fetch_document,
+    get_event_id,
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-    RECORD_PER_PAGE
+    RECORD_PER_PAGE,
+    BASE_DOC_URL
 )
 from utils.general import read_template, get_compliance_template_name
 from agreements.serializers import (
@@ -47,6 +50,8 @@ class AgreementComplianceList(APIView):
                 fields={}
             )
 
+            response_json = AgreementComplianceList.add_document_url(request, response_json)
+
             return Response(response_json,
                             status=status.HTTP_200_OK
                             )
@@ -68,6 +73,12 @@ class AgreementComplianceList(APIView):
             response_json = {}
             status_code = 500
 
+            # Generate PDF document
+            request_data = AgreementComplianceList.generate_pdf_document(
+                request_data,
+                event_id = get_event_id()
+                )
+
             if request_data['agreement_compliance_type'] == "software-license-policy":
                 response_json, status_code = self.create_software_license_policy(
                     request_data,
@@ -81,11 +92,7 @@ class AgreementComplianceList(APIView):
                     status_code)
 
 
-            # Generate PDF document
-            if status_code >= 200 and status_code <= 299:
-                AgreementComplianceList.generate_pdf_document(response_json)
-
-
+            response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
 
         # The code below will
@@ -168,9 +175,86 @@ class AgreementComplianceList(APIView):
         # return result
         return response_json, status_code
 
+    @staticmethod
+    def add_document_url(request, response_data):
+        data_list = response_data['data']
+        new_data_list = []
+        # preview_doc_url
+        # download_doc_url
+
+        for data in data_list:
+            agreement = data['agreement']
+            # this code only execute
+            # if the agreement object
+            # does not have logo_detail field
+            if "pdf_document_name" not in agreement:
+                new_data_list.append(data)
+                continue
+
+            agreement['preview_doc_url'] = f'{BASE_DOC_URL}{agreement["pdf_document_name"]}'
+
+            agreement['html_doc_url'] = request.build_absolute_uri(
+                reverse('load_public_agreement_compliance', kwargs={'event_id': data["eventId"]}))
+
+            agreement['download_doc_url'] = request.build_absolute_uri(
+                f'/download/?fn={agreement["pdf_document_name"]}')
+
+            # add agreement to new data list
+            data['agreement'] = agreement
+            new_data_list.append(data)
+
+        if new_data_list:
+            response_data['data'] = new_data_list
+
+        return response_data
+
 
     @staticmethod
-    def generate_pdf_document(context:dict):
+    def generate_pdf_document(context:dict, event_id):
+        import time
+        import datetime
+        from utils.generate_pdf import generate
+
+        try:
+            ts = time.time()
+            
+            context['event_id'] = event_id
+
+            # load commpliance template from the filesystem
+            content = read_template(get_compliance_template_name(context['agreement_compliance_type']))
+
+
+            # html temporary file
+            file_name = f'AGREEMENTS{event_id.replace("-", "").upper()}_{ts}'.replace(".", "")
+            html_tmp_path = os.path.join('/tmp/', f'{file_name}.html')
+
+            # create html tmp file
+            with open(html_tmp_path, "w") as html_tmp_file:
+
+                content = content.substitute(**context)
+                html_tmp_file.write(content)
+
+                #PERMIT READ FILE
+                try:
+                    os.chmod(html_tmp_path, 0o777)
+                except Exception as e:
+                    print(str(e))
+                # END PERMIT READ FILE
+
+            # Generate PDF
+            generate(
+                html_file_abs_path_or_url=html_tmp_path, 
+                pdf_file_name=file_name)
+
+            context['pdf_document_name'] = f'{file_name}.pdf'
+
+            return context
+        except Exception as err:
+            print(str(err))
+            return context
+
+    @staticmethod
+    def generate_pdf_document_(context:dict):
         import time
         from utils.generate_pdf import generate
 
@@ -182,6 +266,7 @@ class AgreementComplianceList(APIView):
 
             # load commpliance template from the filesystem
             content = read_template(get_compliance_template_name(agreement_data['agreement_compliance_type']))
+
 
             # html temporary file
             file_name = f'{data["_id"].replace("-", "_").upper()}_{ts}'.replace(".", "_")
@@ -227,6 +312,7 @@ class AgreementComplianceDetail(APIView):
                 fields={"eventId": event_id}
             )
 
+            AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status.HTTP_200_OK)
 
         # The code below will
@@ -244,6 +330,9 @@ class AgreementComplianceDetail(APIView):
             response_json = {}
             status_code = 500
 
+            # Generate PDF document
+            request_data = AgreementComplianceList.generate_pdf_document(request_data, event_id)
+
             if request_data['agreement_compliance_type'] == "software-license-policy":
                 response_json, status_code = self.update_software_license_policy(
                     event_id= event_id,
@@ -259,10 +348,7 @@ class AgreementComplianceDetail(APIView):
                     status_code= status_code)
 
 
-            # Generate PDF document
-            if status_code >= 200 and status_code <= 299:
-                AgreementComplianceList.generate_pdf_document(response_json)
-
+            response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
 
 
@@ -365,7 +451,7 @@ class AgreementComplianceDetail(APIView):
         return response_json, status_code
 
 
-
+@xframe_options_exempt
 def load_public_agreement_compliance(request, event_id:str):
     try:
 
@@ -404,3 +490,25 @@ def load_public_agreement_compliance(request, event_id:str):
     except Exception as err:
         print(str(err))
         return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+def download_file(request):
+    try:
+
+        file_name = request.GET.get('fn','')
+        file_path = os.path.join(settings.MEDIA_ROOT, f'documents/{file_name}')
+        file_path=file_path.replace("\\","/")
+        file_server = pathlib.Path(file_path)
+
+        if not file_server.exists():
+            print('file not found.')
+        else:
+            file_to_download = open(str(file_server), 'rb')
+            response = FileResponse(file_to_download, content_type='application/force-download')
+            response['Content-Disposition'] = 'inline; filename="'+file_name+'"'
+            return response
+
+
+    except Exception as e:
+        return HttpResponse(f"{e}")

@@ -99,9 +99,13 @@ def save_document(
     document: str,
     key: str,
     value: dict,
-):
+    event_id:str=""
+    
+    ):
+    
     url = "http://100002.pythonanywhere.com/"
-    event_id = get_event_id()
+    if not event_id:
+        event_id = get_event_id()
 
     # Build request data or payload
     payload = json.dumps({
