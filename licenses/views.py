@@ -68,12 +68,6 @@ class SoftwareLicenseList(APIView):
             request_data = request.data
 
 
-            # Create other license attributes
-            if request_data['other_attributes']:
-                _thread.start_new_thread(
-                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
-
-
             action_type = ""
             if "action_type" in request_data:
                 action_type = request_data["action_type"]
@@ -83,6 +77,14 @@ class SoftwareLicenseList(APIView):
                     request, format)
             else:
                 request_data["is_active"] = True
+
+                # Create other license attributes
+                if "other_attributes" in request_data:
+                    if request_data['other_attributes']:
+                        _thread.start_new_thread(
+                            SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
+
+
 
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
@@ -131,6 +133,7 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_one}
             )
+
             license_one = license_one_json["data"][0]['softwarelicense']
 
             # Get license two
@@ -224,7 +227,8 @@ class SoftwareLicenseList(APIView):
                 continue
 
             logo_detail = softwarelicense['logo_detail']
-            logo_detail['url'] = f'{BASE_IMAGE_URL}{logo_detail["filename"]}'
+            if "filename" in logo_detail:
+                logo_detail['url'] = f'{BASE_IMAGE_URL}{logo_detail["filename"]}'
 
             # update license logo detail
             softwarelicense['logo_detail'] = logo_detail
