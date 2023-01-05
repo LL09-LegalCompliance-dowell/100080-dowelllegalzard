@@ -23,3 +23,6 @@ def get_compliance_template_name(agreement_compliance_type:str) -> str:
 
     elif agreement_compliance_type == "eula":
         return "end-user-licensing-agreement.html"
+
+    elif agreement_compliance_type == "mou":
+        return "memorandum-of-understanding.html"

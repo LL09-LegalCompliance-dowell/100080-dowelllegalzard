@@ -215,12 +215,6 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
             validated_data["interest_rate_apply_to_late_payment"])
 
 
-        # # Generate pdf document
-        # filename = create_pdf_document(validated_data, "enduserlicensingagreement.html")
-        # validated_data['pdf_document_generated'] = filename
-
-
-
         # Update software agreement on remote server
         response_json = update_document(
             collection=SOFTWARE_AGREEMENT_COLLECTION,
@@ -374,7 +368,7 @@ class MOUSerializer(serializers.Serializer):
     party_1_zipcode = serializers.CharField(max_length=20)
     party_1_state = serializers.CharField(max_length=50)
     party_1_country = serializers.CharField(max_length=50)
-    # party_1_period_mentioned = serializers.CharField(choices = PERIOD_MENTIONED)
+    party_1_period_mentioned = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
     party_2_entity_type = serializers.CharField(max_length=50)
     party_2_full_name = serializers.CharField(max_length=150)
     party_2_address_line_1 = serializers.CharField(max_length=255)
@@ -383,58 +377,55 @@ class MOUSerializer(serializers.Serializer):
     party_2_zipcode = serializers.CharField(max_length=20)
     party_2_state = serializers.CharField(max_length=50)
     party_2_country = serializers.CharField(max_length=50)
-    # party_2_period_mentioned = serializers.CharField(max_length=50, choices = PERIOD_MENTIONED)
+    party_2_period_mentioned = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
     what_will_be_the_purpose_of_this_mou = serializers.CharField(max_length=1000)
     what_is_the_objective_of_this_mou = serializers.CharField(max_length=1000)
     date_of_commencement = serializers.DateField()
     date_of_termination = serializers.DateField()
-    # period_for_notice_in_case_of_cancellation_or_amendment = serializers.CharField(choices = PERIOD_MENTIONED)
+    period_for_notice_in_case_of_cancellation_or_amendment = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
 
     state_of_laws_use_as_governing_laws = serializers.CharField(max_length=50)
     state_of_laws_for_governing_laws_in_case_of_reimbursement = serializers.CharField(max_length=50)
-    number_of_parties_enter_this_mou = serializers.CharField(max_length=255)
+    number_of_parties_enter_this_mou = serializers.IntegerField(default=0)
     mou_include_confidentiality = serializers.BooleanField(default=False)
     mou_retrict_working_with_competitors = serializers.BooleanField(default=False)
+    date_for_legally_binding_definitive_agreement = serializers.DateField()
+    should_the_parties_agree_to_refrain_from_negotiating_with_third_parties = serializers.BooleanField(default=False)
+    will_mou_agreement_be_terminated_in_case_of_force_majeure = serializers.BooleanField(default=False)
+    any_other_contracts_entered_between_parties_together_with_this_mou = serializers.BooleanField(default=False)
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+    state_of_laws_used_as_the_governing_laws_2 = serializers.CharField(max_length=100)
+    state_of_laws_to_be_used_as_the_governing_laws_in_case_of_reimbursement_2 = serializers.CharField(max_length=100)
+    number_of_parties_entered_this_mou_2 = serializers.IntegerField(default=0)
+    does_this_mou_restrict_working_with_competitors_for_period_of_time_2 = serializers.BooleanField(default=False)
+    number_of_time_to_restrict_from_working_with_competitors_2 = serializers.IntegerField(default=0)
+    number_of_time_to_restrict_from_working_with_competitors_unit_2 = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
+    date_for_legally_binding_definitive_agreement_2 = serializers.DateField()
     
-    party_2_entity_type = serializers.CharField(max_length=50)
-    party_2_full_name = serializers.CharField(max_length=150)
-    party_2_postal_address = serializers.CharField(max_length=255)
-    party_2_jurisdiction_incorporated = serializers.CharField(max_length=150)
-    party_2_registration_number = serializers.CharField(max_length=50)
-    party_2_registrar_office_address = serializers.CharField(max_length=255)
-    party_2_principal_place_of_business = serializers.CharField(max_length=255)
-
-    company_details_nature_of_company = serializers.CharField(max_length=150)
-    software_product = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
-    software_product_license_name = serializers.CharField(max_length=150)
-    software_product_license_name_uc = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
-
-    liability_remedy_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
-    state_law_applies = serializers.CharField(max_length=150)
-    jurisdiction_city = serializers.CharField(max_length=150)
-    jurisdiction_state = serializers.CharField(max_length=150)
-    date_of_commencement = serializers.DateField()
-    is_maintenance_or_support_available_for_app = serializers.BooleanField(default=False)
-    will_it_state_number_of_maintenance_and_schedules = serializers.BooleanField(default=False)
-    at_which_point_will_users_be_bound_by_terms = serializers.CharField(max_length=150)
-    will_users_be_able_to_install_app_on_multiple_device = serializers.BooleanField(default=False)
-    violations_that_enable_app_provider_to_cancel_agreement = serializers.CharField(max_length=300)
 
 
     def create(self, validated_data):
         """
-        Create and return new software agreement.
+        Create and return new momorandum of understanding (MOU).
         """
 
-        # format date back to iso format
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
 
         validated_data["date_of_commencement"]\
             = validated_data["date_of_commencement"].isoformat()
 
-        validated_data["liability_remedy_amount"] = float(
-            validated_data["liability_remedy_amount"])
+        validated_data["date_of_termination"]\
+            = validated_data["date_of_termination"].isoformat()
+
+        validated_data["date_for_legally_binding_definitive_agreement"]\
+            = validated_data["date_for_legally_binding_definitive_agreement"].isoformat()
+
+        validated_data["date_for_legally_binding_definitive_agreement_2"]\
+            = validated_data["date_for_legally_binding_definitive_agreement_2"].isoformat()
+
 
 
         # Create software agreement on remote server
@@ -442,7 +433,8 @@ class MOUSerializer(serializers.Serializer):
             collection=SOFTWARE_AGREEMENT_COLLECTION,
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
-            value=validated_data
+            value=validated_data,
+            event_id = validated_data['event_id']
         )
 
         if response_json["isSuccess"]:
@@ -458,11 +450,10 @@ class MOUSerializer(serializers.Serializer):
 
     def update(self, event_id, validated_data):
         """
-        Update and return software agreement.
+        Update and return momorandum of understanding (MOU).
         """
         status_code = 500
         response_json = {}
-
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -471,8 +462,14 @@ class MOUSerializer(serializers.Serializer):
         validated_data["date_of_commencement"]\
             = validated_data["date_of_commencement"].isoformat()
 
-        validated_data["liability_remedy_amount"] = float(
-            validated_data["liability_remedy_amount"])
+        validated_data["date_of_termination"]\
+            = validated_data["date_of_termination"].isoformat()
+
+        validated_data["date_for_legally_binding_definitive_agreement"]\
+            = validated_data["date_for_legally_binding_definitive_agreement"].isoformat()
+
+        validated_data["date_for_legally_binding_definitive_agreement_2"]\
+            = validated_data["date_for_legally_binding_definitive_agreement_2"].isoformat()
 
         # Update software agreement on remote server
         response_json = update_document(
@@ -491,6 +488,7 @@ class MOUSerializer(serializers.Serializer):
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
                 fields={"eventId": event_id}
             )
-            
+
+
         return response_json, status_code
 

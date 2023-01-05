@@ -23,7 +23,8 @@ from utils.dowell import (
 from utils.general import read_template, get_compliance_template_name
 from agreements.serializers import (
     SoftwareLicensePolicySerializer,
-    EulaSerializer
+    EulaSerializer,
+    MOUSerializer
     
     )
 
@@ -87,6 +88,12 @@ class AgreementComplianceList(APIView):
 
             elif request_data['agreement_compliance_type'] == "eula":
                 response_json, status_code = self.create_eula(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "mou":
+                response_json, status_code = self.create_mou(
                     request_data,
                     response_json,
                     status_code)
@@ -174,6 +181,44 @@ class AgreementComplianceList(APIView):
 
         # return result
         return response_json, status_code
+
+
+    def create_mou(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+        request_data["date_of_commencement"] = date.fromisoformat(
+            request_data["date_of_commencement"])
+
+        request_data["date_of_termination"] = date.fromisoformat(
+            request_data["date_of_termination"])
+
+        request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
+            request_data["date_for_legally_binding_definitive_agreement"])
+
+        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
+            request_data["date_for_legally_binding_definitive_agreement_2"])
+
+
+        # Create serializer object
+        serializer = MOUSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            response_json = serializer.errors
+
+        # return result
+        return response_json, status_code
+
+
+
+
+
 
     @staticmethod
     def add_document_url(request, response_data):
@@ -347,6 +392,13 @@ class AgreementComplianceDetail(APIView):
                     response_json= response_json,
                     status_code= status_code)
 
+            elif request_data['agreement_compliance_type'] == "mou":
+                response_json, status_code = self.update_mou(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -449,6 +501,50 @@ class AgreementComplianceDetail(APIView):
 
         # return result
         return response_json, status_code
+
+
+    def update_mou(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+        request_data["date_of_commencement"] = date.fromisoformat(
+            request_data["date_of_commencement"])
+
+        request_data["date_of_termination"] = date.fromisoformat(
+            request_data["date_of_termination"])
+
+        request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
+            request_data["date_for_legally_binding_definitive_agreement"])
+
+        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
+            request_data["date_for_legally_binding_definitive_agreement_2"])
+
+
+        # Update and Commit data into database
+        serializer = MOUSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+
+
 
 
 @xframe_options_exempt

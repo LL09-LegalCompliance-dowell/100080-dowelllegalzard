@@ -822,6 +822,52 @@ The API will return three error types when requests fail:
             }
 ```
 
+### MOU
+```
+{
+    "agreement_compliance_type": "mou",
+    "date_of_execution_of_document": "2025-10-20",
+    "party_1_entity_type": "Organization",
+    "party_1_full_name": "Software Own",
+    "party_1_address_line_1": "P.O.BOX 45, India",
+    "party_1_address_line_2": "sample law",
+    "party_1_address_line_3": "RS5428888",
+    "party_1_zipcode": "Mobai",
+    "party_1_state": "India",
+    "party_1_country": "India",
+    "party_1_period_mentioned": "Days",
+    "party_2_entity_type": "Individual",
+    "party_2_full_name": "sample",
+    "party_2_address_line_1": "Individual",
+    "party_2_address_line_2": "Sample 2",
+    "party_2_address_line_3": "Sample Mix",
+    "party_2_zipcode": "+254",
+    "party_2_state": "India",
+    "party_2_country": "India",
+    "party_2_period_mentioned": "Months",
+    "what_will_be_the_purpose_of_this_mou": "India",
+    "what_is_the_objective_of_this_mou": "contract",
+    "date_of_commencement": "2025-10-20",
+    "date_of_termination": "2025-10-20",
+    "period_for_notice_in_case_of_cancellation_or_amendment": "Days",
+    "state_of_laws_use_as_governing_laws": "India",
+    "state_of_laws_for_governing_laws_in_case_of_reimbursement": "India",
+    "number_of_parties_enter_this_mou": 5,
+    "mou_include_confidentiality": true,
+    "mou_retrict_working_with_competitors": false,
+    "date_for_legally_binding_definitive_agreement": "2025-10-20",
+    "should_the_parties_agree_to_refrain_from_negotiating_with_third_parties": false,
+    "any_other_contracts_entered_between_parties_together_with_this_mou": true,
+    "state_of_laws_used_as_the_governing_laws_2": "India",
+    "state_of_laws_to_be_used_as_the_governing_laws_in_case_of_reimbursement_2": "India",
+    "number_of_parties_entered_this_mou_2": 5,
+    "does_this_mou_restrict_working_with_competitors_for_period_of_time_2": false,
+    "number_of_time_to_restrict_from_working_with_competitors_2": 5,
+    "number_of_time_to_restrict_from_working_with_competitors_unit_2": "Months",
+    "date_for_legally_binding_definitive_agreement_2": "2025-10-20"
+}
+```
+
 
 
 
