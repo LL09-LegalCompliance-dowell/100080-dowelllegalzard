@@ -26,3 +26,6 @@ def get_compliance_template_name(agreement_compliance_type:str) -> str:
 
     elif agreement_compliance_type == "mou":
         return "memorandum-of-understanding.html"
+
+    elif agreement_compliance_type == "website-terms-of-use":
+        return "website-terms-of-use.html"

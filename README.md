@@ -573,13 +573,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -607,17 +608,28 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
             }
         }
     ]
@@ -658,13 +670,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -692,17 +705,28 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
             } '`
 
 - You can also open the link `http://127.0.0.1:8000/api/agreements/` in a browser and perform the post operation
@@ -711,7 +735,7 @@ The API will return three error types when requests fail:
 
 ### Software Agreement
 ```
- {
+{
                 "agreement_compliance_type": "software-license-policy",
                 "date_of_execution_of_document": "2025-10-20",
                 "party_1_entity_type": "Individual",
@@ -741,13 +765,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -775,18 +800,29 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
-            }
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
+}
 ```
 
 ### EULA
@@ -799,7 +835,6 @@ The API will return three error types when requests fail:
                 "party_details_address_line_1": "P.O.BOX 45, India",
                 "party_details_address_line_2": "sample law",
                 "party_details_address_line_3": "RS5428888",
-                "party_details_city": "Mobai",
                 "party_details_country": "India",
                 "party_details_state": "India",
                 "party_details_zipcode": "RT455",
@@ -868,6 +903,24 @@ The API will return three error types when requests fail:
 }
 ```
 
+### Website Terms Of Use
+```
+{
+    "agreement_compliance_type": "website-terms-of-use",
+    "terms_last_updated": "2025-10-20",
+    "full_name_of_the_party": "Website Owner",
+    "website_url": "www.website.come",
+    "email_id": "example@website.com",
+    "email_id_for_acquiring_written_permission": "example1@website.com",
+    "liability_limit_amount": 5240.00,
+    "liability_limit_amount_currency": "USD",
+    "liability_must_not_exceed_amount": 6000,
+    "liability_must_not_exceed_amount_currency": "USD",
+    "email_id_for_requesting_access_or_correction_of_personal_info": "example3@website.com"
+}
+```
+
+
 
 
 
@@ -917,13 +970,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -951,18 +1005,29 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
-            }
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
+          }
         }
     ]
 }
@@ -1002,13 +1067,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -1036,18 +1102,29 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
-            }'`
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
+}'`
 
 ```
 {
@@ -1086,13 +1163,14 @@ The API will return three error types when requests fail:
                 "software_specification": "software spic",
                 "can_software_specification_be_varied_by_the_parties": false,
                 "terms_of_contract_duration": "4",
+                "terms_of_contract_duration_unit": "Months",
                 "is_inline_copy_right_remove": true,
                 "is_term_of_contract_indefinite": false,
                 "contract_termination_date": "2023-05-20",
                 "events_that_will_cause_contract_to_be_terminated": "miss handle",
                 "number_of_license_to_be_deliver": 5,
                 "software_delivery_channel": "Github",
-                "software_delivery_period": "4",
+                "within_what_period_must_software_be_delivered": "4",
                 "what_did_licensor_supply_to_the_licensee": "CRM software",
                 "purpose_of_supply": "request by licensee",
                 "when_should_invoice_be_issued": "After getting requirement from licensee",
@@ -1120,18 +1198,29 @@ The API will return three error types when requests fail:
                 "law_governs_document": "law 1",
                 "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "india law",
                 "will_the_contract_signed_by_party_1_contracting_entity": true,
-                "party_1_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/5554image.png",
+                "party_1_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_party_1_witness": "witness 1 name",
-                "party_1_witness_date_of_signing_contract": "2022-11-02",
+                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
+                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
                 "will_the_contract_signed_by_pary_2_contracting_entity": true,
-                "party_2_signatory_scanned_copy_url": "https://4555.dowell-storage-server.com/44454image.png",
+                "party_2_signatory_scanned_copy_detail": {
+                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                    "actual_filename": "AFL.png",
+                    "file_extension": "png",
+                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_party_2_witness": "witness 2 name",
-                "party_2_witness_date_of_signing_contract": "2022-11-05"
-            }
+                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
+                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+
+           }
         }
     ]
 }

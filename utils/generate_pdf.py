@@ -1,4 +1,6 @@
 # Referencem link: https://pypi.org/project/pyhtml2pdf/
+# https://pypi.org/project/webdriver-manager/
+
 from pyhtml2pdf import converter
 from storage.path import get_storage_path
 from django.conf import settings

@@ -24,7 +24,8 @@ from utils.general import read_template, get_compliance_template_name
 from agreements.serializers import (
     SoftwareLicensePolicySerializer,
     EulaSerializer,
-    MOUSerializer
+    MOUSerializer,
+    WebsiteTermsOfUseSerializer
     
     )
 
@@ -98,6 +99,12 @@ class AgreementComplianceList(APIView):
                     response_json,
                     status_code)
 
+            elif request_data['agreement_compliance_type'] == "website-terms-of-use":
+                response_json, status_code = self.create_website_terms_of_use(
+                    request_data,
+                    response_json,
+                    status_code)
+
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -127,14 +134,14 @@ class AgreementComplianceList(APIView):
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
 
-        request_data["party_1_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_1_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_1"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_1"])
 
         request_data["party_2_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_2_date_of_signing_contract"])
 
-        request_data["party_2_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_2_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
         request_data["invoicing_date"] = date.fromisoformat(
             request_data["invoicing_date"])
@@ -151,9 +158,16 @@ class AgreementComplianceList(APIView):
 
         # Commit data to database
         if serializer.is_valid():
+            print(request_data)
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
@@ -177,7 +191,12 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
@@ -210,10 +229,42 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
+
+
+    def create_website_terms_of_use(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["terms_last_updated"] = date.fromisoformat(
+            request_data["terms_last_updated"])
+
+
+        # Create serializer object
+        serializer = WebsiteTermsOfUseSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
 
 
 
@@ -400,6 +451,14 @@ class AgreementComplianceDetail(APIView):
                     status_code= status_code)
 
 
+            elif request_data['agreement_compliance_type'] == "website-terms-of-use":
+                response_json, status_code = self.update_website_terms_of_use(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
 
@@ -419,6 +478,7 @@ class AgreementComplianceDetail(APIView):
     def update_software_license_policy(self, event_id, request_data, response_json, status_code):
 
         from datetime import date
+        
 
         # Convert date string (yyyy-mm-dd)
         # to date object
@@ -431,14 +491,14 @@ class AgreementComplianceDetail(APIView):
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
 
-        request_data["party_1_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_1_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_1"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_1"])
 
         request_data["party_2_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_2_date_of_signing_contract"])
 
-        request_data["party_2_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_2_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
         request_data["invoicing_date"] = date.fromisoformat(
             request_data["invoicing_date"])
@@ -543,6 +603,33 @@ class AgreementComplianceDetail(APIView):
         # return result
         return response_json, status_code
 
+    def update_website_terms_of_use(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["terms_last_updated"] = date.fromisoformat(
+            request_data["terms_last_updated"])
+
+
+        # Update and Commit data into database
+        serializer = WebsiteTermsOfUseSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
 
 
 
