@@ -495,3 +495,94 @@ class MOUSerializer(serializers.Serializer):
 
         return response_json, status_code
 
+
+class WebsiteTermsOfUseSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        end-user-license-agreement document
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    terms_last_updated = serializers.DateField()
+    full_name_of_the_party = serializers.CharField(max_length=150)
+    website_url = serializers.CharField(max_length=500)
+    email_id = serializers.CharField(max_length=300)
+    email_id_for_acquiring_written_permission = serializers.CharField(max_length=300)
+    liability_limit_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    liability_limit_amount_currency = serializers.CharField(max_length=20)
+    liability_must_not_exceed_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    liability_must_not_exceed_amount_currency = serializers.CharField(max_length=20)
+    email_id_for_requesting_access_or_correction_of_personal_info = serializers.CharField(max_length=300)
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+    def create(self, validated_data):
+        """
+        Create and return website terms of use.
+        """
+
+        # format date back to iso format
+        validated_data["terms_last_updated"]\
+            = validated_data["terms_last_updated"].isoformat()
+        validated_data["liability_limit_amount"] = float(
+            validated_data["liability_limit_amount"])
+        validated_data["liability_must_not_exceed_amount"] = float(
+            validated_data["liability_must_not_exceed_amount"])
+
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return software agreement.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["terms_last_updated"]\
+            = validated_data["terms_last_updated"].isoformat()
+        validated_data["liability_limit_amount"] = float(
+            validated_data["liability_limit_amount"])
+        validated_data["liability_must_not_exceed_amount"] = float(
+            validated_data["liability_must_not_exceed_amount"])
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+

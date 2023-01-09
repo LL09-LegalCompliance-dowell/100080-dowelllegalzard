@@ -903,6 +903,24 @@ The API will return three error types when requests fail:
 }
 ```
 
+### Website Terms Of Use
+```
+{
+    "agreement_compliance_type": "website-terms-of-use",
+    "terms_last_updated": "2025-10-20",
+    "full_name_of_the_party": "Website Owner",
+    "website_url": "www.website.come",
+    "email_id": "example@website.com",
+    "email_id_for_acquiring_written_permission": "example1@website.com",
+    "liability_limit_amount": 5240.00,
+    "liability_limit_amount_currency": "USD",
+    "liability_must_not_exceed_amount": 6000,
+    "liability_must_not_exceed_amount_currency": "USD",
+    "email_id_for_requesting_access_or_correction_of_personal_info": "example3@website.com"
+}
+```
+
+
 
 
 
