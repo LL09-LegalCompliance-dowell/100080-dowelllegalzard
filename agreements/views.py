@@ -127,14 +127,14 @@ class AgreementComplianceList(APIView):
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
 
-        request_data["party_1_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_1_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_1"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_1"])
 
         request_data["party_2_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_2_date_of_signing_contract"])
 
-        request_data["party_2_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_2_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
         request_data["invoicing_date"] = date.fromisoformat(
             request_data["invoicing_date"])
@@ -151,9 +151,16 @@ class AgreementComplianceList(APIView):
 
         # Commit data to database
         if serializer.is_valid():
+            print(request_data)
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
@@ -177,7 +184,12 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
@@ -210,7 +222,12 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
-            response_json = serializer.errors
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
         return response_json, status_code
@@ -419,6 +436,7 @@ class AgreementComplianceDetail(APIView):
     def update_software_license_policy(self, event_id, request_data, response_json, status_code):
 
         from datetime import date
+        
 
         # Convert date string (yyyy-mm-dd)
         # to date object
@@ -431,14 +449,14 @@ class AgreementComplianceDetail(APIView):
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
 
-        request_data["party_1_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_1_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_1"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_1"])
 
         request_data["party_2_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_2_date_of_signing_contract"])
 
-        request_data["party_2_witness_date_of_signing_contract"] = date.fromisoformat(
-            request_data["party_2_witness_date_of_signing_contract"])
+        request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
+            request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
         request_data["invoicing_date"] = date.fromisoformat(
             request_data["invoicing_date"])

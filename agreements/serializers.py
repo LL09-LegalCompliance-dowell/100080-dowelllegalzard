@@ -49,6 +49,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     can_software_specification_be_varied_by_the_parties = serializers.BooleanField(
         default=False)
     terms_of_contract_duration = serializers.CharField(max_length=50)
+    terms_of_contract_duration_unit = serializers.CharField(max_length=50)
     is_inline_copy_right_remove = serializers.BooleanField(default=False)
     is_term_of_contract_indefinite = serializers.BooleanField(default=False)
     contract_termination_date = serializers.DateField()
@@ -56,7 +57,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         max_length=255)
     number_of_license_to_be_deliver = serializers.IntegerField(default=1)
     software_delivery_channel = serializers.CharField(max_length=50)
-    software_delivery_period = serializers.CharField(max_length=50)
+    within_what_period_must_software_be_delivered = serializers.CharField(max_length=50)
     what_did_licensor_supply_to_the_licensee = serializers.CharField(
         max_length=150)
     purpose_of_supply = serializers.CharField(max_length=255)
@@ -97,18 +98,18 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         max_length=255)
     will_the_contract_signed_by_party_1_contracting_entity = serializers.BooleanField(
         default=False)
-    party_1_signatory_scanned_copy_url = serializers.CharField(max_length=255)
+    party_1_signatory_scanned_copy_detail = serializers.DictField()
     full_name_of_party_1_signatory = serializers.CharField(max_length=150)
     party_1_date_of_signing_contract = serializers.DateField()
-    full_name_of_party_1_witness = serializers.CharField(max_length=150)
-    party_1_witness_date_of_signing_contract = serializers.DateField()
+    full_name_of_the_person_sign_on_behalf_of_party_1 = serializers.CharField(max_length=150)
+    date_contract_was_sign_on_behalf_of_party_1 = serializers.DateField()
     will_the_contract_signed_by_pary_2_contracting_entity = serializers.BooleanField(
         default=False)
-    party_2_signatory_scanned_copy_url = serializers.CharField(max_length=255)
+    party_2_signatory_scanned_copy_detail = serializers.DictField()
     full_name_of_party_2_signatory = serializers.CharField(max_length=150)
     party_2_date_of_signing_contract = serializers.DateField()
-    full_name_of_party_2_witness = serializers.CharField(max_length=150)
-    party_2_witness_date_of_signing_contract = serializers.DateField()
+    full_name_of_the_person_sign_on_behalf_of_party_2 = serializers.CharField(max_length=150)
+    date_contract_was_sign_on_behalf_of_party_2 = serializers.DateField()
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
 
@@ -127,14 +128,14 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["party_1_date_of_signing_contract"]\
             = validated_data["party_1_date_of_signing_contract"].isoformat()
 
-        validated_data["party_1_witness_date_of_signing_contract"]\
-            = validated_data["party_1_witness_date_of_signing_contract"].isoformat()
+        validated_data["date_contract_was_sign_on_behalf_of_party_1"]\
+            = validated_data["date_contract_was_sign_on_behalf_of_party_1"].isoformat()
 
         validated_data["party_2_date_of_signing_contract"]\
             = validated_data["party_2_date_of_signing_contract"].isoformat()
 
-        validated_data["party_2_witness_date_of_signing_contract"]\
-            = validated_data["party_2_witness_date_of_signing_contract"].isoformat()
+        validated_data["date_contract_was_sign_on_behalf_of_party_2"]\
+            = validated_data["date_contract_was_sign_on_behalf_of_party_2"].isoformat()
 
         validated_data["invoicing_date"]\
             = validated_data["invoicing_date"].isoformat()
@@ -150,6 +151,8 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
 
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
+        
+        print(validated_data)
 
 
 
@@ -190,14 +193,14 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["party_1_date_of_signing_contract"]\
             = validated_data["party_1_date_of_signing_contract"].isoformat()
 
-        validated_data["party_1_witness_date_of_signing_contract"]\
-            = validated_data["party_1_witness_date_of_signing_contract"].isoformat()
+        validated_data["date_contract_was_sign_on_behalf_of_party_1"]\
+            = validated_data["date_contract_was_sign_on_behalf_of_party_1"].isoformat()
 
         validated_data["party_2_date_of_signing_contract"]\
             = validated_data["party_2_date_of_signing_contract"].isoformat()
 
-        validated_data["party_2_witness_date_of_signing_contract"]\
-            = validated_data["party_2_witness_date_of_signing_contract"].isoformat()
+        validated_data["date_contract_was_sign_on_behalf_of_party_2"]\
+            = validated_data["date_contract_was_sign_on_behalf_of_party_2"].isoformat()
 
         validated_data["invoicing_date"]\
             = validated_data["invoicing_date"].isoformat()
@@ -213,6 +216,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
 
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
+
 
 
         # Update software agreement on remote server
@@ -249,7 +253,6 @@ class EulaSerializer(serializers.Serializer):
     party_details_address_line_1 = serializers.CharField(max_length=300)
     party_details_address_line_2 = serializers.CharField(max_length=300)
     party_details_address_line_3 = serializers.CharField(max_length=300)
-    party_details_city = serializers.CharField(max_length=150)
     party_details_country = serializers.CharField(max_length=150)
     party_details_state = serializers.CharField(max_length=150)
     party_details_zipcode = serializers.CharField(max_length=150)
