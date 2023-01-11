@@ -25,7 +25,9 @@ from agreements.serializers import (
     SoftwareLicensePolicySerializer,
     EulaSerializer,
     MOUSerializer,
-    WebsiteTermsOfUseSerializer
+    WebsiteTermsOfUseSerializer,
+    WebsitePrivacyPolicySerializer,
+    WebsiteSecurityPolicySerializer
     
     )
 
@@ -101,6 +103,18 @@ class AgreementComplianceList(APIView):
 
             elif request_data['agreement_compliance_type'] == "website-terms-of-use":
                 response_json, status_code = self.create_website_terms_of_use(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "website-privacy-policy":
+                response_json, status_code = self.create_website_privacy_policy(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "website-security-policy":
+                response_json, status_code = self.create_website_security_policy(
                     request_data,
                     response_json,
                     status_code)
@@ -250,6 +264,56 @@ class AgreementComplianceList(APIView):
 
         # Create serializer object
         serializer = WebsiteTermsOfUseSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_website_privacy_policy(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_updated"] = date.fromisoformat(
+            request_data["last_updated"])
+
+
+        # Create serializer object
+        serializer = WebsitePrivacyPolicySerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_website_security_policy(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_updated"] = date.fromisoformat(
+            request_data["last_updated"])
+
+
+        # Create serializer object
+        serializer = WebsiteSecurityPolicySerializer(data=request_data)
 
         # Commit data to database
         if serializer.is_valid():
@@ -458,6 +522,20 @@ class AgreementComplianceDetail(APIView):
                     response_json= response_json,
                     status_code= status_code)
 
+            elif request_data['agreement_compliance_type'] == "website-privacy-policy":
+                response_json, status_code = self.update_website_privacy_policy(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "website-security-policy":
+                response_json, status_code = self.update_website_security_policy(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -613,6 +691,62 @@ class AgreementComplianceDetail(APIView):
 
         # Update and Commit data into database
         serializer = WebsiteTermsOfUseSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_website_privacy_policy(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_updated"] = date.fromisoformat(
+            request_data["last_updated"])
+
+
+        # Update and Commit data into database
+        serializer = WebsitePrivacyPolicySerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_website_security_policy(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_updated"] = date.fromisoformat(
+            request_data["last_updated"])
+
+
+        # Update and Commit data into database
+        serializer = WebsiteSecurityPolicySerializer(
             event_id, data=request_data)
 
         if serializer.is_valid():

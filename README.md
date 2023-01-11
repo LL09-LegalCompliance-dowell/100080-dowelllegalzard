@@ -920,6 +920,36 @@ The API will return three error types when requests fail:
 }
 ```
 
+### Website Privacy Policy
+```
+{
+    "agreement_compliance_type": "website-privacy-policy",
+    "last_updated": "2025-10-20",
+    "company_name": "SamPle",
+    "company_address": "sample street",
+    "registration_number": "7845587457",
+    "country": "India",
+    "website_name": "SamPle",
+    "website_url": "www.sample.com",
+    "website_contact_page_url": "www.sample.com/contact",
+    "website_contact_email": "info@sample.com"
+}
+```
+
+### Website Security Policy
+```
+{
+    "agreement_compliance_type": "website-security-policy",
+    "last_updated": "2025-10-20",
+    "company_name": "SamPle",
+    "website_name": "SamPle",
+    "jurisdiction": "India",
+    "website_url": "www.sample.com",
+    "website_contact_email": "info@sample.com"
+}
+```
+
+
 
 
 
