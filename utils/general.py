@@ -2,6 +2,15 @@ import os
 from string import Template
 from DowellLicenseProject.settings import BASE_DIR
 
+agreement_compliance_templates = {
+    "software-license-policy": "software-license-agreement.html",
+    "eula": "software-license-agreement.html",
+    "mou": "memorandum-of-understanding.html",
+    "website-terms-of-use": "website-terms-of-use.html",
+    "website-privacy-policy": "website-privacy-policy.html",
+    "website-security-policy": "website-security-policy.html"
+}
+
 
 def read_template(filename:str) -> Template:
     content=""
@@ -17,12 +26,4 @@ def read_template(filename:str) -> Template:
 
 
 def get_compliance_template_name(agreement_compliance_type:str) -> str:
-
-    if agreement_compliance_type == "software-license-policy":
-        return "software-license-agreement.html"
-
-    elif agreement_compliance_type == "eula":
-        return "end-user-licensing-agreement.html"
-
-    elif agreement_compliance_type == "mou":
-        return "memorandum-of-understanding.html"
+    return agreement_compliance_templates[agreement_compliance_type]
