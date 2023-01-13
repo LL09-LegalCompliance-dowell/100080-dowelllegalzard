@@ -4,7 +4,7 @@ from DowellLicenseProject.settings import BASE_DIR
 
 agreement_compliance_templates = {
     "software-license-policy": "software-license-agreement.html",
-    "eula": "software-license-agreement.html",
+    "eula": "end-user-licensing-agreement.html",
     "mou": "memorandum-of-understanding.html",
     "website-terms-of-use": "website-terms-of-use.html",
     "website-privacy-policy": "website-privacy-policy.html",
