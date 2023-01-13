@@ -280,7 +280,7 @@ class EulaSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         """
-        Create and return new software agreement.
+        Create and return new end-user-license-agreement.
         """
 
         # format date back to iso format
@@ -316,7 +316,7 @@ class EulaSerializer(serializers.Serializer):
 
     def update(self, event_id, validated_data):
         """
-        Update and return software agreement.
+        Update and return end-user-license-agreement.
         """
         status_code = 500
         response_json = {}
