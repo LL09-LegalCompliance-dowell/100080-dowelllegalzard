@@ -803,8 +803,7 @@ The API will return three error types when requests fail:
                 "party_1_signatory_scanned_copy_detail": {
                     "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
                     "actual_filename": "AFL.png",
-                    "file_extension": "png",
-                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                    "file_extension": "png"
                 },
                 "full_name_of_party_1_signatory": "party 1 name",
                 "party_1_date_of_signing_contract": "2022-11-02",
@@ -814,8 +813,7 @@ The API will return three error types when requests fail:
                 "party_2_signatory_scanned_copy_detail": {
                     "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
                     "actual_filename": "AFL.png",
-                    "file_extension": "png",
-                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+                    "file_extension": "png"
                 },
                 "full_name_of_party_2_signatory": "party 2 name",
                 "party_2_date_of_signing_contract": "2022-11-05",
@@ -947,6 +945,68 @@ The API will return three error types when requests fail:
     "website_url": "www.sample.com",
     "website_contact_email": "info@sample.com"
 }
+```
+
+
+### Non Compete Agreement
+```
+ {
+    "agreement_compliance_type": "non-compete-agreement",
+    "date_of_execution_of_document": "2025-10-20",
+    "party_full_name": "Individual and Company",
+    "company_name": "Dowell Research 1",
+    "company_address_line_1": "P.O.BOX 45, India",
+    "company_address_line_2": "sample law",
+    "company_address_line_3": "RS5428888",
+    "company_zipcode": "India",
+    "type_of_company": "India",
+    "restricted_area": "RT455",
+    "date_of_termination": "2025-10-20",
+    "duration_for_solicit": 54,
+    "duration_for_solicit_unit": "Days",
+    "governing_laws_country": "Sample 2",
+    "will_there_be_a_litigation_matter_in_case_of_dispute": false,
+    "which_state_should_abide_litigation_matter": "",
+    "will_electronic_notices_be_allowed": "yes",
+    "name_of_witnesses": "Seth",
+    "signature_of_witnesses_detail": {
+        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+        "actual_filename": "AFL.png",
+        "file_extension": "png"
+    }
+}
+
+```
+
+
+### Cookies policy
+```
+ {
+    "agreement_compliance_type": "non-compete-agreement",
+    "date_of_execution_of_document": "2025-10-20",
+    "party_full_name": "Individual and Company",
+    "company_name": "Dowell Research 1",
+    "company_address_line_1": "P.O.BOX 45, India",
+    "company_address_line_2": "sample law",
+    "company_address_line_3": "RS5428888",
+    "company_zipcode": "India",
+    "type_of_company": "India",
+    "restricted_area": "RT455",
+    "date_of_termination": "2025-10-20",
+    "duration_for_solicit": 54,
+    "duration_for_solicit_unit": "Days",
+    "governing_laws_country": "Sample 2",
+    "will_there_be_a_litigation_matter_in_case_of_dispute": false,
+    "which_state_should_abide_litigation_matter": "",
+    "will_electronic_notices_be_allowed": "yes",
+    "name_of_witnesses": "Seth",
+    "signature_of_witnesses_detail": {
+        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+        "actual_filename": "AFL.png",
+        "file_extension": "png"
+    }
+}
+
 ```
 
 

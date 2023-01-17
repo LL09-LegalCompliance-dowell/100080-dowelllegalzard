@@ -8,7 +8,8 @@ agreement_compliance_templates = {
     "mou": "memorandum-of-understanding.html",
     "website-terms-of-use": "website-terms-of-use.html",
     "website-privacy-policy": "website-privacy-policy.html",
-    "website-security-policy": "website-security-policy.html"
+    "website-security-policy": "website-security-policy.html",
+    "non-compete-agreement": "non-compete-agreement.html"
 }
 
 
