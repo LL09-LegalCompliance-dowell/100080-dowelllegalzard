@@ -28,7 +28,10 @@ from agreements.serializers import (
     WebsiteTermsOfUseSerializer,
     WebsitePrivacyPolicySerializer,
     WebsiteSecurityPolicySerializer,
-    NonCompeteAgreementSerializer
+    NonCompeteAgreementSerializer,
+    CookiesPolicySerializer,
+    ReturnAndRefundSerializer,
+    AppDisclaimerSerializer
     
     )
 
@@ -122,6 +125,24 @@ class AgreementComplianceList(APIView):
 
             elif request_data['agreement_compliance_type'] == "non-compete-agreement":
                 response_json, status_code = self.create_non_compete_agreement(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "cookie-policy":
+                response_json, status_code = self.create_cookie_policy(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "return-and-refund":
+                response_json, status_code = self.create_return_and_fund(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-disclaimer":
+                response_json, status_code = self.create_app_disclaimer(
                     request_data,
                     response_json,
                     status_code)
@@ -365,6 +386,84 @@ class AgreementComplianceList(APIView):
         # return result
         return response_json, status_code
 
+    def create_cookie_policy(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+
+        # Create serializer object
+        serializer = CookiesPolicySerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_return_and_fund(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date"] = date.fromisoformat(
+            request_data["date"])
+
+
+        # Create serializer object
+        serializer = ReturnAndRefundSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_app_disclaimer(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Create serializer object
+        serializer = AppDisclaimerSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": f"{serializer.errors}",
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
 
 
 
@@ -573,6 +672,27 @@ class AgreementComplianceDetail(APIView):
 
             elif request_data['agreement_compliance_type'] == "non-compete-agreement":
                 response_json, status_code = self.update_non_compete_agreement(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "cookie-policy":
+                response_json, status_code = self.update_cookie_policy(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "return-and-refund":
+                response_json, status_code = self.update_return_and_fund(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-disclaimer":
+                response_json, status_code = self.update_app_disclaimer(
                     event_id= event_id,
                     request_data= request_data,
                     response_json= response_json,
@@ -836,6 +956,91 @@ class AgreementComplianceDetail(APIView):
 
         # return result
         return response_json, status_code
+
+    def update_cookie_policy(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+
+        # Update and Commit data into database
+        serializer = CookiesPolicySerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_return_and_fund(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date"] = date.fromisoformat(
+            request_data["date"])
+
+
+        # Update and Commit data into database
+        serializer = ReturnAndRefundSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_app_disclaimer(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Update and Commit data into database
+        serializer = AppDisclaimerSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
 
 
 

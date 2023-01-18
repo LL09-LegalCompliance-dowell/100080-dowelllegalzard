@@ -981,33 +981,43 @@ The API will return three error types when requests fail:
 
 ### Cookies policy
 ```
- {
-    "agreement_compliance_type": "non-compete-agreement",
+{
+    "agreement_compliance_type": "cookie-policy",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
-    "company_name": "Dowell Research 1",
-    "company_address_line_1": "P.O.BOX 45, India",
-    "company_address_line_2": "sample law",
-    "company_address_line_3": "RS5428888",
-    "company_zipcode": "India",
-    "type_of_company": "India",
-    "restricted_area": "RT455",
-    "date_of_termination": "2025-10-20",
-    "duration_for_solicit": 54,
-    "duration_for_solicit_unit": "Days",
-    "governing_laws_country": "Sample 2",
-    "will_there_be_a_litigation_matter_in_case_of_dispute": false,
-    "which_state_should_abide_litigation_matter": "",
-    "will_electronic_notices_be_allowed": "yes",
-    "name_of_witnesses": "Seth",
-    "signature_of_witnesses_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png"
-    }
-}
+    "website_has_a_data_protection_officer": true,
+    "which_medium_can_website_users_raise_question_regarding_cookies": "P.O.BOX 45, India",
+    "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": true,
+    "will_the_cookie_store_personal_information": true,
+    "type_of_personal_information_store_by_cookie": ["Address", "Contact Details"],
+    "other_type_of_personal_information_store_by_cookie": "India",
+    "website_privacy_document_hold": [
+        {
+            "name": "Privacy Policy",
+            "location": "sample.com/privacy"
+        },
+        {
+            "name": "Terms",
+            "location": "sample.com/terms-and-condition"
+        }
+    ],
+    "provide_situations_where_cookies_may_be_collected_without_consent_of_users": "",
+    "detail_about_information_third_party_cookies_will_be_collecting_users": "info",
+    "name_of_third_party_cookies": "bitmake",
+    "owner_of_third_party_cookies": "Sample 2"
 
+}
 ```
+
+### App Disclaimer
+```
+{
+    "agreement_compliance_type": "app-disclaimer",
+    "last_update": "2025-10-20",
+    "app_name": "App"
+}
+```
+
 
 
 

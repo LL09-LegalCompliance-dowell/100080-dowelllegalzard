@@ -9,7 +9,10 @@ agreement_compliance_templates = {
     "website-terms-of-use": "website-terms-of-use.html",
     "website-privacy-policy": "website-privacy-policy.html",
     "website-security-policy": "website-security-policy.html",
-    "non-compete-agreement": "non-compete-agreement.html"
+    "non-compete-agreement": "non-compete-agreement.html",
+    "cookie-policy": "cookie-policy.html",
+    "return-and-refund": "return-and-refund.html",
+    "app-disclaimer": "app-disclaimer.html"
 }
 
 
