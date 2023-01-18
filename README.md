@@ -1019,6 +1019,24 @@ The API will return three error types when requests fail:
 ```
 
 
+### Return and Refund
+```
+
+{
+    "agreement_compliance_type": "return-and-refund",
+    "date": "2025-10-20",
+    "website_or_app_name": "App 2",
+    "company_info": "App 2",
+    "website_url": "app.com",
+    "cancellation_right_of_order": 50,
+    "cancellation_right_of_order_unit": "Months",
+    "reimbursement_of_cancellation_money": 2500.01,
+    "reimbursement_of_cancellation_money_currency": "USD",
+    "website_contact_email": "USD"
+
+}
+```
+
 
 
 

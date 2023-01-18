@@ -1009,7 +1009,7 @@ class ReturnAndRefundSerializer(serializers.Serializer):
     agreement_compliance_type = serializers.CharField(max_length=200)
     date = serializers.DateField()
     website_or_app_name = serializers.CharField(max_length=150)
-    company_info = serializers.BooleanField(default=False)
+    company_info = serializers.CharField(max_length=400)
     website_url = serializers.CharField(max_length=255)
     cancellation_right_of_order= serializers.IntegerField(default=0)
     cancellation_right_of_order_unit= serializers.CharField(max_length=20)
