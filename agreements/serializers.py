@@ -851,7 +851,7 @@ class CookiesPolicySerializer(serializers.Serializer):
     date_of_execution_of_document = serializers.DateField()
     party_full_name = serializers.CharField(max_length=150)
     website_has_a_data_protection_officer = serializers.BooleanField(default=False)
-    which_medium_can_website_users_raise_question_regarding_cookies = serializers.CharField(max_length=255)
+    which_medium_can_website_users_raise_question_regarding_cookies = serializers.ListField()
     website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie = serializers.BooleanField(default=False)
     will_the_cookie_store_personal_information = serializers.BooleanField(default=False)
     type_of_personal_information_store_by_cookie = serializers.ListField()

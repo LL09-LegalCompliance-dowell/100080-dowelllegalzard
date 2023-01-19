@@ -986,7 +986,7 @@ The API will return three error types when requests fail:
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
     "website_has_a_data_protection_officer": true,
-    "which_medium_can_website_users_raise_question_regarding_cookies": "P.O.BOX 45, India",
+    "which_medium_can_website_users_raise_question_regarding_cookies": ["Via Email"],
     "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": true,
     "will_the_cookie_store_personal_information": true,
     "type_of_personal_information_store_by_cookie": ["Address", "Contact Details"],
@@ -2038,3 +2038,23 @@ The API will return three error types when requests fail:
     }
 }
 ```
+
+
+### Agreement Compliance Sample
+
+-   https://100080.pythonanywhere.com/media/doc/cookies-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/discliamer-for-website.pdf
+-   https://100080.pythonanywhere.com/media/doc/employment-contract.pdf
+-   https://100080.pythonanywhere.com/media/doc/end-user-licensing-agreement.pdf
+-   https://100080.pythonanywhere.com/media/doc/gdpr-privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/memorandum-of-understanding.pdf
+-   https://100080.pythonanywhere.com/media/doc/non-compete-agreement.pdf
+-   https://100080.pythonanywhere.com/media/doc/non-disclosure-agreement.pdf
+-   https://100080.pythonanywhere.com/media/doc/privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/return-refund-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/software-license-agreement.pdf
+-   https://100080.pythonanywhere.com/media/doc/statement-of-work.pdf
+-   https://100080.pythonanywhere.com/media/doc/terms-and-conditions.pdf
+-   https://100080.pythonanywhere.com/media/doc/terms-of-use-licensing-app.pdf
+-   https://100080.pythonanywhere.com/media/doc/website-security-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/website-terms-of-use.pdf
