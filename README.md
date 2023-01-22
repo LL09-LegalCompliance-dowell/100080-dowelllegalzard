@@ -2054,6 +2054,21 @@ The API will return three error types when requests fail:
 ```
 
 
+#### DELETE /api/comparisons/{event_id}/
+
+- `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/ -X DELETE -H "Content-Type: application/json`
+
+
+```
+{
+    "isSuccess": true,
+    "event_id": "FB1010000000166909595159447637"
+}
+```
+
+
+
+
 ### Agreement Compliance Sample
 
 -   https://100080.pythonanywhere.com/media/doc/cookies-policy.pdf

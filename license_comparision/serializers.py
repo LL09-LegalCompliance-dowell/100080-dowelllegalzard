@@ -40,6 +40,7 @@ class ComparisionSerializer(serializers.Serializer):
 
 
         # Create comparision
+        validated_data['is_active'] = True
         response_json = save_document(
             collection=ATTRIBUTE_COLLECTION,
             document=ATTRIBUTE_DOCUMENT_NAME,
@@ -70,6 +71,7 @@ class ComparisionSerializer(serializers.Serializer):
 
 
         # Update comparision
+        validated_data['is_active'] = True
         response_json = update_document(
             collection=ATTRIBUTE_COLLECTION,
             document=ATTRIBUTE_DOCUMENT_NAME,

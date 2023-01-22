@@ -277,7 +277,6 @@ class SoftwareLicenseDetail(APIView):
     """
      Retrieve , update and delete software license
     """
-
     def get(self, request, event_id, format=None):
         try:
             # # Localhost

@@ -9,12 +9,14 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
+    update_document,
     format_id,
     SOFTWARE_LICENSE_COLLECTION,
     ATTRIBUTE_COLLECTION,
 
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
+    ATTRIBUTE_MAIN_KEY,
     
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
@@ -343,75 +345,30 @@ class ComparisionDetail(APIView):
                 document=ATTRIBUTE_DOCUMENT_NAME,
                 fields={"eventId": event_id}
             )
+            
             license_comparison = response_json["data"][0]["attributes"]
 
             
+            # Update comparision
+            license_comparison['is_active'] = False
+            license_comparison['identifier'] = ""
+            response_json = update_document(
+                collection=ATTRIBUTE_COLLECTION,
+                document=ATTRIBUTE_DOCUMENT_NAME,
+                key=ATTRIBUTE_MAIN_KEY,
+                new_value=license_comparison,
+                event_id=event_id
+            )
 
+            return Response(
+                {
+                "isSuccess": response_json["isSuccess"],
+                "event_id": event_id
+                },
+                status=200
+            )
 
-
-            if action_type == "delete-license":
-                comparison = request_data["comparison"]
-                comparison['_id'] = str(uuid.uuid4())
-                license_comparison["comparisons"].append(comparison)
-
-
-                # Update
-                serializer = ComparisionSerializer(
-                    event_id, data=license_comparison)
-                if serializer.is_valid():
-                    response_json, status_code = serializer.update(
-                        event_id, serializer.validated_data)
-
-                    return Response(
-                        {
-                        "isSuccess": response_json["isSuccess"],
-                        "comparison": comparison
-                        },
-                        status=status_code
-                    )
-
-                else:
-                    return Response({"error_msg": f"{serializer.errors}"},
-                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                                    )
                 
-            elif action_type == "delete-license-comparison":
-                comparison = request_data["comparison"]
-                temp_comparisons = []
-
-                comparison_id = request_data["comparison_id"]
-
-                for data in license_comparison["comparisons"]:
-
-                    if comparison_id == data["_id"]:
-
-                        # Update license comparison object
-                        comparison_new = {**data, **comparison}
-                        temp_comparisons.append(comparison_new)
-
-                    else:
-                        temp_comparisons.append(data)
-
-                # Update list of license comparison object
-                license_comparison["comparisons"] = temp_comparisons
-
-
-                # Update
-                serializer = ComparisionSerializer(
-                    event_id, data=license_comparison)
-                if serializer.is_valid():
-                    response_json, status_code = serializer.update(
-                        event_id, serializer.validated_data)
-
-                    return Response(
-                        {
-                        "isSuccess": response_json["isSuccess"],
-                        "comparison": comparison_new
-                        },
-                        status=status_code
-                    )
-
-
         # The code below will
         # execute when error occur
         except Exception as e:
