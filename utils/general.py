@@ -12,7 +12,8 @@ agreement_compliance_templates = {
     "non-compete-agreement": "non-compete-agreement.html",
     "cookie-policy": "cookie-policy.html",
     "return-and-refund": "return-and-refund.html",
-    "app-disclaimer": "app-disclaimer.html"
+    "app-disclaimer": "app-disclaimer.html",
+    "app-privacy-policy": "app-privacy-policy.html"
 }
 
 
