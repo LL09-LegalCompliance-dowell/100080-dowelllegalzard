@@ -35,6 +35,55 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
 
 
+
+    // BEGIN delete of license detail
+    document.querySelector("#confirm-delete").addEventListener("click", function(event){
+
+        const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Deleting...`
+
+
+        const eventId = document.getElementById("confirm-delete").getAttribute("data-id");
+        const licenseName = document.getElementById("confirm-delete").getAttribute("data-license-name");
+        this.innerHTML = spinner;
+        const errorEl = document.getElementById("delete-license-error-notify");
+        errorEl.innerHTML = "";
+
+        fetch(`/api/licenses/${eventId}/`, {
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"}
+            }).then(response => {
+
+                if (response.status === 200){
+                    const licenseDetailContentEl = document.getElementById(`license-table-row-${eventId}`)
+                    licenseDetailContentEl.remove();
+                    this.innerHTML = "Delete";
+                    document.getElementById("delete-license-modal-close").click();
+
+                }else {
+
+                    this.innerHTML="Delete";
+                    response.json()
+                }
+
+            }).then(jsonData => {
+
+                errorEl.innerHTML = jsonData.error_msg;
+
+            }).catch(error => {
+
+            })
+        })
+        // END delete of license detail
+  
+
+
+
+
+
+
+
+
 })
 
 
@@ -274,20 +323,21 @@ const loadTable = () => {
         for (let license of jsonData.data){
             index += 1;
             content += tableContent(index, license);
-            console.log(content);
         }
 
         tableSpinnerEl.style.display = "none";
         tableBodyEl.innerHTML = content;
         document.getElementById("btn-add-new").style.display = "inline-block";
         // listenToEditBtn();
-        
+        deleteLicense();
 
     }).catch(function(err){
         tableSpinnerEl.style.display = "none";
 
     })
 
+
+   
 
     
 
@@ -474,7 +524,7 @@ const tableContent = (index, data) => {
       }
     
     return `
-            <tr>
+            <tr id="license-table-row-${data.eventId}">
                   <td scope="row">${index}</td>
                   <td>${license.license_name}</td>
                   <td>${license.version}</td>
@@ -483,6 +533,7 @@ const tableContent = (index, data) => {
 
                     <div class="btn-group" role="group" aria-label="action">
                         <a href="/temp-admin/license-edit/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
+                        <a href="#" data-license-version="${license.version}" data-license-name="${license.license_name}"   data-id="${data.eventId}" data-bs-toggle="modal" data-bs-target="#delete-license-modal" class="btn btn-danger delete-license">Delete</a>
                     </div>
 
                   </td>
@@ -649,4 +700,30 @@ const getLicenseTagContent = () => {
 
     return licenseTags;
 }
+
+
+const deleteLicense = () => {
+    console.log("worl")
+    const deleteBtnEls = document.querySelectorAll(".delete-license");
+    // loop over all delete button
+    // and event listener to it
+    deleteBtnEls.forEach(element => {
+
+      element.addEventListener("click", function(event){
+
+
+        const eventId = this.getAttribute("data-id");
+        const licenseName = this.getAttribute("data-license-name");
+        const licenseVersion = this.getAttribute("data-license-version");
+        console.log(licenseName);
+
+        document.getElementById("delete-license-name").innerHTML=`license: ${licenseName}, version: ${licenseVersion}`;
+        const deleteBtnEl = document.getElementById("confirm-delete");
+        deleteBtnEl.setAttribute("data-license-name", licenseName);
+        deleteBtnEl.setAttribute("data-id", eventId);
+      });
+
+    });
+  }
+
 

@@ -57,6 +57,27 @@
       </div>
 
 
+      <!--BEGIN delete  modal-->
+      <div class="modal fade" id="delete-license-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm delete</h5>
+              <button type="button" id="delete-license-modal-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              You are sure you want to delete seleted license (<span id="delete-license-name"></span>).
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" id="confirm-delete" class="btn btn-primary">Delete</button>
+            </div>
+
+            <p style="color: red;" id="delete-license-error-notify"></p>
+          </div>
+        </div>
+      </div><!--END delete modal-->
+
 
 
     </div>
