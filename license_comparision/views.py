@@ -127,7 +127,8 @@ class ComparisionList(APIView):
         except Exception as e:
             print(f"{e}")
             return Response({
-                "error_msg": f"{e}"
+                "error_msg": f"{e}",
+                "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
@@ -171,7 +172,8 @@ class ComparisionDetail(APIView):
         except Exception as e:
             print(f"{e}")
             return Response({
-                "error_msg": f"{e}"
+                "error_msg": f"{e}",
+                "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
@@ -260,7 +262,8 @@ class ComparisionDetail(APIView):
                     return Response(
                         {
                         "isSuccess": response_json["isSuccess"],
-                        "comparison": comparison_new
+                        "comparison": comparison_new,
+                        "status_code": status_code
                         },
                         status=status_code
                     )
@@ -305,16 +308,19 @@ class ComparisionDetail(APIView):
 
                     return Response(
                         {
-                        "isSuccess": response_json["isSuccess"]
+                        "isSuccess": response_json["isSuccess"],
+                        "status_code": status_code
                         },
                         status=status_code
                     )
 
 
                 else:
-                    return Response({"error_msg": f"{serializer.errors}"},
-                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                                    )
+                    return Response({
+                        "error_msg": str(serializer.errors),
+                        "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
+                    },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR )
 
 
             
@@ -323,7 +329,8 @@ class ComparisionDetail(APIView):
         except Exception as e:
             print(f"{e}")
             return Response({
-                "error_msg": f"{e}"
+                "error_msg": f"{e}",
+                "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
@@ -363,7 +370,8 @@ class ComparisionDetail(APIView):
             return Response(
                 {
                 "isSuccess": response_json["isSuccess"],
-                "event_id": event_id
+                "event_id": event_id,
+                "status_code": 200
                 },
                 status=200
             )
@@ -374,7 +382,8 @@ class ComparisionDetail(APIView):
         except Exception as e:
             print(f"{e}")
             return Response({
-                "error_msg": f"{e}"
+                "error_msg": f"{e}",
+                "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
