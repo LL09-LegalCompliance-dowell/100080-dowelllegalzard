@@ -220,7 +220,7 @@ const loadTable = () => {
 
 const tableContent = (index, comparison) => {
     const additional_value_1 = comparison.licence_1.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
-    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
+    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_2.additional_value})` : ""
 
     return `
             <tr id="comparison-${comparison._id}">
@@ -241,7 +241,7 @@ const tableContent = (index, comparison) => {
 
 const tableContentWithOutTR = (index, comparison, updateIndex) => {
     const additional_value_1 = comparison.licence_1.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
-    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
+    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_2.additional_value})` : ""
     return `
             
                   <th scope="row">${updateIndex}</th>
@@ -280,7 +280,7 @@ const listenToEditBtn = () => {
                     document.querySelector("#category").value = comparison_category.category;
                     document.querySelector("#license-1").value = comparison_category.licence_1.comparison_value;
                     document.querySelector("#license-2").value = comparison_category.licence_2.comparison_value;
-                    document.querySelector("#licensee-1-additional-info").value = comparison_category.licence_2.additional_value;
+                    document.querySelector("#licensee-1-additional-info").value = comparison_category.licence_1.additional_value;
                     document.querySelector("#licensee-2-additional-info").value = comparison_category.licence_2.additional_value;
                     cardFormTitleEl.textContent = "Update Category Comparison";
                     break;

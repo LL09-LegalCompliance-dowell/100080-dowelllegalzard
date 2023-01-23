@@ -24,20 +24,32 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     party_1_postal_address = serializers.CharField(max_length=255)
     party_1_jurisdiction_incorporated = serializers.CharField(max_length=150)
     party_1_registration_number = serializers.CharField(max_length=50)
-    party_1_registrar_office_address = serializers.CharField(max_length=255)
+
+    party_1_registrar_office_address_1 = serializers.CharField(max_length=255)
+    party_1_registrar_office_address_2 = serializers.CharField(max_length=255)
+    party_1_registrar_office_address_3 = serializers.CharField(max_length=255)
+
+
     party_1_principal_place_of_business = serializers.CharField(max_length=255)
     party_2_entity_type = serializers.CharField(max_length=50)
     party_2_full_name = serializers.CharField(max_length=150)
     party_2_postal_address = serializers.CharField(max_length=255)
     party_2_jurisdiction_incorporated = serializers.CharField(max_length=150)
     party_2_registration_number = serializers.CharField(max_length=50)
-    party_2_registrar_office_address = serializers.CharField(max_length=255)
+
+    party_2_registrar_office_address_1 = serializers.CharField(max_length=255)
+    party_2_registrar_office_address_2 = serializers.CharField(max_length=255)
+    party_2_registrar_office_address_3 = serializers.CharField(max_length=255)
+
     party_2_principal_place_of_business = serializers.CharField(max_length=255)
     charges_payable = serializers.DecimalField(
         max_digits=18, decimal_places=2, default=0)
     software_document_identification = serializers.CharField(max_length=255)
     contract_effective_date = serializers.DateField()
-    minimum_terms_apply = serializers.CharField(max_length=50)
+
+    minimum_terms_apply = serializers.IntegerField(default=1)
+    minimum_terms_apply_unit = serializers.CharField(max_length=50)
+
     is_software_form_specified = serializers.BooleanField(default=False)
     software_form = serializers.CharField(max_length=100)
     is_non_material_defects_count_as_software_defects = serializers.BooleanField(
@@ -48,22 +60,33 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     software_specification = serializers.CharField(max_length=255)
     can_software_specification_be_varied_by_the_parties = serializers.BooleanField(
         default=False)
-    terms_of_contract_duration = serializers.CharField(max_length=50)
+
+    terms_of_contract_duration = serializers.IntegerField(default=1)
     terms_of_contract_duration_unit = serializers.CharField(max_length=50)
+
     is_inline_copy_right_remove = serializers.BooleanField(default=False)
     is_term_of_contract_indefinite = serializers.BooleanField(default=False)
     contract_termination_date = serializers.DateField()
     events_that_will_cause_contract_to_be_terminated = serializers.CharField(
         max_length=255)
+
     number_of_license_to_be_deliver = serializers.IntegerField(default=1)
-    software_delivery_channel = serializers.CharField(max_length=50)
-    within_what_period_must_software_be_delivered = serializers.CharField(max_length=50)
+    number_of_license_to_be_deliver_unit = serializers.CharField(max_length=50)
+
+    software_delivery_channel = serializers.CharField(max_length=100)
+
+    within_what_period_must_software_be_delivered = serializers.IntegerField(default=1)
+    within_what_period_must_software_be_delivered_unit = serializers.CharField(max_length=50)
+
     what_did_licensor_supply_to_the_licensee = serializers.CharField(
         max_length=150)
     purpose_of_supply = serializers.CharField(max_length=255)
     when_should_invoice_be_issued = serializers.CharField(max_length=255)
     invoicing_date = serializers.DateField()
-    period_for_payment_of_invoices = serializers.CharField(max_length=50)
+
+    period_for_payment_of_invoices = serializers.IntegerField(default=1)
+    period_for_payment_of_invoices_unit = serializers.CharField(max_length=50)
+
     effective_date_for_invoice_payment = serializers.DateField()
     invoice_payment_method = serializers.CharField(max_length=100)
     interest_rate_apply_to_late_payment = serializers.DecimalField(
