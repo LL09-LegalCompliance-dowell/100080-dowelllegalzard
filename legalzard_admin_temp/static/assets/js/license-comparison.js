@@ -1,6 +1,7 @@
 let index = 0;
 let updateIndex = 0;
 let license_compared_data_list = [];
+let responseStatus = 400;
 
 document.addEventListener("DOMContentLoaded", function(event){
 
@@ -55,6 +56,7 @@ const saveDataToDatabase = (event) =>{
         const loading = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> saving...';
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
+        responseStatus = 400;
 
 
         const data = {
@@ -62,8 +64,8 @@ const saveDataToDatabase = (event) =>{
             license_1_event_id: license1EventId,
             license_2_event_id: license2EventId,
             percentage_of_compatibility: percentageOfCompatibility,
-            recommendation: recommendation,
-            disclaimer: disclaimer,
+            recommendation: sanitizeText(recommendation),
+            disclaimer: sanitizeText(disclaimer),
         }
 
         console.log(data)
@@ -73,52 +75,53 @@ const saveDataToDatabase = (event) =>{
             body: JSON.stringify(data),
             headers: {"Content-Type": "application/json"}
         }).then(function(response){
-            if (response.status === 201 || response.status === 200){
+            return response.json();
 
-                return response.json();
+        }).then(function(jsonData){
+
+
+            // check for error
+            if (jsonData.status_code === 201 || jsonData.status_code === 200){
+
+                const tableBodyEl = document.getElementById("table-body");
+                index += 1;
+    
+                if (methodType === "POST"){
+    
+                    const content = tableContent(index, jsonData.data[0]);
+                    tableBodyEl.innerHTML = `${tableBodyEl.innerHTML}${content}`;
+    
+                }else{
+                    window.location.reload();
+                }
+    
+    
+                // deactivate loading
+                btnSaveData.innerHTML = "Save";
+                btnSaveData.disabled = false;
+                document.getElementById("btn-close-modal").click();
+                listenToEditBtn();
+    
 
             }else{
-
-
+                console.log("me to")
                 // set error 
                 errorContainerEl.style.display = "block";
-                errorContentEl.textContent = "Something went wrong, whilst saving the data!";
+                errorContentEl.textContent = jsonData.error_msg;
 
                 // deactivate loading
                 btnSaveData.innerHTML = "Save";
                 btnSaveData.disabled = false;
-
-
             }
 
-        }).then(function(jsonData){
-
-            const tableBodyEl = document.getElementById("table-body");
-
-            index += 1;
-
-            if (methodType === "POST"){
-
-                const content = tableContent(index, jsonData.data[0]);
-                tableBodyEl.innerHTML = `${tableBodyEl.innerHTML}${content}`;
-
-            }else{
-                window.location.reload();
-            }
-
-
-            // deactivate loading
-            btnSaveData.innerHTML = "Save";
-            btnSaveData.disabled = false;
-            document.getElementById("btn-close-modal").click();
-            listenToEditBtn();
 
 
         }).catch(function(err){
 
             // set error 
+            console.log(err)
             errorContainerEl.style.display = "block";
-            errorContentEl.textContent = "Something went wrong, check your network!";
+            errorContentEl.textContent = err.toString();
 
             // deactivate loading
             btnSaveData.innerHTML = "Save";
@@ -316,4 +319,9 @@ const validateInput = () => {
 
 
     return isValid;
+}
+
+
+const sanitizeText = (text) => {
+    return text.replace(/["${}]/g,"");
 }

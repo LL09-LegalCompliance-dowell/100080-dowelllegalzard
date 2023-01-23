@@ -32,3 +32,9 @@ def read_template(filename:str) -> Template:
 
 def get_compliance_template_name(agreement_compliance_type:str) -> str:
     return agreement_compliance_templates[agreement_compliance_type]
+
+
+
+def sanitize_text(text):
+    import re
+    return re.sub(r"[\"${}]", "",text)
