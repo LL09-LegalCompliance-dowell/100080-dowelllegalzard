@@ -1086,3 +1086,80 @@ class ReturnAndRefundSerializer(serializers.Serializer):
 
         return response_json, status_code
 
+class AppPrivacyPolicySerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        app privacy policy document
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    last_update = serializers.DateField()
+    company_name = serializers.CharField(max_length=150)
+    app_name = serializers.CharField(max_length=150)
+    app_url = serializers.URLField()
+    website_contact_page_url = serializers.URLField()
+    website_contact_email = serializers.CharField(max_length=255)
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+
+    def create(self, validated_data):
+        """
+        Create and return app privacy policy.
+        """
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return app privacy policy.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code

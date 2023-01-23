@@ -39,7 +39,7 @@ class SoftwareLicenseList(APIView):
                 response_json = fetch_document(
                     collection=SOFTWARE_LICENSE_COLLECTION,
                     document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                    fields={}
+                    fields={"softwarelicense.is_active": True}
                 )
 
                 response_json = self.add_license_logo_url(response_json)
@@ -95,7 +95,7 @@ class SoftwareLicenseList(APIView):
                 else:
                     print(serializer.errors)
                     response_json = {
-                       "error_msg": f"{serializer.errors}" 
+                       "error_msg": str(serializer.errors) 
                     }
                     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
@@ -201,7 +201,7 @@ class SoftwareLicenseList(APIView):
                 collection=SOFTWARE_LICENSE_COLLECTION,
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"softwarelicense.license_name": {
-                    "$regex": f"{search_term}", "$options": "i"}}
+                    "$regex": f"{search_term}", "$options": "i"}, "softwarelicense.is_active": True}
             )
 
             return response_json, status.HTTP_200_OK
@@ -277,7 +277,6 @@ class SoftwareLicenseDetail(APIView):
     """
      Retrieve , update and delete software license
     """
-
     def get(self, request, event_id, format=None):
         try:
             # # Localhost
@@ -333,7 +332,7 @@ class SoftwareLicenseDetail(APIView):
 
             else:
                 print(serializer.errors)
-                return Response({"error_msg": f"{serializer.errors}"},
+                return Response({"error_msg": str(serializer.errors)},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )
 
@@ -343,6 +342,57 @@ class SoftwareLicenseDetail(APIView):
             print(f"{e}")
             return Response({
                 "error_msg": f"{e}"
+            },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def delete(self, request, event_id, format=None):
+        try:
+            from datetime import date
+            from utils.dowell import (
+                fetch_document,
+                update_document,
+                SOFTWARE_LICENSE_COLLECTION,
+                SOFTWARE_LICENSE_DOCUMENT_NAME,
+                SOFTWARE_LICENSE_KEY,
+            )
+
+
+            response_json = fetch_document(
+                collection=SOFTWARE_LICENSE_COLLECTION,
+                document=SOFTWARE_LICENSE_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+            license = response_json["data"][0]["softwarelicense"]
+            license["is_active"] = False
+
+
+            # # Update license on remote server
+            response_json = update_document(
+                collection=SOFTWARE_LICENSE_COLLECTION,
+                document=SOFTWARE_LICENSE_DOCUMENT_NAME,
+                key=SOFTWARE_LICENSE_KEY,
+                new_value=license,
+                event_id=event_id
+            )
+
+            if response_json["isSuccess"]:
+                return Response(
+                    {
+                        "event_id": event_id,
+                        "isSuccess": True
+                    },
+                    status=200
+                )
+
+        # The code below will
+        # execute when error occur
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}",
+                "isSuccess": False
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

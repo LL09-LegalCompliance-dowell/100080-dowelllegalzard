@@ -485,6 +485,20 @@ The API will return three error types when requests fail:
 }
 ```
 
+
+
+#### DELETE /api/licenses/{event_id}/
+- `curl http://127.0.0.1:8000/api/licenses/FB1010000000167015140150633419/ -X DELETE -H "Content-Type: application/json"`
+
+```
+{
+    "event_id": "FB1010000000167015140150633419",
+    "isSuccess": true
+}
+```
+
+
+
 #### GET /api/licenses/?search_term=mit&action_type=search
 
 - General:
@@ -2040,6 +2054,21 @@ The API will return three error types when requests fail:
 ```
 
 
+#### DELETE /api/comparisons/{event_id}/
+
+- `curl http://127.0.0.1:8000/api/comparisons/FB1010000000166909595159447637/ -X DELETE -H "Content-Type: application/json`
+
+
+```
+{
+    "isSuccess": true,
+    "event_id": "FB1010000000166909595159447637"
+}
+```
+
+
+
+
 ### Agreement Compliance Sample
 
 -   https://100080.pythonanywhere.com/media/doc/cookies-policy.pdf
@@ -2058,3 +2087,5 @@ The API will return three error types when requests fail:
 -   https://100080.pythonanywhere.com/media/doc/terms-of-use-licensing-app.pdf
 -   https://100080.pythonanywhere.com/media/doc/website-security-policy.pdf
 -   https://100080.pythonanywhere.com/media/doc/website-terms-of-use.pdf
+
+

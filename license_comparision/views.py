@@ -9,12 +9,14 @@ from storage.upload import upload_img
 import uuid
 from utils.dowell import (
     fetch_document,
+    update_document,
     format_id,
     SOFTWARE_LICENSE_COLLECTION,
     ATTRIBUTE_COLLECTION,
 
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
+    ATTRIBUTE_MAIN_KEY,
     
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
@@ -80,6 +82,7 @@ class ComparisionList(APIView):
             license_1_logo_url = "#"
             if "logo_detail" in license_1:
                 license_1_logo_url = license_1["logo_detail"]["url"]
+
 
             license_2_logo_url = "#"
             if "logo_detail" in license_1:
@@ -279,7 +282,7 @@ class ComparisionDetail(APIView):
                 if "logo_detail" in license_1:
                     license_2_logo_url = license_2["logo_detail"]["url"]
 
-                print(str(int(request_data['percentage_of_compatibility'])))
+                
                 license_comparison['identifier'] = f"{license_1_event_id}-{license_2_event_id},{license_2_event_id}-{license_1_event_id}"
                 license_comparison['license_1_logo_url'] = license_1_logo_url
                 license_comparison['license_2_logo_url'] = license_2_logo_url
@@ -324,3 +327,55 @@ class ComparisionDetail(APIView):
             },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+
+    def delete(self, request, event_id, format=None):
+        try:
+
+            request_data = request.data
+
+            action_type = ""
+            if "action_type" in request_data:
+                action_type = request_data["action_type"]
+
+            # Get license comparision 
+            response_json = fetch_document(
+                collection=ATTRIBUTE_COLLECTION,
+                document=ATTRIBUTE_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+            
+            license_comparison = response_json["data"][0]["attributes"]
+
+            
+            # Update comparision
+            license_comparison['is_active'] = False
+            license_comparison['identifier'] = ""
+            response_json = update_document(
+                collection=ATTRIBUTE_COLLECTION,
+                document=ATTRIBUTE_DOCUMENT_NAME,
+                key=ATTRIBUTE_MAIN_KEY,
+                new_value=license_comparison,
+                event_id=event_id
+            )
+
+            return Response(
+                {
+                "isSuccess": response_json["isSuccess"],
+                "event_id": event_id
+                },
+                status=200
+            )
+
+                
+        # The code below will
+        # execute when error occur
+        except Exception as e:
+            print(f"{e}")
+            return Response({
+                "error_msg": f"{e}"
+            },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
