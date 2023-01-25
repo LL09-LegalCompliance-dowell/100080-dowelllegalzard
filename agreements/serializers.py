@@ -78,9 +78,9 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     within_what_period_must_software_be_delivered = serializers.IntegerField(default=1)
     within_what_period_must_software_be_delivered_unit = serializers.CharField(max_length=50)
 
-    what_did_licensor_supply_to_the_licensee = serializers.CharField(
-        max_length=150)
-    purpose_of_supply = serializers.CharField(max_length=255)
+    what_did_licensor_supply_to_the_licensee = serializers.CharField(max_length=150)
+
+    purpose_by_reference_to_which_sub_licensing_is_permitted = serializers.CharField(max_length=255)
     when_should_invoice_be_issued = serializers.CharField(max_length=255)
     invoicing_date = serializers.DateField()
 
@@ -91,10 +91,14 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     invoice_payment_method = serializers.CharField(max_length=100)
     interest_rate_apply_to_late_payment = serializers.DecimalField(
         max_digits=18, decimal_places=2, default=0)
-    optional_element_warranty = serializers.CharField(max_length=255)
+    
+    optional_element = serializers.CharField(max_length=500)
+
     is_warranty_relate_to_a_specific_period = serializers.BooleanField(
         default=False)
-    period_apply_to_warranty = serializers.CharField(max_length=50)
+    
+    period_apply_to_warranty = serializers.IntegerField(default=1)
+    period_apply_to_warranty_unit = serializers.CharField(max_length=50)
     scope_of_warranty = serializers.CharField(max_length=255)
     jurisdictional_coverage_of_warranty = serializers.CharField(max_length=255)
     circumstances_in_which_licensor_may_exercise_its_rights = serializers.CharField(
@@ -105,7 +109,11 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         default=False)
     limitations_on_right_to_modify_specification = serializers.CharField(
         max_length=255)
-    termination_notice_period_apply = serializers.BooleanField(default=False)
+    
+
+    termination_notice_period_apply = serializers.IntegerField(default=1)
+    termination_notice_period_apply_unit = serializers.CharField(max_length=50)
+
     is_termination_period_expirable = serializers.BooleanField(default=False)
     relevant_termination_period = serializers.CharField(max_length=50)
     circumstances_in_which_a_party_may_terminate_for_breach = serializers.CharField(
