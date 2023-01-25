@@ -18,7 +18,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     """
     license_name = serializers.CharField(max_length=100)
     license_tags = serializers.ListField(default=[])
-    version = serializers.CharField(max_length=15)
+    version = serializers.CharField(max_length=100)
     type_of_license = serializers.CharField(max_length=150)
     short_description = serializers.CharField(
         max_length=2000, default="", allow_blank=True, required=False)
