@@ -177,8 +177,20 @@ class AgreementComplianceList(APIView):
         request_data["date_of_execution_of_document"] = date.fromisoformat(
             request_data["date_of_execution_of_document"])
 
+        request_data["contract_effective_date"] = date.fromisoformat(
+            request_data["contract_effective_date"])
+
+        request_data["contract_termination_date"] = date.fromisoformat(
+            request_data["contract_termination_date"])
+
+        request_data["invoicing_date"] = date.fromisoformat(
+            request_data["invoicing_date"])
+
         request_data["effective_date_for_invoice_payment"] = date.fromisoformat(
             request_data["effective_date_for_invoice_payment"])
+
+        request_data["relevant_termination_period_date"] = date.fromisoformat(
+            request_data["relevant_termination_period_date"])
 
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
@@ -192,15 +204,6 @@ class AgreementComplianceList(APIView):
         request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
             request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
-        request_data["invoicing_date"] = date.fromisoformat(
-            request_data["invoicing_date"])
-
-        request_data["contract_termination_date"] = date.fromisoformat(
-            request_data["contract_termination_date"])
-
-        request_data["contract_effective_date"] = date.fromisoformat(
-            request_data["contract_effective_date"])
-
 
         # Create serializer object
         serializer = SoftwareLicensePolicySerializer(data=request_data)
@@ -213,7 +216,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -242,7 +245,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -280,7 +283,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -306,7 +309,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -331,7 +334,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -356,7 +359,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -385,7 +388,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -411,7 +414,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -437,7 +440,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -463,7 +466,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -489,7 +492,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -765,8 +768,20 @@ class AgreementComplianceDetail(APIView):
         request_data["date_of_execution_of_document"] = date.fromisoformat(
             request_data["date_of_execution_of_document"])
 
+        request_data["contract_effective_date"] = date.fromisoformat(
+            request_data["contract_effective_date"])
+
+        request_data["contract_termination_date"] = date.fromisoformat(
+            request_data["contract_termination_date"])
+
+        request_data["invoicing_date"] = date.fromisoformat(
+            request_data["invoicing_date"])
+
         request_data["effective_date_for_invoice_payment"] = date.fromisoformat(
             request_data["effective_date_for_invoice_payment"])
+
+        request_data["relevant_termination_period_date"] = date.fromisoformat(
+            request_data["relevant_termination_period_date"])
 
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
@@ -780,14 +795,6 @@ class AgreementComplianceDetail(APIView):
         request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
             request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
-        request_data["invoicing_date"] = date.fromisoformat(
-            request_data["invoicing_date"])
-
-        request_data["contract_termination_date"] = date.fromisoformat(
-            request_data["contract_termination_date"])
-
-        request_data["contract_effective_date"] = date.fromisoformat(
-            request_data["contract_effective_date"])
 
 
         # Update and Commit data into database
@@ -802,7 +809,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -834,7 +841,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -875,7 +882,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -903,7 +910,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -931,7 +938,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -959,7 +966,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -989,7 +996,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -1017,7 +1024,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -1045,7 +1052,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -1073,7 +1080,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -1101,7 +1108,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
