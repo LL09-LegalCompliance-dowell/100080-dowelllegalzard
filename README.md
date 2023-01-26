@@ -1071,24 +1071,27 @@ The API will return three error types when requests fail:
     "agreement_compliance_type": "cookie-policy",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
-    "website_has_a_data_protection_officer": true,
-    "which_medium_can_website_users_raise_question_regarding_cookies": ["Via Email"],
-    "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": true,
     "will_the_cookie_store_personal_information": true,
-    "type_of_personal_information_store_by_cookie": ["Address", "Contact Details"],
-    "other_type_of_personal_information_store_by_cookie": "India",
-    "website_privacy_document_hold": [
+    "type_of_personal_information_store_by_cookies": ["Email", "Phone"],
+    "other_type_of_personal_information_store_by_cookies": "Nil",
+    "does_your_website_or_app_use_essential_cookies": true,
+    "does_your_website_or_app_use_any_perfomance_and_functionality_cookies": false,
+    "does_your_website_or_app_use_marketing_social_media_cookies": true,
+    "does_your_website_or_app_use_third_party_cookies": true,
+    "personal_information_store_by_third_party_cookies": ["Email", "Phone", "IP Address"],
+    "does_your_website_or_app_show_ads": true,
+    "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": true,
+    "which_medium_can_website_users_raise_question_regarding_cookies": [
         {
-            "name": "Privacy Policy",
-            "location": "sample.com/privacy"
+            "name": "Email",
+            "location": "email@example.com"
         },
         {
-            "name": "Terms",
-            "location": "sample.com/terms-and-condition"
+            "name": "Phone",
+            "location": "020002255"
         }
     ],
     "provide_situations_where_cookies_may_be_collected_without_consent_of_users": "",
-    "detail_about_information_third_party_cookies_will_be_collecting_users": "info",
     "name_of_third_party_cookies": "bitmake",
     "owner_of_third_party_cookies": "Sample 2"
 
