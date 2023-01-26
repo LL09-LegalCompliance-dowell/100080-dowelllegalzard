@@ -24,83 +24,64 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     party_1_postal_address = serializers.CharField(max_length=255)
     party_1_jurisdiction_incorporated = serializers.CharField(max_length=150)
     party_1_registration_number = serializers.CharField(max_length=50)
-
     party_1_registrar_office_address_1 = serializers.CharField(max_length=255)
-    party_1_registrar_office_address_2 = serializers.CharField(max_length=255)
-    party_1_registrar_office_address_3 = serializers.CharField(max_length=255)
-
-
+    party_1_registrar_office_address_2 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
+    party_1_registrar_office_address_3 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     party_1_principal_place_of_business = serializers.CharField(max_length=255)
     party_2_entity_type = serializers.CharField(max_length=50)
     party_2_full_name = serializers.CharField(max_length=150)
     party_2_postal_address = serializers.CharField(max_length=255)
     party_2_jurisdiction_incorporated = serializers.CharField(max_length=150)
     party_2_registration_number = serializers.CharField(max_length=50)
-
     party_2_registrar_office_address_1 = serializers.CharField(max_length=255)
-    party_2_registrar_office_address_2 = serializers.CharField(max_length=255)
-    party_2_registrar_office_address_3 = serializers.CharField(max_length=255)
-
+    party_2_registrar_office_address_2 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
+    party_2_registrar_office_address_3 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     party_2_principal_place_of_business = serializers.CharField(max_length=255)
     charges_payable = serializers.DecimalField(
         max_digits=18, decimal_places=2, default=0)
-    software_document_identification = serializers.CharField(max_length=255)
+    software_document_identification = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
     contract_effective_date = serializers.DateField()
-
     minimum_terms_apply = serializers.IntegerField(default=1)
     minimum_terms_apply_unit = serializers.CharField(max_length=50)
-
     is_software_form_specified = serializers.BooleanField(default=False)
     software_form = serializers.CharField(max_length=100)
     is_non_material_defects_count_as_software_defects = serializers.BooleanField(
         default=False)
     ways_defect_affect_software = serializers.CharField(max_length=255)
     is_set_of_exclusions_included = serializers.BooleanField(default=False)
-    exclusions_apply = serializers.CharField(max_length=255)
+    exclusions_apply = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     software_specification = serializers.CharField(max_length=255)
     can_software_specification_be_varied_by_the_parties = serializers.BooleanField(
         default=False)
-
-    terms_of_contract_duration = serializers.IntegerField(default=1)
+    terms_of_contract_duration = serializers.IntegerField(default=0)
     terms_of_contract_duration_unit = serializers.CharField(max_length=50)
-
     is_inline_copy_right_remove = serializers.BooleanField(default=False)
     is_term_of_contract_indefinite = serializers.BooleanField(default=False)
     contract_termination_date = serializers.DateField()
     events_that_will_cause_contract_to_be_terminated = serializers.CharField(
         max_length=255)
-
     number_of_license_to_be_deliver = serializers.IntegerField(default=1)
     number_of_license_to_be_deliver_unit = serializers.CharField(max_length=50)
-
     software_delivery_channel = serializers.CharField(max_length=100)
-
     within_what_period_must_software_be_delivered = serializers.IntegerField(default=1)
     within_what_period_must_software_be_delivered_unit = serializers.CharField(max_length=50)
-
     what_did_licensor_supply_to_the_licensee = serializers.CharField(max_length=150)
-
     purpose_by_reference_to_which_sub_licensing_is_permitted = serializers.CharField(max_length=255)
     when_should_invoice_be_issued = serializers.CharField(max_length=255)
     invoicing_date = serializers.DateField()
-
     period_for_payment_of_invoices = serializers.IntegerField(default=1)
     period_for_payment_of_invoices_unit = serializers.CharField(max_length=50)
-
     effective_date_for_invoice_payment = serializers.DateField()
     invoice_payment_method = serializers.CharField(max_length=100)
     interest_rate_apply_to_late_payment = serializers.DecimalField(
         max_digits=18, decimal_places=2, default=0)
-    
-    optional_element = serializers.CharField(max_length=500)
-
+    optional_element = serializers.CharField(max_length=500,allow_blank=True, required=False, default="")
     is_warranty_relate_to_a_specific_period = serializers.BooleanField(
         default=False)
-    
-    period_apply_to_warranty = serializers.IntegerField(default=1)
-    period_apply_to_warranty_unit = serializers.CharField(max_length=50)
-    scope_of_warranty = serializers.CharField(max_length=255)
+    scope_of_warranty = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     jurisdictional_coverage_of_warranty = serializers.CharField(max_length=255)
+    period_apply_to_warranty = serializers.IntegerField(default=0)
+    period_apply_to_warranty_unit = serializers.CharField(max_length=50)
     circumstances_in_which_licensor_may_exercise_its_rights = serializers.CharField(
         max_length=255)
     should_there_be_an_express_requirement_for_licensor_to_act_reasonably = serializers.BooleanField(
@@ -109,40 +90,53 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         default=False)
     limitations_on_right_to_modify_specification = serializers.CharField(
         max_length=255)
-    
-
     termination_notice_period_apply = serializers.IntegerField(default=1)
     termination_notice_period_apply_unit = serializers.CharField(max_length=50)
-
     is_termination_period_expirable = serializers.BooleanField(default=False)
-    relevant_termination_period = serializers.CharField(max_length=50)
+    relevant_termination_period = serializers.IntegerField(default=0)
+    relevant_termination_period_unit = serializers.CharField(max_length=50)
+    relevant_termination_period_date = serializers.DateField()
     circumstances_in_which_a_party_may_terminate_for_breach = serializers.CharField(
         max_length=255)
-    time_frame_for_the_notice_period = serializers.CharField(max_length=50)
-    
-    contact_details_to_sent_contractual_notices_to_the_licensor = serializers.CharField(
+    time_frame_for_the_notice_period = serializers.IntegerField(default=0)
+    time_frame_for_the_notice_period_unit = serializers.CharField(max_length=50)
+    sent_contractual_notices_to_the_licensor_name = serializers.CharField(
         max_length=255)
-    contact_details_to_sent_contractual_notices_to_the_licensee = serializers.CharField(
+    sent_contractual_notices_to_the_licensor_address_1 = serializers.CharField(
         max_length=255)
+    sent_contractual_notices_to_the_licensor_address_2 = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensor_address_3 = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensor_contact_details = serializers.CharField(
+        max_length=500)
+    sent_contractual_notices_to_the_licensee_name = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensee_address_1 = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensee_address_2 = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensee_address_3 = serializers.CharField(
+        max_length=255)
+    sent_contractual_notices_to_the_licensee_contact_details = serializers.CharField(
+        max_length=500)
     law_governs_document = serializers.CharField(max_length=255)
     court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document = serializers.CharField(
         max_length=255)
-    will_the_contract_signed_by_party_1_contracting_entity = serializers.BooleanField(
-        default=False)
+    which_entity_will_sign_contract_on_behalf_of_party_1 = serializers.CharField(max_length=255)
     party_1_signatory_scanned_copy_detail = serializers.DictField()
     full_name_of_party_1_signatory = serializers.CharField(max_length=150)
     party_1_date_of_signing_contract = serializers.DateField()
     full_name_of_the_person_sign_on_behalf_of_party_1 = serializers.CharField(max_length=150)
     date_contract_was_sign_on_behalf_of_party_1 = serializers.DateField()
-    will_the_contract_signed_by_pary_2_contracting_entity = serializers.BooleanField(
-        default=False)
+    which_entity_will_sign_contract_on_behalf_of_party_2 = serializers.CharField(max_length=255)    
     party_2_signatory_scanned_copy_detail = serializers.DictField()
     full_name_of_party_2_signatory = serializers.CharField(max_length=150)
     party_2_date_of_signing_contract = serializers.DateField()
     full_name_of_the_person_sign_on_behalf_of_party_2 = serializers.CharField(max_length=150)
     date_contract_was_sign_on_behalf_of_party_2 = serializers.DateField()
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500,allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -153,8 +147,20 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
 
+        validated_data["contract_effective_date"]\
+            = validated_data["contract_effective_date"].isoformat()
+
+        validated_data["contract_termination_date"]\
+            = validated_data["contract_termination_date"].isoformat()
+
+        validated_data["invoicing_date"]\
+            = validated_data["invoicing_date"].isoformat()
+
         validated_data["effective_date_for_invoice_payment"]\
             = validated_data["effective_date_for_invoice_payment"].isoformat()
+
+        validated_data["relevant_termination_period_date"]\
+            = validated_data["relevant_termination_period_date"].isoformat()
 
         validated_data["party_1_date_of_signing_contract"]\
             = validated_data["party_1_date_of_signing_contract"].isoformat()
@@ -168,22 +174,11 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["date_contract_was_sign_on_behalf_of_party_2"]\
             = validated_data["date_contract_was_sign_on_behalf_of_party_2"].isoformat()
 
-        validated_data["invoicing_date"]\
-            = validated_data["invoicing_date"].isoformat()
-
-        validated_data["contract_termination_date"]\
-            = validated_data["contract_termination_date"].isoformat()
-
-        validated_data["contract_effective_date"]\
-            = validated_data["contract_effective_date"].isoformat()
-
         validated_data["charges_payable"] = float(
             validated_data["charges_payable"])
 
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
-        
-        print(validated_data)
 
 
 
@@ -218,8 +213,20 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
 
+        validated_data["contract_effective_date"]\
+            = validated_data["contract_effective_date"].isoformat()
+
+        validated_data["contract_termination_date"]\
+            = validated_data["contract_termination_date"].isoformat()
+
+        validated_data["invoicing_date"]\
+            = validated_data["invoicing_date"].isoformat()
+
         validated_data["effective_date_for_invoice_payment"]\
             = validated_data["effective_date_for_invoice_payment"].isoformat()
+
+        validated_data["relevant_termination_period_date"]\
+            = validated_data["relevant_termination_period_date"].isoformat()
 
         validated_data["party_1_date_of_signing_contract"]\
             = validated_data["party_1_date_of_signing_contract"].isoformat()
@@ -233,21 +240,11 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         validated_data["date_contract_was_sign_on_behalf_of_party_2"]\
             = validated_data["date_contract_was_sign_on_behalf_of_party_2"].isoformat()
 
-        validated_data["invoicing_date"]\
-            = validated_data["invoicing_date"].isoformat()
-
-        validated_data["contract_termination_date"]\
-            = validated_data["contract_termination_date"].isoformat()
-
-        validated_data["contract_effective_date"]\
-            = validated_data["contract_effective_date"].isoformat()
-
         validated_data["charges_payable"] = float(
             validated_data["charges_payable"])
 
         validated_data["interest_rate_apply_to_late_payment"] = float(
             validated_data["interest_rate_apply_to_late_payment"])
-
 
 
         # Update software agreement on remote server
@@ -285,7 +282,7 @@ class EulaSerializer(serializers.Serializer):
     party_details_address_line_2 = serializers.CharField(max_length=300)
     party_details_address_line_3 = serializers.CharField(max_length=300)
     party_details_country = serializers.CharField(max_length=150)
-    party_details_state = serializers.CharField(max_length=150)
+    party_details_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     party_details_zipcode = serializers.CharField(max_length=150)
     party_details_phone = serializers.CharField(max_length=150)
     party_details_email = serializers.CharField(max_length=150)
@@ -881,15 +878,18 @@ class CookiesPolicySerializer(serializers.Serializer):
     agreement_compliance_type = serializers.CharField(max_length=200)
     date_of_execution_of_document = serializers.DateField()
     party_full_name = serializers.CharField(max_length=150)
-    website_has_a_data_protection_officer = serializers.BooleanField(default=False)
-    which_medium_can_website_users_raise_question_regarding_cookies = serializers.ListField()
-    website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie = serializers.BooleanField(default=False)
     will_the_cookie_store_personal_information = serializers.BooleanField(default=False)
-    type_of_personal_information_store_by_cookie = serializers.ListField()
-    other_type_of_personal_information_store_by_cookie = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
-    website_privacy_document_hold = serializers.ListField()
+    type_of_personal_information_store_by_cookies = serializers.ListField()
+    other_type_of_personal_information_store_by_cookies = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
+    does_your_website_or_app_use_essential_cookies = serializers.BooleanField(default=False)
+    does_your_website_or_app_use_any_perfomance_and_functionality_cookies = serializers.BooleanField(default=False)
+    does_your_website_or_app_use_marketing_social_media_cookies  = serializers.BooleanField(default=False)
+    does_your_website_or_app_use_third_party_cookies = serializers.BooleanField(default=False)
+    personal_information_store_by_third_party_cookies = serializers.ListField()
+    does_your_website_or_app_show_ads = serializers.BooleanField(default=False)
+    website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie = serializers.BooleanField(default=False)
+    which_medium_can_website_users_raise_question_regarding_cookies = serializers.ListField()
     provide_situations_where_cookies_may_be_collected_without_consent_of_users = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
-    detail_about_information_third_party_cookies_will_be_collecting_users = serializers.CharField(max_length=20)
     name_of_third_party_cookies= serializers.CharField(max_length=100)
     owner_of_third_party_cookies= serializers.CharField(max_length=100)
     event_id = serializers.CharField(max_length=250)
