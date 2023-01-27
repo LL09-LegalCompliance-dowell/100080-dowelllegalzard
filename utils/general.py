@@ -13,7 +13,8 @@ agreement_compliance_templates = {
     "cookie-policy": "cookie-policy.html",
     "return-and-refund": "return-and-refund.html",
     "app-disclaimer": "app-disclaimer.html",
-    "app-privacy-policy": "app-privacy-policy.html"
+    "app-privacy-policy": "app-privacy-policy.html",
+    "nda": "non-disclosure-agreement.html"
 }
 
 
