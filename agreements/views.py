@@ -32,7 +32,8 @@ from agreements.serializers import (
     CookiesPolicySerializer,
     ReturnAndRefundSerializer,
     AppDisclaimerSerializer,
-    AppPrivacyPolicySerializer
+    AppPrivacyPolicySerializer,
+    NDASerializer
     
     )
 
@@ -150,6 +151,11 @@ class AgreementComplianceList(APIView):
 
             elif request_data['agreement_compliance_type'] == "app-privacy-policy":
                 response_json, status_code = self.create_app_privacy_policy(
+                    request_data,
+                    response_json,
+                    status_code)
+            elif request_data['agreement_compliance_type'] == "nda":
+                response_json, status_code = self.create_nda(
                     request_data,
                     response_json,
                     status_code)
@@ -500,6 +506,33 @@ class AgreementComplianceList(APIView):
         # return result
         return response_json, status_code
 
+    def create_nda(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["what_will_be_the_date_for_termination_of_this_nda"] = date.fromisoformat(
+            request_data["what_will_be_the_date_for_termination_of_this_nda"])
+
+        # Create serializer object
+        serializer = NDASerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
 
 
 
@@ -741,6 +774,12 @@ class AgreementComplianceDetail(APIView):
                     response_json= response_json,
                     status_code= status_code)
 
+            elif request_data['agreement_compliance_type'] == "nda":
+                response_json, status_code = self.update_nda(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -1098,6 +1137,35 @@ class AgreementComplianceDetail(APIView):
 
         # Update and Commit data into database
         serializer = AppPrivacyPolicySerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_nda(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["what_will_be_the_date_for_termination_of_this_nda"] = date.fromisoformat(
+            request_data["what_will_be_the_date_for_termination_of_this_nda"])
+
+        # Update and Commit data into database
+        serializer = NDASerializer(
             event_id, data=request_data)
 
         if serializer.is_valid():

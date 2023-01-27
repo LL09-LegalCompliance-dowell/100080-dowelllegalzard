@@ -1076,21 +1076,17 @@ The API will return three error types when requests fail:
     "other_type_of_personal_information_store_by_cookies": "Nil",
     "does_your_website_or_app_use_essential_cookies": true,
     "does_your_website_or_app_use_any_perfomance_and_functionality_cookies": false,
-    "does_your_website_or_app_use_marketing_social_media_cookies": true,
+    "does_your_website_or_app_use_marketing_cookies": true,
+    "does_your_website_or_app_use_analytic_and_customization_cookies": true,
+    "does_your_website_or_app_use_social_media_cookies": true,
     "does_your_website_or_app_use_third_party_cookies": true,
     "personal_information_store_by_third_party_cookies": ["Email", "Phone", "IP Address"],
     "does_your_website_or_app_show_ads": true,
     "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": true,
-    "which_medium_can_website_users_raise_question_regarding_cookies": [
-        {
-            "name": "Email",
-            "location": "email@example.com"
-        },
-        {
-            "name": "Phone",
-            "location": "020002255"
-        }
-    ],
+    "which_medium_can_website_users_raise_question_regarding_cookies": {
+        "email": "email@example.com",
+        "website": "www.example.com"
+    },
     "provide_situations_where_cookies_may_be_collected_without_consent_of_users": "",
     "name_of_third_party_cookies": "bitmake",
     "owner_of_third_party_cookies": "Sample 2"
@@ -1123,6 +1119,49 @@ The API will return three error types when requests fail:
     "reimbursement_of_cancellation_money_currency": "USD",
     "website_contact_email": "USD"
 
+}
+```
+
+### Non Disclosure Agreement
+```
+{
+    "agreement_compliance_type": "nda",
+    "party_1_full_name": "Party 1 Name",
+    "party_1_address_line_1": "India Street",
+    "party_1_address_line_2": "",
+    "party_1_address_line_3": "",
+    "party_1_country": "India",
+    "party_1_city": "Mbadu",
+    "party_1_state": "Mbadu",
+    "party_1_zipcode": "4545",
+    "party_2_full_name": "Party 1 Name",
+    "party_2_address_line_1": "India Street",
+    "party_2_address_line_2": "",
+    "party_2_address_line_3": "",
+    "party_2_country": "India",
+    "party_2_city": "Mbadu",
+    "party_2_state": "Mbadu",
+    "party_2_zipcode": "4545",
+    "what_shall_be_the_of_term_this_agrement": 0,
+    "what_shall_be_the_of_term_this_agrement_unit": "Months",
+    "what_shall_be_the_governing_this_law_this_agrement": "India Law",
+    "date_of_execution_of_document": "2025-10-20",
+    "number_of_witness": 2,
+    "witness_1_full_name": "Witness name",
+    "witness_1_address_line_1": "Witness Street",
+    "witness_1_address_line_2": "",
+    "witness_1_address_line_3": "",
+    "witness_2_full_name": "Witness name",
+    "witness_2_address_line_1": "Witness Street",
+    "witness_2_address_line_2": "",
+    "witness_2_address_line_3": "",
+    "will_the_obligations_of_confidentiality_subsist_after_expiry": true,
+    "what_will_be_the_date_for_termination_of_this_nda": "2025-10-20",
+    "will_the_party_be_allow_to_enter_into_similar_arragements_with_other_party": true,
+    "the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party": 5,
+    "the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party_unit": "Months",
+    "how_will_the_agreement_be_terminated": "Notice",
+    "other_medium_agreement_can_be_terminated": ""
 }
 ```
 
