@@ -1166,6 +1166,20 @@ The API will return three error types when requests fail:
 ```
 
 
+### App Privacy Policy
+```
+{
+    "agreement_compliance_type": "app-privacy-policy",
+    "last_update": "2025-10-20",
+    "company_name": "Sample Ltd",
+    "app_name": "App 1",
+    "app_url": "http://app.com/app",
+    "website_contact_page_url": "http://website.com/contact",
+    "website_contact_email": "app@website.com"
+}
+```
+
+
 
 
 

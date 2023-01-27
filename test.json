@@ -1,9 +1,9 @@
 {
-    "agreement_compliance_type": "nda",
-    "party_1_full_name": "Party 1 Name",
-    "party_1_address_line_1": "India Street",
-    "party_1_address_line_2": "",
-    "party_1_address_line_3": "",
-    "party_1_country": "India",
-    "party_1_city": "Mbadu"
+    "agreement_compliance_type": "app-privacy-policy",
+    "last_update": "2025-10-20",
+    "company_name": "Sample Ltd",
+    "app_name": "App 1",
+    "app_url": "http://app.com/app",
+    "website_contact_page_url": "http://website.com/contact",
+    "website_contact_email": "app@website.com"
 }
