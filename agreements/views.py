@@ -33,7 +33,9 @@ from agreements.serializers import (
     ReturnAndRefundSerializer,
     AppDisclaimerSerializer,
     AppPrivacyPolicySerializer,
-    NDASerializer
+    NDASerializer,
+    StatementOfWorkSerializer,
+    DisclaimerForWebsiteSerializer
     
     )
 
@@ -154,8 +156,21 @@ class AgreementComplianceList(APIView):
                     request_data,
                     response_json,
                     status_code)
+            
             elif request_data['agreement_compliance_type'] == "nda":
                 response_json, status_code = self.create_nda(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+                response_json, status_code = self.create_discliamer_for_website(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "statement-of-work":
+                response_json, status_code = self.create_statement_of_work(
                     request_data,
                     response_json,
                     status_code)
@@ -533,6 +548,68 @@ class AgreementComplianceList(APIView):
         # return result
         return response_json, status_code
 
+    def create_statement_of_work(self, request_data, response_json, status_code):
+
+        from datetime import date, datetime
+
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
+
+        request_data["when_should_the_invoices_be_submitted"] = date.fromisoformat(
+            request_data["when_should_the_invoices_be_submitted"])
+
+        request_data["when_will_the_invoices_be_payable_by_after_receipt"] = date.fromisoformat(
+            request_data["when_will_the_invoices_be_payable_by_after_receipt"])
+
+        request_data["when_will_the_freelancer_share_his_status_on_deliverables"] = datetime.fromisoformat(
+            request_data["when_will_the_freelancer_share_his_status_on_deliverables"])
+
+        request_data["when_will_the_progress_meetings_occur"] = datetime.fromisoformat(
+            request_data["when_will_the_progress_meetings_occur"])
+
+
+        # Create serializer object
+        serializer = StatementOfWorkSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_discliamer_for_website(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Create serializer object
+        serializer = DisclaimerForWebsiteSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
 
 
 
@@ -776,6 +853,20 @@ class AgreementComplianceDetail(APIView):
 
             elif request_data['agreement_compliance_type'] == "nda":
                 response_json, status_code = self.update_nda(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+                response_json, status_code = self.update_discliamer_for_website(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "statement-of-work":
+                response_json, status_code = self.update_statement_of_work(
                     event_id= event_id,
                     request_data= request_data,
                     response_json= response_json,
@@ -1184,6 +1275,73 @@ class AgreementComplianceDetail(APIView):
         # return result
         return response_json, status_code
 
+
+    def update_statement_of_work(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date, datetime
+
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
+
+        request_data["when_should_the_invoices_be_submitted"] = date.fromisoformat(
+            request_data["when_should_the_invoices_be_submitted"])
+
+        request_data["when_will_the_invoices_be_payable_by_after_receipt"] = date.fromisoformat(
+            request_data["when_will_the_invoices_be_payable_by_after_receipt"])
+
+        request_data["when_will_the_freelancer_share_his_status_on_deliverables"] = datetime.fromisoformat(
+            request_data["when_will_the_freelancer_share_his_status_on_deliverables"])
+
+        request_data["when_will_the_progress_meetings_occur"] = datetime.fromisoformat(
+            request_data["when_will_the_progress_meetings_occur"])
+
+
+        # Update and Commit data into database
+        serializer = StatementOfWorkSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_discliamer_for_website(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Update and Commit data into database
+        serializer = DisclaimerForWebsiteSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
 
 
 

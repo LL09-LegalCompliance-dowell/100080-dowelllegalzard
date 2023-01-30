@@ -14,7 +14,9 @@ agreement_compliance_templates = {
     "return-and-refund": "return-and-refund.html",
     "app-disclaimer": "app-disclaimer.html",
     "app-privacy-policy": "app-privacy-policy.html",
-    "nda": "non-disclosure-agreement.html"
+    "nda": "non-disclosure-agreement.html",
+    "statement-of-work": "statement-of-work.html",
+    "discliamer-for-website": "discliamer-for-website.html"
 }
 
 
