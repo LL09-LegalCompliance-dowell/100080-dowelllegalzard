@@ -33,7 +33,8 @@ from agreements.serializers import (
     ReturnAndRefundSerializer,
     AppDisclaimerSerializer,
     AppPrivacyPolicySerializer,
-    NDASerializer
+    NDASerializer,
+    StatementOfWorkSerializer
     
     )
 

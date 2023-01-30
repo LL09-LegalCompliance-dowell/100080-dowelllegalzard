@@ -1228,14 +1228,7 @@ class NDASerializer(serializers.Serializer):
     date_of_execution_of_document = serializers.DateField()
     number_of_witness = serializers.IntegerField(default=2)
 
-    witness_1_full_name = serializers.CharField(max_length=150)
-    witness_1_address_line_1 = serializers.CharField(max_length=300)
-    witness_1_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    witness_1_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    witness_2_full_name = serializers.CharField(max_length=150)
-    witness_2_address_line_1 = serializers.CharField(max_length=300)
-    witness_2_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    witness_2_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    witnesses = serializers.ListField()
 
     will_the_obligations_of_confidentiality_subsist_after_expiry = serializers.BooleanField(default=False)
     what_will_be_the_date_for_termination_of_this_nda = serializers.DateField()
@@ -1283,6 +1276,116 @@ class NDASerializer(serializers.Serializer):
     def update(self, event_id, validated_data):
         """
         Update and return non disclosure agreement.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
+            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
+
+
+class StatementOfWorkSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        non statement of work
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    party_1_full_name = serializers.CharField(max_length=150)
+    party_1_address_line_1 = serializers.CharField(max_length=300)
+    party_1_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    party_1_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    party_1_country = serializers.CharField(max_length=150)
+    party_1_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+    party_1_zipcode = serializers.CharField(max_length=150)
+    party_1_city = serializers.CharField(max_length=150)
+    party_2_full_name = serializers.CharField(max_length=150)
+    party_2_address_line_1 = serializers.CharField(max_length=300)
+    party_2_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    party_2_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    party_2_country = serializers.CharField(max_length=150)
+    party_2_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+    party_2_zipcode = serializers.CharField(max_length=150)
+    party_2_city = serializers.CharField(max_length=150)
+
+    what_shall_be_the_of_term_this_agrement = serializers.IntegerField(default=0)
+    what_shall_be_the_of_term_this_agrement_unit = serializers.CharField(max_length=150)
+    what_shall_be_the_governing_this_law_this_agrement = serializers.CharField(max_length=150)
+    date_of_execution_of_document = serializers.DateField()
+    number_of_witness = serializers.IntegerField(default=2)
+
+    witnesses = serializers.ListField()
+
+    will_the_obligations_of_confidentiality_subsist_after_expiry = serializers.BooleanField(default=False)
+    what_will_be_the_date_for_termination_of_this_nda = serializers.DateField()
+    will_the_party_be_allow_to_enter_into_similar_arragements_with_other_party = serializers.BooleanField(default=False)
+    the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party = serializers.IntegerField(default=0)
+    the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party_unit = serializers.CharField(max_length=100)
+    how_will_the_agreement_be_terminated= serializers.CharField(max_length=100)
+    other_medium_agreement_can_be_terminated= serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+
+    def create(self, validated_data):
+        """
+        Create and return statement of work.
+        """
+
+        # format date back to iso format
+        validated_data["date_of_execution_of_document"]\
+            = validated_data["date_of_execution_of_document"].isoformat()
+        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
+            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return statement of work.
         """
         status_code = 500
         response_json = {}

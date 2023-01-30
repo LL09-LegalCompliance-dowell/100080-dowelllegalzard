@@ -1,9 +1,51 @@
 {
-    "agreement_compliance_type": "app-privacy-policy",
-    "last_update": "2025-10-20",
-    "company_name": "Sample Ltd",
-    "app_name": "App 1",
-    "app_url": "http://app.com/app",
-    "website_contact_page_url": "http://website.com/contact",
-    "website_contact_email": "app@website.com"
+    "agreement_compliance_type": "nda",
+    "party_1_full_name": "Party 1 Name",
+    "party_1_address_line_1": "India Street",
+    "party_1_address_line_2": "",
+    "party_1_address_line_3": "",
+    "party_1_country": "India",
+    "party_1_city": "Mbadu",
+    "party_1_state": "Mbadu",
+    "party_1_zipcode": "4545",
+    "party_2_full_name": "Party 1 Name",
+    "party_2_address_line_1": "India Street",
+    "party_2_address_line_2": "",
+    "party_2_address_line_3": "",
+    "party_2_country": "India",
+    "party_2_city": "Mbadu",
+    "party_2_state": "Mbadu",
+    "party_2_zipcode": "4545",
+    "what_shall_be_the_of_term_this_agrement": 0,
+    "what_shall_be_the_of_term_this_agrement_unit": "Months",
+    "what_shall_be_the_governing_this_law_this_agrement": "India Law",
+    "date_of_execution_of_document": "2025-10-20",
+    "number_of_witness": 2,
+    "witnesses": [
+        {
+            "full_name": "Witness 1",
+            "address_line_1": "Witness 1 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        },
+        {
+            "full_name": "Witness 2",
+            "address_line_1": "Witness 2 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        },
+        {
+            "full_name": "Witness 3",
+            "address_line_1": "Witness 3 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        }
+    ],
+    "will_the_obligations_of_confidentiality_subsist_after_expiry": true,
+    "what_will_be_the_date_for_termination_of_this_nda": "2025-10-20",
+    "will_the_party_be_allow_to_enter_into_similar_arragements_with_other_party": true,
+    "the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party": 5,
+    "the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party_unit": "Months",
+    "how_will_the_agreement_be_terminated": "Notice",
+    "other_medium_agreement_can_be_terminated": ""
 }

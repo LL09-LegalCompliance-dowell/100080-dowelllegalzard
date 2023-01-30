@@ -1126,7 +1126,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "nda",
-    "party_1_full_name": "Party 1 Name",
+    "party_1_full_name": "Party 1 Name 2",
     "party_1_address_line_1": "India Street",
     "party_1_address_line_2": "",
     "party_1_address_line_3": "",
@@ -1147,14 +1147,26 @@ The API will return three error types when requests fail:
     "what_shall_be_the_governing_this_law_this_agrement": "India Law",
     "date_of_execution_of_document": "2025-10-20",
     "number_of_witness": 2,
-    "witness_1_full_name": "Witness name",
-    "witness_1_address_line_1": "Witness Street",
-    "witness_1_address_line_2": "",
-    "witness_1_address_line_3": "",
-    "witness_2_full_name": "Witness name",
-    "witness_2_address_line_1": "Witness Street",
-    "witness_2_address_line_2": "",
-    "witness_2_address_line_3": "",
+    "witnesses": [
+        {
+            "full_name": "Witness 1",
+            "address_line_1": "Witness 1 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        },
+        {
+            "full_name": "Witness 2",
+            "address_line_1": "Witness 2 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        },
+        {
+            "full_name": "Witness 3",
+            "address_line_1": "Witness 3 Street",
+            "address_line_2": "",
+            "address_line_3": ""
+        }
+    ],
     "will_the_obligations_of_confidentiality_subsist_after_expiry": true,
     "what_will_be_the_date_for_termination_of_this_nda": "2025-10-20",
     "will_the_party_be_allow_to_enter_into_similar_arragements_with_other_party": true,
