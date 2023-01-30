@@ -1308,45 +1308,39 @@ class NDASerializer(serializers.Serializer):
         return response_json, status_code
 
 
-
 class StatementOfWorkSerializer(serializers.Serializer):
     """ Validate attribute, create and update
         non statement of work
     """
 
     agreement_compliance_type = serializers.CharField(max_length=200)
-    party_1_full_name = serializers.CharField(max_length=150)
-    party_1_address_line_1 = serializers.CharField(max_length=300)
-    party_1_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    party_1_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    party_1_country = serializers.CharField(max_length=150)
-    party_1_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
-    party_1_zipcode = serializers.CharField(max_length=150)
-    party_1_city = serializers.CharField(max_length=150)
-    party_2_full_name = serializers.CharField(max_length=150)
-    party_2_address_line_1 = serializers.CharField(max_length=300)
-    party_2_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    party_2_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    party_2_country = serializers.CharField(max_length=150)
-    party_2_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
-    party_2_zipcode = serializers.CharField(max_length=150)
-    party_2_city = serializers.CharField(max_length=150)
+    client_full_name = serializers.CharField(max_length=150)
+    jurisdiction = serializers.CharField(max_length=300)
+    project_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    effective_date = serializers.DateField()
+    freelancers_full_name = serializers.CharField(max_length=150)
+    freelancer_access = serializers.ListField()
+    what_is_the_goal_of_this_project = serializers.CharField(max_length=150)
+    deliverables_expected_in_this_scope_of_work = serializers.CharField(max_length=500)
+    
+    mode_of_communication_between_the_parties = serializers.CharField(max_length=200)
+    when_will_the_freelancer_share_his_status_on_deliverables = serializers.DateTimeField()
+    when_will_the_progress_meetings_occur = serializers.DateTimeField()
 
-    what_shall_be_the_of_term_this_agrement = serializers.IntegerField(default=0)
-    what_shall_be_the_of_term_this_agrement_unit = serializers.CharField(max_length=150)
-    what_shall_be_the_governing_this_law_this_agrement = serializers.CharField(max_length=150)
-    date_of_execution_of_document = serializers.DateField()
-    number_of_witness = serializers.IntegerField(default=2)
+    what_is_the_minimum_time_required_to_complete_this_project = serializers.IntegerField()
+    what_is_the_minimum_time_required_to_complete_this_project_unit = serializers.CharField(max_length=30)
+    what_is_value_in_respect_to_time_required = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    what_is_value_in_respect_to_time_required_currency = serializers.CharField(max_length=30)
+    what_is_the_billing_rate = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    what_is_the_billing_rate_currency = serializers.CharField(max_length=30)
+    what_is_the_charges_for_rush_work = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    what_is_the_charges_for_rush_work_currency = serializers.CharField(max_length=30)
 
-    witnesses = serializers.ListField()
+    whom_should_the_invoices_be_submitted_to = serializers.CharField(max_length=100)
+    whom_should_the_invoices_be_submitted_to_department_name = serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
 
-    will_the_obligations_of_confidentiality_subsist_after_expiry = serializers.BooleanField(default=False)
-    what_will_be_the_date_for_termination_of_this_nda = serializers.DateField()
-    will_the_party_be_allow_to_enter_into_similar_arragements_with_other_party = serializers.BooleanField(default=False)
-    the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party = serializers.IntegerField(default=0)
-    the_period_a_party_is_entitle_to_enter_into_similar_arragement_with_other_party_unit = serializers.CharField(max_length=100)
-    how_will_the_agreement_be_terminated= serializers.CharField(max_length=100)
-    other_medium_agreement_can_be_terminated= serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
+    when_should_the_invoices_be_submitted = serializers.DateField()
+    when_will_the_invoices_be_payable_by_after_receipt = serializers.DateField()
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
 
@@ -1396,6 +1390,83 @@ class StatementOfWorkSerializer(serializers.Serializer):
             = validated_data["date_of_execution_of_document"].isoformat()
         validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
             = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
+
+class DisclaimerForWebsiteSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        disclaimer for website
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    last_update = serializers.DateField()
+    website_name = serializers.CharField(max_length=150)
+    website_url = serializers.URLField()
+    website_contact_email = serializers.EmailField()
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+
+    def create(self, validated_data):
+        """
+        Create and return disclaimer for website.
+        """
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return disclaimer for website.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
 
         # Update software agreement on remote server
         response_json = update_document(
