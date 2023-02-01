@@ -1342,7 +1342,7 @@ class StatementOfWorkSerializer(serializers.Serializer):
     when_should_the_invoices_be_submitted = serializers.DateField()
     when_will_the_invoices_be_payable_by_after_receipt = serializers.DateField()
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
 
 
 
@@ -1352,10 +1352,23 @@ class StatementOfWorkSerializer(serializers.Serializer):
         """
 
         # format date back to iso format
-        validated_data["date_of_execution_of_document"]\
-            = validated_data["date_of_execution_of_document"].isoformat()
-        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
-            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
+        validated_data["when_will_the_freelancer_share_his_status_on_deliverables"]\
+            = validated_data["when_will_the_freelancer_share_his_status_on_deliverables"].isoformat()
+        validated_data["when_will_the_progress_meetings_occur"]\
+            = validated_data["when_will_the_progress_meetings_occur"].isoformat()
+        validated_data["when_should_the_invoices_be_submitted"]\
+            = validated_data["when_should_the_invoices_be_submitted"].isoformat()
+        validated_data["when_will_the_invoices_be_payable_by_after_receipt"]\
+            = validated_data["when_will_the_invoices_be_payable_by_after_receipt"].isoformat()
+
+        validated_data["what_is_value_in_respect_to_time_required"] = float(
+            validated_data["what_is_value_in_respect_to_time_required"])
+        validated_data["what_is_the_billing_rate"] = float(
+            validated_data["what_is_the_billing_rate"])
+        validated_data["what_is_the_charges_for_rush_work"] = float(
+            validated_data["what_is_the_charges_for_rush_work"])
 
         # Create software agreement on remote server
         response_json = save_document(
@@ -1386,10 +1399,23 @@ class StatementOfWorkSerializer(serializers.Serializer):
 
 
         # format date back to iso format
-        validated_data["date_of_execution_of_document"]\
-            = validated_data["date_of_execution_of_document"].isoformat()
-        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
-            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
+        validated_data["when_will_the_freelancer_share_his_status_on_deliverables"]\
+            = validated_data["when_will_the_freelancer_share_his_status_on_deliverables"].isoformat()
+        validated_data["when_will_the_progress_meetings_occur"]\
+            = validated_data["when_will_the_progress_meetings_occur"].isoformat()
+        validated_data["when_should_the_invoices_be_submitted"]\
+            = validated_data["when_should_the_invoices_be_submitted"].isoformat()
+        validated_data["when_will_the_invoices_be_payable_by_after_receipt"]\
+            = validated_data["when_will_the_invoices_be_payable_by_after_receipt"].isoformat()
+
+        validated_data["what_is_value_in_respect_to_time_required"] = float(
+            validated_data["what_is_value_in_respect_to_time_required"])
+        validated_data["what_is_the_billing_rate"] = float(
+            validated_data["what_is_the_billing_rate"])
+        validated_data["what_is_the_charges_for_rush_work"] = float(
+            validated_data["what_is_the_charges_for_rush_work"])
 
         # Update software agreement on remote server
         response_json = update_document(
@@ -1556,7 +1582,7 @@ class EmploymentContractSerializer(serializers.Serializer):
         # format date back to iso format
         validated_data["last_update"]\
             = validated_data["last_update"].isoformat()
-            
+
         validated_data["liability_limit_amount"] = float(
             validated_data["liability_limit_amount"])
 

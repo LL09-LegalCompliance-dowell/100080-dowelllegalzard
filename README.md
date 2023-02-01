@@ -1237,6 +1237,41 @@ The API will return three error types when requests fail:
 }
 ```
 
+### Statement Of Work
+```
+{
+    "agreement_compliance_type": "statement-of-work",
+    "client_full_name": "Client Name",
+    "jurisdiction": "India Law",
+    "project_name": "Project",
+    "effective_date": "2025-10-20",
+    "freelancers_full_name": "Lancer",
+    "freelancer_access": [
+        "Client’s web hosting account (AWS)",
+        "Client’s project management tool (Jira)"
+    ],
+    "what_is_the_goal_of_this_project": "nil",
+    "deliverables_expected_in_this_scope_of_work": "nil",
+    "mode_of_communication_between_the_parties": "nil",
+    "when_will_the_freelancer_share_his_status_on_deliverables": "2025-03-20T14:30:43",
+    "when_will_the_progress_meetings_occur": "2025-03-20T14:30:43",
+    "what_is_the_minimum_time_required_to_complete_this_project": 25,
+    "what_is_the_minimum_time_required_to_complete_this_project_unit": "Days",
+    "what_is_value_in_respect_to_time_required": 542.0,
+    "what_is_value_in_respect_to_time_required_currency": "USD",
+    "what_is_the_billing_rate": 250.0,
+    "what_is_the_billing_rate_currency": "USD",
+    "what_is_the_charges_for_rush_work": 560.0,
+    "what_is_the_charges_for_rush_work_currency": "USD",
+    "whom_should_the_invoices_be_submitted_to": "flash",
+    "whom_should_the_invoices_be_submitted_to_department_name": "nil",
+    "when_should_the_invoices_be_submitted": "2025-10-20",
+    "when_will_the_invoices_be_payable_by_after_receipt": "2025-10-20"
+
+}
+```
+
+
 
 
 
