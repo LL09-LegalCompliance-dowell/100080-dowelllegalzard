@@ -1342,7 +1342,7 @@ class StatementOfWorkSerializer(serializers.Serializer):
     when_should_the_invoices_be_submitted = serializers.DateField()
     when_will_the_invoices_be_payable_by_after_receipt = serializers.DateField()
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
 
 
 
@@ -1352,10 +1352,23 @@ class StatementOfWorkSerializer(serializers.Serializer):
         """
 
         # format date back to iso format
-        validated_data["date_of_execution_of_document"]\
-            = validated_data["date_of_execution_of_document"].isoformat()
-        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
-            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
+        validated_data["when_will_the_freelancer_share_his_status_on_deliverables"]\
+            = validated_data["when_will_the_freelancer_share_his_status_on_deliverables"].isoformat()
+        validated_data["when_will_the_progress_meetings_occur"]\
+            = validated_data["when_will_the_progress_meetings_occur"].isoformat()
+        validated_data["when_should_the_invoices_be_submitted"]\
+            = validated_data["when_should_the_invoices_be_submitted"].isoformat()
+        validated_data["when_will_the_invoices_be_payable_by_after_receipt"]\
+            = validated_data["when_will_the_invoices_be_payable_by_after_receipt"].isoformat()
+
+        validated_data["what_is_value_in_respect_to_time_required"] = float(
+            validated_data["what_is_value_in_respect_to_time_required"])
+        validated_data["what_is_the_billing_rate"] = float(
+            validated_data["what_is_the_billing_rate"])
+        validated_data["what_is_the_charges_for_rush_work"] = float(
+            validated_data["what_is_the_charges_for_rush_work"])
 
         # Create software agreement on remote server
         response_json = save_document(
@@ -1386,10 +1399,23 @@ class StatementOfWorkSerializer(serializers.Serializer):
 
 
         # format date back to iso format
-        validated_data["date_of_execution_of_document"]\
-            = validated_data["date_of_execution_of_document"].isoformat()
-        validated_data["what_will_be_the_date_for_termination_of_this_nda"]\
-            = validated_data["what_will_be_the_date_for_termination_of_this_nda"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
+        validated_data["when_will_the_freelancer_share_his_status_on_deliverables"]\
+            = validated_data["when_will_the_freelancer_share_his_status_on_deliverables"].isoformat()
+        validated_data["when_will_the_progress_meetings_occur"]\
+            = validated_data["when_will_the_progress_meetings_occur"].isoformat()
+        validated_data["when_should_the_invoices_be_submitted"]\
+            = validated_data["when_should_the_invoices_be_submitted"].isoformat()
+        validated_data["when_will_the_invoices_be_payable_by_after_receipt"]\
+            = validated_data["when_will_the_invoices_be_payable_by_after_receipt"].isoformat()
+
+        validated_data["what_is_value_in_respect_to_time_required"] = float(
+            validated_data["what_is_value_in_respect_to_time_required"])
+        validated_data["what_is_the_billing_rate"] = float(
+            validated_data["what_is_the_billing_rate"])
+        validated_data["what_is_the_charges_for_rush_work"] = float(
+            validated_data["what_is_the_charges_for_rush_work"])
 
         # Update software agreement on remote server
         response_json = update_document(
@@ -1487,3 +1513,178 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
             )
 
         return response_json, status_code
+
+
+class EmploymentContractSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        employment contract
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    last_update = serializers.DateField()
+    party_full_name = serializers.CharField(max_length=150)
+    website_url = serializers.URLField()
+    email = serializers.EmailField()
+    email_use_for_acquiring_written_permission = serializers.EmailField()
+    liability_limit_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    liability_limit_amount_currency = serializers.CharField(max_length=30)
+    liability_must_not_exceed_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    liability_must_not_exceed_amount_currency = serializers.CharField(max_length=30)
+    email_for_requesting_access_to_personal_information = serializers.EmailField()
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+    def create(self, validated_data):
+        """
+        Create and return employment contract.
+        """
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        validated_data["liability_limit_amount"] = float(
+            validated_data["liability_limit_amount"])
+
+        validated_data["liability_must_not_exceed_amount"] = float(
+            validated_data["liability_must_not_exceed_amount"])
+
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return employment contract.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        validated_data["liability_limit_amount"] = float(
+            validated_data["liability_limit_amount"])
+
+        validated_data["liability_must_not_exceed_amount"] = float(
+            validated_data["liability_must_not_exceed_amount"])
+
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
+
+class TermsAndConditionSerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        terms and conditions
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    last_update = serializers.DateField()
+    country_name = serializers.CharField(max_length=150)
+    company_name = serializers.CharField(max_length=150)
+    website_or_app_name = serializers.CharField(max_length=150)
+    website_url = serializers.URLField()
+    support_email = serializers.EmailField()
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
+
+
+    def create(self, validated_data):
+        """
+        Create and return terms and conditions.
+        """
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return terms and conditions.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
