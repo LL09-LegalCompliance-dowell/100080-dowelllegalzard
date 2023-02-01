@@ -1204,6 +1204,41 @@ The API will return three error types when requests fail:
 ```
 
 
+### Employment Contract
+```
+{
+    "agreement_compliance_type": "employment-contract",
+    "last_update": "2025-10-20",
+    "party_full_name": "Person 1",
+    "website_url": "http://app.com/app",
+    "email": "example@example.com",
+    "email_use_for_acquiring_written_permission": "permission@example.com",
+    "liability_limit_amount": 120.0,
+    "liability_limit_amount_currency": "USD",
+    "liability_must_not_exceed_amount": 150.00,
+    "liability_must_not_exceed_amount_currency": "USD",
+    "email_for_requesting_access_to_personal_information": "access@example.com"
+
+}
+```
+
+
+### Terms and Conditions
+```
+{
+    "agreement_compliance_type": "terms-and-conditions",
+    "last_update": "2025-10-20",
+    "country_name": "India",
+    "company_name": "Company Name Test",
+    "website_or_app_name": "websiteexample",
+    "website_url": "http://websiteexample.com/",
+    "support_email": "access@example.com"
+
+}
+```
+
+
+
 
 
 

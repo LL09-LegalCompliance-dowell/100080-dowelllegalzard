@@ -16,7 +16,10 @@ agreement_compliance_templates = {
     "app-privacy-policy": "app-privacy-policy.html",
     "nda": "non-disclosure-agreement.html",
     "statement-of-work": "statement-of-work.html",
-    "discliamer-for-website": "discliamer-for-website.html"
+    "discliamer-for-website": "discliamer-for-website.html",
+    "employment-contract": "employment-contract.html",
+    "terms-and-conditions": "terms-and-conditions.html"
+
 }
 
 
