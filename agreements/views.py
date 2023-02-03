@@ -1536,6 +1536,8 @@ def check_and_format_money(data:dict):
     if "liability_must_not_exceed_amount" in data:
         data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
 
+    if "reimbursement_of_cancellation_money" in data:
+        data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
 
     return data
 
