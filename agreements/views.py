@@ -1504,6 +1504,7 @@ def load_public_agreement_compliance(request, event_id:str):
         content = read_template(get_compliance_template_name(agreement['agreement_compliance_type']))
 
         # replace placeholders in the template with actual values
+        agreement = check_and_format_money(agreement)
         content = content.substitute(**agreement)
         # return html context
 
@@ -1522,6 +1523,23 @@ def load_public_agreement_compliance(request, event_id:str):
     except Exception as err:
         print(str(err))
         return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# Convert money
+format_money = lambda value: '{:20,.2f}'.format(float(value))
+
+def check_and_format_money(data:dict):
+    
+    if "liability_limit_amount" in data:
+        data['liability_limit_amount'] = format_money(float(data['liability_limit_amount']))
+
+    if "liability_must_not_exceed_amount" in data:
+        data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
+
+
+    return data
+
+
 
 
 
