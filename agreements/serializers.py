@@ -426,14 +426,6 @@ class MOUSerializer(serializers.Serializer):
     any_other_contracts_entered_between_parties_together_with_this_mou = serializers.BooleanField(default=False)
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
-
-    state_of_laws_used_as_the_governing_laws_2 = serializers.CharField(max_length=100)
-    state_of_laws_to_be_used_as_the_governing_laws_in_case_of_reimbursement_2 = serializers.CharField(max_length=100)
-    number_of_parties_entered_this_mou_2 = serializers.IntegerField(default=0)
-    does_this_mou_restrict_working_with_competitors_for_period_of_time_2 = serializers.BooleanField(default=False)
-    number_of_time_to_restrict_from_working_with_competitors_2 = serializers.IntegerField(default=0)
-    number_of_time_to_restrict_from_working_with_competitors_unit_2 = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
-    date_for_legally_binding_definitive_agreement_2 = serializers.DateField()
     
 
 
@@ -453,9 +445,6 @@ class MOUSerializer(serializers.Serializer):
 
         validated_data["date_for_legally_binding_definitive_agreement"]\
             = validated_data["date_for_legally_binding_definitive_agreement"].isoformat()
-
-        validated_data["date_for_legally_binding_definitive_agreement_2"]\
-            = validated_data["date_for_legally_binding_definitive_agreement_2"].isoformat()
 
 
 
@@ -499,8 +488,6 @@ class MOUSerializer(serializers.Serializer):
         validated_data["date_for_legally_binding_definitive_agreement"]\
             = validated_data["date_for_legally_binding_definitive_agreement"].isoformat()
 
-        validated_data["date_for_legally_binding_definitive_agreement_2"]\
-            = validated_data["date_for_legally_binding_definitive_agreement_2"].isoformat()
 
         # Update software agreement on remote server
         response_json = update_document(

@@ -322,8 +322,6 @@ class AgreementComplianceList(APIView):
         request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
             request_data["date_for_legally_binding_definitive_agreement"])
 
-        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
-            request_data["date_for_legally_binding_definitive_agreement_2"])
 
 
         # Create serializer object
@@ -1091,9 +1089,6 @@ class AgreementComplianceDetail(APIView):
 
         request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
             request_data["date_for_legally_binding_definitive_agreement"])
-
-        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
-            request_data["date_for_legally_binding_definitive_agreement_2"])
 
 
         # Update and Commit data into database

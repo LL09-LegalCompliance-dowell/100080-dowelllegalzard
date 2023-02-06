@@ -977,14 +977,7 @@ The API will return three error types when requests fail:
     "date_for_legally_binding_definitive_agreement": "2025-10-20",
     "should_the_parties_agree_to_refrain_from_negotiating_with_third_parties": false,
     "will_mou_agreement_be_terminated_in_case_of_force_majeure": true,
-    "any_other_contracts_entered_between_parties_together_with_this_mou": true,
-    "state_of_laws_used_as_the_governing_laws_2": "India",
-    "state_of_laws_to_be_used_as_the_governing_laws_in_case_of_reimbursement_2": "India",
-    "number_of_parties_entered_this_mou_2": 5,
-    "does_this_mou_restrict_working_with_competitors_for_period_of_time_2": false,
-    "number_of_time_to_restrict_from_working_with_competitors_2": 5,
-    "number_of_time_to_restrict_from_working_with_competitors_unit_2": "Months",
-    "date_for_legally_binding_definitive_agreement_2": "2025-10-20"
+    "any_other_contracts_entered_between_parties_together_with_this_mou": true
 }
 ```
 
