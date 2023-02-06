@@ -42,6 +42,23 @@ from agreements.serializers import (
     )
 
 
+MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January"
+]
+
+
 def index(request):
     return JsonResponse({
         "message": "Welcome to legalzard"
@@ -1538,8 +1555,32 @@ def check_and_format_money(data:dict):
 
     if "reimbursement_of_cancellation_money" in data:
         data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+    
+    if "non-compete-agreement" == data['agreement_compliance_type']:
+        pass
 
     return data
+
+
+def split_date(data):
+    from datetime import date, datetime
+
+    if "date" in data:
+        # date_c = date.fromisoformat(data["date"])
+        yyyy, mm, dd = data["date"].split()
+        
+
+        data['liability_limit_amount'] = format_money(float(data['liability_limit_amount']))
+
+    if "liability_must_not_exceed_amount" in data:
+        data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
+
+    if "reimbursement_of_cancellation_money" in data:
+        data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+    
+    if "non-compete-agreement" == data['agreement_compliance_type']:
+        pass
+
 
 
 
