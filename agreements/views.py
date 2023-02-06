@@ -27,9 +27,36 @@ from agreements.serializers import (
     MOUSerializer,
     WebsiteTermsOfUseSerializer,
     WebsitePrivacyPolicySerializer,
-    WebsiteSecurityPolicySerializer
+    WebsiteSecurityPolicySerializer,
+    NonCompeteAgreementSerializer,
+    CookiesPolicySerializer,
+    ReturnAndRefundSerializer,
+    AppDisclaimerSerializer,
+    AppPrivacyPolicySerializer,
+    NDASerializer,
+    StatementOfWorkSerializer,
+    DisclaimerForWebsiteSerializer,
+    EmploymentContractSerializer,
+    TermsAndConditionSerializer
     
     )
+
+
+MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January"
+]
 
 
 def index(request):
@@ -119,6 +146,66 @@ class AgreementComplianceList(APIView):
                     response_json,
                     status_code)
 
+            elif request_data['agreement_compliance_type'] == "non-compete-agreement":
+                response_json, status_code = self.create_non_compete_agreement(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "cookie-policy":
+                response_json, status_code = self.create_cookie_policy(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "return-and-refund":
+                response_json, status_code = self.create_return_and_fund(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-disclaimer":
+                response_json, status_code = self.create_app_disclaimer(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-privacy-policy":
+                response_json, status_code = self.create_app_privacy_policy(
+                    request_data,
+                    response_json,
+                    status_code)
+            
+            elif request_data['agreement_compliance_type'] == "nda":
+                response_json, status_code = self.create_nda(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+                response_json, status_code = self.create_discliamer_for_website(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "statement-of-work":
+                response_json, status_code = self.create_statement_of_work(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "employment-contract":
+                response_json, status_code = self.create_employment_contract(
+                    request_data,
+                    response_json,
+                    status_code)
+
+            elif request_data['agreement_compliance_type'] == "terms-and-conditions":
+                response_json, status_code = self.create_terms_and_conditions(
+                    request_data,
+                    response_json,
+                    status_code)
+
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -142,8 +229,20 @@ class AgreementComplianceList(APIView):
         request_data["date_of_execution_of_document"] = date.fromisoformat(
             request_data["date_of_execution_of_document"])
 
+        request_data["contract_effective_date"] = date.fromisoformat(
+            request_data["contract_effective_date"])
+
+        request_data["contract_termination_date"] = date.fromisoformat(
+            request_data["contract_termination_date"])
+
+        request_data["invoicing_date"] = date.fromisoformat(
+            request_data["invoicing_date"])
+
         request_data["effective_date_for_invoice_payment"] = date.fromisoformat(
             request_data["effective_date_for_invoice_payment"])
+
+        request_data["relevant_termination_period_date"] = date.fromisoformat(
+            request_data["relevant_termination_period_date"])
 
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
@@ -157,15 +256,6 @@ class AgreementComplianceList(APIView):
         request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
             request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
-        request_data["invoicing_date"] = date.fromisoformat(
-            request_data["invoicing_date"])
-
-        request_data["contract_termination_date"] = date.fromisoformat(
-            request_data["contract_termination_date"])
-
-        request_data["contract_effective_date"] = date.fromisoformat(
-            request_data["contract_effective_date"])
-
 
         # Create serializer object
         serializer = SoftwareLicensePolicySerializer(data=request_data)
@@ -178,7 +268,7 @@ class AgreementComplianceList(APIView):
             print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -207,7 +297,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -232,8 +322,6 @@ class AgreementComplianceList(APIView):
         request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
             request_data["date_for_legally_binding_definitive_agreement"])
 
-        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
-            request_data["date_for_legally_binding_definitive_agreement_2"])
 
 
         # Create serializer object
@@ -245,7 +333,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -271,7 +359,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -296,7 +384,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -321,7 +409,7 @@ class AgreementComplianceList(APIView):
         else:
             response_json = {
                 "isSuccess": False,
-                "message": f"{serializer.errors}",
+                "message": str(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -330,6 +418,277 @@ class AgreementComplianceList(APIView):
         return response_json, status_code
 
 
+    def create_non_compete_agreement(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["date_of_termination"] = date.fromisoformat(
+            request_data["date_of_termination"])
+
+
+        # Create serializer object
+        serializer = NonCompeteAgreementSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_cookie_policy(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+
+        # Create serializer object
+        serializer = CookiesPolicySerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_return_and_fund(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date"] = date.fromisoformat(
+            request_data["date"])
+
+
+        # Create serializer object
+        serializer = ReturnAndRefundSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_app_disclaimer(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Create serializer object
+        serializer = AppDisclaimerSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_app_privacy_policy(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Create serializer object
+        serializer = AppPrivacyPolicySerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_nda(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["what_will_be_the_date_for_termination_of_this_nda"] = date.fromisoformat(
+            request_data["what_will_be_the_date_for_termination_of_this_nda"])
+
+        # Create serializer object
+        serializer = NDASerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_statement_of_work(self, request_data, response_json, status_code):
+
+        from datetime import date, datetime
+
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
+
+        request_data["when_should_the_invoices_be_submitted"] = date.fromisoformat(
+            request_data["when_should_the_invoices_be_submitted"])
+
+        request_data["when_will_the_invoices_be_payable_by_after_receipt"] = date.fromisoformat(
+            request_data["when_will_the_invoices_be_payable_by_after_receipt"])
+
+        request_data["when_will_the_freelancer_share_his_status_on_deliverables"] = datetime.fromisoformat(
+            request_data["when_will_the_freelancer_share_his_status_on_deliverables"])
+
+        request_data["when_will_the_progress_meetings_occur"] = datetime.fromisoformat(
+            request_data["when_will_the_progress_meetings_occur"])
+
+
+        # Create serializer object
+        serializer = StatementOfWorkSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_discliamer_for_website(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Create serializer object
+        serializer = DisclaimerForWebsiteSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
+
+    def create_employment_contract(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Create serializer object
+        serializer = EmploymentContractSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            response_json = {
+                "isSuccess": False,
+                "message": serializer.errors,
+                # "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(str(response_json), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+
+        # return result
+        return response_json, status_code
+
+    def create_terms_and_conditions(self, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Create serializer object
+        serializer = TermsAndConditionSerializer(data=request_data)
+
+        # Commit data to database
+        if serializer.is_valid():
+            response_json, status_code = serializer.save()
+        else:
+            print(serializer.errors)
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status.HTTP_500_INTERNAL_SERVER_ERROR
+            }
+            return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # return result
+        return response_json, status_code
 
 
 
@@ -536,6 +895,76 @@ class AgreementComplianceDetail(APIView):
                     response_json= response_json,
                     status_code= status_code)
 
+            elif request_data['agreement_compliance_type'] == "non-compete-agreement":
+                response_json, status_code = self.update_non_compete_agreement(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "cookie-policy":
+                response_json, status_code = self.update_cookie_policy(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "return-and-refund":
+                response_json, status_code = self.update_return_and_fund(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-disclaimer":
+                response_json, status_code = self.update_app_disclaimer(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "app-privacy-policy":
+                response_json, status_code = self.update_app_privacy_policy(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "nda":
+                response_json, status_code = self.update_nda(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+                response_json, status_code = self.update_discliamer_for_website(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "statement-of-work":
+                response_json, status_code = self.update_statement_of_work(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "employment-contract":
+                response_json, status_code = self.update_employment_contract(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
+            elif request_data['agreement_compliance_type'] == "terms-and-conditions":
+                response_json, status_code = self.update_terms_and_conditions(
+                    event_id= event_id,
+                    request_data= request_data,
+                    response_json= response_json,
+                    status_code= status_code)
+
 
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
@@ -563,8 +992,20 @@ class AgreementComplianceDetail(APIView):
         request_data["date_of_execution_of_document"] = date.fromisoformat(
             request_data["date_of_execution_of_document"])
 
+        request_data["contract_effective_date"] = date.fromisoformat(
+            request_data["contract_effective_date"])
+
+        request_data["contract_termination_date"] = date.fromisoformat(
+            request_data["contract_termination_date"])
+
+        request_data["invoicing_date"] = date.fromisoformat(
+            request_data["invoicing_date"])
+
         request_data["effective_date_for_invoice_payment"] = date.fromisoformat(
             request_data["effective_date_for_invoice_payment"])
+
+        request_data["relevant_termination_period_date"] = date.fromisoformat(
+            request_data["relevant_termination_period_date"])
 
         request_data["party_1_date_of_signing_contract"] = date.fromisoformat(
             request_data["party_1_date_of_signing_contract"])
@@ -578,14 +1019,6 @@ class AgreementComplianceDetail(APIView):
         request_data["date_contract_was_sign_on_behalf_of_party_2"] = date.fromisoformat(
             request_data["date_contract_was_sign_on_behalf_of_party_2"])
 
-        request_data["invoicing_date"] = date.fromisoformat(
-            request_data["invoicing_date"])
-
-        request_data["contract_termination_date"] = date.fromisoformat(
-            request_data["contract_termination_date"])
-
-        request_data["contract_effective_date"] = date.fromisoformat(
-            request_data["contract_effective_date"])
 
 
         # Update and Commit data into database
@@ -600,7 +1033,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -632,7 +1065,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -657,9 +1090,6 @@ class AgreementComplianceDetail(APIView):
         request_data["date_for_legally_binding_definitive_agreement"] = date.fromisoformat(
             request_data["date_for_legally_binding_definitive_agreement"])
 
-        request_data["date_for_legally_binding_definitive_agreement_2"] = date.fromisoformat(
-            request_data["date_for_legally_binding_definitive_agreement_2"])
-
 
         # Update and Commit data into database
         serializer = MOUSerializer(
@@ -673,7 +1103,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -701,7 +1131,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -729,7 +1159,7 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
@@ -757,13 +1187,310 @@ class AgreementComplianceDetail(APIView):
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 "error": status_code
             }
 
 
         # return result
         return response_json, status_code
+
+    def update_non_compete_agreement(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["date_of_termination"] = date.fromisoformat(
+            request_data["date_of_termination"])
+
+
+        # Update and Commit data into database
+        serializer = NonCompeteAgreementSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_cookie_policy(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+
+
+        # Update and Commit data into database
+        serializer = CookiesPolicySerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_return_and_fund(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date"] = date.fromisoformat(
+            request_data["date"])
+
+
+        # Update and Commit data into database
+        serializer = ReturnAndRefundSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_app_disclaimer(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Update and Commit data into database
+        serializer = AppDisclaimerSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_app_privacy_policy(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+
+        # Update and Commit data into database
+        serializer = AppPrivacyPolicySerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_nda(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["date_of_execution_of_document"] = date.fromisoformat(
+            request_data["date_of_execution_of_document"])
+        request_data["what_will_be_the_date_for_termination_of_this_nda"] = date.fromisoformat(
+            request_data["what_will_be_the_date_for_termination_of_this_nda"])
+
+        # Update and Commit data into database
+        serializer = NDASerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+
+    def update_statement_of_work(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date, datetime
+
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
+
+        request_data["when_should_the_invoices_be_submitted"] = date.fromisoformat(
+            request_data["when_should_the_invoices_be_submitted"])
+
+        request_data["when_will_the_invoices_be_payable_by_after_receipt"] = date.fromisoformat(
+            request_data["when_will_the_invoices_be_payable_by_after_receipt"])
+
+        request_data["when_will_the_freelancer_share_his_status_on_deliverables"] = datetime.fromisoformat(
+            request_data["when_will_the_freelancer_share_his_status_on_deliverables"])
+
+        request_data["when_will_the_progress_meetings_occur"] = datetime.fromisoformat(
+            request_data["when_will_the_progress_meetings_occur"])
+
+
+        # Update and Commit data into database
+        serializer = StatementOfWorkSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+
+    def update_discliamer_for_website(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Update and Commit data into database
+        serializer = DisclaimerForWebsiteSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+
+
+    def update_employment_contract(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Update and Commit data into database
+        serializer = EmploymentContractSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
+    def update_terms_and_conditions(self, event_id, request_data, response_json, status_code):
+
+        from datetime import date
+
+        request_data["last_update"] = date.fromisoformat(
+            request_data["last_update"])
+
+        # Update and Commit data into database
+        serializer = TermsAndConditionSerializer(
+            event_id, data=request_data)
+
+        if serializer.is_valid():
+            response_json, status_code = serializer.update(
+                event_id, serializer.validated_data)
+
+        else:
+            status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response_json = {
+                "isSuccess": False,
+                "message": str(serializer.errors),
+                "error": status_code
+            }
+
+
+        # return result
+        return response_json, status_code
+
 
 
 
@@ -789,6 +1516,7 @@ def load_public_agreement_compliance(request, event_id:str):
         content = read_template(get_compliance_template_name(agreement['agreement_compliance_type']))
 
         # replace placeholders in the template with actual values
+        agreement = check_and_format_money(agreement)
         content = content.substitute(**agreement)
         # return html context
 
@@ -807,6 +1535,49 @@ def load_public_agreement_compliance(request, event_id:str):
     except Exception as err:
         print(str(err))
         return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# Convert money
+format_money = lambda value: '{:20,.2f}'.format(float(value))
+
+def check_and_format_money(data:dict):
+    
+    if "liability_limit_amount" in data:
+        data['liability_limit_amount'] = format_money(float(data['liability_limit_amount']))
+
+    if "liability_must_not_exceed_amount" in data:
+        data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
+
+    if "reimbursement_of_cancellation_money" in data:
+        data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+    
+    if "non-compete-agreement" == data['agreement_compliance_type']:
+        pass
+
+    return data
+
+
+def split_date(data):
+    from datetime import date, datetime
+
+    if "date" in data:
+        # date_c = date.fromisoformat(data["date"])
+        yyyy, mm, dd = data["date"].split()
+        
+
+        data['liability_limit_amount'] = format_money(float(data['liability_limit_amount']))
+
+    if "liability_must_not_exceed_amount" in data:
+        data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
+
+    if "reimbursement_of_cancellation_money" in data:
+        data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+    
+    if "non-compete-agreement" == data['agreement_compliance_type']:
+        pass
+
+
+
 
 
 

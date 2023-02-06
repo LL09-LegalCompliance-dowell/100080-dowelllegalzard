@@ -2,6 +2,7 @@ let index = 0;
 let updateIndex = 0;
 let fileData = {};
 let licenseTagAddCount = 0;
+let responseStatus = 400;
 
 document.addEventListener("DOMContentLoaded", function(event){
 
@@ -33,6 +34,60 @@ document.addEventListener("DOMContentLoaded", function(event){
     if(tableBodyEl){
         loadTable();
     }
+
+
+
+    // BEGIN delete of license detail
+    deleteLicenseConfirmEl = document.querySelector("#confirm-delete");
+    if (deleteLicenseConfirmEl) {
+
+        deleteLicenseConfirmEl.addEventListener("click", function(event){
+
+            const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Deleting...`
+    
+    
+            const eventId = document.getElementById("confirm-delete").getAttribute("data-id");
+            const licenseName = document.getElementById("confirm-delete").getAttribute("data-license-name");
+            this.innerHTML = spinner;
+            const errorEl = document.getElementById("delete-license-error-notify");
+            errorEl.innerHTML = "";
+    
+            fetch(`/api/licenses/${eventId}/`, {
+                    method: "DELETE",
+                    headers: {"Content-Type": "application/json"}
+                }).then(response => {
+    
+                    if (response.status === 200){
+                        const licenseDetailContentEl = document.getElementById(`license-table-row-${eventId}`)
+                        licenseDetailContentEl.remove();
+                        this.innerHTML = "Delete";
+                        document.getElementById("delete-license-modal-close").click();
+    
+                    }else {
+    
+                        this.innerHTML="Delete";
+                        response.json()
+                    }
+    
+                }).then(jsonData => {
+    
+                    errorEl.innerHTML = jsonData.error_msg;
+    
+                }).catch(error => {
+    
+                })
+            })
+            // END delete of license detail
+
+    }
+  
+
+
+
+
+
+
 
 
 })
@@ -155,8 +210,8 @@ const saveDataToDatabase = (event) =>{
             if (otherLicenseAttribute.includes(",")){
 
                 for (let attribute of otherLicenseAttribute.split(",")){
-                    licenseAttributeList.push(attribute.trim());
-                    otherLicenseAttributeList.push(attribute.trim());
+                    licenseAttributeList.push(sanitizeText(attribute.trim()));
+                    otherLicenseAttributeList.push(sanitizeText(attribute.trim()));
                 }
             }else{
                 licenseAttributeList.push(otherLicenseAttribute);
@@ -175,11 +230,11 @@ const saveDataToDatabase = (event) =>{
             license_url: licenseUrl,
             type_of_license: typeOfLicense,
             license_tags: getLicenseTagContent(),
-            short_description: shortDescription,
-            description: licenseDescription,
-            disclaimer: disclaimer,
-            risk_for_choosing_license: riskForChoosingLicense,
-            limitation_of_liability: limitationOfLiability,
+            short_description: sanitizeText(shortDescription),
+            description: sanitizeText(licenseDescription),
+            disclaimer: sanitizeText(disclaimer),
+            risk_for_choosing_license: sanitizeText(riskForChoosingLicense),
+            limitation_of_liability: sanitizeText(limitationOfLiability),
             logo_detail: {
                 filename: fileData.filename,
                 actual_filename: fileData.actual_filename,
@@ -188,7 +243,7 @@ const saveDataToDatabase = (event) =>{
             },
             recommendation: " ",
             license_attributes: {
-                heading: licenseAttributeHeading,
+                heading: sanitizeText(licenseAttributeHeading),
                 attributes: licenseAttributeList
             },
             license_compatible_with_lookup: licenseCompatibleWithList,
@@ -210,29 +265,34 @@ const saveDataToDatabase = (event) =>{
             body: JSON.stringify(data),
             headers: {"Content-Type": "application/json"}
         }).then(function(response){
+
+            responseStatus = response.status;
             if (response.status === 201 || response.status === 200){
 
                 window.location.href = "/temp-admin/licenses/";
 
             }else{
 
+                return response.json();
+
+            }
+
+        }).then(jsonData => {
 
                 // set error 
                 errorContainerEl.style.display = "block";
-                errorContentEl.textContent = "Something went wrong, whilst saving the data!";
+                errorContentEl.textContent = jsonData.error_msg;
 
                 // deactivate loading
                 btnSaveData.innerHTML = "Save";
                 btnSaveData.disabled = false;
 
-
-            }
-
         }).catch(function(err){
 
             // set error 
+            console.log(err)
             errorContainerEl.style.display = "block";
-            errorContentEl.textContent = "Something went wrong, check your network!";
+            errorContentEl.textContent = err.toString();
 
             // deactivate loading
             btnSaveData.innerHTML = "Save";
@@ -274,20 +334,21 @@ const loadTable = () => {
         for (let license of jsonData.data){
             index += 1;
             content += tableContent(index, license);
-            console.log(content);
         }
 
         tableSpinnerEl.style.display = "none";
         tableBodyEl.innerHTML = content;
         document.getElementById("btn-add-new").style.display = "inline-block";
         // listenToEditBtn();
-        
+        deleteLicense();
 
     }).catch(function(err){
         tableSpinnerEl.style.display = "none";
 
     })
 
+
+   
 
     
 
@@ -474,7 +535,7 @@ const tableContent = (index, data) => {
       }
     
     return `
-            <tr>
+            <tr id="license-table-row-${data.eventId}">
                   <td scope="row">${index}</td>
                   <td>${license.license_name}</td>
                   <td>${license.version}</td>
@@ -483,6 +544,7 @@ const tableContent = (index, data) => {
 
                     <div class="btn-group" role="group" aria-label="action">
                         <a href="/temp-admin/license-edit/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
+                        <a href="#" data-license-version="${license.version}" data-license-name="${license.license_name}"   data-id="${data.eventId}" data-bs-toggle="modal" data-bs-target="#delete-license-modal" class="btn btn-danger delete-license">Delete</a>
                     </div>
 
                   </td>
@@ -649,4 +711,34 @@ const getLicenseTagContent = () => {
 
     return licenseTags;
 }
+
+
+const deleteLicense = () => {
+    console.log("worl")
+    const deleteBtnEls = document.querySelectorAll(".delete-license");
+    // loop over all delete button
+    // and event listener to it
+    deleteBtnEls.forEach(element => {
+
+      element.addEventListener("click", function(event){
+
+
+        const eventId = this.getAttribute("data-id");
+        const licenseName = this.getAttribute("data-license-name");
+        const licenseVersion = this.getAttribute("data-license-version");
+        console.log(licenseName);
+
+        document.getElementById("delete-license-name").innerHTML=`license: ${licenseName}, version: ${licenseVersion}`;
+        const deleteBtnEl = document.getElementById("confirm-delete");
+        deleteBtnEl.setAttribute("data-license-name", licenseName);
+        deleteBtnEl.setAttribute("data-id", eventId);
+      });
+
+    });
+  }
+
+const sanitizeText = (text) => {
+    return text.replace(/["${}]/g,"");
+}
+
 

@@ -8,7 +8,18 @@ agreement_compliance_templates = {
     "mou": "memorandum-of-understanding.html",
     "website-terms-of-use": "website-terms-of-use.html",
     "website-privacy-policy": "website-privacy-policy.html",
-    "website-security-policy": "website-security-policy.html"
+    "website-security-policy": "website-security-policy.html",
+    "non-compete-agreement": "non-compete-agreement.html",
+    "cookie-policy": "cookie-policy.html",
+    "return-and-refund": "return-and-refund.html",
+    "app-disclaimer": "app-disclaimer.html",
+    "app-privacy-policy": "app-privacy-policy.html",
+    "nda": "non-disclosure-agreement.html",
+    "statement-of-work": "statement-of-work.html",
+    "discliamer-for-website": "discliamer-for-website.html",
+    "employment-contract": "employment-contract.html",
+    "terms-and-conditions": "terms-and-conditions.html"
+
 }
 
 
@@ -27,3 +38,9 @@ def read_template(filename:str) -> Template:
 
 def get_compliance_template_name(agreement_compliance_type:str) -> str:
     return agreement_compliance_templates[agreement_compliance_type]
+
+
+
+def sanitize_text(text):
+    import re
+    return re.sub(r"[\"${}]", "",text)

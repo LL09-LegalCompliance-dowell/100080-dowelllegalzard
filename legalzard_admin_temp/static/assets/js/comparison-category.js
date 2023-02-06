@@ -43,6 +43,8 @@ const saveDataToDatabase = (event) =>{
     const category = document.querySelector("#category").value;
     const license1ComparisonValue = document.querySelector("#license-1").value;
     const license2ComparisonValue = document.querySelector("#license-2").value;
+    const license1AdditionalInfoValue = document.querySelector("#licensee-1-additional-info").value;
+    const license2AdditionalInfoValue = document.querySelector("#licensee-2-additional-info").value;
     const btnSaveData = document.querySelector("#btn-save-category-comparison");
 
 
@@ -65,11 +67,13 @@ const saveDataToDatabase = (event) =>{
                 category: category,
                 licence_1:{
                     name: license_compared.license_1_name,
-                    comparison_value: license1ComparisonValue
+                    comparison_value: license1ComparisonValue,
+                    additional_value: license1AdditionalInfoValue
                 },
                 licence_2:{
                     name: license_compared.license_2_name,
-                    comparison_value: license2ComparisonValue
+                    comparison_value: license2ComparisonValue,
+                    additional_value: license2AdditionalInfoValue
                 }
             }
         }
@@ -215,13 +219,15 @@ const loadTable = () => {
 }
 
 const tableContent = (index, comparison) => {
-    console.log(comparison);
+    const additional_value_1 = comparison.licence_1.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
+    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_2.additional_value})` : ""
+
     return `
             <tr id="comparison-${comparison._id}">
                   <th scope="row">${index}</th>
                   <td>${comparison.category}</td>
-                  <td>${comparison.licence_1.comparison_value}</td>
-                  <td>${comparison.licence_2.comparison_value}</td>
+                  <td>${comparison.licence_1.comparison_value}${additional_value_1}</td>
+                  <td>${comparison.licence_2.comparison_value}${additional_value_2}</td>
                   <td style="width:10px">
 
                     <div class="btn-group" role="group" aria-label="action">
@@ -234,13 +240,14 @@ const tableContent = (index, comparison) => {
 }
 
 const tableContentWithOutTR = (index, comparison, updateIndex) => {
-    console.log(comparison);
+    const additional_value_1 = comparison.licence_1.additional_value  ? ` - (${comparison.licence_1.additional_value})` : ""
+    const additional_value_2 = comparison.licence_2.additional_value  ? ` - (${comparison.licence_2.additional_value})` : ""
     return `
             
                   <th scope="row">${updateIndex}</th>
                   <td>${comparison.category}</td>
-                  <td>${comparison.licence_1.comparison_value}</td>
-                  <td>${comparison.licence_2.comparison_value}</td>
+                  <td>${comparison.licence_1.comparison_value}${additional_value_1}</td>
+                  <td>${comparison.licence_2.comparison_value}${additional_value_2}</td>
                   <td style="width:10px">
 
                     <div class="btn-group" role="group" aria-label="action">
@@ -273,6 +280,8 @@ const listenToEditBtn = () => {
                     document.querySelector("#category").value = comparison_category.category;
                     document.querySelector("#license-1").value = comparison_category.licence_1.comparison_value;
                     document.querySelector("#license-2").value = comparison_category.licence_2.comparison_value;
+                    document.querySelector("#licensee-1-additional-info").value = comparison_category.licence_1.additional_value;
+                    document.querySelector("#licensee-2-additional-info").value = comparison_category.licence_2.additional_value;
                     cardFormTitleEl.textContent = "Update Category Comparison";
                     break;
                 }
