@@ -559,6 +559,7 @@ The API will return three error types when requests fail:
             "eventId": "785455899666558884",
             "agreement": {
                             "agreement_compliance_type": "software-license-policy",
+                            "organization_id": "ROD345OS443345OS443OSS",
                             "date_of_execution_of_document": "2025-10-20",
                             "party_1_entity_type": "Individual",
                             "party_1_full_name": "Party 1 Name 1",
@@ -797,6 +798,7 @@ The API will return three error types when requests fail:
 ```
 {
             "agreement_compliance_type": "software-license-policy",
+            "organization_id": "ROD345OS443345OS443OSS",
             "date_of_execution_of_document": "2025-10-20",
             "party_1_entity_type": "Individual",
             "party_1_full_name": "Party 1 Name 1",
@@ -913,6 +915,7 @@ The API will return three error types when requests fail:
 ```
  {
                 "agreement_compliance_type": "eula",
+                "organization_id": "ROD345OS443345OS443OSS",
                 "date_of_execution_of_document": "2025-10-20",
                 "party_details_full_name": "Individual and Company",
                 "party_details_company_name": "Dowell Research 1",
@@ -945,6 +948,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "mou",
+    "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_1_entity_type": "Organization",
     "party_1_full_name": "Software Own",
@@ -985,6 +989,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "website-terms-of-use",
+    "organization_id": "ROD345OS443345OS443OSS",
     "terms_last_updated": "2025-10-20",
     "full_name_of_the_party": "Website Owner",
     "website_url": "www.website.come",
@@ -1002,6 +1007,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "website-privacy-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_updated": "2025-10-20",
     "company_name": "SamPle",
     "company_address": "sample street",
@@ -1018,6 +1024,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "website-security-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_updated": "2025-10-20",
     "company_name": "SamPle",
     "website_name": "SamPle",
@@ -1032,6 +1039,7 @@ The API will return three error types when requests fail:
 ```
  {
     "agreement_compliance_type": "non-compete-agreement",
+    "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
     "company_name": "Dowell Research 1",
@@ -1063,6 +1071,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "cookie-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
     "will_the_cookie_store_personal_information": true,
@@ -1092,6 +1101,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "app-disclaimer",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
     "app_name": "App"
 }
@@ -1103,6 +1113,7 @@ The API will return three error types when requests fail:
 
 {
     "agreement_compliance_type": "return-and-refund",
+    "organization_id": "ROD345OS443345OS443OSS",
     "date": "2025-10-20",
     "website_or_app_name": "App 2",
     "company_info": "App 2",
@@ -1120,6 +1131,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "nda",
+    "organization_id": "ROD345OS443345OS443OSS",
     "party_1_full_name": "Party 1 Name 2",
     "party_1_address_line_1": "India Street",
     "party_1_address_line_2": "",
@@ -1176,6 +1188,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "app-privacy-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
     "company_name": "Sample Ltd",
     "app_name": "App 1",
@@ -1189,6 +1202,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "discliamer-for-website",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
     "website_name": "Sample website",
     "website_url": "http://app.com/app",
@@ -1201,6 +1215,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "employment-contract",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
     "party_full_name": "Person 1",
     "website_url": "http://app.com/app",
@@ -1220,6 +1235,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "terms-and-conditions",
+    "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
     "country_name": "India",
     "company_name": "Company Name Test",
@@ -1234,6 +1250,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "statement-of-work",
+    "organization_id": "ROD345OS443345OS443OSS",
     "client_full_name": "Client Name",
     "jurisdiction": "India Law",
     "project_name": "Project",
