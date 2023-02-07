@@ -1216,16 +1216,21 @@ The API will return three error types when requests fail:
 {
     "agreement_compliance_type": "employment-contract",
     "organization_id": "ROD345OS443345OS443OSS",
-    "last_update": "2025-10-20",
-    "party_full_name": "Person 1",
-    "website_url": "http://app.com/app",
-    "email": "example@example.com",
-    "email_use_for_acquiring_written_permission": "permission@example.com",
-    "liability_limit_amount": 120.0,
-    "liability_limit_amount_currency": "USD",
-    "liability_must_not_exceed_amount": 150.00,
-    "liability_must_not_exceed_amount_currency": "USD",
-    "email_for_requesting_access_to_personal_information": "access@example.com"
+    "company_name": "company 1",
+    "company_address_line_1": "India Mubai street",
+    "company_address_line_2": "",
+    "company_address_line_3": "",
+    "employee_full_name": "employee 1",
+    "type_of_business_the_company_engaged": "Information Technology",
+    "start_date": "2025-10-20",
+    "company_state": "Mubai",
+    "company_country": "India",
+    "duties_of_employee": "Work with developers to design algorithms and flowcharts. \nProduce clean, efficient code based on specifications.",
+    "time_frame_of_the_compensation": "Days",
+    "amount": 120.0,
+    "amount_currency": "USD",
+    "jurisdiction": "India law"
+
 
 }
 ```
