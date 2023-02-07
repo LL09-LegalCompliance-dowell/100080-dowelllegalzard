@@ -644,8 +644,8 @@ class AgreementComplianceList(APIView):
 
         from datetime import date
 
-        request_data["last_update"] = date.fromisoformat(
-            request_data["last_update"])
+        request_data["start_date"] = date.fromisoformat(
+            request_data["start_date"])
 
         # Create serializer object
         serializer = EmploymentContractSerializer(data=request_data)
@@ -1441,8 +1441,8 @@ class AgreementComplianceDetail(APIView):
 
         from datetime import date
 
-        request_data["last_update"] = date.fromisoformat(
-            request_data["last_update"])
+        request_data["start_date"] = date.fromisoformat(
+            request_data["start_date"])
 
         # Update and Commit data into database
         serializer = EmploymentContractSerializer(
@@ -1550,6 +1550,9 @@ def check_and_format_money(data:dict):
 
     if "reimbursement_of_cancellation_money" in data:
         data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+
+    if "amount" in data:
+        data['amount'] = format_money(float(data['amount']))
     
     if "non-compete-agreement" == data['agreement_compliance_type']:
         pass

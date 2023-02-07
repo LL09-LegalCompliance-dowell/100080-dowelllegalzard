@@ -280,8 +280,8 @@ class EulaSerializer(serializers.Serializer):
     party_details_full_name = serializers.CharField(max_length=150)
     party_details_company_name = serializers.CharField(max_length=150)
     party_details_address_line_1 = serializers.CharField(max_length=300)
-    party_details_address_line_2 = serializers.CharField(max_length=300)
-    party_details_address_line_3 = serializers.CharField(max_length=300)
+    party_details_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    party_details_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
     party_details_country = serializers.CharField(max_length=150)
     party_details_state = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     party_details_zipcode = serializers.CharField(max_length=150)
@@ -1522,16 +1522,21 @@ class EmploymentContractSerializer(serializers.Serializer):
     """
 
     agreement_compliance_type = serializers.CharField(max_length=200)
-    last_update = serializers.DateField()
-    party_full_name = serializers.CharField(max_length=150)
-    website_url = serializers.URLField()
-    email = serializers.EmailField()
-    email_use_for_acquiring_written_permission = serializers.EmailField()
-    liability_limit_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
-    liability_limit_amount_currency = serializers.CharField(max_length=30)
-    liability_must_not_exceed_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
-    liability_must_not_exceed_amount_currency = serializers.CharField(max_length=30)
-    email_for_requesting_access_to_personal_information = serializers.EmailField()
+    company_name = serializers.CharField(max_length=150)
+    company_address_line_1 = serializers.CharField(max_length=300)
+    company_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    company_address_line_3 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    employee_full_name = serializers.CharField(max_length=150)
+    type_of_business_the_company_engaged = serializers.CharField(max_length=500)
+    start_date = serializers.DateField()
+    company_state = serializers.CharField(max_length=150)
+    company_country = serializers.CharField(max_length=150)
+    duties_of_employee = serializers.CharField(max_length=10000)
+    time_frame_of_the_compensation = serializers.CharField(max_length=50)
+    amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    amount_currency = serializers.CharField(max_length=30)
+    jurisdiction = serializers.CharField(max_length=150)
+
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
@@ -1543,14 +1548,11 @@ class EmploymentContractSerializer(serializers.Serializer):
         """
 
         # format date back to iso format
-        validated_data["last_update"]\
-            = validated_data["last_update"].isoformat()
+        validated_data["start_date"]\
+            = validated_data["start_date"].isoformat()
 
-        validated_data["liability_limit_amount"] = float(
-            validated_data["liability_limit_amount"])
-
-        validated_data["liability_must_not_exceed_amount"] = float(
-            validated_data["liability_must_not_exceed_amount"])
+        validated_data["amount"] = float(
+            validated_data["amount"])
 
 
         # Create software agreement on remote server
@@ -1582,15 +1584,11 @@ class EmploymentContractSerializer(serializers.Serializer):
 
 
         # format date back to iso format
-        validated_data["last_update"]\
-            = validated_data["last_update"].isoformat()
+        validated_data["start_date"]\
+            = validated_data["start_date"].isoformat()
 
-        validated_data["liability_limit_amount"] = float(
-            validated_data["liability_limit_amount"])
-
-        validated_data["liability_must_not_exceed_amount"] = float(
-            validated_data["liability_must_not_exceed_amount"])
-
+        validated_data["amount"] = float(
+            validated_data["amount"])
 
         # Update software agreement on remote server
         response_json = update_document(
