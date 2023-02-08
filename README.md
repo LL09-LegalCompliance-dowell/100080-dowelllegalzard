@@ -1229,7 +1229,20 @@ The API will return three error types when requests fail:
     "time_frame_of_the_compensation": "Days",
     "amount": 120.0,
     "amount_currency": "USD",
-    "jurisdiction": "India law"
+    "full_name_of_company_signatory": "company name",
+    "company_signatory_scanned_copy_detail": {
+        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+        "actual_filename": "AFL.png",
+        "file_extension": "png",
+        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
+    },
+    "company_signatory_date": "2025-10-20",
+    "full_name_of_employee_signatory": "",
+    "employee_signatory_scanned_copy_detail": {},
+    "employee_signatory_date": null,
+    "jurisdiction": "India law",
+    "employee_state": "Mubai",
+    "employee_country": "India"
 
 
 }

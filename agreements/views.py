@@ -647,6 +647,15 @@ class AgreementComplianceList(APIView):
         request_data["start_date"] = date.fromisoformat(
             request_data["start_date"])
 
+        if request_data["company_signatory_date"] is not None:
+            request_data["company_signatory_date"] = date.fromisoformat(
+                request_data["company_signatory_date"])           
+
+        if request_data["employee_signatory_date"] is not None:
+            request_data["employee_signatory_date"] = date.fromisoformat(
+                request_data["employee_signatory_date"])
+
+
         # Create serializer object
         serializer = EmploymentContractSerializer(data=request_data)
 
@@ -654,9 +663,10 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
+            print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 # "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(str(response_json), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -1443,6 +1453,14 @@ class AgreementComplianceDetail(APIView):
 
         request_data["start_date"] = date.fromisoformat(
             request_data["start_date"])
+
+        if request_data["company_signatory_date"] is not None:
+            request_data["company_signatory_date"] = date.fromisoformat(
+                request_data["company_signatory_date"])           
+
+        if request_data["employee_signatory_date"] is not None:
+            request_data["employee_signatory_date"] = date.fromisoformat(
+                request_data["employee_signatory_date"])
 
         # Update and Commit data into database
         serializer = EmploymentContractSerializer(
