@@ -1535,7 +1535,17 @@ class EmploymentContractSerializer(serializers.Serializer):
     time_frame_of_the_compensation = serializers.CharField(max_length=50)
     amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
     amount_currency = serializers.CharField(max_length=30)
+
+    full_name_of_company_signatory = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+    company_signatory_scanned_copy_detail = serializers.DictField()
+    company_signatory_date = serializers.DateField(required=False, allow_null=True)
+    full_name_of_employee_signatory = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
+    employee_signatory_scanned_copy_detail = serializers.DictField()
+    employee_signatory_date = serializers.DateField(required=False, allow_null=True)
+    
     jurisdiction = serializers.CharField(max_length=150)
+    employee_state = serializers.CharField(max_length=150)
+    employee_country = serializers.CharField(max_length=150)
 
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
@@ -1553,6 +1563,13 @@ class EmploymentContractSerializer(serializers.Serializer):
 
         validated_data["amount"] = float(
             validated_data["amount"])
+
+
+        if validated_data["company_signatory_date"] is not None:
+            validated_data["company_signatory_date"] = validated_data["company_signatory_date"].isoformat()           
+
+        if validated_data["employee_signatory_date"] is not None:
+            validated_data["employee_signatory_date"] = validated_data["employee_signatory_date"].isoformat()
 
 
         # Create software agreement on remote server
@@ -1589,6 +1606,12 @@ class EmploymentContractSerializer(serializers.Serializer):
 
         validated_data["amount"] = float(
             validated_data["amount"])
+
+        if validated_data["company_signatory_date"] is not None:
+            validated_data["company_signatory_date"] = validated_data["company_signatory_date"].isoformat()           
+
+        if validated_data["employee_signatory_date"] is not None:
+            validated_data["employee_signatory_date"] = validated_data["employee_signatory_date"].isoformat()
 
         # Update software agreement on remote server
         response_json = update_document(
