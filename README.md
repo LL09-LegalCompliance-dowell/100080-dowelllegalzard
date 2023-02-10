@@ -1279,7 +1279,10 @@ The API will return three error types when requests fail:
         "Client’s project management tool (Jira)"
     ],
     "what_is_the_goal_of_this_project": "nil",
-    "deliverables_expected_in_this_scope_of_work": "nil",
+    "deliverables_expected_in_this_scope_of_work": [
+        "coding",
+        "managing"
+    ],
     "mode_of_communication_between_the_parties": "nil",
     "when_will_the_freelancer_share_his_status_on_deliverables": "2025-03-20T14:30:43",
     "when_will_the_progress_meetings_occur": "2025-03-20T14:30:43",
