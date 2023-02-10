@@ -1320,7 +1320,7 @@ class StatementOfWorkSerializer(serializers.Serializer):
     freelancers_full_name = serializers.CharField(max_length=150)
     freelancer_access = serializers.ListField()
     what_is_the_goal_of_this_project = serializers.CharField(max_length=150)
-    deliverables_expected_in_this_scope_of_work = serializers.CharField(max_length=500)
+    deliverables_expected_in_this_scope_of_work = serializers.ListField()
     
     mode_of_communication_between_the_parties = serializers.CharField(max_length=200)
     when_will_the_freelancer_share_his_status_on_deliverables = serializers.DateTimeField()
