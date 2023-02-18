@@ -644,8 +644,17 @@ class AgreementComplianceList(APIView):
 
         from datetime import date
 
-        request_data["last_update"] = date.fromisoformat(
-            request_data["last_update"])
+        request_data["start_date"] = date.fromisoformat(
+            request_data["start_date"])
+
+        if request_data["company_signatory_date"] is not None:
+            request_data["company_signatory_date"] = date.fromisoformat(
+                request_data["company_signatory_date"])           
+
+        if request_data["employee_signatory_date"] is not None:
+            request_data["employee_signatory_date"] = date.fromisoformat(
+                request_data["employee_signatory_date"])
+
 
         # Create serializer object
         serializer = EmploymentContractSerializer(data=request_data)
@@ -654,9 +663,10 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
+            print(serializer.errors)
             response_json = {
                 "isSuccess": False,
-                "message": serializer.errors,
+                "message": str(serializer.errors),
                 # "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
             return Response(str(response_json), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -1441,8 +1451,16 @@ class AgreementComplianceDetail(APIView):
 
         from datetime import date
 
-        request_data["last_update"] = date.fromisoformat(
-            request_data["last_update"])
+        request_data["start_date"] = date.fromisoformat(
+            request_data["start_date"])
+
+        if request_data["company_signatory_date"] is not None:
+            request_data["company_signatory_date"] = date.fromisoformat(
+                request_data["company_signatory_date"])           
+
+        if request_data["employee_signatory_date"] is not None:
+            request_data["employee_signatory_date"] = date.fromisoformat(
+                request_data["employee_signatory_date"])
 
         # Update and Commit data into database
         serializer = EmploymentContractSerializer(
@@ -1516,7 +1534,7 @@ def load_public_agreement_compliance(request, event_id:str):
         content = read_template(get_compliance_template_name(agreement['agreement_compliance_type']))
 
         # replace placeholders in the template with actual values
-        agreement = check_and_format_money(agreement)
+        agreement = format_content(agreement)
         content = content.substitute(**agreement)
         # return html context
 
@@ -1550,32 +1568,96 @@ def check_and_format_money(data:dict):
 
     if "reimbursement_of_cancellation_money" in data:
         data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
+
+    if "amount" in data:
+        data['amount'] = format_money(float(data['amount']))
+
+    if "amount" in data:
+        data['amount'] = format_money(float(data['amount']))
+
+    if "what_is_value_in_respect_to_time_required" in data:
+        data['what_is_value_in_respect_to_time_required'] = format_money(float(data['what_is_value_in_respect_to_time_required']))
     
-    if "non-compete-agreement" == data['agreement_compliance_type']:
-        pass
+    if "what_is_the_billing_rate" in data:
+        data['what_is_the_billing_rate'] = format_money(float(data['what_is_the_billing_rate']))
+
+
 
     return data
 
 
-def split_date(data):
+
+
+
+def split_date_and_format_data(data):
     from datetime import date, datetime
 
     if "date" in data:
         # date_c = date.fromisoformat(data["date"])
         yyyy, mm, dd = data["date"].split()
+
+
+    # Statement of work
+    if "when_will_the_freelancer_share_his_status_on_deliverables" in data:
+        date_c = datetime.fromisoformat(data["when_will_the_freelancer_share_his_status_on_deliverables"])
+        form_datetime = date_c.strftime("%d/%m/%Y %H:%M:%S %p")
+        data["when_will_the_freelancer_share_his_status_on_deliverables"] = form_datetime
+
+    if "when_will_the_progress_meetings_occur" in data:
+        date_c = datetime.fromisoformat(data["when_will_the_progress_meetings_occur"])
+        form_datetime = date_c.strftime("%d/%m/%Y %H:%M:%S %p")
+        data["when_will_the_progress_meetings_occur"] = form_datetime
+
+    if "whom_should_the_invoices_be_submitted_to" in data:
+        if not data['whom_should_the_invoices_be_submitted_to']:
+            data['whom_should_the_invoices_be_submitted_to'] = data['whom_should_the_invoices_be_submitted_to_department_name']
+
+    if "when_should_the_invoices_be_submitted" in data:
+        date_c = date.fromisoformat(data["when_should_the_invoices_be_submitted"])
+        form_datetime = date_c.strftime("%B, ")
+        text = "(st)" if date_c.day == 1 else "(nd)" if date_c.day == 2 else "(rd)" if date_c.day == 3 else "(th)"
+        form_datetime = f"{date_c.day}{text}, {MONTHS[date_c.month - 1]}"
+        data["when_should_the_invoices_be_submitted"] = form_datetime
+
+    if "when_will_the_invoices_be_payable_by_after_receipt" in data:
+        date_c = date.fromisoformat(data["when_will_the_invoices_be_payable_by_after_receipt"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["when_will_the_invoices_be_payable_by_after_receipt"] = form_datetime
+
+    if "effective_date" in data:
+        date_c = date.fromisoformat(data["effective_date"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["effective_date"] = form_datetime
+
+    return data
+
+
+
+def format_content(data):
+    data = check_and_format_money(data)
+    data = split_date_and_format_data(data)
+
+    ### BENGIN  Statement Of Work
+    # freelancer access list
+    if "freelancer_access" in data:
+        content = ""
+        for access in data['freelancer_access']:
+            content += f'<li class="c0 li-bullet-0">{access}</li>'
         
+        data['freelancer_access'] = content
 
-        data['liability_limit_amount'] = format_money(float(data['liability_limit_amount']))
+    # deliverables expected in this scope of work list
+    if "deliverables_expected_in_this_scope_of_work" in data:
+        content = ""
+        for scope in data['deliverables_expected_in_this_scope_of_work']:
+            content += f'<li class="c0 li-bullet-0">{scope}</li>'
+        
+        data['deliverables_expected_in_this_scope_of_work'] = content
 
-    if "liability_must_not_exceed_amount" in data:
-        data['liability_must_not_exceed_amount'] = format_money(float(data['liability_must_not_exceed_amount']))
+    ### END Statement Of Work
 
-    if "reimbursement_of_cancellation_money" in data:
-        data['reimbursement_of_cancellation_money'] = format_money(float(data['reimbursement_of_cancellation_money']))
-    
-    if "non-compete-agreement" == data['agreement_compliance_type']:
-        pass
 
+    return data
 
 
 
