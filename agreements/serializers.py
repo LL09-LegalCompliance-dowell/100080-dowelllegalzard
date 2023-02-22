@@ -1712,3 +1712,154 @@ class TermsAndConditionSerializer(serializers.Serializer):
 
         return response_json, status_code
 
+
+class GDPRPrivacyPolicySerializer(serializers.Serializer):
+    """ Validate attribute, create and update
+        GDPR Privacy Policy
+    """
+
+    agreement_compliance_type = serializers.CharField(max_length=200)
+    location = serializers.CharField(max_length=300)
+    jurisdictional_laws = serializers.CharField(max_length=300)
+    privacy_policy_will_be_used_for = serializers.CharField(max_length=300)
+    would_you_like_to_create_a_premium_privacy_policy  = serializers.CharField(max_length=300)
+    do_you_operate_your_app_under_a_company_name = serializers.CharField(max_length=300)
+    company_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    does_your_company_have_a_short_or_trade_name = serializers.CharField(max_length=300)
+    short_or_trade_name_of_your_company = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    can_users_sign_up_and_create_account_in_your_app = serializers.CharField(max_length=300)
+    can_users_sign_up_using_social_media_and_other_third_party_service = serializers.CharField(max_length=300)
+    can_users_view_and_change_their_personal_information = serializers.CharField(max_length=300)
+    can_users_delete_their_account_and_personal_information = serializers.CharField(max_length=300)
+    how_can_users_delete_their_account_and_personal_information = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    can_users_publish_anything_in_your_app = serializers.CharField(max_length=300)
+
+    can_users_share_content_available_in_your_app = serializers.CharField(max_length=300)
+    can_users_interact_with_each_other_in_your_app = serializers.CharField(max_length=300)
+    when_users_interact_can_they_see_other_users_personally_identifiable_information = serializers.CharField(max_length=300)
+    does_your_target_audience_include_resident_of_california_usa = serializers.CharField(max_length=300)
+    does_your_target_audience_include_resident_of_european_union = serializers.CharField(max_length=300)
+    does_your_target_audience_include_those_under_the_age_of_18 = serializers.CharField(max_length=300)
+    does_your_target_audience_include_those_under_the_age_of_13 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    do_you_collect_any_information_from_children = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    will_information_submitted_by_children_be_publicly_available = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    is_there_an_option_to_keep_submitted_information_private = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    items_apply_to_children_using_the_app = serializers.ListField(default=[])
+    do_you_currently_sell_or_plan_on_selling_products_or_services_in_your_app = serializers.CharField(max_length=300)
+    do_you_offer_products_or_services_provided_by_third_party_companies = serializers.CharField(max_length=300)
+    do_you_have_security_measures_in_place_to_protect_sensitive_payment_information = serializers.CharField(max_length=300)
+    do_you_store_any_sensitive_payment_information = serializers.CharField(max_length=300)
+    do_you_perform_credit_checks_on_your_customers_members_of_their_household = serializers.CharField(max_length=300)
+    do_you_use_third_party_analytics_or_tracking_tools = serializers.CharField(max_length=300)
+
+
+    do_you_anonymize_users_personal_information = serializers.CharField(max_length=300)
+    do_you_have_affiliate_links_in_your_app = serializers.CharField(max_length=300)
+    do_you_display_ads_in_your_app = serializers.CharField(max_length=300)
+    do_you_collect_users_data_for_remarketing = serializers.CharField(max_length=300)
+    do_you_send_email_newsletters_to_users = serializers.CharField(max_length=300)
+    do_you_send_push_notifications_to_your_users = serializers.CharField(max_length=300)
+    do_you_use_third_party_provider_to_send_push_notification = serializers.CharField(max_length=300)
+    what_kind_of_information_do_you_collect_from_your_users = serializers.ListField(default=[])
+    will_you_be_requesting_access_to_the_geolocation_of_your_users = serializers.CharField(max_length=300)
+    will_you_be_requesting_access_to_various_features_on_yours_users_device = serializers.CharField(max_length=300)
+    do_you_collect_any_derivative_data_from_your_users = serializers.CharField(max_length=300)
+
+    do_you_have_affiliate_links_in_your_app = serializers.CharField(max_length=300)
+    do_you_collect_users_personal_information_from_third_party_source = serializers.CharField(max_length=300)
+    what_will_you_do_with_the_information_you_collect = serializers.ListField(default=[])
+    do_you_combine_different_bits_of_personal_information = serializers.CharField(max_length=300)
+    will_you_disclose_personal_information_to_business_affiliates = serializers.CharField(max_length=300)
+    will_you_disclose_personal_information_to_third_parties = serializers.CharField(max_length=300)
+    what_are_the_categories_of_third_parties_you_may_disclose_personal_information_to = serializers.ListField(default=[])
+    will_the_information_disclosed_to_third_parties_contain_any_personally_identifiable_details = serializers.CharField(max_length=300)
+    will_you_disclose_personal_information_in_the_event_of_a_business_sale_or_merger = serializers.CharField(max_length=300)
+    will_you_disclose_personal_information_to_law_enforcement_agencies_upon_lawful_requests = serializers.CharField(max_length=300)
+
+    how_long_will_you_store_your_users_personal_information = serializers.CharField(max_length=300)
+    do_you_have_affiliate_links_in_your_app = serializers.CharField(max_length=300)
+    what_is_the_maximum_time_you_will_store_users_personal_information = serializers.IntegerField(default=0)
+    is_the_person_or_company_responsible_for_the_protection_of_personal_information = serializers.CharField(max_length=300)
+    
+    what_is_your_dpos_name = serializers.CharField(max_length=300)
+    how_can_users_contact_your_dpo = serializers.ListField(default=[])
+    what_is_your_dpos_email_address = serializers.CharField(max_length=300)
+
+    do_you_have_security_measures_in_place_to_project_personal_information = serializers.CharField(max_length=300)
+    what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach = serializers.ListField(default=[])
+   
+    how_can_users_contact_you_regarding_this_policy = serializers.ListField(default=[])
+    what_is_the_url_of_your_contact_form = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    what_is_your_email_address = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    what_is_your_business_address = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+
+    how_will_you_notify_users_of_the_updates_to_this_policy = serializers.ListField(default=[])
+    last_update = serializers.DateField()
+
+
+    
+
+
+
+
+    def create(self, validated_data):
+        """
+        Create and return terms and conditions.
+        """
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Create software agreement on remote server
+        response_json = save_document(
+            collection = SOFTWARE_AGREEMENT_COLLECTION,
+            document = SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key = SOFTWARE_AGREEMENT_KEY,
+            value = validated_data,
+            event_id = validated_data['event_id']
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 201
+            # Retrieve license on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": response_json["event_id"]}
+            )
+
+        return response_json, status_code
+
+    def update(self, event_id, validated_data):
+        """
+        Update and return terms and conditions.
+        """
+        status_code = 500
+        response_json = {}
+
+
+        # format date back to iso format
+        validated_data["last_update"]\
+            = validated_data["last_update"].isoformat()
+
+        # Update software agreement on remote server
+        response_json = update_document(
+            collection=SOFTWARE_AGREEMENT_COLLECTION,
+            document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+            key=SOFTWARE_AGREEMENT_KEY,
+            new_value=validated_data,
+            event_id=event_id
+        )
+
+        if response_json["isSuccess"]:
+            status_code = 200
+            # Retrieve software agreement on remote server
+            response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+        return response_json, status_code
+
