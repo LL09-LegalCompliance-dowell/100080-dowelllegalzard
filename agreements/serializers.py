@@ -144,6 +144,8 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         """
         Create and return new software agreement.
         """
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
@@ -313,6 +315,9 @@ class EulaSerializer(serializers.Serializer):
         Create and return new end-user-license-agreement.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
@@ -436,6 +441,8 @@ class MOUSerializer(serializers.Serializer):
         """
         Create and return new momorandum of understanding (MOU).
         """
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
@@ -540,6 +547,9 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
         Create and return website terms of use.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["terms_last_updated"]\
             = validated_data["terms_last_updated"].isoformat()
@@ -630,6 +640,9 @@ class WebsitePrivacyPolicySerializer(serializers.Serializer):
         Create and return website terms of use.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["last_updated"]\
             = validated_data["last_updated"].isoformat()
@@ -709,6 +722,9 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
         """
         Create and return website security policy.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_updated"]\
@@ -801,6 +817,9 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
         """
         Create and return non compete agreement.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -901,6 +920,9 @@ class CookiesPolicySerializer(serializers.Serializer):
         Create and return cookies policy.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
@@ -975,6 +997,9 @@ class AppDisclaimerSerializer(serializers.Serializer):
         """
         Create and return app disclaimer.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1058,6 +1083,9 @@ class ReturnAndRefundSerializer(serializers.Serializer):
         Create return-and-fund.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["date"]\
             = validated_data["date"].isoformat()
@@ -1140,6 +1168,9 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
         """
         Create and return app privacy policy.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1246,6 +1277,9 @@ class NDASerializer(serializers.Serializer):
         Create and return non disclosure agreement.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
             = validated_data["date_of_execution_of_document"].isoformat()
@@ -1350,6 +1384,9 @@ class StatementOfWorkSerializer(serializers.Serializer):
         """
         Create and return statement of work.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["effective_date"]\
@@ -1459,6 +1496,9 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
         Create and return disclaimer for website.
         """
 
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+
         # format date back to iso format
         validated_data["last_update"]\
             = validated_data["last_update"].isoformat()
@@ -1556,6 +1596,9 @@ class EmploymentContractSerializer(serializers.Serializer):
         """
         Create and return employment contract.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["start_date"]\
@@ -1655,6 +1698,9 @@ class TermsAndConditionSerializer(serializers.Serializer):
         """
         Create and return terms and conditions.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1765,7 +1811,6 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
     will_you_be_requesting_access_to_various_features_on_yours_users_device = serializers.CharField(max_length=300)
     do_you_collect_any_derivative_data_from_your_users = serializers.CharField(max_length=300)
 
-    do_you_have_affiliate_links_in_your_app = serializers.CharField(max_length=300)
     do_you_collect_users_personal_information_from_third_party_source = serializers.CharField(max_length=300)
     what_will_you_do_with_the_information_you_collect = serializers.ListField(default=[])
     do_you_combine_different_bits_of_personal_information = serializers.CharField(max_length=300)
@@ -1777,13 +1822,12 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
     will_you_disclose_personal_information_to_law_enforcement_agencies_upon_lawful_requests = serializers.CharField(max_length=300)
 
     how_long_will_you_store_your_users_personal_information = serializers.CharField(max_length=300)
-    do_you_have_affiliate_links_in_your_app = serializers.CharField(max_length=300)
     what_is_the_maximum_time_you_will_store_users_personal_information = serializers.IntegerField(default=0)
     is_the_person_or_company_responsible_for_the_protection_of_personal_information = serializers.CharField(max_length=300)
     
-    what_is_your_dpos_name = serializers.CharField(max_length=300)
+    what_is_your_dpos_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
     how_can_users_contact_your_dpo = serializers.ListField(default=[])
-    what_is_your_dpos_email_address = serializers.CharField(max_length=300)
+    what_is_your_dpos_email_address = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
 
     do_you_have_security_measures_in_place_to_project_personal_information = serializers.CharField(max_length=300)
     what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach = serializers.ListField(default=[])
@@ -1795,6 +1839,13 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
 
     how_will_you_notify_users_of_the_updates_to_this_policy = serializers.ListField(default=[])
     last_update = serializers.DateField()
+    website_or_app_name = serializers.CharField(max_length=300)
+    website_or_app_url = serializers.URLField()
+    website_or_app_contact_page_url = serializers.URLField()
+    website_or_app_contact_email = serializers.EmailField()
+    organization_id = serializers.CharField(max_length=250)
+    event_id = serializers.CharField(max_length=250)
+    pdf_document_name = serializers.CharField(max_length=500)
 
 
     
@@ -1804,8 +1855,11 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
 
     def create(self, validated_data):
         """
-        Create and return terms and conditions.
+        Create and return GDPR Privacy Policy.
         """
+
+        validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1831,9 +1885,10 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
+
     def update(self, event_id, validated_data):
         """
-        Update and return terms and conditions.
+        Update and return GDPR Privacy Policy.
         """
         status_code = 500
         response_json = {}
