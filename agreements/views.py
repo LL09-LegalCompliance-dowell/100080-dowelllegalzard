@@ -728,6 +728,7 @@ class AgreementComplianceList(APIView):
                 "message": json.dumps(serializer.errors),
                 "error": status.HTTP_500_INTERNAL_SERVER_ERROR
             }
+
             return Response(response_json, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # return result
@@ -891,6 +892,16 @@ class AgreementComplianceDetail(APIView):
             response_json = {}
             status_code = 500
 
+
+
+           # Retrieve old record
+            old_policy_response_json = fetch_document(
+                collection=SOFTWARE_AGREEMENT_COLLECTION,
+                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                fields={"eventId": event_id}
+            )
+
+
             # Generate PDF document
             request_data = AgreementComplianceList.generate_pdf_document(request_data, event_id)
 
@@ -1009,7 +1020,7 @@ class AgreementComplianceDetail(APIView):
 
             elif request_data['agreement_compliance_type'] == "gdpr-privacy-policy":
                 response_json, status_code = self.update_gdpr_privacy_policy(
-                    event_id= event_id,
+                    old_policy= old_policy_response_json["data"][0],
                     request_data= request_data,
                     response_json= response_json,
                     status_code= status_code)
@@ -1548,7 +1559,7 @@ class AgreementComplianceDetail(APIView):
         # return result
         return response_json, status_code
 
-    def update_gdpr_privacy_policy(self, event_id, request_data, response_json, status_code):
+    def update_gdpr_privacy_policy(self, old_policy, request_data, response_json, status_code):
 
         from datetime import date
 
@@ -1557,11 +1568,11 @@ class AgreementComplianceDetail(APIView):
 
         # Update and Commit data into database
         serializer = GDPRPrivacyPolicySerializer(
-            event_id, data=request_data)
+            old_policy, data=request_data)
 
         if serializer.is_valid():
             response_json, status_code = serializer.update(
-                event_id, serializer.validated_data)
+                old_policy, serializer.validated_data)
 
         else:
             status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
