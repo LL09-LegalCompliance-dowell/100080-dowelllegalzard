@@ -205,7 +205,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return software agreement.
         """
@@ -213,12 +213,12 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
 
         # format date back to iso format
@@ -265,7 +265,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -274,7 +274,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
 
@@ -358,19 +358,19 @@ class EulaSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return end-user-license-agreement.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -388,7 +388,7 @@ class EulaSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -397,7 +397,7 @@ class EulaSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -493,7 +493,7 @@ class MOUSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return momorandum of understanding (MOU).
         """
@@ -501,12 +501,12 @@ class MOUSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
 
         # format date back to iso format
@@ -529,7 +529,7 @@ class MOUSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -538,7 +538,7 @@ class MOUSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
 
@@ -603,7 +603,7 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return website terms of use.
         """
@@ -611,12 +611,12 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["terms_last_updated"]\
@@ -632,7 +632,7 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -641,7 +641,7 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -699,19 +699,19 @@ class WebsitePrivacyPolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return website privacy policy .
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_updated"]\
@@ -723,7 +723,7 @@ class WebsitePrivacyPolicySerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -732,7 +732,7 @@ class WebsitePrivacyPolicySerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -787,7 +787,7 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return website security policy.
         """
@@ -795,12 +795,12 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_updated"]\
@@ -812,7 +812,7 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -821,7 +821,7 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -891,19 +891,19 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return non compete agreement.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -918,7 +918,7 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -927,7 +927,7 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -997,19 +997,19 @@ class CookiesPolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return cookies policy.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -1021,7 +1021,7 @@ class CookiesPolicySerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1030,7 +1030,7 @@ class CookiesPolicySerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1081,7 +1081,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return app disclaimer.
         """
@@ -1089,12 +1089,12 @@ class AppDisclaimerSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1106,7 +1106,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1115,7 +1115,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1175,7 +1175,7 @@ class ReturnAndRefundSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update return-and-fund.
         """
@@ -1183,12 +1183,12 @@ class ReturnAndRefundSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date"]\
@@ -1202,7 +1202,7 @@ class ReturnAndRefundSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1211,7 +1211,7 @@ class ReturnAndRefundSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1266,19 +1266,19 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return app privacy policy.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1290,7 +1290,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1299,7 +1299,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1382,7 +1382,7 @@ class NDASerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return non disclosure agreement.
         """
@@ -1390,12 +1390,12 @@ class NDASerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["date_of_execution_of_document"]\
@@ -1409,7 +1409,7 @@ class NDASerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1418,7 +1418,7 @@ class NDASerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1510,19 +1510,19 @@ class StatementOfWorkSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return statement of work.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["effective_date"]\
@@ -1549,7 +1549,7 @@ class StatementOfWorkSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1558,7 +1558,7 @@ class StatementOfWorkSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1612,19 +1612,19 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return disclaimer for website.
         """
         status_code = 500
         response_json = {}
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1636,7 +1636,7 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1645,7 +1645,7 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1730,7 +1730,7 @@ class EmploymentContractSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return employment contract.
         """
@@ -1738,12 +1738,12 @@ class EmploymentContractSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["start_date"]\
@@ -1764,7 +1764,7 @@ class EmploymentContractSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1773,7 +1773,7 @@ class EmploymentContractSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
@@ -1828,7 +1828,7 @@ class TermsAndConditionSerializer(serializers.Serializer):
 
         return response_json, status_code
 
-    def update(self, event_id, validated_data):
+    def update(self, old_policy, validated_data):
         """
         Update and return terms and conditions.
         """
@@ -1836,12 +1836,12 @@ class TermsAndConditionSerializer(serializers.Serializer):
         response_json = {}
 
 
-        # old_data = old_policy['agreement']
-        # if "policy_created_datetime" in old_data:
-        #     validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
-        # else:
-        #     validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
-        # validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        old_data = old_policy['agreement']
+        if "policy_created_datetime" in old_data:
+            validated_data['policy_created_datetime'] = old_data["policy_created_datetime"]
+        else:
+            validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
+        validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1853,7 +1853,7 @@ class TermsAndConditionSerializer(serializers.Serializer):
             document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
             key=SOFTWARE_AGREEMENT_KEY,
             new_value=validated_data,
-            event_id=event_id
+            event_id=old_policy["eventId"]
         )
 
         if response_json["isSuccess"]:
@@ -1862,7 +1862,7 @@ class TermsAndConditionSerializer(serializers.Serializer):
             response_json = fetch_document(
                 collection=SOFTWARE_AGREEMENT_COLLECTION,
                 document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+                fields={"eventId": old_policy["eventId"]}
             )
 
         return response_json, status_code
