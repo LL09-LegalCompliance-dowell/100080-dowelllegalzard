@@ -1705,6 +1705,11 @@ def split_date_and_format_data(data):
         form_datetime = date_c.strftime("%d/%m/%Y")
         data["effective_date"] = form_datetime
 
+    if "last_update" in data:
+        date_c = date.fromisoformat(data["last_update"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["last_update"] = form_datetime
+
     return data
 
 
@@ -1713,7 +1718,7 @@ def format_content(data):
     data = check_and_format_money(data)
     data = split_date_and_format_data(data)
 
-    ### BENGIN  Statement Of Work
+    ### BEGIN  Statement Of Work
     # freelancer access list
     if "freelancer_access" in data:
         content = ""
@@ -1731,6 +1736,65 @@ def format_content(data):
         data['deliverables_expected_in_this_scope_of_work'] = content
 
     ### END Statement Of Work
+
+
+    ### BEGIN GDPR privacy policy
+    # what_kind_of_information_do_you_collect_from_your_users
+    if "what_kind_of_information_do_you_collect_from_your_users" in data:
+        content = ""
+        for value in data['what_kind_of_information_do_you_collect_from_your_users']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['what_kind_of_information_do_you_collect_from_your_users'] = content
+
+    # what_will_you_do_with_the_information_you_collect
+    if "what_will_you_do_with_the_information_you_collect" in data:
+        content = ""
+        for value in data['what_will_you_do_with_the_information_you_collect']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['what_will_you_do_with_the_information_you_collect'] = content
+
+    # 
+    if "what_are_the_categories_of_third_parties_you_may_disclose_personal_information_to" in data:
+        content = ""
+        for value in data['what_are_the_categories_of_third_parties_you_may_disclose_personal_information_to']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['what_are_the_categories_of_third_parties_you_may_disclose_personal_information_to'] = content
+
+    # 
+    if "what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach" in data:
+        content = ""
+        for value in data['what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach'] = content
+
+    # 
+    if "how_can_users_contact_you_regarding_this_policy" in data:
+        content = ""
+        for value in data['how_can_users_contact_you_regarding_this_policy']:
+            content += f'<li class="c0 li-bullet-0"><span class="c2">{value}</span></li>'
+        
+        data['how_can_users_contact_you_regarding_this_policy'] = content
+
+    # 
+    if "how_will_you_notify_users_of_the_updates_to_this_policy" in data:
+        content = ""
+        for value in data['how_will_you_notify_users_of_the_updates_to_this_policy']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['how_will_you_notify_users_of_the_updates_to_this_policy'] = content
+
+    # 
+    if "how_can_users_contact_your_dpo" in data:
+        content = ""
+        for value in data['how_can_users_contact_your_dpo']:
+            content += f'<li class="c0 li-bullet-0">{value}</li>'
+        
+        data['how_can_users_contact_your_dpo'] = content
+    ### END GDPR privacy policy
 
 
     return data
