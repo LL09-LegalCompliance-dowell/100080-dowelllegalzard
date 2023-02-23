@@ -1392,6 +1392,9 @@ The API will return three error types when requests fail:
         "Post notifications in the mobile app."
     ],
     "last_update": "2023-05-02",
+
+
+    # Additional attribute (required)
     "website_or_app_name": "Dowell GDPR",
     "website_or_app_url": "http://app.com",
     "website_or_app_contact_page_url": "http://app.com/contact",
