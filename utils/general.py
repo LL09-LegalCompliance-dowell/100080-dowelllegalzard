@@ -18,7 +18,8 @@ agreement_compliance_templates = {
     "statement-of-work": "statement-of-work.html",
     "discliamer-for-website": "discliamer-for-website.html",
     "employment-contract": "employment-contract.html",
-    "terms-and-conditions": "terms-and-conditions.html"
+    "terms-and-conditions": "terms-and-conditions.html",
+    "gdpr-privacy-policy": "gdpr-privacy-policy.html"
 
 }
 
