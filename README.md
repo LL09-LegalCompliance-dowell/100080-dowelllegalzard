@@ -1204,6 +1204,9 @@ The API will return three error types when requests fail:
     "agreement_compliance_type": "discliamer-for-website",
     "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
+    "effective_date": "2025-10-20",
+    "jurisdiction": "India Law",
+    "company_name": "Sample",
     "website_name": "Sample website",
     "website_url": "http://app.com/app",
     "website_contact_email": "app@website.com"

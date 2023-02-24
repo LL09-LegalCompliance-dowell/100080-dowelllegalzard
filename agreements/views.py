@@ -628,6 +628,8 @@ class AgreementComplianceList(APIView):
 
         request_data["last_update"] = date.fromisoformat(
             request_data["last_update"])
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
 
         # Create serializer object
         serializer = DisclaimerForWebsiteSerializer(data=request_data)
@@ -1474,6 +1476,8 @@ class AgreementComplianceDetail(APIView):
 
         request_data["last_update"] = date.fromisoformat(
             request_data["last_update"])
+        request_data["effective_date"] = date.fromisoformat(
+            request_data["effective_date"])
 
         # Update and Commit data into database
         serializer = DisclaimerForWebsiteSerializer(
@@ -1709,6 +1713,12 @@ def split_date_and_format_data(data):
         date_c = date.fromisoformat(data["last_update"])
         form_datetime = date_c.strftime("%d/%m/%Y")
         data["last_update"] = form_datetime
+
+    if "last_updated" in data:
+        date_c = date.fromisoformat(data["last_updated"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["last_updated"] = form_datetime
+
 
     return data
 
