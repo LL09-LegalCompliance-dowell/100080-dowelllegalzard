@@ -2497,6 +2497,7 @@ The API will return three error types when requests fail:
 ### Agreement Compliance Sample
 
 -   https://100080.pythonanywhere.com/media/doc/cookies-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/discliamer-for-app.pdf
 -   https://100080.pythonanywhere.com/media/doc/discliamer-for-website.pdf
 -   https://100080.pythonanywhere.com/media/doc/employment-contract.pdf
 -   https://100080.pythonanywhere.com/media/doc/end-user-licensing-agreement.pdf
@@ -2504,7 +2505,8 @@ The API will return three error types when requests fail:
 -   https://100080.pythonanywhere.com/media/doc/memorandum-of-understanding.pdf
 -   https://100080.pythonanywhere.com/media/doc/non-compete-agreement.pdf
 -   https://100080.pythonanywhere.com/media/doc/non-disclosure-agreement.pdf
--   https://100080.pythonanywhere.com/media/doc/privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/app-privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/website-privacy-policy.pdf
 -   https://100080.pythonanywhere.com/media/doc/return-refund-policy.pdf
 -   https://100080.pythonanywhere.com/media/doc/software-license-agreement.pdf
 -   https://100080.pythonanywhere.com/media/doc/statement-of-work.pdf
