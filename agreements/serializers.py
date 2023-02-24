@@ -1571,6 +1571,9 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
 
     agreement_compliance_type = serializers.CharField(max_length=200)
     last_update = serializers.DateField()
+    effective_date = serializers.DateField()
+    jurisdiction = serializers.CharField(max_length=300)
+    company_name = serializers.CharField(max_length=300)
     website_name = serializers.CharField(max_length=150)
     website_url = serializers.URLField()
     website_contact_email = serializers.EmailField()
@@ -1591,6 +1594,8 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
         # format date back to iso format
         validated_data["last_update"]\
             = validated_data["last_update"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
 
         # Create software agreement on remote server
         response_json = save_document(
@@ -1629,6 +1634,8 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
         # format date back to iso format
         validated_data["last_update"]\
             = validated_data["last_update"].isoformat()
+        validated_data["effective_date"]\
+            = validated_data["effective_date"].isoformat()
 
         # Update software agreement on remote server
         response_json = update_document(
