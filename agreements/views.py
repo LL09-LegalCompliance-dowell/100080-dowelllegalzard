@@ -185,6 +185,14 @@ class AgreementComplianceList(APIView):
                     status_code)
 
             elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+
+                if "effective_date" not in request_data:
+                    request_data["effective_date"] = request_data['last_update']
+                if "jurisdiction" not in request_data:
+                    request_data["jurisdiction"] = " "
+                if "company_name" not in request_data:
+                    request_data["company_name"] = " "
+                    
                 response_json, status_code = self.create_discliamer_for_website(
                     request_data,
                     response_json,
@@ -993,6 +1001,15 @@ class AgreementComplianceDetail(APIView):
                     status_code= status_code)
 
             elif request_data['agreement_compliance_type'] == "discliamer-for-website":
+
+                if "effective_date" not in request_data:
+                    request_data["effective_date"] = request_data['last_update']
+                if "jurisdiction" not in request_data:
+                    request_data["jurisdiction"] = " "
+                if "company_name" not in request_data:
+                    request_data["company_name"] = " "
+
+
                 response_json, status_code = self.update_discliamer_for_website(
                     old_policy= old_policy_response_json["data"][0],
                     request_data= request_data,
