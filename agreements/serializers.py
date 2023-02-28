@@ -1887,7 +1887,7 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
     would_you_like_to_create_a_premium_privacy_policy  = serializers.CharField(max_length=300)
     do_you_operate_your_app_under_a_company_name = serializers.CharField(max_length=300)
     company_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
-    does_your_company_have_a_short_or_trade_name = serializers.CharField(max_length=300)
+    does_your_company_have_a_short_or_trade_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
     short_or_trade_name_of_your_company = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
     can_users_sign_up_and_create_account_in_your_app = serializers.CharField(max_length=300)
     can_users_sign_up_using_social_media_and_other_third_party_service = serializers.CharField(max_length=300)
