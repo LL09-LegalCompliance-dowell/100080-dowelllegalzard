@@ -19,7 +19,8 @@ from utils.dowell import (
     SOFTWARE_AGREEMENT_COLLECTION,
     SOFTWARE_AGREEMENT_DOCUMENT_NAME,
     RECORD_PER_PAGE,
-    BASE_DOC_URL
+    BASE_DOC_URL,
+    BASE_URL
 )
 from utils.general import read_template, get_compliance_template_name
 from agreements.serializers import (
@@ -422,6 +423,7 @@ class AgreementComplianceList(APIView):
         if serializer.is_valid():
             response_json, status_code = serializer.save()
         else:
+            print(serializer.errors)
             response_json = {
                 "isSuccess": False,
                 "message": json.dumps(serializer.errors),
@@ -803,7 +805,7 @@ class AgreementComplianceList(APIView):
             # create html tmp file
             with open(html_tmp_path, "w") as html_tmp_file:
 
-                content = content.substitute(**context)
+                content = content.substitute(**context, eventId="", base_url="")
                 html_tmp_file.write(content)
 
                 #PERMIT READ FILE
@@ -824,48 +826,6 @@ class AgreementComplianceList(APIView):
         except Exception as err:
             print(str(err))
             return context
-
-    @staticmethod
-    def generate_pdf_document_(context:dict):
-        import time
-        from utils.generate_pdf import generate
-
-        try:
-            ts = time.time()
-            
-            data = context['data'][0]
-            agreement_data = data['agreement']
-
-            # load commpliance template from the filesystem
-            content = read_template(get_compliance_template_name(agreement_data['agreement_compliance_type']))
-
-
-            # html temporary file
-            file_name = f'{data["_id"].replace("-", "_").upper()}_{ts}'.replace(".", "_")
-            html_tmp_path = os.path.join('/tmp/', f'{file_name}.html')
-
-            # create html tmp file
-            with open(html_tmp_path, "w") as html_tmp_file:
-
-                content = content.substitute(**agreement_data)
-                html_tmp_file.write(content)
-
-                #PERMIT READ FILE
-                try:
-                    os.chmod(html_tmp_path, 0o777)
-                except Exception as e:
-                    print(str(e))
-                # END PERMIT READ FILE
-
-            # Generate PDF
-            generate(
-                html_file_abs_path_or_url=html_tmp_path, 
-                pdf_file_name=file_name)
-            
-
-        except Exception as err:
-            print(str(err))
-            pass
 
 
 
@@ -1615,6 +1575,7 @@ def load_public_agreement_compliance(request, event_id:str):
     try:
 
         format = request.GET.get("format", "html")
+        base_url = "http://127.0.0.1:8000/" if settings.DEBUG else BASE_URL
 
         # retrieve compliance related data from
         # database
@@ -1632,7 +1593,7 @@ def load_public_agreement_compliance(request, event_id:str):
 
         # replace placeholders in the template with actual values
         agreement = format_content(agreement)
-        content = content.substitute(**agreement)
+        content = content.substitute(**agreement, base_url=base_url, eventId=data["eventId"])
         # return html context
 
         if format == "html":
