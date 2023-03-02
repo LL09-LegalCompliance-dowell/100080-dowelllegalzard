@@ -9,7 +9,7 @@
       }
 
       *{max-width: 100%}
-	  
+
 	.lst-kix_list_2-6>li:before {
 		content: "\0025cf  "
 	}
@@ -500,13 +500,13 @@
 	</style>
 </head>
 
-<body class="c26 doc-content">
+<body class="c26 doc-content"  id="body" data-event-id="${eventId}" data-base-url="${base_url}">
 
-	<div id="wrap" id="body" data-event-id="${eventId}" data-base-url="${base_url}">
+	<div id="wrap">
 
 		<p class="c17"><span class="c9">COOKIES POLICY</span></p>
 		<p class="c17"><span>DATE: ${date_of_execution_of_document}</span></p>
-		<p class="c3"><span>At ${party_full_name}<span class="c10 c7">&nbsp; (&ldquo;the website&rdquo;), We use cookies to make Your overall experience on our Website better.</span></p>
+		<p class="c3"><span>At <span id="party-full-name"></span> <span class="c10 c7">&nbsp; (&ldquo;the website&rdquo;), We use cookies to make Your overall experience on our Website better.</span></p>
 		<p class="c3"><span class="c10 c7">Specifically, we use cookies to:</span></p>
 		<p class="c3"><span class="c10 c7">-Store information for the time you are on the website called session cookies.</span></p>
 		<p class="c3"><span class="c10 c7">- Store information to recognise your browser or device each time you visit called persistent cookies.</span></p>
@@ -640,8 +640,8 @@
 <script>
 
 	const bodyEl = document.getElementById("body");
-	const eventId = bodyEl.getAttribute("data-event-id");
-	const baseUrl = bodyEl.getAttribute("data-base-url");
+	let eventId = bodyEl.getAttribute("data-event-id");
+	let baseUrl = bodyEl.getAttribute("data-base-url");
   
 	// Change base url for testing purpose
 	// baseUrl = https://100080.pythonanywhere.com/;
@@ -650,7 +650,7 @@
 	// eventId = "";
   
 	
-	fetch(baseUrl+"", {
+	fetch(baseUrl+"api/agreements/"+eventId+"/", {
 	  method: "GET",
 	  headers: {"Content-Type": "application/json"}
 	}).then(res => {
@@ -665,6 +665,8 @@
 		 // write code to display content
 		 const data = jsonData.data[0].agreement;
 		 console.log(data);
+
+		//  document.getElementById("party-full-name").innerHTML
 
 
 
