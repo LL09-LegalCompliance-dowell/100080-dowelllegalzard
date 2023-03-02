@@ -460,7 +460,7 @@
 	</style>
 </head>
 
-<body class="c14 doc-content">
+<body class="c14 doc-content" id="body" data-event-id="${eventId}" data-base-url="${base_url}">
 
     <div id="wrap">
 
@@ -627,3 +627,44 @@
 </body>
 
 </html>
+
+
+<script>
+
+	const bodyEl = document.getElementById("body");
+	const eventId = bodyEl.getAttribute("data-event-id");
+	const baseUrl = bodyEl.getAttribute("data-base-url");
+  
+	// Change base url for testing purpose
+	// baseUrl = https://100080.pythonanywhere.com/;
+  
+	// Change eventId for testing purpose
+	// eventId = "";
+  
+	
+	fetch(baseUrl+"api/agreements/"+eventId+"/", {
+	  method: "GET",
+	  headers: {"Content-Type": "application/json"}
+	}).then(res => {
+  
+	  return res.json();
+  
+	}).then(jsonData => {
+  
+  
+	  if (jsonData.isSuccess){
+  
+		 // write code to display content
+		 const data = jsonData.data[0].agreement;
+		 console.log(data);
+
+
+
+
+	  }
+  
+  
+  
+	})
+
+</script>
