@@ -958,7 +958,8 @@ The API will return three error types when requests fail:
     "party_1_zipcode": "Mobai",
     "party_1_state": "India",
     "party_1_country": "India",
-    "party_1_period_mentioned": "Days",
+    "party_1_period_mentioned": 50,
+    "party_1_period_mentioned_unit": "Days",
     "party_2_entity_type": "Individual",
     "party_2_full_name": "sample",
     "party_2_address_line_1": "Individual",
@@ -967,21 +968,28 @@ The API will return three error types when requests fail:
     "party_2_zipcode": "+254",
     "party_2_state": "India",
     "party_2_country": "India",
-    "party_2_period_mentioned": "Months",
+    "party_2_period_mentioned": 45,
+    "party_2_period_mentioned_unit": "Months",
     "what_will_be_the_purpose_of_this_mou": "India",
     "what_is_the_objective_of_this_mou": "contract",
     "date_of_commencement": "2025-10-20",
     "date_of_termination": "2025-10-20",
-    "period_for_notice_in_case_of_cancellation_or_amendment": "Days",
+    "period_for_notice_in_case_of_cancellation_or_amendment": 50,
+    "period_for_notice_in_case_of_cancellation_or_amendment_unit": "Days",
     "state_of_laws_use_as_governing_laws": "India",
     "state_of_laws_for_governing_laws_in_case_of_reimbursement": "India",
     "number_of_parties_enter_this_mou": 5,
     "mou_include_confidentiality": true,
     "mou_retrict_working_with_competitors": false,
+    "period_mou_retrict_working_with_competitors": 50,
+    "period_mou_retrict_working_with_competitors_unit": "Days",
     "date_for_legally_binding_definitive_agreement": "2025-10-20",
     "should_the_parties_agree_to_refrain_from_negotiating_with_third_parties": false,
     "will_mou_agreement_be_terminated_in_case_of_force_majeure": true,
-    "any_other_contracts_entered_between_parties_together_with_this_mou": true
+    "any_other_contracts_entered_between_parties_together_with_this_mou": true,
+
+    "project_name": "Project Mou",
+    "project_detail": "project detail with a example"
 }
 ```
 
@@ -1061,7 +1069,11 @@ The API will return three error types when requests fail:
         "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
         "actual_filename": "AFL.png",
         "file_extension": "png"
-    }
+    },
+
+    "company_nature_of_work": "Software Development",
+    "employee_job_title": "Software Engineer"
+
 }
 
 ```

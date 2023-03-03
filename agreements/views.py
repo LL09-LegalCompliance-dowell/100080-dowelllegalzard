@@ -1698,6 +1698,44 @@ def split_date_and_format_data(data):
         data["last_updated"] = form_datetime
 
 
+    if "date_of_commencement" in data:
+        date_c = date.fromisoformat(data["date_of_commencement"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_commencement"] = form_datetime
+
+    if "date_of_termination" in data:
+        date_c = date.fromisoformat(data["date_of_termination"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_termination"] = form_datetime
+
+    if "date_for_legally_binding_definitive_agreement" in data:
+        date_c = date.fromisoformat(data["date_for_legally_binding_definitive_agreement"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_for_legally_binding_definitive_agreement"] = form_datetime
+
+    if "date_of_execution_of_document" in data:
+        date_c = date.fromisoformat(data["date_of_execution_of_document"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_execution_of_document"] = form_datetime
+
+        if data['agreement_compliance_type'] == "non-compete-agreement":
+            execution_day = date_c.day
+            execution_month = date_c.month
+            execution_year = date_c.year
+            execution_month_ = MONTHS[execution_month - 1]
+            data["execution_day"] = execution_day
+            data["execution_month"] = execution_month_
+            data["execution_year"] = execution_year
+
+    if "date_of_termination" in data:
+        date_c = date.fromisoformat(data["date_of_termination"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_termination"] = form_datetime
+
+
+
+
+
     return data
 
 

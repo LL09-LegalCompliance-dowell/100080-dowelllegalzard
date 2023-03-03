@@ -421,7 +421,8 @@ class MOUSerializer(serializers.Serializer):
     party_1_zipcode = serializers.CharField(max_length=20)
     party_1_state = serializers.CharField(max_length=50)
     party_1_country = serializers.CharField(max_length=50)
-    party_1_period_mentioned = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
+    party_1_period_mentioned = serializers.IntegerField(default = 0)
+    party_1_period_mentioned_unit = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
     party_2_entity_type = serializers.CharField(max_length=50)
     party_2_full_name = serializers.CharField(max_length=150)
     party_2_address_line_1 = serializers.CharField(max_length=255)
@@ -430,23 +431,33 @@ class MOUSerializer(serializers.Serializer):
     party_2_zipcode = serializers.CharField(max_length=20)
     party_2_state = serializers.CharField(max_length=50)
     party_2_country = serializers.CharField(max_length=50)
-    party_2_period_mentioned = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
-    what_will_be_the_purpose_of_this_mou = serializers.CharField(max_length=1000)
-    what_is_the_objective_of_this_mou = serializers.CharField(max_length=1000)
+    party_2_period_mentioned = serializers.IntegerField(default = 0)
+    party_2_period_mentioned_unit = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
+    what_will_be_the_purpose_of_this_mou = serializers.CharField(max_length=2000)
+    what_is_the_objective_of_this_mou = serializers.CharField(max_length=2000)
     date_of_commencement = serializers.DateField()
     date_of_termination = serializers.DateField()
-    period_for_notice_in_case_of_cancellation_or_amendment = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
+    period_for_notice_in_case_of_cancellation_or_amendment = serializers.IntegerField(default = 0)
+    period_for_notice_in_case_of_cancellation_or_amendment_unit = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
 
     state_of_laws_use_as_governing_laws = serializers.CharField(max_length=50)
     state_of_laws_for_governing_laws_in_case_of_reimbursement = serializers.CharField(max_length=50)
     number_of_parties_enter_this_mou = serializers.IntegerField(default=0)
     mou_include_confidentiality = serializers.BooleanField(default=False)
     mou_retrict_working_with_competitors = serializers.BooleanField(default=False)
+    period_mou_retrict_working_with_competitors = serializers.IntegerField(default = 0)
+    period_mou_retrict_working_with_competitors_unit = serializers.ChoiceField(choices = PERIOD_MENTIONED, default="Days")
     date_for_legally_binding_definitive_agreement = serializers.DateField()
     should_the_parties_agree_to_refrain_from_negotiating_with_third_parties = serializers.BooleanField(default=False)
     will_mou_agreement_be_terminated_in_case_of_force_majeure = serializers.BooleanField(default=False)
     any_other_contracts_entered_between_parties_together_with_this_mou = serializers.BooleanField(default=False)
     organization_id = serializers.CharField(max_length=250)
+
+
+    project_name = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
+    project_detail = serializers.CharField(max_length=5000, allow_blank=True, required=False, default="")
+
+
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
     
@@ -852,8 +863,16 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
     name_of_witnesses = serializers.CharField(max_length=100)
     signature_of_witnesses_detail = serializers.DictField()
     organization_id = serializers.CharField(max_length=250)
+
+    company_nature_of_work = serializers.CharField(max_length=10000, allow_blank=True, required=False, default="")
+    employee_job_title = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
+
+
+
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500)
+
+
 
 
 
