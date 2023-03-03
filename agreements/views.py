@@ -107,11 +107,9 @@ class AgreementComplianceList(APIView):
             response_json = {}
             status_code = 500
 
-            # Generate PDF document
-            request_data = AgreementComplianceList.generate_pdf_document(
-                request_data,
-                event_id = get_event_id()
-                )
+            
+            request_data['event_id'] = get_event_id()
+            request_data['pdf_document_name'] = "nil"
 
             if request_data['agreement_compliance_type'] == "software-license-policy":
                 response_json, status_code = self.create_software_license_policy(
@@ -765,13 +763,13 @@ class AgreementComplianceList(APIView):
                 new_data_list.append(data)
                 continue
 
-            agreement['preview_doc_url'] = f'{BASE_DOC_URL}{agreement["pdf_document_name"]}'
+            # agreement['preview_doc_url'] = f'{BASE_DOC_URL}{agreement["pdf_document_name"]}'
 
             agreement['html_doc_url'] = request.build_absolute_uri(
                 reverse('load_public_agreement_compliance', kwargs={'event_id': data["eventId"]}))
 
-            agreement['download_doc_url'] = request.build_absolute_uri(
-                f'/download/?fn={agreement["pdf_document_name"]}')
+            # agreement['download_doc_url'] = request.build_absolute_uri(
+            #     f'/download/?fn={agreement["pdf_document_name"]}')
 
             # add agreement to new data list
             data['agreement'] = agreement
@@ -872,8 +870,9 @@ class AgreementComplianceDetail(APIView):
             )
 
 
-            # Generate PDF document
-            request_data = AgreementComplianceList.generate_pdf_document(request_data, event_id)
+            request_data['event_id'] = event_id
+            request_data['pdf_document_name'] = " "
+
 
             if request_data['agreement_compliance_type'] == "software-license-policy":
                 response_json, status_code = self.update_software_license_policy(
@@ -1696,6 +1695,39 @@ def split_date_and_format_data(data):
         date_c = date.fromisoformat(data["last_updated"])
         form_datetime = date_c.strftime("%d/%m/%Y")
         data["last_updated"] = form_datetime
+
+
+    if "date_of_commencement" in data:
+        date_c = date.fromisoformat(data["date_of_commencement"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_commencement"] = form_datetime
+
+    if "date_of_termination" in data:
+        date_c = date.fromisoformat(data["date_of_termination"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_termination"] = form_datetime
+
+    if "date_for_legally_binding_definitive_agreement" in data:
+        date_c = date.fromisoformat(data["date_for_legally_binding_definitive_agreement"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_for_legally_binding_definitive_agreement"] = form_datetime
+
+    if "date_of_execution_of_document" in data:
+        date_c = date.fromisoformat(data["date_of_execution_of_document"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date_of_execution_of_document"] = form_datetime
+
+        if data['agreement_compliance_type'] == "non-compete-agreement":
+            execution_day = date_c.day
+            execution_month = date_c.month
+            execution_year = date_c.year
+            execution_month_ = MONTHS[execution_month - 1]
+            data["execution_day"] = execution_day
+            data["execution_month"] = execution_month_
+            data["execution_year"] = execution_year
+
+
+
 
 
     return data
