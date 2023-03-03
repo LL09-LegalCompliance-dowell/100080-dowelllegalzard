@@ -1076,11 +1076,16 @@
 		</ol>
 		<p class="c9"><span class="c1">This Agreement may be amended or modified only by a written agreement signed by all of the parties.&nbsp;</span></p>
 		<p class="c7"><span class="c1"></span></p>
-		<ol class="c6 lst-kix_list_4-0" start="14">
-			<li class="c4 li-bullet-0"><span class="c2">NOTICES</span></li>
-		</ol>
-		<p class="c9"><span class="c1">&nbsp;Any notice or other communication given or made to any party under this Agreement shall be in writing and delivered by hand, sent by overnight courier service or sent by certified or registered mail, return receipt requested, to the address stated above or to another address as that parties may subsequently designate by notice and shall be deemed given on the date of delivery. </span></p>
-		<p class="c9 c23"><span class="c16 c21 c22"></span></p>
+
+		<div id="will_electronic_notices_be_allowed" style="display: none;">
+			<ol class="c6 lst-kix_list_4-0" start="14">
+				<li class="c4 li-bullet-0"><span class="c2">NOTICES</span></li>
+			</ol>
+			<p class="c9"><span class="c1">&nbsp;Any notice or other communication given or made to any party under this Agreement shall be in writing and delivered by hand, sent by overnight courier service or sent by certified or registered mail, return receipt requested, to the address stated above or to another address as that parties may subsequently designate by notice and shall be deemed given on the date of delivery. </span></p>
+			<p class="c9 c23"><span class="c16 c21 c22"></span></p>
+		</div>
+
+
 		<ol class="c6 lst-kix_list_4-0" start="15">
 			<li class="c4 li-bullet-0"><span class="c2">WAIVER</span></li>
 		</ol>
@@ -1092,7 +1097,7 @@
 		<ol class="c6 lst-kix_list_4-0" start="16">
 			<li class="c28 c20 c29 li-bullet-0"><span class="c2">SIGNATURE</span></li>
 		</ol>
-		<p class="c28 c25"><span class="c0">IN WITNESS WHEREOF</span><span class="c2">, </span><span class="c1">the parties hereto have executed this agreement on----</span></p>
+		<p class="c28 c25"><span class="c0">IN WITNESS WHERE OF</span><span class="c2">, </span><span class="c1">the parties hereto have executed this agreement on----</span></p>
 		<p class="c11"><span class="c1"></span></p>
 		<p class="c25 c28"><span class="c1">PROTECTED PARTY</span></p>
 		<p class="c28 c25"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; SIGNATURE</span></p>
@@ -1110,5 +1115,9 @@
 
 <script>
 	const wrapEl = document.getElementById("wrap");
-	// const data-will_electronic_notices_be_allowed = 
+	const willElectronicNoticesBeAllowed = wrapEl.getAttribute("data-will_electronic_notices_be_allowed");
+
+	if (willElectronicNoticesBeAllowed.toLowerCase() === "yes"){
+		document.getElementById("will_electronic_notices_be_allowed").style.display = "block";
+	}
 </script>

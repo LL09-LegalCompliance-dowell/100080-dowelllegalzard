@@ -988,8 +988,8 @@ The API will return three error types when requests fail:
     "will_mou_agreement_be_terminated_in_case_of_force_majeure": true,
     "any_other_contracts_entered_between_parties_together_with_this_mou": true,
 
-    "project_name": "Project Mou",
-    "project_detail": "project detail with a example"
+    "project_name": "",
+    "project_detail": ""
 }
 ```
 
@@ -1071,8 +1071,8 @@ The API will return three error types when requests fail:
         "file_extension": "png"
     },
 
-    "company_nature_of_work": "Software Development",
-    "employee_job_title": "Software Engineer"
+    "company_nature_of_work": "",
+    "employee_job_title": ""
 
 }
 

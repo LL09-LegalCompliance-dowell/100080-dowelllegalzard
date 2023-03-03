@@ -316,7 +316,7 @@ class EulaSerializer(serializers.Serializer):
     violations_that_enable_app_provider_to_cancel_agreement = serializers.CharField(max_length=300)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -459,7 +459,7 @@ class MOUSerializer(serializers.Serializer):
 
 
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
     
 
 
@@ -574,7 +574,7 @@ class WebsiteTermsOfUseSerializer(serializers.Serializer):
     email_id_for_requesting_access_or_correction_of_personal_info = serializers.CharField(max_length=300)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -674,7 +674,7 @@ class WebsitePrivacyPolicySerializer(serializers.Serializer):
     website_contact_email = serializers.CharField(max_length=255)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -762,7 +762,7 @@ class WebsiteSecurityPolicySerializer(serializers.Serializer):
     website_contact_email = serializers.CharField(max_length=255)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -870,7 +870,7 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
 
 
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -980,7 +980,7 @@ class CookiesPolicySerializer(serializers.Serializer):
     owner_of_third_party_cookies= serializers.CharField(max_length=100)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1064,7 +1064,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
     app_name = serializers.CharField(max_length=150)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1156,7 +1156,7 @@ class ReturnAndRefundSerializer(serializers.Serializer):
     website_contact_email = serializers.CharField(max_length=255)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1249,7 +1249,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
     website_contact_email = serializers.CharField(max_length=255)
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1363,7 +1363,7 @@ class NDASerializer(serializers.Serializer):
     other_medium_agreement_can_be_terminated= serializers.CharField(max_length=200, allow_blank=True, required=False, default="")
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1598,7 +1598,7 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
     website_contact_email = serializers.EmailField()
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
 
@@ -1710,7 +1710,7 @@ class EmploymentContractSerializer(serializers.Serializer):
 
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -1819,7 +1819,7 @@ class TermsAndConditionSerializer(serializers.Serializer):
     support_email = serializers.EmailField()
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):
@@ -1980,7 +1980,7 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
     website_or_app_contact_email = serializers.EmailField()
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
-    pdf_document_name = serializers.CharField(max_length=500)
+    pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
 
     
