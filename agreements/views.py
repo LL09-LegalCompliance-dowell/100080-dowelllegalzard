@@ -1586,12 +1586,14 @@ def load_public_agreement_compliance(request, event_id:str):
         
         data = response_data['data'][0]
         agreement = data['agreement']
+        
 
         # load commpliance template from the filesystem
         content = read_template(get_compliance_template_name(agreement['agreement_compliance_type']))
-
+        
         # replace placeholders in the template with actual values
         agreement = format_content(agreement)
+
         content = content.substitute(**agreement, base_url=base_url, eventId=data["eventId"])
         # return html context
 
@@ -1650,8 +1652,9 @@ def split_date_and_format_data(data):
     from datetime import date, datetime
 
     if "date" in data:
-        # date_c = date.fromisoformat(data["date"])
-        yyyy, mm, dd = data["date"].split()
+        date_c = date.fromisoformat(data["date"])
+        form_datetime = date_c.strftime("%d/%m/%Y")
+        data["date"] = form_datetime
 
 
     # Statement of work

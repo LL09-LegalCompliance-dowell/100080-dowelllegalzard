@@ -34,10 +34,10 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     license_attributes = serializers.DictField()
     license_compatible_with_lookup = serializers.ListField(default=[])
     license_not_compatible_with_lookup = serializers.ListField(default=[])
-    permissions = serializers.ListField(default=[])
-    conditions = serializers.ListField(default=[])
-    limitations = serializers.ListField(default=[])
-    references  = serializers.ListField(default=[])
+    # permissions = serializers.ListField(default=[])
+    # conditions = serializers.ListField(default=[])
+    # limitations = serializers.ListField(default=[])
+    # references  = serializers.ListField(default=[])
 
 
     def to_representation(self, document: dict, id):
