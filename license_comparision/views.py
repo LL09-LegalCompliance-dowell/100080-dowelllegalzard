@@ -297,6 +297,7 @@ class ComparisionDetail(APIView):
                 license_comparison['license_2_event_id'] = license_2_event_id
                 license_comparison['percentage_of_compatibility'] = int(request_data['percentage_of_compatibility'])
                 license_comparison['recommendation'] = request_data['recommendation']
+                license_comparison['recommendation_details'] = request_data['recommendation_details']
                 license_comparison['disclaimer'] = request_data['disclaimer']
 
                 # Update

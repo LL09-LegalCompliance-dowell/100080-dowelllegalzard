@@ -1134,7 +1134,7 @@ The API will return three error types when requests fail:
     "cancellation_right_of_order_unit": "Months",
     "reimbursement_of_cancellation_money": 2500.01,
     "reimbursement_of_cancellation_money_currency": "USD",
-    "website_contact_email": "USD"
+    "website_contact_email": "example@email.com"
 
 }
 ```
