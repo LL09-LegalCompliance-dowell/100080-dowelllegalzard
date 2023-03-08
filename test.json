@@ -71,31 +71,47 @@
     
     "permissions": [
         "Commercial Use",
+        "Distribute",
         "Distribution",
-        "Modification"
+        "Modify",
+        "Modification",
+        "Patent Use",
+        "Private Use",
+        "Place Warranty",
+        "Sublicense",
+        "Use Patent Claims"
     ],
     "conditions": [
         "License and Copyright notice",
-        "State Changes"
+        "State Changes",
+        "Include Original",
+        "Disclose Source",
+        "Include Copyright",
+        "Include License",
+        "Include Notice",
+        "Give Credit"
     ],
     "limitations": [
         "Liability",
-        "Trademark use",
-        "Warranty"
+        "Use Trademark",
+        "Warranty",
+        "Sublicense",
+        "Hold Liable"
     ],
     "references": [
         {
-            "actions": "Distribution of the code to third parties",
-            "permissions": "Yes"
+            "action": "Distribution of the code to third parties",
+            "permission": "Yes"
         },
         {
-            "actions": "Modification of the code by a licensee",
-            "permissions": "Yes"
+            "action": "Modification of the code by a licensee",
+            "permission": "Yes"
         },
         {
-            "actions": "May be used privately (e.g. internal use by a corporation)",
-            "permissions": "Yes"
+            "action": "May be used privately (e.g. internal use by a corporation)",
+            "permission": "Yes"
         }
 
     ]
 }
+

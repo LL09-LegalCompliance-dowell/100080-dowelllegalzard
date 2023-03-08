@@ -264,6 +264,105 @@
           </div>
         </div>
 
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">Permissions</h5>
+
+              <div class="col-12 other-info">
+                <select required multiple size="8" id="permissions" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                  <option value="Commercial Use">Commercial Use</option>
+                  <option value="Distribute">Distribute</option>
+                  <option value="Distribution">Distribution</option>
+                  <option value="Modify">Modify</option>
+                  <option value="Modification">Modification</option>
+                  <option value="Patent Use">Patent Use</option>
+                  <option value="Private Use">Private Use</option>
+                  <option value="Place Warranty">Place Warranty</option>
+                  <option value="Sublicense">Sublicense</option>
+                  <option value="Use Patent Claims">Use Patent Claims</option>
+                  
+                </select>
+                <p id="permissions-error" style="color: red; display: none;">Permissions required</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">Conditions</h5>
+
+              <div class="col-12 other-info">
+                <select required multiple size="8" id="conditions" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                  <option value="License and Copyright notice">License and Copyright notice</option>
+                  <option value="State Changes">State Changes</option>
+                  <option value="Include Original">Include Original</option>
+                  <option value="Disclose Source">Disclose Source</option>
+                  <option value="Include Copyright">Include Copyright</option>
+                  <option value="Include License">Include License</option>
+                  <option value="Include Notice">Include Notice</option>
+                  <option value="Give Credit">Give Credit</option>
+                </select>
+                <p id="conditions-error" style="color: red; display: none;">Conditions required</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">Limitations</h5>
+
+              <div class="col-12 other-info">
+                <select required multiple size="8" id="limitations" class="form-select">
+                  <option value="0" selected disabled>--please choose--</option>
+                  <option value="Liability">Liability</option>
+                  <option value="Use Trademark">Use Trademark</option>
+                  <option value="Warranty">Warranty</option>
+                  <option value="Sublicense">Sublicense</option>
+                  <option value="Hold Liable">Hold Liable</option>
+                </select>
+                <p id="limitations-error" style="color: red; display: none;">Limitations required</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">References</h5>
+              <div id="license-reference-container" class="col-lg-12">
+
+                <!--TAGS ARE DISPLAY HERE-->
+
+
+              </div>
+
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-references" class="btn btn-outline-primary">Add Reference</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
         <div>
           <button style="float: right;" id="btn-save-license" type="button" class="btn btn-primary">Save</button>
           <button style="float: right; margin-right: 5px;" type="button" class="btn btn-secondary">Cancel</button>
