@@ -1731,6 +1731,18 @@ def split_date_and_format_data(data):
 
 
 
+    if "company_signatory_date" in data:
+        if data["company_signatory_date"]:
+            date_c = date.fromisoformat(data["company_signatory_date"])
+            form_datetime = date_c.strftime("%d/%m/%Y")
+            data["company_signatory_date"] = form_datetime
+
+    if "employee_signatory_date" in data:
+        if data["employee_signatory_date"]:
+            date_c = date.fromisoformat(data["employee_signatory_date"])
+            form_datetime = date_c.strftime("%d/%m/%Y")
+            data["employee_signatory_date"] = form_datetime
+
 
 
     return data
@@ -1819,6 +1831,81 @@ def format_content(data):
         data['how_can_users_contact_your_dpo'] = content
     ### END GDPR privacy policy
 
+
+    if "company_signatory_scanned_copy_detail" in data:
+        company_signatory_scanned_copy_detail = data["company_signatory_scanned_copy_detail"]
+        company_signatory_scanned_extension = "png"
+        company_signatory_scanned_bit64string = ""
+
+        if "file_extension" in company_signatory_scanned_copy_detail:
+            company_signatory_scanned_extension = company_signatory_scanned_copy_detail["file_extension"].lower()
+        
+        if "filename" in company_signatory_scanned_copy_detail:
+            company_signatory_scanned_bit64string = company_signatory_scanned_copy_detail["filename"]
+
+        data["company_signatory_scanned_bit64string"] = company_signatory_scanned_bit64string
+        data["company_signatory_scanned_extension"] = company_signatory_scanned_extension
+
+
+
+    if "employee_signatory_scanned_copy_detail" in data:
+        employee_signatory_scanned_copy_detail = data["employee_signatory_scanned_copy_detail"]
+        employee_signatory_scanned_extension = "png"
+        employee_signatory_scanned_bit64string = ""
+
+        if "file_extension" in employee_signatory_scanned_copy_detail:
+            employee_signatory_scanned_extension = employee_signatory_scanned_copy_detail["file_extension"].lower()
+        
+        if "filename" in employee_signatory_scanned_copy_detail:
+            employee_signatory_scanned_bit64string = employee_signatory_scanned_copy_detail["filename"]
+
+        data["employee_signatory_scanned_bit64string"] = employee_signatory_scanned_bit64string
+        data["employee_signatory_scanned_extension"] = employee_signatory_scanned_extension
+
+
+    if "signature_of_witnesses_detail" in data:
+        signature_of_witnesses_detail = data["signature_of_witnesses_detail"]
+        file_extension = "png"
+        filename = ""
+
+        if "file_extension" in signature_of_witnesses_detail:
+            file_extension = signature_of_witnesses_detail["file_extension"].lower()
+        
+        if "filename" in signature_of_witnesses_detail:
+            filename = signature_of_witnesses_detail["filename"]
+
+        data["signature_of_witnesses_detail_file_extension"] = file_extension
+        data["signature_of_witnesses_detail_filename"] = filename
+
+
+    if "party_1_signatory_scanned_copy_detail" in data:
+        party_1_signatory_scanned_copy_detail = data["party_1_signatory_scanned_copy_detail"]
+        file_extension = "png"
+        filename = ""
+
+        if "file_extension" in party_1_signatory_scanned_copy_detail:
+            file_extension = party_1_signatory_scanned_copy_detail["file_extension"].lower()
+        
+        if "filename" in party_1_signatory_scanned_copy_detail:
+            filename = party_1_signatory_scanned_copy_detail["filename"]
+
+        data["party_1_signatory_scanned_copy_detail_file_extension"] = file_extension
+        data["party_1_signatory_scanned_copy_detail_filename"] = filename
+
+
+    if "party_2_signatory_scanned_copy_detail" in data:
+        party_2_signatory_scanned_copy_detail = data["party_2_signatory_scanned_copy_detail"]
+        file_extension = "png"
+        filename = ""
+
+        if "file_extension" in party_2_signatory_scanned_copy_detail:
+            file_extension = party_2_signatory_scanned_copy_detail["file_extension"].lower()
+        
+        if "filename" in party_2_signatory_scanned_copy_detail:
+            filename = party_2_signatory_scanned_copy_detail["filename"]
+
+        data["party_2_signatory_scanned_copy_detail_file_extension"] = file_extension
+        data["party_2_signatory_scanned_copy_detail_filename"] = filename
 
     return data
 
