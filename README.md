@@ -182,7 +182,122 @@ The API will return three error types when requests fail:
 
 - General:
   - Creates a new software license using the submitted json data, Returns the detail of the created license, success value, and event id.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 1", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' {
+    "software_name": "SAMPLE 1",
+    "license_name": "LGPLv2.1",
+    "version": "2.0",
+    "type_of_license": "WEAKLY COPYLEFT",
+    "description": "The 2.0 version of the BSD License",
+    "disclaimer": "Disclamer copyright",
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+    "limitation_of_liability": "In no event and under no legal",
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "definition",
+        "limitation_of_liability",
+        "disclaimer",
+        "recommendation",
+        "trademark"
+    ],
+    "license_compatibility": [
+        {
+            "license": "PUBLIC DOMAIN",
+            "percentage_of_comaptibility": "45",
+            "is_compatible": true
+        },
+        {
+            "license": "MIT/XII",
+            "percentage_of_comaptibility": "70",
+            "is_compatible": true
+        },
+        {
+            "license": "BSD",
+            "percentage_of_comaptibility": "60",
+            "is_compatible": true
+        },
+        {
+            "license": "APACHE 2.0",
+            "percentage_of_comaptibility": "90",
+            "is_compatible": true
+        },
+        {
+            "license": "GPLv2",
+            "percentage_of_comaptibility": "80",
+            "is_compatible": false
+        },
+        {
+            "license": "GPL2+",
+            "percentage_of_comaptibility": "95",
+            "is_compatible": false
+        },
+        {
+            "license": "GPLv3 or GPLv3+",
+            "percentage_of_comaptibility": "100",
+            "is_compatible": false
+        }
+    ],
+    "license_compatible_with_lookup": [
+        "PUBLIC DOMAIN",
+        "MIT/XII",
+        "BSD",
+        "APACHE 2.0"
+    ],
+    "license_not_compatible_with_lookup": [
+        "GPLv2",
+        "GPL2+",
+        "GPLv3 or GPLv3+"
+    ],
+
+    
+    "permissions": [
+        "Commercial Use",
+        "Distribute",
+        "Distribution",
+        "Modify",
+        "Modification",
+        "Patent Use",
+        "Private Use",
+        "Place Warranty",
+        "Sublicense",
+        "Use Patent Claims"
+    ],
+    "conditions": [
+        "License and Copyright notice",
+        "State Changes",
+        "Include Original",
+        "Disclose Source",
+        "Include Copyright",
+        "Include License",
+        "Include Notice",
+        "Give Credit"
+    ],
+    "limitations": [
+        "Liability",
+        "Use Trademark",
+        "Warranty",
+        "Sublicense",
+        "Hold Liable"
+    ],
+    "references": [
+        {
+            "action": "Distribution of the code to third parties",
+            "permission": "Yes"
+        },
+        {
+            "action": "Modification of the code by a licensee",
+            "permission": "Yes"
+        },
+        {
+            "action": "May be used privately (e.g. internal use by a corporation)",
+            "permission": "Yes"
+        }
+
+    ]
+}'`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
@@ -885,9 +1000,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
             "party_1_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "actual_filename": "AFL.png",
                 "file_extension": "png",
-                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
             },
             "full_name_of_party_1_signatory": "party 1 name",
             "party_1_date_of_signing_contract": "2022-11-02",
@@ -896,9 +1009,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
             "party_2_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "actual_filename": "AFL.png",
                 "file_extension": "png",
-                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
             },
             "full_name_of_party_2_signatory": "party 2 name",
             "party_2_date_of_signing_contract": "2022-11-05",
@@ -1066,10 +1177,9 @@ The API will return three error types when requests fail:
     "will_electronic_notices_be_allowed": "yes",
     "name_of_witnesses": "Seth",
     "signature_of_witnesses_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png"
-    },
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png",
+            },
 
     "company_nature_of_work": "",
     "employee_job_title": ""
@@ -1246,11 +1356,9 @@ The API will return three error types when requests fail:
     "amount_currency": "USD",
     "full_name_of_company_signatory": "company name",
     "company_signatory_scanned_copy_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png",
-        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-    },
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png",
+            },
     "company_signatory_date": "2025-10-20",
     "full_name_of_employee_signatory": "",
     "employee_signatory_scanned_copy_detail": {},
