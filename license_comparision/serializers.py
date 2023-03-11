@@ -29,8 +29,9 @@ class ComparisionSerializer(serializers.Serializer):
     license_2_version = serializers.CharField(max_length=50)
     comparisons = serializers.ListField()
     percentage_of_compatibility = serializers.IntegerField(default=0)
-    recommendation = serializers.CharField(max_length=30000)
-    disclaimer = serializers.CharField(max_length=30000)
+    recommendation = serializers.CharField(max_length=30000, allow_blank=True, required=False, default="")
+    recommendation_details = serializers.CharField(max_length=30000, allow_blank=True, required=False, default="")
+    disclaimer = serializers.CharField(max_length=30000, allow_blank=True, required=False, default="")
 
 
     def create(self, validated_data):

@@ -182,7 +182,122 @@ The API will return three error types when requests fail:
 
 - General:
   - Creates a new software license using the submitted json data, Returns the detail of the created license, success value, and event id.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "software_name": "SAMPLE 1", "license_name": "LGPLv2.1", "version": "2.0", "type_of_license": "WEAKLY COPYLEFT", "description": "The 2.0 version of the BSD License", "disclaimer": "Disclamer copyright", "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.", "limitation_of_liability": "In no event and under no legal", "license_url": "https://www.apache.org/licenses/LICENSE-2.0", "image_url": "https://www.apache.org/licenses/LICENSE-2.0", "recommendation": "2.0", "released_date": "2022-05-10", "is_active": true, "license_attributes": [ "definition", "limitation_of_liability", "disclaimer", "recommendation", "trademark" ], "license_compatibility": [ { "license": "PUBLIC DOMAIN", "percentage_of_comaptibility": 45, "is_compatible": true }, { "license": "MIT/XII", "percentage_of_comaptibility": 70, "is_compatible": true }, { "license": "BSD", "percentage_of_comaptibility": 60, "is_compatible": true }, { "license": "APACHE 2.0", "percentage_of_comaptibility": 90, "is_compatible": true }, { "license": "GPLv2", "percentage_of_comaptibility": 80, "is_compatible": false }, { "license": "GPL2+", "percentage_of_comaptibility": 95, "is_compatible": false }, { "license": "GPLv3 or GPLv3+", "percentage_of_comaptibility": 100, "is_compatible": false } ], "license_compatible_with_lookup": [ "PUBLIC DOMAIN", "MIT/XII", "BSD", "APACHE 2.0" ], "license_not_compatible_with_lookup": [ "GPLv2", "GPL2+", "GPLv3 or GPLv3+" ] }'`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' {
+    "software_name": "SAMPLE 1",
+    "license_name": "LGPLv2.1",
+    "version": "2.0",
+    "type_of_license": "WEAKLY COPYLEFT",
+    "description": "The 2.0 version of the BSD License",
+    "disclaimer": "Disclamer copyright",
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+    "limitation_of_liability": "In no event and under no legal",
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "definition",
+        "limitation_of_liability",
+        "disclaimer",
+        "recommendation",
+        "trademark"
+    ],
+    "license_compatibility": [
+        {
+            "license": "PUBLIC DOMAIN",
+            "percentage_of_comaptibility": "45",
+            "is_compatible": true
+        },
+        {
+            "license": "MIT/XII",
+            "percentage_of_comaptibility": "70",
+            "is_compatible": true
+        },
+        {
+            "license": "BSD",
+            "percentage_of_comaptibility": "60",
+            "is_compatible": true
+        },
+        {
+            "license": "APACHE 2.0",
+            "percentage_of_comaptibility": "90",
+            "is_compatible": true
+        },
+        {
+            "license": "GPLv2",
+            "percentage_of_comaptibility": "80",
+            "is_compatible": false
+        },
+        {
+            "license": "GPL2+",
+            "percentage_of_comaptibility": "95",
+            "is_compatible": false
+        },
+        {
+            "license": "GPLv3 or GPLv3+",
+            "percentage_of_comaptibility": "100",
+            "is_compatible": false
+        }
+    ],
+    "license_compatible_with_lookup": [
+        "PUBLIC DOMAIN",
+        "MIT/XII",
+        "BSD",
+        "APACHE 2.0"
+    ],
+    "license_not_compatible_with_lookup": [
+        "GPLv2",
+        "GPL2+",
+        "GPLv3 or GPLv3+"
+    ],
+
+    
+    "permissions": [
+        "Commercial Use",
+        "Distribute",
+        "Distribution",
+        "Modify",
+        "Modification",
+        "Patent Use",
+        "Private Use",
+        "Place Warranty",
+        "Sublicense",
+        "Use Patent Claims"
+    ],
+    "conditions": [
+        "License and Copyright notice",
+        "State Changes",
+        "Include Original",
+        "Disclose Source",
+        "Include Copyright",
+        "Include License",
+        "Include Notice",
+        "Give Credit"
+    ],
+    "limitations": [
+        "Liability",
+        "Use Trademark",
+        "Warranty",
+        "Sublicense",
+        "Hold Liable"
+    ],
+    "references": [
+        {
+            "action": "Distribution of the code to third parties",
+            "permission": "Yes"
+        },
+        {
+            "action": "Modification of the code by a licensee",
+            "permission": "Yes"
+        },
+        {
+            "action": "May be used privately (e.g. internal use by a corporation)",
+            "permission": "Yes"
+        }
+
+    ]
+}'`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
@@ -885,9 +1000,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
             "party_1_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "actual_filename": "AFL.png",
                 "file_extension": "png",
-                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
             },
             "full_name_of_party_1_signatory": "party 1 name",
             "party_1_date_of_signing_contract": "2022-11-02",
@@ -896,9 +1009,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
             "party_2_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "actual_filename": "AFL.png",
                 "file_extension": "png",
-                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
             },
             "full_name_of_party_2_signatory": "party 2 name",
             "party_2_date_of_signing_contract": "2022-11-05",
@@ -958,7 +1069,8 @@ The API will return three error types when requests fail:
     "party_1_zipcode": "Mobai",
     "party_1_state": "India",
     "party_1_country": "India",
-    "party_1_period_mentioned": "Days",
+    "party_1_period_mentioned": 50,
+    "party_1_period_mentioned_unit": "Days",
     "party_2_entity_type": "Individual",
     "party_2_full_name": "sample",
     "party_2_address_line_1": "Individual",
@@ -967,21 +1079,28 @@ The API will return three error types when requests fail:
     "party_2_zipcode": "+254",
     "party_2_state": "India",
     "party_2_country": "India",
-    "party_2_period_mentioned": "Months",
+    "party_2_period_mentioned": 45,
+    "party_2_period_mentioned_unit": "Months",
     "what_will_be_the_purpose_of_this_mou": "India",
     "what_is_the_objective_of_this_mou": "contract",
     "date_of_commencement": "2025-10-20",
     "date_of_termination": "2025-10-20",
-    "period_for_notice_in_case_of_cancellation_or_amendment": "Days",
+    "period_for_notice_in_case_of_cancellation_or_amendment": 50,
+    "period_for_notice_in_case_of_cancellation_or_amendment_unit": "Days",
     "state_of_laws_use_as_governing_laws": "India",
     "state_of_laws_for_governing_laws_in_case_of_reimbursement": "India",
     "number_of_parties_enter_this_mou": 5,
     "mou_include_confidentiality": true,
     "mou_retrict_working_with_competitors": false,
+    "period_mou_retrict_working_with_competitors": 50,
+    "period_mou_retrict_working_with_competitors_unit": "Days",
     "date_for_legally_binding_definitive_agreement": "2025-10-20",
     "should_the_parties_agree_to_refrain_from_negotiating_with_third_parties": false,
     "will_mou_agreement_be_terminated_in_case_of_force_majeure": true,
-    "any_other_contracts_entered_between_parties_together_with_this_mou": true
+    "any_other_contracts_entered_between_parties_together_with_this_mou": true,
+
+    "project_name": "",
+    "project_detail": ""
 }
 ```
 
@@ -1058,10 +1177,13 @@ The API will return three error types when requests fail:
     "will_electronic_notices_be_allowed": "yes",
     "name_of_witnesses": "Seth",
     "signature_of_witnesses_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png"
-    }
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png",
+            },
+
+    "company_nature_of_work": "",
+    "employee_job_title": ""
+
 }
 
 ```
@@ -1122,7 +1244,7 @@ The API will return three error types when requests fail:
     "cancellation_right_of_order_unit": "Months",
     "reimbursement_of_cancellation_money": 2500.01,
     "reimbursement_of_cancellation_money_currency": "USD",
-    "website_contact_email": "USD"
+    "website_contact_email": "example@email.com"
 
 }
 ```
@@ -1204,6 +1326,9 @@ The API will return three error types when requests fail:
     "agreement_compliance_type": "discliamer-for-website",
     "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
+    "effective_date": "2025-10-20",
+    "jurisdiction": "India Law",
+    "company_name": "Sample",
     "website_name": "Sample website",
     "website_url": "http://app.com/app",
     "website_contact_email": "app@website.com"
@@ -1231,11 +1356,9 @@ The API will return three error types when requests fail:
     "amount_currency": "USD",
     "full_name_of_company_signatory": "company name",
     "company_signatory_scanned_copy_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png",
-        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-    },
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png",
+            },
     "company_signatory_date": "2025-10-20",
     "full_name_of_employee_signatory": "",
     "employee_signatory_scanned_copy_detail": {},
@@ -1298,6 +1421,107 @@ The API will return three error types when requests fail:
     "whom_should_the_invoices_be_submitted_to_department_name": "nil",
     "when_should_the_invoices_be_submitted": "2025-10-20",
     "when_will_the_invoices_be_payable_by_after_receipt": "2025-10-20"
+
+}
+```
+
+
+### GDPR Privacy Policy
+```
+{
+    "agreement_compliance_type": "gdpr-privacy-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
+    "location": "india 1",
+    "jurisdictional_laws": "India law",
+    "privacy_policy_will_be_used_for": "Mobile App",
+    "would_you_like_to_create_a_premium_privacy_policy": "Yes, I would like to create a premium privacy policy.",
+    "do_you_operate_your_app_under_a_company_name": "No",
+    "company_name": "",
+    "does_your_company_have_a_short_or_trade_name": "No.",
+    "short_or_trade_name_of_your_company": "",
+    "can_users_sign_up_and_create_account_in_your_app": "Yes, users can sign up for an account.",
+    "can_users_sign_up_using_social_media_and_other_third_party_service": "Yes, users can sign up using third-party services.",
+    "can_users_view_and_change_their_personal_information": "Yes, users have full access to their personal information.",
+    "can_users_delete_their_account_and_personal_information": "Yes, users can delete their accounts and personal information at any time.",
+    "how_can_users_delete_their_account_and_personal_information": "They can log in to their account settings page to delete it.",
+    "can_users_publish_anything_in_your_app": "Yes, users can submit and publish their own content.",
+    "can_users_share_content_available_in_your_app": "Yes, content can be shared on social networks.",
+    "can_users_interact_with_each_other_in_your_app": "Yes, users can interact with each other (via comments, messages, etc).",
+    "when_users_interact_can_they_see_other_users_personally_identifiable_information": "Yes, personally identifiable information may be displayed.",
+    "does_your_target_audience_include_resident_of_california_usa": "Yes, our target audience or users may include residents of California (required for the CCPA compliance).",
+    "does_your_target_audience_include_resident_of_european_union": "Yes, our target audience or users may include residents in the European Union (required for the GDPR compliance).",
+    "does_your_target_audience_include_those_under_the_age_of_18": "Yes, our target audience or users may include those under the age of 18.",
+    "does_your_target_audience_include_those_under_the_age_of_13": "",
+    "do_you_collect_any_information_from_children": "",
+    "will_information_submitted_by_children_be_publicly_available": "",
+    "is_there_an_option_to_keep_submitted_information_private": "",
+    "items_apply_to_children_using_the_app": [],
+    "do_you_currently_sell_or_plan_on_selling_products_or_services_in_your_app": "Yes, we sell products or services or plan to sell in the future.",
+    "do_you_offer_products_or_services_provided_by_third_party_companies": "Yes, we offer products or services provided by third-party companies.",
+    "do_you_have_security_measures_in_place_to_protect_sensitive_payment_information": "Yes, we’ve taken all the necessary measures to keep sensitive payment information secure.",
+    "do_you_store_any_sensitive_payment_information": "Yes, we may store payment information for future purchases or recurring billing (such as credit card numbers or tokens).",
+    "do_you_perform_credit_checks_on_your_customers_members_of_their_household": "Yes, we may perform credit checks.",
+    "do_you_use_third_party_analytics_or_tracking_tools": "Yes, we use third-party analytics tools.",
+    "do_you_anonymize_users_personal_information": "Yes, user’s personal information is anonymized to prevent analytics tools from linking it to an individual person.",
+    "do_you_have_affiliate_links_in_your_app": "Yes, there may be affiliate links.",
+    "do_you_display_ads_in_your_app": "Yes, there may be ads displayed.",
+    "do_you_collect_users_data_for_remarketing": "Yes, we may do targeted advertising to users based on collected data.",
+    "do_you_send_email_newsletters_to_users": "Yes, users can opt to receive email newsletters from us.",
+    "do_you_send_push_notifications_to_your_users": "Yes, users can opt to receive push notifications from us.",
+    "do_you_use_third_party_provider_to_send_push_notification": "Yes, we use a third-party provider to send push notifications.",
+    "what_kind_of_information_do_you_collect_from_your_users": [
+        "Account details (such as user name, unique user ID, password, etc)",
+        "Contact information (such as email address, phone number, etc)"
+    ],
+    "will_you_be_requesting_access_to_the_geolocation_of_your_users": "Yes, we may request access to geolocation.",
+    "will_you_be_requesting_access_to_various_features_on_yours_users_device": "Yes, we may request access to certain features.",
+    "do_you_collect_any_derivative_data_from_your_users": "Yes, we may collect derivative data of our users.",
+    "do_you_collect_users_personal_information_from_third_party_source": "Yes, we may collect personal information from third parties.",
+    "what_will_you_do_with_the_information_you_collect": [
+        "Create and manage user accounts",
+        "Fulfill and manage orders"
+    ],
+    "do_you_combine_different_bits_of_personal_information": "Yes, we combine different bits of personal information to create consumer profiles.",
+    "will_you_disclose_personal_information_to_business_affiliates": "Yes, we may disclose personal information to business affiliates.",
+    "will_you_disclose_personal_information_to_third_parties": "Yes, we may disclose personal information to third parties.",
+    "what_are_the_categories_of_third_parties_you_may_disclose_personal_information_to": [
+        "Advertising networks",
+        "Affiliate programs"
+    ],
+    "will_the_information_disclosed_to_third_parties_contain_any_personally_identifiable_details": "Yes, some personally identifiable information may be disclosed.",
+    "will_you_disclose_personal_information_in_the_event_of_a_business_sale_or_merger": "Yes, we will disclose personal information with the purchaser.",
+    "will_you_disclose_personal_information_to_law_enforcement_agencies_upon_lawful_requests": "Yes, we’ll disclose personal information upon lawful request.",
+    "how_long_will_you_store_your_users_personal_information": "As long as necessary to comply with the regulations.",
+    "what_is_the_maximum_time_you_will_store_users_personal_information": 10,
+    "is_the_person_or_company_responsible_for_the_protection_of_personal_information": "Yes, a different person or company is responsible for it.",
+    "what_is_your_dpos_name": "",
+    "how_can_users_contact_your_dpo": [],
+    "what_is_your_dpos_email_address": "",
+    "do_you_have_security_measures_in_place_to_project_personal_information": "Yes, we’ve taken all the necessary measures to keep personal information secure.",
+    "what_kind_of_responsive_action_will_you_take_if_you_have_a_data_breach": [
+        "Post notifications in the mobile app.",
+        "Notify users via email."
+    ],
+    "how_can_users_contact_you_regarding_this_policy": [
+        "Contact form",
+        "Email address"
+
+    ],
+    "what_is_the_url_of_your_contact_form": "",
+    "what_is_your_email_address": "",
+    "what_is_your_business_address": "",
+    "how_will_you_notify_users_of_the_updates_to_this_policy": [
+        "Update the modification date at the bottom of the privacy policy page.",
+        "Post notifications in the mobile app."
+    ],
+    "last_update": "2023-05-02",
+
+    "website_or_app_name": "Dowell GDPR",
+    "website_or_app_url": "http://app.com",
+    "website_or_app_contact_page_url": "http://app.com/contact",
+    "website_or_app_contact_email": "example@app.com"
+
+
 
 }
 ```
@@ -2394,6 +2618,7 @@ The API will return three error types when requests fail:
 ### Agreement Compliance Sample
 
 -   https://100080.pythonanywhere.com/media/doc/cookies-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/discliamer-for-app.pdf
 -   https://100080.pythonanywhere.com/media/doc/discliamer-for-website.pdf
 -   https://100080.pythonanywhere.com/media/doc/employment-contract.pdf
 -   https://100080.pythonanywhere.com/media/doc/end-user-licensing-agreement.pdf
@@ -2401,7 +2626,8 @@ The API will return three error types when requests fail:
 -   https://100080.pythonanywhere.com/media/doc/memorandum-of-understanding.pdf
 -   https://100080.pythonanywhere.com/media/doc/non-compete-agreement.pdf
 -   https://100080.pythonanywhere.com/media/doc/non-disclosure-agreement.pdf
--   https://100080.pythonanywhere.com/media/doc/privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/app-privacy-policy.pdf
+-   https://100080.pythonanywhere.com/media/doc/website-privacy-policy.pdf
 -   https://100080.pythonanywhere.com/media/doc/return-refund-policy.pdf
 -   https://100080.pythonanywhere.com/media/doc/software-license-agreement.pdf
 -   https://100080.pythonanywhere.com/media/doc/statement-of-work.pdf

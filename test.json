@@ -1,33 +1,118 @@
 {
-    "agreement_compliance_type": "employment-contract",
-    "organization_id": "ROD345OS443345OS443OSS",
-    "company_name": "company 1",
-    "company_address_line_1": "India Mubai street",
-    "company_address_line_2": "",
-    "company_address_line_3": "",
-    "employee_full_name": "employee 1",
-    "type_of_business_the_company_engaged": "Information Technology",
-    "start_date": "2025-10-20",
-    "company_state": "Mubai",
-    "company_country": "India",
-    "duties_of_employee": "Work with developers to design algorithms and flowcharts. \nProduce clean, efficient code based on specifications.",
-    "time_frame_of_the_compensation": "Days",
-    "amount": 120.0,
-    "amount_currency": "USD",
-    "full_name_of_company_signatory": "company name",
-    "company_signatory_scanned_copy_detail": {
-        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-        "actual_filename": "AFL.png",
-        "file_extension": "png",
-        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-    },
-    "company_signatory_date": "2025-10-20",
-    "full_name_of_employee_signatory": "",
-    "employee_signatory_scanned_copy_detail": {},
-    "employee_signatory_date": null,
-    "jurisdiction": "India law",
-    "employee_state": "Mubai",
-    "employee_country": "India"
+    "software_name": "SAMPLE 1",
+    "license_name": "LGPLv2.1",
+    "version": "2.0",
+    "type_of_license": "WEAKLY COPYLEFT",
+    "description": "The 2.0 version of the BSD License",
+    "disclaimer": "Disclamer copyright",
+    "risk_for_choosing_license": "One thing to consider is that you cannot combine LGPLv2.1 with.",
+    "limitation_of_liability": "In no event and under no legal",
+    "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "image_url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "recommendation": "2.0",
+    "released_date": "2022-05-10",
+    "is_active": true,
+    "license_attributes": [
+        "definition",
+        "limitation_of_liability",
+        "disclaimer",
+        "recommendation",
+        "trademark"
+    ],
+    "license_compatibility": [
+        {
+            "license": "PUBLIC DOMAIN",
+            "percentage_of_comaptibility": "45",
+            "is_compatible": true
+        },
+        {
+            "license": "MIT/XII",
+            "percentage_of_comaptibility": "70",
+            "is_compatible": true
+        },
+        {
+            "license": "BSD",
+            "percentage_of_comaptibility": "60",
+            "is_compatible": true
+        },
+        {
+            "license": "APACHE 2.0",
+            "percentage_of_comaptibility": "90",
+            "is_compatible": true
+        },
+        {
+            "license": "GPLv2",
+            "percentage_of_comaptibility": "80",
+            "is_compatible": false
+        },
+        {
+            "license": "GPL2+",
+            "percentage_of_comaptibility": "95",
+            "is_compatible": false
+        },
+        {
+            "license": "GPLv3 or GPLv3+",
+            "percentage_of_comaptibility": "100",
+            "is_compatible": false
+        }
+    ],
+    "license_compatible_with_lookup": [
+        "PUBLIC DOMAIN",
+        "MIT/XII",
+        "BSD",
+        "APACHE 2.0"
+    ],
+    "license_not_compatible_with_lookup": [
+        "GPLv2",
+        "GPL2+",
+        "GPLv3 or GPLv3+"
+    ],
 
+    
+    "permissions": [
+        "Commercial Use",
+        "Distribute",
+        "Distribution",
+        "Modify",
+        "Modification",
+        "Patent Use",
+        "Private Use",
+        "Place Warranty",
+        "Sublicense",
+        "Use Patent Claims"
+    ],
+    "conditions": [
+        "License and Copyright notice",
+        "State Changes",
+        "Include Original",
+        "Disclose Source",
+        "Include Copyright",
+        "Include License",
+        "Include Notice",
+        "Give Credit"
+    ],
+    "limitations": [
+        "Liability",
+        "Use Trademark",
+        "Warranty",
+        "Sublicense",
+        "Hold Liable"
+    ],
+    "references": [
+        {
+            "action": "Distribution of the code to third parties",
+            "permission": "Yes"
+        },
+        {
+            "action": "Modification of the code by a licensee",
+            "permission": "Yes"
+        },
+        {
+            "action": "May be used privately (e.g. internal use by a corporation)",
+            "permission": "Yes"
+        }
 
+    ]
 }
+// FB1010000000016783882785587006 "employment-contract"
+// FB1010000000016781764505889352   non-compete-agreement

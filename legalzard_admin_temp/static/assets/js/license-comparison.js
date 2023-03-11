@@ -42,6 +42,7 @@ const saveDataToDatabase = (event) =>{
     const license2EventId = document.querySelector("#license-2").value;
     const percentageOfCompatibility = document.querySelector("#percentage-of-compatibility").value;
     const recommendation = document.querySelector("#recommendation").value;
+    const recommendationDetails = document.querySelector("#recommendation-details").value;
     const disclaimer = document.querySelector("#disclaimer").value;
     const btnSaveData = document.querySelector("#btn-save-license-comparison");
 
@@ -65,6 +66,7 @@ const saveDataToDatabase = (event) =>{
             license_2_event_id: license2EventId,
             percentage_of_compatibility: percentageOfCompatibility,
             recommendation: sanitizeText(recommendation),
+            recommendation_details: sanitizeText(recommendationDetails),
             disclaimer: sanitizeText(disclaimer),
         }
 
@@ -274,6 +276,7 @@ const listenToEditBtn = () => {
                     document.querySelector("#license-2").value = data.license_2_event_id;
                     document.querySelector("#percentage-of-compatibility").value = data.percentage_of_compatibility;
                     document.querySelector("#recommendation").value = data.recommendation;
+                    document.querySelector("#recommendation-details").value = data.recommendation_details;
                     document.querySelector("#disclaimer").value = data.disclaimer;
                     cardFormTitleEl.textContent = "Update License Compare";
                     break;

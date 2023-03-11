@@ -2,6 +2,7 @@ let index = 0;
 let updateIndex = 0;
 let fileData = {};
 let licenseTagAddCount = 0;
+let licenseReferenceAddCount = 0;
 let responseStatus = 400;
 
 document.addEventListener("DOMContentLoaded", function(event){
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     const tableBodyEl = document.getElementById("table-body");
     const licenseBtnSaveEl = document.getElementById("btn-save-license");
     const licenseTagAddEl = document.getElementById("btn-add-license-tag");
+    const licenseReferenceAddEl = document.getElementById("btn-add-references");
 
 
     
@@ -28,6 +30,12 @@ document.addEventListener("DOMContentLoaded", function(event){
     if(licenseTagAddEl){
         licenseTagAddEl.onclick = function(event){
             formatAddTag("", "");
+        };
+    }
+
+    if(licenseReferenceAddEl){
+        licenseReferenceAddEl.onclick = function(event){
+            formatAddReference("", "");
         };
     }
 
@@ -169,6 +177,9 @@ const saveDataToDatabase = (event) =>{
     const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
     let otherLicenseAttribute = document.querySelector("#other-license-attribute").value;
     const btnSaveData = document.querySelector("#btn-save-license");
+    const permissions = document.querySelectorAll('#permissions option:checked');
+    const conditions = document.querySelectorAll('#conditions option:checked');
+    const limitations = document.querySelectorAll('#limitations option:checked');
 
 
 
@@ -219,6 +230,20 @@ const saveDataToDatabase = (event) =>{
             }
         }
 
+        const permissionsList = [];
+        for (let option of permissions) {
+            permissionsList.push(option.value);
+        }
+
+        const conditionsList = [];
+        for (let option of conditions) {
+            conditionsList.push(option.value);
+        }
+
+        const limitationsList = [];
+        for (let option of limitations) {
+            limitationsList.push(option.value);
+        }
 
 
         // Format data
@@ -248,7 +273,11 @@ const saveDataToDatabase = (event) =>{
             },
             license_compatible_with_lookup: licenseCompatibleWithList,
             license_not_compatible_with_lookup: licenseNotCompatibleWithList,
-            other_attributes: otherLicenseAttributeList
+            other_attributes: otherLicenseAttributeList,
+            permissions: permissionsList,
+            conditions: conditionsList,
+            limitations: limitationsList,
+            references: getLicenseReferenceContent()
             
         }
 
@@ -406,6 +435,9 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         $("#license-attribute").val(license.license_attributes.attributes);
         $("#license-compatible-with").val(license.license_compatible_with_lookup);
         $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
+        $("#permissions").val(license.permissions);
+        $("#conditions").val(license.conditions);
+        $("#limitations").val(license.limitations);
 
         // display license tags
         if(license["license_tags"] !== undefined){
@@ -414,6 +446,17 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
                 const key = Object.keys(data)[0];
                 const value = data[key];
                 formatAddTag(key, value);
+            })
+        }
+
+
+        // display license references
+        if(license["references"] !== undefined){
+
+            license.references.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddReference(action, permission);
             })
         }
         
@@ -711,6 +754,80 @@ const getLicenseTagContent = () => {
 
     return licenseTags;
 }
+
+const getLicenseReferenceContent = () => {
+
+    const licenseReferences = [];
+    
+    const licenseReferenceEl = document.querySelectorAll(".license-reference");
+    licenseReferenceEl.forEach(element => {
+        const referenceId = element.getAttribute("data-reference-id");
+        let key = document.querySelector(`#${referenceId}-key`).value;
+        const value = document.querySelector(`#${referenceId}-value`).value;
+
+        if (value && key){
+
+            // format data
+            key = key.replace(":", "").trim();
+            const data = {};
+            data["action"] = key.trim();
+            data["permission"] = value.trim();
+
+            licenseReferences.push(data);
+
+        }
+
+
+    })
+
+    return licenseReferences;
+}
+
+const formatAddReference = (action="", permission="") => {
+    licenseReferenceAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+        <input type="text"  placeholder="Enter value" class="form-control" value="${action}" id="license-reference-${licenseReferenceAddCount}-key">
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-reference-${licenseReferenceAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+        <button type="button" data-reference-id="license-reference-${licenseReferenceAddCount}" class="btn btn-outline-danger license-reference-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-reference-${licenseReferenceAddCount}`);
+    divEl.setAttribute('data-reference-id', `license-reference-${licenseReferenceAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-reference`);
+    divEl.innerHTML = content;
+    const licenseReferenceContainerEl = document.getElementById("license-reference-container")
+    licenseReferenceContainerEl.appendChild(divEl);
+    if(permission){
+        document.getElementById(`license-reference-${licenseReferenceAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseReference();
+}
+
+const deleteLicenseReference = () => {
+    const licenseReferenceDeleteEl = document.querySelectorAll(".license-reference-delete");
+    licenseReferenceDeleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const referenceId = element.getAttribute("data-reference-id");
+            document.querySelector(`#${referenceId}`).remove();
+        }
+
+    });
+}
+
+
 
 
 const deleteLicense = () => {
