@@ -387,7 +387,13 @@ The API will return three error types when requests fail:
 
 - General:
   - Check for compatibility between two software license with the submitted json data, return true if compatible else return false.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_event_id_one": "FB1010000000166123835456631894", "license_event_id_two": "FB1010000000166123810354118614", "action_type": "check-compatibility" } '`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d '{
+    "action_type": "check-compatibility",
+    "license_event_id_one": "FB1010000000166184126356826496",
+    "license_event_id_two": "FB1010000000016618418385506453",
+    "user_id": 4585,
+    "organization_id": "ROD345OS443345OS443OSS"
+}'`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
@@ -2611,6 +2617,263 @@ The API will return three error types when requests fail:
     "event_id": "FB1010000000166909595159447637"
 }
 ```
+
+
+#### GET /api/licenses/?collection_type=license-compatibility-history
+
+- General:
+  - Returns a list of license comparison checked history objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/comparisons/` or open link in a browser
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "640e49cebab572e4dba34861",
+            "eventId": "FB1010000000167865799253114822",
+            "license_compatibility_history": {
+                "organization_id": "ROD345OS443345OS443OSS",
+                "user_id": 4585,
+                "comparison_detail": {
+                    "is_compatible": false,
+                    "license_comparison": {
+                        "attribute_type": "comparisions",
+                        "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                        "license_1_event_id": "FB1010000000166184126356826496",
+                        "license_2_event_id": "FB1010000000016618418385506453",
+                        "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_11630806-873b-4cc3-aa0d-9a302f7955bd.png",
+                        "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_503d90b2-86e9-4f4d-aa82-2c09606ac1ca.wine",
+                        "license_1_name": "Apache License v2.0",
+                        "license_2_name": "Mozilla Public License v2.0",
+                        "license_1_version": "v2.0",
+                        "license_2_version": "v2.0",
+                        "comparisons": [
+                            {
+                                "category": "Code Is Protected By Copy Right",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "d38b9497-c207-4288-a1f0-31ca8e9a1fad"
+                            },
+                            {
+                                "category": "Code can be used in Closed Source Project",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "7909a62d-ccbe-4a30-9e86-3e9521cbbad5"
+                            },
+                            {
+                                "category": "Program that uses the Software can be sold Commercially",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "23d48791-07cc-47b5-8470-b59bba76773b"
+                            },
+                            {
+                                "category": "Sources to bug fixes and modification must be released",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "732966db-0795-478a-b28a-2e2ee145d818"
+                            },
+                            {
+                                "category": "Provides Explicit Patent License",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "bc2ddd40-3945-4616-aec5-7c324ac4d43f"
+                            },
+                            {
+                                "category": "Permissions in Addition to Commercial Use, Distribution, and Modification (Patent use)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "34e77361-cedf-4331-8fd2-ba8bc8b09626"
+                            },
+                            {
+                                "category": "Permissions in Addition to Commercial Use, Distribution, and Modification (Patent Grant)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "84cc1686-c078-4486-9226-12cb3e1bc89a"
+                            },
+                            {
+                                "category": "Conditions (Disclose Source)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "391c4189-5d0c-493f-9a85-81a269dde50a"
+                            },
+                            {
+                                "category": "Conditions (License and Copyright Notice)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "27cb5555-4a7f-494f-b829-cafb7e7bb16a"
+                            },
+                            {
+                                "category": "Conditions (Network Use is for Distribution)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "32edc941-b042-4b94-9a6a-383f3e7d38bd"
+                            },
+                            {
+                                "category": "Conditions (Release under Same License)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": "condition- files"
+                                },
+                                "_id": "6863bf56-9a4e-4d0e-b0c3-d3de269147a2"
+                            },
+                            {
+                                "category": "Conditions (State Changes)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "58e4a2e1-9bbb-4c2c-8b07-faf7902852f1"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Liability)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "6a70e86d-7e88-4cc8-a5d9-421be2c799dd"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Warranty)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "22db40ff-16a3-41c1-91a6-1e910d32232c"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Trademark Use)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "e7647966-339f-4ee6-ba9f-45d2e03b05b8"
+                            }
+                        ],
+                        "percentage_of_compatibility": 80,
+                        "recommendation": "The MPL is a simple weak copyleft license while Apache License 2.0 is a permissive license. The boundary between these two licenses is close to being different kinds of licenses.\nBoth the licenses can be used freely, modified, distributed and be sublicensed.\nBoth Apache and Mozilla Public License are OSI approved licenses.\nMozilla Foundation has created its own open source license, the Mozilla Public License.\nApache License allows you to do whatever you like to do with the software as long as you include the required notice.\n\nThe MPL's file-level copyleft is designed to encourage contributors to share modifications they make to your code, while still allowing them to combine your code with code under other licenses (open or proprietary) with minimal restrictions.\nThe MPL only creates obligations in case you want to distribute the software outside your organization.\nUnder Mozilla Public License the new code files can be kept proprietary or released under a different license. This is sometimes referred to as file-based copyleft. Including the full license text is not necessary.\n\nApache allows the software to be made proprietary which means that a person can combine his license, which is a permissive open source license with his own code and also choose to not make it open source after combining.\n\nMPL Vs Apache: Which is better?\nMPL 2.0 like the Apache 2.0 license protects from patent trolling and provides protections over patent lawsuits.\nJudge declarations due to inquiring about rights is allowed under MPL 2.0, but there's no specific reference of this in the Apache 2.0 license. MPL 2.0 has better defined clauses.\nApache 2.0 also requires modifications that aren't of its license to be indicated. MPL keeps modifications per file under its license terms.\nCode modifications applied to files under MPL 2.0, must be kept under this license, unlike Apache License 2.0. Also if the author keeps the MPL’d code in separate files, they can combine that code with closed-source code to create an aggregate work.\n\nWhy are earlier versions of Apache and MPL not compatible?\nSoftware with permissive (BSD-style) licenses can be incorporated into MPL 2.0, Apache License 2.0 and other licensed code. While MPL 2.0 and Apache License 2.0 can be used together, it adds to limitations on compatibility with other licenses that are incompatible with either.\nVersion 2.0 of Mozilla Public License is, by default, compatible with LGPL and GPL version 2 or greater.\nSoftware using previous MPL versions can be upgraded to MPL 2.0 without requiring the authors' consent. With this upgrade, putting the code under the newer license, allows Apache licensed code to be used with the software. The original authors' consent would still be required to opt-in to certain parts of MPL 2.0.",
+                        "recommendation_details": "",
+                        "disclaimer": "MPL 2.0\nLimitation of Liability\n\nUnder no circumstances and under no legal theory, whether tort (including negligence), contract, or otherwise, shall any Contributor, or anyone who distributes Covered Software as permitted above, be liable to You for any direct, indirect, special, incidental, or consequential damages of any character including, without limitation, damages for lost profits, loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses, even if such party shall have been informed of the possibility of such damages. This limitation of liability shall not apply to liability for death or personal injury resulting from such party's negligence to the extent applicable law prohibits such limitation. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so this exclusion and limitation may not apply to You.\n\nAPACHE 2.0\n\nLimitation of Liability.\nIn no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+                        "is_active": true
+                    },
+                    "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453"
+                }
+            }
+        }
+    ]
+}
+```
+
 
 
 
