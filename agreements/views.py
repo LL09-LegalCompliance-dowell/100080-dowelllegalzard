@@ -1934,19 +1934,37 @@ def format_content(data):
         data["employee_signatory_scanned_extension"] = employee_signatory_scanned_extension
 
 
-    if "signature_of_witnesses_detail" in data:
-        signature_of_witnesses_detail = data["signature_of_witnesses_detail"]
+    if "signature_of_witnesse_1_detail" in data:
+        signature_of_witnesse_1_detail = data["signature_of_witnesse_1_detail"]
         file_extension = "png"
         filename = ""
 
-        if "file_extension" in signature_of_witnesses_detail:
-            file_extension = signature_of_witnesses_detail["file_extension"].lower()
+        if "file_extension" in signature_of_witnesse_1_detail:
+            file_extension = signature_of_witnesse_1_detail["file_extension"].lower()
         
-        if "filename" in signature_of_witnesses_detail:
-            filename = signature_of_witnesses_detail["filename"]
+        if "filename" in signature_of_witnesse_1_detail:
+            filename = signature_of_witnesse_1_detail["filename"]
 
-        data["signature_of_witnesses_detail_file_extension"] = file_extension
-        data["signature_of_witnesses_detail_filename"] = filename
+        data["signature_of_witnesse_1_detail_file_extension"] = file_extension
+        data["signature_of_witnesse_1_detail_filename"] = filename
+
+
+
+    if "signature_of_witnesse_2_detail" in data:
+        signature_of_witnesse_2_detail = data["signature_of_witnesse_2_detail"]
+        file_extension = "png"
+        filename = ""
+
+        if "file_extension" in signature_of_witnesse_2_detail:
+            file_extension = signature_of_witnesse_2_detail["file_extension"].lower()
+        
+        if "filename" in signature_of_witnesse_2_detail:
+            filename = signature_of_witnesse_2_detail["filename"]
+
+        data["signature_of_witnesse_2_detail_file_extension"] = file_extension
+        data["signature_of_witnesse_2_detail_filename"] = filename
+
+
 
 
     if "party_1_signatory_scanned_copy_detail" in data:

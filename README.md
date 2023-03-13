@@ -1181,11 +1181,24 @@ The API will return three error types when requests fail:
     "will_there_be_a_litigation_matter_in_case_of_dispute": false,
     "which_state_should_abide_litigation_matter": "",
     "will_electronic_notices_be_allowed": "yes",
-    "name_of_witnesses": "Seth",
-    "signature_of_witnesses_detail": {
+
+    "name_of_witnesse_1": "Seth",
+    "signature_of_witnesse_1_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
                 "file_extension": "png",
             },
+    "witnesse_1_address_line_1": "",
+    "witnesse_1_address_line_2": "",
+    "witnesse_1_address_line_3": "",
+
+    "name_of_witnesse_2": "Seth 2",
+    "signature_of_witnesse_2_detail": {
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png",
+            },
+    "witnesse_2_address_line_1": "",
+    "witnesse_2_address_line_2": "",
+    "witnesse_2_address_line_3": "",
 
     "company_nature_of_work": "",
     "employee_job_title": ""
