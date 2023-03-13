@@ -860,10 +860,19 @@ class NonCompeteAgreementSerializer(serializers.Serializer):
     will_there_be_a_litigation_matter_in_case_of_dispute = serializers.BooleanField(default=False)
     which_state_should_abide_litigation_matter = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
     will_electronic_notices_be_allowed = serializers.CharField(max_length=50, allow_blank=True, required=False, default="")
-    name_of_witnesses = serializers.CharField(max_length=100)
-    signature_of_witnesses_detail = serializers.DictField()
-    organization_id = serializers.CharField(max_length=250)
 
+    name_of_witnesse_1 = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
+    signature_of_witnesse_1_detail = serializers.DictField()
+    witnesse_1_address_line_1 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    witnesse_1_address_line_2 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    witnesse_1_address_line_3 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    name_of_witnesse_2 = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
+    signature_of_witnesse_2_detail = serializers.DictField()
+    witnesse_2_address_line_1 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    witnesse_2_address_line_2 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    witnesse_2_address_line_3 = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+
+    organization_id = serializers.CharField(max_length=250)
     company_nature_of_work = serializers.CharField(max_length=10000, allow_blank=True, required=False, default="")
     employee_job_title = serializers.CharField(max_length=100, allow_blank=True, required=False, default="")
 
