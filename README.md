@@ -1182,10 +1182,10 @@ The API will return three error types when requests fail:
     "which_state_should_abide_litigation_matter": "",
     "will_electronic_notices_be_allowed": "yes",
 
-    "name_of_witnesse_1": "Seth",
+    "name_of_witnesse_1": "Seth 1",
     "signature_of_witnesse_1_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
     "witnesse_1_address_line_1": "",
     "witnesse_1_address_line_2": "",
@@ -1194,7 +1194,7 @@ The API will return three error types when requests fail:
     "name_of_witnesse_2": "Seth 2",
     "signature_of_witnesse_2_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
     "witnesse_2_address_line_1": "",
     "witnesse_2_address_line_2": "",
@@ -1244,7 +1244,7 @@ The API will return three error types when requests fail:
     "agreement_compliance_type": "app-disclaimer",
     "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
-    "app_name": "App"
+    "app_name": "Legal Zard"
 }
 ```
 
@@ -2773,6 +2773,9 @@ The API will return three error types when requests fail:
 - General:
   - Returns a list of license comparison checked history objects, and success value
 - Sample: `curl http://127.0.0.1:8000/api/comparisons/` or open link in a browser
+- `curl http://127.0.0.1:8000/api/licenses/?collection_type=license-compatibility-history&user_id=4585&organization_id=ROD345OS443345OS443OSS`
+- `curl http://127.0.0.1:8000/api/licenses/?collection_type=license-compatibility-history&organization_id=ROD345OS443345OS443OSS`
+
 
 ```
 {

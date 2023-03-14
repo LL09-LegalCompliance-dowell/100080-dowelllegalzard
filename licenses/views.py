@@ -33,6 +33,10 @@ class SoftwareLicenseList(APIView):
             offset = int(request.GET.get("offset", "0"))
             action_type = request.GET.get("action_type", "")
             collection_type = request.GET.get("collection_type", "license")
+            user_id = int(request.GET.get("user_id", ""))
+            organization_id = request.GET.get("organization_id", "")
+            print("organization_id: ", organization_id)
+            print("user_id: ", user_id)
 
             response_json = {}
             status_code = 500
@@ -66,11 +70,30 @@ class SoftwareLicenseList(APIView):
 
                 elif collection_type == "license-compatibility-history":
 
-                    response_json = fetch_document(
-                        collection=COMPARISON_HISTORY_COLLECTION,
-                        document=COMPARISON_HISTORY_DOCUMENT_NAME,
-                        fields={}
-                    )
+                    if organization_id and user_id:
+                        print("working")
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={
+                                "license_compatibility_history.organization_id": organization_id,
+                                "license_compatibility_history.user_id": user_id
+                                }
+                        )
+                    elif organization_id and user_id == "":
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={"license_compatibility_history.organization_id": organization_id}
+                        )
+
+                    elif organization_id == "" and user_id == "":
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={}
+                        )
+
                     status_code = status.HTTP_200_OK
 
 
