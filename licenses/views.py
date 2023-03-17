@@ -33,10 +33,8 @@ class SoftwareLicenseList(APIView):
             offset = int(request.GET.get("offset", "0"))
             action_type = request.GET.get("action_type", "")
             collection_type = request.GET.get("collection_type", "license")
-            user_id = int(request.GET.get("user_id", ""))
+            user_id = request.GET.get("user_id", "")
             organization_id = request.GET.get("organization_id", "")
-            print("organization_id: ", organization_id)
-            print("user_id: ", user_id)
 
             response_json = {}
             status_code = 500
@@ -69,6 +67,7 @@ class SoftwareLicenseList(APIView):
 
 
                 elif collection_type == "license-compatibility-history":
+                    user_id = int(user_id)
 
                     if organization_id and user_id:
                         print("working")
