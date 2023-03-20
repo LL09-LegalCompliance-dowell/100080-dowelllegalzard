@@ -1721,6 +1721,7 @@ def check_and_format_money(data:dict):
 
 def split_date_and_format_data(data):
     from datetime import date, datetime
+    form_datetime = ""
 
     if "date" in data:
         date_c = date.fromisoformat(data["date"])
@@ -1809,10 +1810,11 @@ def split_date_and_format_data(data):
             data["company_signatory_date"] = form_datetime
 
     if "employee_signatory_date" in data:
+        
         if data["employee_signatory_date"]:
             date_c = date.fromisoformat(data["employee_signatory_date"])
             form_datetime = date_c.strftime("%d/%m/%Y")
-            data["employee_signatory_date"] = form_datetime
+        data["employee_signatory_date"] = form_datetime
 
 
 
