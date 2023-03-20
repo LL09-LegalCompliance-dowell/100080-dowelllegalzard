@@ -1666,8 +1666,8 @@ def load_public_agreement_compliance(request, event_id:str):
         agreement = format_content(agreement)
 
         content = content.substitute(**agreement, base_url=base_url, eventId=data["eventId"])
-        # return html context
 
+        # return html context
         if format == "html":
             return HttpResponse(content= content)
 
