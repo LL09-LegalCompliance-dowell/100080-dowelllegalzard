@@ -1401,7 +1401,8 @@ The API will return three error types when requests fail:
     "company_name": "Company Name Test",
     "website_or_app_name": "websiteexample",
     "website_url": "http://websiteexample.com/",
-    "support_email": "access@example.com"
+    "support_email": "access@example.com",
+    "jurisdiction": "India"
 
 }
 ```
