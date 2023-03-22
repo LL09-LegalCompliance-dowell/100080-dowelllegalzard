@@ -1600,8 +1600,8 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
     agreement_compliance_type = serializers.CharField(max_length=200)
     last_update = serializers.DateField()
     effective_date = serializers.DateField()
-    jurisdiction = serializers.CharField(max_length=300,allow_blank=True, required=False, default="")
-    company_name = serializers.CharField(max_length=300,allow_blank=True, required=False, default="")
+    jurisdiction = serializers.CharField(max_length=300)
+    company_name = serializers.CharField(max_length=300)
     website_name = serializers.CharField(max_length=150)
     website_url = serializers.URLField()
     website_contact_email = serializers.EmailField()
@@ -1827,6 +1827,7 @@ class TermsAndConditionSerializer(serializers.Serializer):
     website_url = serializers.URLField()
     support_email = serializers.EmailField()
     organization_id = serializers.CharField(max_length=250)
+    jurisdiction = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
 
