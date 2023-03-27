@@ -955,7 +955,7 @@ The API will return three error types when requests fail:
             "terms_of_contract_duration": 50,
             "terms_of_contract_duration_unit": "Months",
             "is_inline_copy_right_remove": false,
-            "is_term_of_contract_indefinite": false,
+            "is_term_of_contract_indefinite": "Term is indefinite",
             "contract_termination_date": "2022-10-20",
             "events_that_will_cause_contract_to_be_terminated": "Nil",
             "number_of_license_to_be_deliver": 4,
@@ -972,6 +972,7 @@ The API will return three error types when requests fail:
             "effective_date_for_invoice_payment": "2022-10-20",
             "invoice_payment_method": "Nil",
             "interest_rate_apply_to_late_payment": 2450.55,
+            "add_warranty_optional_element": false,
             "optional_element": "",
             "is_warranty_relate_to_a_specific_period": true,
             "scope_of_warranty": "Nil",
@@ -1049,6 +1050,7 @@ The API will return three error types when requests fail:
                 "software_product_license_name": "Sample Mix",
                 "software_product_license_name_uc": "",
                 "liability_remedy_amount": 2542.45,
+                "liability_remedy_amount_currency": "USA",
                 "state_law_applies": "India",
                 "jurisdiction_city": "Mobai",
                 "jurisdiction_state": "India",
@@ -1438,7 +1440,6 @@ The API will return three error types when requests fail:
     "what_is_the_charges_for_rush_work": 560.0,
     "what_is_the_charges_for_rush_work_currency": "USD",
     "whom_should_the_invoices_be_submitted_to": "flash",
-    "whom_should_the_invoices_be_submitted_to_department_name": "nil",
     "when_should_the_invoices_be_submitted": "2025-10-20",
     "when_will_the_invoices_be_payable_by_after_receipt": "2025-10-20"
 
