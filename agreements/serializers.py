@@ -37,8 +37,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     party_2_registrar_office_address_2 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     party_2_registrar_office_address_3 = serializers.CharField(max_length=255,allow_blank=True, required=False, default="")
     party_2_principal_place_of_business = serializers.CharField(max_length=255)
-    charges_payable = serializers.DecimalField(
-        max_digits=18, decimal_places=2, default=0)
+    charges_payable = serializers.DecimalField(max_digits=18, decimal_places=2, default=0)
     software_document_identification = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
     contract_effective_date = serializers.DateField()
     minimum_terms_apply = serializers.IntegerField(default=1)
@@ -56,7 +55,7 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     terms_of_contract_duration = serializers.IntegerField(default=0)
     terms_of_contract_duration_unit = serializers.CharField(max_length=50)
     is_inline_copy_right_remove = serializers.BooleanField(default=False)
-    is_term_of_contract_indefinite = serializers.BooleanField(default=False)
+    is_term_of_contract_indefinite = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
     contract_termination_date = serializers.DateField()
     events_that_will_cause_contract_to_be_terminated = serializers.CharField(
         max_length=255)
@@ -75,6 +74,8 @@ class SoftwareLicensePolicySerializer(serializers.Serializer):
     invoice_payment_method = serializers.CharField(max_length=100)
     interest_rate_apply_to_late_payment = serializers.DecimalField(
         max_digits=18, decimal_places=2, default=0)
+
+    add_warranty_optional_element = serializers.BooleanField(default=False)
     optional_element = serializers.CharField(max_length=500,allow_blank=True, required=False, default="")
     is_warranty_relate_to_a_specific_period = serializers.BooleanField(
         default=False)
@@ -305,6 +306,7 @@ class EulaSerializer(serializers.Serializer):
     software_product_license_name_uc = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
 
     liability_remedy_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
+    liability_remedy_amount_currency = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     state_law_applies = serializers.CharField(max_length=150)
     jurisdiction_city = serializers.CharField(max_length=150)
     jurisdiction_state = serializers.CharField(max_length=150)
