@@ -67,20 +67,24 @@ def calculate_percentage(data_1, data_2, type_of_data):
             # check if item exist
             if key in data_2_formated:
                 # check if value is equal
-                if value == data_2_formated[key]:
+                if value and data_2_formated[key]:
+                    # if all value are true
                     result += score
-                else:
+                elif value != data_2_formated[key]:
+                    # if one of the value is true
                     result += (float(score) / float(2))
-            
+      
     
     else:
         for key, value in data_2_formated.items():
             # check if item exist
             if key in data_1_formated:
                 # check if value is equal
-                if value == data_1_formated[key]:
+                if value and data_1_formated[key]:
+                    # if all value are true
                     result += score
-                else:
+                elif value != data_1_formated[key]:
+                    # if one of the value is true
                     result += (float(score) / float(2))
 
 
@@ -130,17 +134,17 @@ if __name__ == "__main__":
     # Condition Percentage
     condition_1 = [
         {"Disclose Source": True},
-        {"Network Use is for Distribution": True},
+        {"Network Use is for Distribution": False},
         {"Release Under Same License": True},
         {"State changes": True},
-        {"License and Copyright Notice": True}
+        {"License and Copyright Notice": False}
     ]
     condition_2 = [
         {"Disclose Source": True},
         {"Network Use is for Distribution": False},
         {"Release Under Same License": True},
         {"State changes": True},
-        {"License and Copyright Notice": True}
+        {"License and Copyright Notice": False}
     ]
 
     print("condition %: ", calculate_percentage(condition_1, condition_2, "condition"))
