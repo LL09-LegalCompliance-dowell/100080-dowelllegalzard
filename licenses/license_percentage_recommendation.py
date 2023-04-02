@@ -21,13 +21,18 @@ def calculate_percentage_recommendation(license_1:dict, license_2:dict) -> int:
     source_percentage = 0
     must_include_percentage = 0
 
-
-    permission_percentage = calculate_percentage(license_1['permissions'], license_2['permissions'], "permission")
-    condition_percentage = calculate_percentage(license_1['conditions'], license_2['conditions'], "condition")
-    limitation_percentage = calculate_percentage(license_1['limitations'], license_2['limitations'], "limitation")
-    # law_percentage = calculate_percentage(license_1['laws'], license_2['laws'], "law")
-    # source_percentage = calculate_percentage(license_1['sources'], license_2['sources'], "source")
-    # must_include_percentage = calculate_percentage(license_1['must_includes'], license_2['must_includes'], "must include")
+    if "permissions" in license_1 and "permissions" in license_2:
+        permission_percentage = calculate_percentage(license_1['permissions'], license_2['permissions'], "permission")
+    if "conditions" in license_1 and "conditions" in license_2:
+        condition_percentage = calculate_percentage(license_1['conditions'], license_2['conditions'], "condition")
+    if "limitations" in license_1 and "limitations" in license_2:
+        limitation_percentage = calculate_percentage(license_1['limitations'], license_2['limitations'], "limitation")
+    if "laws" in license_1 and "laws" in license_2:
+        law_percentage = calculate_percentage(license_1['laws'], license_2['laws'], "law")
+    if "sources" in license_1 and "sources" in license_2:
+        source_percentage = calculate_percentage(license_1['sources'], license_2['sources'], "source")
+    if "must_includes" in license_1 and "must_includes" in license_2:
+        must_include_percentage = calculate_percentage(license_1['must_includes'], license_2['must_includes'], "must include")
 
 
     return int(sum(

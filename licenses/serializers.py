@@ -38,6 +38,9 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     conditions = serializers.ListField(default=[])
     limitations = serializers.ListField(default=[])
     references  = serializers.ListField(default=[])
+    laws  = serializers.ListField(default=[])
+    sources  = serializers.ListField(default=[])
+    must_includes  = serializers.ListField(default=[])
 
 
     def to_representation(self, document: dict, id):
