@@ -20,6 +20,7 @@ from utils.dowell import (
     COMPARISON_HISTORY_KEY
 )
 from licenses.serializers import SoftwareLicenseSerializer
+from licenses.license_percentage_recommendation import calculate_percentage_recommendation
 
 
 class SoftwareLicenseList(APIView):
@@ -184,8 +185,8 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_one}
             )
-
             license_one = license_one_json["data"][0]['softwarelicense']
+
 
             # Get license two
             license_two_json = fetch_document(
@@ -193,6 +194,7 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_two}
             )
+            license_two = license_two_json["data"][0]['softwarelicense']
 
             
             # Get licence comparision
@@ -210,18 +212,16 @@ class SoftwareLicenseList(APIView):
             if license_comparison_json["data"]:
                 license_comparison = license_comparison_json["data"][0]["attributes"]
 
-                
-
-            # Get license compatible list
-            license_two = license_two_json["data"][0]['softwarelicense']
-            license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
-
-
-            # Check for compatibility
-            if license_one["license_name"] in license_compatible_with_lookup:
+            
+            # license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
+            percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
+            if percentage_of_compatibility >= 60:
                 is_compatible = True
 
 
+            # Update percentage_of_compatibility
+            license_comparison['percentage_of_compatibility'] = percentage_of_compatibility
+            
 
             comparison_detail = {
                 "is_compatible": is_compatible,
