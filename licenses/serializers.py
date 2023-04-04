@@ -38,7 +38,7 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     conditions = serializers.ListField(default=[])
     limitations = serializers.ListField(default=[])
     references  = serializers.ListField(default=[])
-    laws  = serializers.ListField(default=[])
+    laws  = serializers.CharField(max_length=150)
     sources  = serializers.ListField(default=[])
     must_includes  = serializers.ListField(default=[])
 
