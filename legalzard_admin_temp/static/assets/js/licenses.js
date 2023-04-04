@@ -47,6 +47,12 @@ const limitationData = [
 ]
 let limitationSelectOption = "";
 
+const sourceData = [
+    "FSF",
+    "OSI"
+]
+let sourceSelectOption = "";
+
 
 
 document.addEventListener("DOMContentLoaded", function(event){
@@ -59,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     const licensePermissionAddEl = document.getElementById("btn-add-permissions");
     const licenseConditionAddEl = document.getElementById("btn-add-conditions");
     const licenseLimitationAddEl = document.getElementById("btn-add-limitations");
+    const sourceAddEl = document.getElementById("btn-add-source");
 
 
     
@@ -100,6 +107,12 @@ document.addEventListener("DOMContentLoaded", function(event){
 
     if(licenseLimitationAddEl){
         licenseLimitationAddEl.onclick = function(event){
+            formatAddLimitation("", "");
+        };
+    }
+
+    if(sourceAddEl){
+        sourceAddEl.onclick = function(event){
             formatAddLimitation("", "");
         };
     }
@@ -1155,6 +1168,59 @@ const formatAddLimitation = (action="", permission="") => {
 
 const deleteLicenseLimitation = () => {
     const deleteEl = document.querySelectorAll(".license-limitation-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+
+// Limitation
+const formatAddSource = (action="", permission="") => {
+    licenseSourceAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-source-${licenseSourceAddCount}-key">
+            ${limitationSelectOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-source-${licenseSourceAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+            <button type="button" data-tag-id="license-source-${licenseSourceAddCount}" class="btn btn-outline-danger license-limitation-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-source-${licenseSourceAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-source-${licenseSourceAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-source`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-source-container")
+    containerEl.appendChild(divEl);
+
+
+    if(action){
+        document.getElementById(`license-source-${licenseLimitationAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-source-${licenseLimitationAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseSource();
+}
+
+const deleteLicenseSource = () => {
+    const deleteEl = document.querySelectorAll(".license-source-delete");
     deleteEl.forEach(element => {
 
         element.onclick = function(event){
