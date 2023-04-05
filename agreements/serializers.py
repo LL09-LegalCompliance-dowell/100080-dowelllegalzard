@@ -303,7 +303,6 @@ class EulaSerializer(serializers.Serializer):
     company_details_nature_of_company = serializers.CharField(max_length=150)
     software_product = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     software_product_license_name = serializers.CharField(max_length=150)
-    software_product_license_name_uc = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
 
     liability_remedy_amount = serializers.DecimalField(max_digits=18, decimal_places=2, default = 0)
     liability_remedy_amount_currency = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
