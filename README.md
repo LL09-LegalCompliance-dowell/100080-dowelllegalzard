@@ -1048,7 +1048,6 @@ The API will return three error types when requests fail:
                 "company_details_nature_of_company": "Individual",
                 "software_product": "Sample 2",
                 "software_product_license_name": "Sample Mix",
-                "software_product_license_name_uc": "",
                 "liability_remedy_amount": 2542.45,
                 "liability_remedy_amount_currency": "USA",
                 "state_law_applies": "India",
