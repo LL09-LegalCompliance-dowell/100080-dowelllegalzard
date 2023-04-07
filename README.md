@@ -1008,7 +1008,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
             "party_1_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_1_signatory": "party 1 name",
             "party_1_date_of_signing_contract": "2022-11-02",
@@ -1017,7 +1017,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
             "party_2_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_2_signatory": "party 2 name",
             "party_2_date_of_signing_contract": "2022-11-05",
