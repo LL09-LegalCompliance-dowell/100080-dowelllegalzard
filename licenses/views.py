@@ -128,16 +128,8 @@ class SoftwareLicenseList(APIView):
                 response_json, status_code = self.check_license_compatibility(
                     request, format)
             else:
+
                 request_data["is_active"] = True
-
-                # Create other license attributes
-                if "other_attributes" in request_data:
-                    if request_data['other_attributes']:
-                        _thread.start_new_thread(
-                            SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
-
-
-
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
@@ -408,12 +400,6 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             request_data = request.data
-
-
-            # Create other license attributes
-            if request_data['other_attributes']:
-                _thread.start_new_thread(
-                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
 
 
             # Update and Commit data into database
