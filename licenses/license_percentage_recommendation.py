@@ -14,7 +14,6 @@ def calculate_percentage_recommendation(license_1:dict, license_2:dict) -> int:
         two licenses and return the result 
     """
 
-
     permission_percentage = 0
     condition_percentage = 0
     limitation_percentage = 0
