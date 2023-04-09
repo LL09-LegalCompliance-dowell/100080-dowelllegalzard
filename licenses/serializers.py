@@ -31,13 +31,13 @@ class SoftwareLicenseSerializer(serializers.Serializer):
     logo_detail = serializers.DictField()
     recommendation = serializers.CharField(max_length=30000, default="", allow_blank=True, required=False)
     is_active = serializers.BooleanField(default=True)
-    license_attributes = serializers.DictField()
-    license_compatible_with_lookup = serializers.ListField(default=[])
-    license_not_compatible_with_lookup = serializers.ListField(default=[])
     permissions = serializers.ListField(default=[])
     conditions = serializers.ListField(default=[])
     limitations = serializers.ListField(default=[])
     references  = serializers.ListField(default=[])
+    laws  = serializers.CharField(max_length=150)
+    sources  = serializers.ListField(default=[])
+    must_includes  = serializers.ListField(default=[])
 
 
     def to_representation(self, document: dict, id):

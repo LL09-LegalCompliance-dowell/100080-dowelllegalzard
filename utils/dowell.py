@@ -14,7 +14,8 @@ SOFTWARE_LICENSE_COLLECTION = "softwarelicenses"
 COMMON_ATTRIBUTE_COLLECTION = "common_attributes"
 ATTRIBUTE_COLLECTION = "attributes"
 CONTACT_COLLECTION = "contact"
-# LICENSE_TYPE_COLLECTION = "license_types"
+COMPARISON_HISTORY_COLLECTION = "license_compatibility_history"
+
 
 # DOCUMENTS
 SOFTWARE_AGREEMENT_DOCUMENT_NAME = "agreements"
@@ -22,7 +23,7 @@ SOFTWARE_LICENSE_DOCUMENT_NAME = "softwarelicense"
 COMMON_ATTRIBUTE_DOCUMENT_NAME = "common_attributes"
 ATTRIBUTE_DOCUMENT_NAME = "attributes"
 CONTACT_DOCUMENT_NAME = "contacts"
-# LICENSE_TYPE_DOCUMENT_NAME = "license_type"
+COMPARISON_HISTORY_DOCUMENT_NAME = "license_compatibility_history"
 
 # DOCUMENT KEY
 SOFTWARE_AGREEMENT_KEY = "agreement"
@@ -30,7 +31,7 @@ SOFTWARE_LICENSE_KEY = "softwarelicense"
 COMMON_ATTRIBUTE_KEY = "common_attributes"
 ATTRIBUTE_MAIN_KEY = "attributes"
 CONTACT_KEY = "contacts"
-# LICENSE_MAIN_KEY = "license_type"
+COMPARISON_HISTORY_KEY = "license_compatibility_history"
 
 # TEAM ID
 SOFTWARE_AGREEMENT_TEAM_ID = "10008002"
@@ -38,7 +39,7 @@ SOFTWARE_LICENSE_TEAM_ID = "10008001"
 COMMON_ATTRIBUTE_TEAM_ID = "10008005"
 ATTRIBUTE_MAIN_TEAM_ID = "10008004"
 CONTACT_TEAM_ID = "10008702"
-# LICENSE_MAIN_TEAM_ID = ""
+COMPARISON_HISTORY_TEAM_ID = "1000800002"
 
 # FUNCTION ID
 DEFAULT_FUNC_ID = "ABCDE"
@@ -278,11 +279,14 @@ def get_team_id(collection):
     elif collection == CONTACT_COLLECTION:
         team_id = CONTACT_TEAM_ID
 
+    elif collection == COMPARISON_HISTORY_COLLECTION:
+        team_id = COMPARISON_HISTORY_TEAM_ID
+
     return team_id
 
 
 def get_function_id(collection):
-    func_id = ""
+    func_id = DEFAULT_FUNC_ID
 
     if collection == SOFTWARE_AGREEMENT_COLLECTION:
         func_id = DEFAULT_FUNC_ID

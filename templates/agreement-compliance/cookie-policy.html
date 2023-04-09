@@ -3,13 +3,11 @@
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 	<style type="text/css">
+      #wrap {
+        max-width: 800px;
+      }
 
-	#wrap {
-	max-width: 800px;
-	}
-
-	*{max-width: 100%}
-
+      *{max-width: 100%}
 	ol.lst-kix_v0unugjre2nm-8.start {
 		counter-reset: lst-ctn-kix_v0unugjre2nm-8 0
 	}
@@ -1175,13 +1173,30 @@
 		widows: 2;
 		text-align: left
 	}
+	.hide{
+		display: none;
+		
+	}
+	.loader{
+		border: 16px solid #f3f3f3; 
+		margin-left: 50%;
+		border-top: 16px solid #3498db; 
+		border-radius: 50%;
+		width: 120px;
+		height: 120px;
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
 	</style>
 </head>
 
 <body   class="c49 doc-content"   id="body" data-event-id="${eventId}" data-base-url="${base_url}">
+	<div class="loader" id="loader">
+	<div class="hide" id="mainbody">
     <div id="wrap">
-
-
 	<p class="c47"><span class="c22">COOKIES POLICY</span></p>
 	<p class="c47"><span class="c1 ">DATE : </span><span class="c1 " id="date_of_document"></span></p>
 	<p class="c7"><span class="c14">At </span><span class="c14" id="party_full_name"></span><span class="c1"> , We use cookies to make Your overall experience on our Website better.</span></p>
@@ -1307,6 +1322,8 @@
 	<p class="c12"><span class="c1">If you have any questions about this Cookies Policy, You can contact us:</span></p>
 	<p class="c12"><span class="c30">&middot;</span><span class="c50">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">By email: </span><span id="contact_email"></span></p>
 </div>
+</div>
+</div>
 </body>
 
 </html>
@@ -1343,14 +1360,14 @@
 		// date_of_execution_of_document: "2025-10-20",
 		// party_full_name: "Individual and Company",
 		// will_the_cookie_store_personal_information: true,
-		// type_of_personal_information_store_by_cookies: ["Email", "Phone"],
+		// type_of_personal_information_store_by_cookies: ["Email", "Phone","omair"],
 		// other_type_of_personal_information_store_by_cookies: "Nil",
 		// does_your_website_or_app_use_essential_cookies: true,
 		// does_your_website_or_app_use_any_perfomance_and_functionality_cookies: true,
 		// does_your_website_or_app_use_marketing_cookies: true,
 		// does_your_website_or_app_use_analytic_and_customization_cookies: true,
 		// does_your_website_or_app_use_social_media_cookies: true,
-		// does_your_website_or_app_use_third_party_cookies: false,
+		// does_your_website_or_app_use_third_party_cookies: true,
 		// personal_information_store_by_third_party_cookies: ["Email", "IP Address"],
 		// does_your_website_or_app_show_ads: true,
 		// website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie: true,
@@ -1363,7 +1380,8 @@
 		// owner_of_third_party_cookies: "Sample 2"
 
         // }
-		 
+		 const main=document.getElementById("mainbody")
+		 const loader=document.getElementById("loader")
 		 const date_of_document=document.getElementById("date_of_document")
 		 const party_full_name=document.getElementById("party_full_name")
 		 const store_personal_info=document.getElementById("store_personal_info")
@@ -1375,40 +1393,52 @@
 		 const questions=document.getElementById("questions")
 		 const situations=document.getElementById("situations")
 		 const contact_email=document.getElementById("contact_email")
-
+		main.classList.remove("hide")
+		loader.classList.remove("loader")
 		 date_of_document.innerHTML=data.date_of_execution_of_document
 		 party_full_name.innerHTML=data.party_full_name
 
+		 
+
 		 if(data.will_the_cookie_store_personal_information===true){
-		 	store_personal_info.innerHTML='<div><p class="c7"><span class="c14 ">Analytics may collect information t</span><span class="c14 ">hrough log data such as:</span></p><ul class="c19 lst-kix_aamnrb46s14o-0 start"><li class="c3 li-bullet-0"><span class="c1">IP address (anonymised)</span></li><li class="c3 li-bullet-0"><span class="c1">Contact details</span></li><li class="c3 li-bullet-0"><span class="c1">Address</span></li></ul></div>'		
+		 	store_personal_info.innerHTML='<div><p class="c7"><span class="c14 ">Analytics may collect information t</span><span class="c14 ">hrough log data such as:</span></p></div>'		
 		}
+		data.type_of_personal_information_store_by_cookies.map((element,id)=>{
+			let element1 = document.createElement("p");
+			element1.setAttribute("class","c1 c3");
+			element1.setAttribute("id",id);
+			const id_ = id+1;
+			element1.innerText=id_+"-"+element
+			store_personal_info.appendChild(element1)
+
+		})
 		if (data.does_your_website_or_app_use_essential_cookies===true) {
 			essential_cookies.innerHTML='<div><h3 class="c13 " id="h.3ref5upfd6m2"><span class="c29 c32">Essential and non-essential cookies</span></h3><p class="c13 c11"><span class="c17 c14">Cookies can be classified as either &lsquo;essential&rsquo; or &lsquo;non-essential&rsquo;.</span></p><p class="c13 c11"><span class="c23">Essential cookies</span><span class="c29 c32">:</span><span class="c17 c14">&nbsp;these are cookies that are either:</span></p><ul class="c19 lst-kix_5zn147n3niep-0 start"><li class="c36 li-bullet-0"><span class="c17 c14">used solely to carry out or facilitate the transmission of communications over a network; or</span></li><li class="c36 li-bullet-0"><span class="c17 c14">strictly necessary to provide an online service (e.g. our website or a service on our website) which you have requested.</span></li></ul><p class="c13 c11"><span class="c23">Non-essential cookies</span><span class="c29 c32">:</span><span class="c17 c14">&nbsp;these are any cookies that do not fall within the definition of essential cookies, such as cookies used to analyze your behavior on a website (&lsquo;analytical&rsquo; cookies) or cookies used to display advertisements to you (&lsquo;advertising&rsquo; cookies).</span></p></div>'
 		}
 		if (data.does_your_website_or_app_use_any_perfomance_and_functionality_cookies=== true) {
-			var row = document.createElement("tr");
+			let row = document.createElement("tr");
 			row.setAttribute("class","c28")
 
-			var cell1 = document.createElement("td");
+			let cell1 = document.createElement("td");
 			cell1.setAttribute("class","c10")
 			cell1.setAttribute("colspan","1")
 			cell1.setAttribute("rowspan","1")
-			var par = document.createElement("p");
+			let par = document.createElement("p");
 			par.setAttribute("class","c11")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c17 c14")
 			span.innerText="PREFERENCE & FUNCTIONALITY COOKIES"
 			par.appendChild(span);
 			cell1.appendChild(par)
 			row.appendChild(cell1)
 			
-			var cell2 = document.createElement("td");
+			let cell2 = document.createElement("td");
 			cell2.setAttribute("class","c37")
 			cell2.setAttribute("colspan","1")
 			cell2.setAttribute("rowspan","1")
-			var par2 = document.createElement("p");
+			let par2 = document.createElement("p");
 			par2.setAttribute("class","c11")
-			var span2 = document.createElement("span");
+			let span2 = document.createElement("span");
 			span2.setAttribute("class","c17 c14")
 			span2.innerText="These cookies collect information about your choices and preferences and make using the website more practicalThey are non-essential to their use. However, without these cookies, certain functionality may become unavailable."
 			par2.appendChild(span2);
@@ -1419,29 +1449,29 @@
 		}
 
 		if (data.does_your_website_or_app_use_analytic_and_customization_cookies=== true) {
-			var row = document.createElement("tr");
+			let row = document.createElement("tr");
 			row.setAttribute("class","c28")
 
-			var cell1 = document.createElement("td");
+			let cell1 = document.createElement("td");
 			cell1.setAttribute("class","c10")
 			cell1.setAttribute("colspan","1")
 			cell1.setAttribute("rowspan","1")
-			var par = document.createElement("p");
+			let par = document.createElement("p");
 			par.setAttribute("class","c11")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c17 c14")
 			span.innerText="ANALYTICS & CUSTOMIZATION COOKIES"
 			par.appendChild(span);
 			cell1.appendChild(par)
 			row.appendChild(cell1)
 			
-			var cell2 = document.createElement("td");
+			let cell2 = document.createElement("td");
 			cell2.setAttribute("class","c37")
 			cell2.setAttribute("colspan","1")
 			cell2.setAttribute("rowspan","1")
-			var par2 = document.createElement("p");
+			let par2 = document.createElement("p");
 			par2.setAttribute("class","c11")
-			var span2 = document.createElement("span");
+			let span2 = document.createElement("span");
 			span2.setAttribute("class","c17 c14")
 			span2.innerText="These cookies collect information that is used either in aggregate form to help us understand how our websites are being used to help us improve our websites and application for you in order to enhance your experience."
 			par2.appendChild(span2);
@@ -1452,29 +1482,29 @@
 		}
 
 		if (data.does_your_website_or_app_use_marketing_cookies=== true) {
-			var row = document.createElement("tr");
+			let row = document.createElement("tr");
 			row.setAttribute("class","c28")
 
-			var cell1 = document.createElement("td");
+			let cell1 = document.createElement("td");
 			cell1.setAttribute("class","c10")
 			cell1.setAttribute("colspan","1")
 			cell1.setAttribute("rowspan","1")
-			var par = document.createElement("p");
+			let par = document.createElement("p");
 			par.setAttribute("class","c11")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c17 c14")
 			span.innerText="ADVERTSING (TARGETING) COOKIES "
 			par.appendChild(span);
 			cell1.appendChild(par)
 			row.appendChild(cell1)
 			
-			var cell2 = document.createElement("td");
+			let cell2 = document.createElement("td");
 			cell2.setAttribute("class","c37")
 			cell2.setAttribute("colspan","1")
 			cell2.setAttribute("rowspan","1")
-			var par2 = document.createElement("p");
+			let par2 = document.createElement("p");
 			par2.setAttribute("class","c11")
-			var span2 = document.createElement("span");
+			let span2 = document.createElement("span");
 			span2.setAttribute("class","c17 c14")
 			span2.innerText="These cookies are used to make advertising messages more relevant to you and your interests. They also perform functions like preventing the same ad from continuously reappearing, ensuring that ads are properly displayed, and in some cases selecting advertisements that are based on your interests."
 			par2.appendChild(span2);
@@ -1485,29 +1515,29 @@
 		}
 
 		if (data.does_your_website_or_app_use_social_media_cookies=== true) {
-			var row = document.createElement("tr");
+			let row = document.createElement("tr");
 			row.setAttribute("class","c28")
 
-			var cell1 = document.createElement("td");
+			let cell1 = document.createElement("td");
 			cell1.setAttribute("class","c10")
 			cell1.setAttribute("colspan","1")
 			cell1.setAttribute("rowspan","1")
-			var par = document.createElement("p");
+			let par = document.createElement("p");
 			par.setAttribute("class","c11")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c17 c14")
 			span.innerText="SOCIAL MEDIA COOKIES: "
 			par.appendChild(span);
 			cell1.appendChild(par)
 			row.appendChild(cell1)
 			
-			var cell2 = document.createElement("td");
+			let cell2 = document.createElement("td");
 			cell2.setAttribute("class","c37")
 			cell2.setAttribute("colspan","1")
 			cell2.setAttribute("rowspan","1")
-			var par2 = document.createElement("p");
+			let par2 = document.createElement("p");
 			par2.setAttribute("class","c11")
-			var span2 = document.createElement("span");
+			let span2 = document.createElement("span");
 			span2.setAttribute("class","c17 c14")
 			span2.innerText="In order to enhance your internet experience and to make the sharing of content easier, some of the pages on our website may contain tools or applications that are linked to third-party social media services providers such as Facebook or Twitter. Through these tools or applications, the social media service provider may set its own Cookies on your device. We do not control these Cookies and you should check the social media service provider's website for further details about how they use Cookies."
 			par2.appendChild(span2);
@@ -1523,66 +1553,66 @@
 			Technologies.innerHTML='<span class="c14 ">We also use additional tracking Technologies, for the following purposes.</span>'
 		}
 		if(data.does_your_website_or_app_use_third_party_cookies===true){
-			var par = document.createElement("p");
+			let par = document.createElement("p");
 			par.setAttribute("class","c7")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c22")
 			span.innerText="Our full list of cookies"
 			par.appendChild(span)
 			third_party_cookies.appendChild(par)
 
-			var par1 = document.createElement("p");
+			let par1 = document.createElement("p");
 			par1.setAttribute("class","c7")
-			var span1 = document.createElement("span");
+			let span1 = document.createElement("span");
 			span1.setAttribute("class","c1")
 			span1.innerText="The full list of cookies we use on our website is below:"
 			par1.appendChild(span1)
 			third_party_cookies.appendChild(par1)
 
-			var par2 = document.createElement("p");
+			let par2 = document.createElement("p");
 			par2.setAttribute("class","c7")
-			var span2 = document.createElement("span");
+			let span2 = document.createElement("span");
 			span2.setAttribute("class","c1")
 			span2.innerText="Third party cookies"
 			par2.appendChild(span2)
 			third_party_cookies.appendChild(par2)
 
-			var par3 = document.createElement("p");
+			let par3 = document.createElement("p");
 			par3.setAttribute("class","c7")
-			var span3 = document.createElement("span");
+			let span3 = document.createElement("span");
 			span3.setAttribute("class","c1")
 			span3.innerText="1. Age"
 			par3.appendChild(span3)
 			third_party_cookies.appendChild(par3)
 
-			var par4 = document.createElement("p");
+			let par4 = document.createElement("p");
 			par4.setAttribute("class","c7")
-			var span4 = document.createElement("span");
+			let span4 = document.createElement("span");
 			span4.setAttribute("class","c14")
 			span4.innerText="2. Gender"
 			par4.appendChild(span4)
 			third_party_cookies.appendChild(par4)
 
-			var par5 = document.createElement("p");
+			let par5 = document.createElement("p");
 			par5.setAttribute("class","c7")
-			var span5 = document.createElement("span");
+			let span5 = document.createElement("span");
 			span5.setAttribute("class","c14")
 			span5.innerText="3.User behaviour"
 			par5.appendChild(span5)
 			third_party_cookies.appendChild(par5)
 			if(data.personal_information_store_by_third_party_cookies.length>0){
-				var par6 = document.createElement("p");
+				let par6 = document.createElement("p");
 				par6.setAttribute("class","c7")
-				var span6 = document.createElement("span");
+				let span6 = document.createElement("span");
 				span6.setAttribute("class","c1")
 				span6.innerText="Personal information will be stored by third party cookies:"
 				par6.appendChild(span6)
 				third_party_cookies.appendChild(par6)
-				var ol=document.createElement("ul")
+				let ol=document.createElement("ul")
 				ol.setAttribute("class","c7")
 
 				for (let index = 0; index <data.personal_information_store_by_third_party_cookies.length; index++) {
-					var li=document.createElement("li")
+					let li=document.createElement("li")
 					li.setAttribute("class","c14")
 					li.innerText=data.personal_information_store_by_third_party_cookies[index]
 					ol.appendChild(li)
@@ -1592,18 +1622,18 @@
 
 		}
 		if (data.which_medium_can_website_users_raise_question_regarding_cookies.email !== "") {
-			var li = document.createElement("li");
+			let li = document.createElement("li");
 			li.setAttribute("class","c21 li-bullet-0")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c15 ")
 			span.innerText="Email: " + data.which_medium_can_website_users_raise_question_regarding_cookies.email
 			li.appendChild(span)
 			questions.appendChild(li)
 		}
 		if (data.which_medium_can_website_users_raise_question_regarding_cookies.website !== "") {
-			var li = document.createElement("li");
+			let li = document.createElement("li");
 			li.setAttribute("class","c21 li-bullet-0")
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.setAttribute("class","c15 ")
 			span.innerText="website chat services: " + data.which_medium_can_website_users_raise_question_regarding_cookies.website
 			li.appendChild(span)

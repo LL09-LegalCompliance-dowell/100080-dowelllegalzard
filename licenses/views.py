@@ -6,6 +6,7 @@ import _thread
 import uuid
 from utils.dowell import (
     fetch_document,
+    save_document,
     
     SOFTWARE_LICENSE_COLLECTION,
     ATTRIBUTE_COLLECTION,
@@ -13,9 +14,13 @@ from utils.dowell import (
     SOFTWARE_LICENSE_DOCUMENT_NAME,
     ATTRIBUTE_DOCUMENT_NAME,
     RECORD_PER_PAGE,
-    BASE_IMAGE_URL
+    BASE_IMAGE_URL,
+    COMPARISON_HISTORY_COLLECTION,
+    COMPARISON_HISTORY_DOCUMENT_NAME,
+    COMPARISON_HISTORY_KEY
 )
 from licenses.serializers import SoftwareLicenseSerializer
+from licenses.license_percentage_recommendation import calculate_percentage_recommendation
 
 
 class SoftwareLicenseList(APIView):
@@ -28,22 +33,69 @@ class SoftwareLicenseList(APIView):
             limit = RECORD_PER_PAGE
             offset = int(request.GET.get("offset", "0"))
             action_type = request.GET.get("action_type", "")
+            collection_type = request.GET.get("collection_type", "license")
+            user_id = request.GET.get("user_id", "")
+            organization_id = request.GET.get("organization_id", "")
+
             response_json = {}
             status_code = 500
 
             if action_type == "search":
-                response_json, status_code = self.search_license(
-                    request, format)
-            else:
-                # Retrieve license on remote server
-                response_json = fetch_document(
-                    collection=SOFTWARE_LICENSE_COLLECTION,
-                    document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-                    fields={"softwarelicense.is_active": True}
-                )
 
-                response_json = self.add_license_logo_url(response_json)
-                status_code = status.HTTP_200_OK
+                if collection_type == "license":
+                    response_json, status_code = self.search_license(
+                        request, format)
+                    response_json = self.add_license_logo_url(response_json)
+
+                elif collection_type == "license-compatibility-history":
+                    pass
+                    # response_json, status_code = self.search_license(
+                    #     request, format)
+
+            else:
+
+                
+                # Retrieve license on remote server
+                if collection_type == "license":
+                    
+                    response_json = fetch_document(
+                        collection=SOFTWARE_LICENSE_COLLECTION,
+                        document=SOFTWARE_LICENSE_DOCUMENT_NAME,
+                        fields={"softwarelicense.is_active": True}
+                    )
+                    response_json = self.add_license_logo_url(response_json)
+                    status_code = status.HTTP_200_OK
+
+
+                elif collection_type == "license-compatibility-history":
+                    user_id = int(user_id)
+
+                    if organization_id and user_id:
+                        print("working")
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={
+                                "license_compatibility_history.organization_id": organization_id,
+                                "license_compatibility_history.user_id": user_id
+                                }
+                        )
+                    elif organization_id and user_id == "":
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={"license_compatibility_history.organization_id": organization_id}
+                        )
+
+                    elif organization_id == "" and user_id == "":
+                        response_json = fetch_document(
+                            collection=COMPARISON_HISTORY_COLLECTION,
+                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                            fields={}
+                        )
+
+                    status_code = status.HTTP_200_OK
+
 
             return Response(
                 response_json,
@@ -76,16 +128,8 @@ class SoftwareLicenseList(APIView):
                 response_json, status_code = self.check_license_compatibility(
                     request, format)
             else:
+
                 request_data["is_active"] = True
-
-                # Create other license attributes
-                if "other_attributes" in request_data:
-                    if request_data['other_attributes']:
-                        _thread.start_new_thread(
-                            SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
-
-
-
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
@@ -133,8 +177,8 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_one}
             )
-
             license_one = license_one_json["data"][0]['softwarelicense']
+
 
             # Get license two
             license_two_json = fetch_document(
@@ -142,6 +186,7 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_two}
             )
+            license_two = license_two_json["data"][0]['softwarelicense']
 
             
             # Get licence comparision
@@ -159,30 +204,77 @@ class SoftwareLicenseList(APIView):
             if license_comparison_json["data"]:
                 license_comparison = license_comparison_json["data"][0]["attributes"]
 
-                
-
-            # Get license compatible list
-            license_two = license_two_json["data"][0]['softwarelicense']
-            license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
+            
 
             
 
-            # Check for compatibility
-            if license_one["license_name"] in license_compatible_with_lookup:
-                is_compatible = True
+            comparison_detail = {}
+            if license_comparison:
+
+                # license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
+                percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
+                if percentage_of_compatibility >= 60:
+                    is_compatible = True
 
 
-            return ({
-                "is_compatible": is_compatible,
-                "license_comparison": license_comparison
+                # Update percentage_of_compatibility
+                license_comparison['percentage_of_compatibility'] = percentage_of_compatibility
 
-            }), status.HTTP_200_OK
+
+                comparison_detail = {
+                    "is_compatible": is_compatible,
+                    "license_comparison": license_comparison,
+                    "identifier": identifier
+                }
+
+                # log current comparison to history
+                _thread.start_new_thread(
+                    SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
+                
+                return (comparison_detail), status.HTTP_200_OK
+            
+            else:
+                return ({}), status.HTTP_500_INTERNAL_SERVER_ERROR
+
 
         # The code below will
         # execute when error occur
         except Exception as e:
             print(f"{e}")
             return {"error_msg": f"{e}"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+
+    @staticmethod
+    def log_comparison_history(request, comparison_detail):
+        """ log comparison to history
+        """
+        try:
+
+            user_id = request.data.get("user_id", 0)
+            organization_id = request.data.get("organization_id", "")
+
+            if user_id and organization_id:
+                data = {
+                    "organization_id": organization_id,
+                    "user_id": user_id,
+                    "comparison_detail": comparison_detail
+                }
+
+                # Create log
+                response_json = save_document(
+                    collection=COMPARISON_HISTORY_COLLECTION,
+                    document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                    key=COMPARISON_HISTORY_KEY,
+                    value=data
+                )
+            
+        # The code below will
+        # execute when error occur
+        except Exception as e:
+            print(f"{e}")
+
+
+
 
     # SEARCH FOR LICENSES HERE
 
@@ -190,7 +282,7 @@ class SoftwareLicenseList(APIView):
         """ Load linceses base on search term
         """
         try:
-            print("I was called")
+
             limit = RECORD_PER_PAGE
             offset = int(request.GET.get("offset", "0"))
             search_term = request.GET.get("search_term", "")
@@ -214,6 +306,10 @@ class SoftwareLicenseList(APIView):
 
     @staticmethod
     def add_license_logo_url(response_data):
+
+        if "data" not in response_data:
+            return response_data
+        
         data_list = response_data['data']
         new_data_list = []
 
@@ -310,12 +406,6 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             request_data = request.data
-
-
-            # Create other license attributes
-            if request_data['other_attributes']:
-                _thread.start_new_thread(
-                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
 
 
             # Update and Commit data into database

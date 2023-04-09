@@ -387,7 +387,13 @@ The API will return three error types when requests fail:
 
 - General:
   - Check for compatibility between two software license with the submitted json data, return true if compatible else return false.
-- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d ' { "license_event_id_one": "FB1010000000166123835456631894", "license_event_id_two": "FB1010000000166123810354118614", "action_type": "check-compatibility" } '`
+- `curl http://127.0.0.1:8000/api/licenses/ -X POST -H "Content-Type: application/json" -d '{
+    "action_type": "check-compatibility",
+    "license_event_id_one": "FB1010000000166184126356826496",
+    "license_event_id_two": "FB1010000000016618418385506453",
+    "user_id": 4585,
+    "organization_id": "ROD345OS443345OS443OSS"
+}'`
 
 - You can also open the link `http://127.0.0.1:8000/api/licenses/` in a browser and perform the post operation
 
@@ -913,6 +919,7 @@ The API will return three error types when requests fail:
 ```
 {
             "agreement_compliance_type": "software-license-policy",
+            "website_or_app_name": "Website Name",
             "organization_id": "ROD345OS443345OS443OSS",
             "date_of_execution_of_document": "2025-10-20",
             "party_1_entity_type": "Individual",
@@ -949,7 +956,7 @@ The API will return three error types when requests fail:
             "terms_of_contract_duration": 50,
             "terms_of_contract_duration_unit": "Months",
             "is_inline_copy_right_remove": false,
-            "is_term_of_contract_indefinite": false,
+            "is_term_of_contract_indefinite": "Term is indefinite",
             "contract_termination_date": "2022-10-20",
             "events_that_will_cause_contract_to_be_terminated": "Nil",
             "number_of_license_to_be_deliver": 4,
@@ -966,6 +973,7 @@ The API will return three error types when requests fail:
             "effective_date_for_invoice_payment": "2022-10-20",
             "invoice_payment_method": "Nil",
             "interest_rate_apply_to_late_payment": 2450.55,
+            "add_warranty_optional_element": false,
             "optional_element": "",
             "is_warranty_relate_to_a_specific_period": true,
             "scope_of_warranty": "Nil",
@@ -1000,7 +1008,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
             "party_1_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_1_signatory": "party 1 name",
             "party_1_date_of_signing_contract": "2022-11-02",
@@ -1009,7 +1017,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
             "party_2_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_2_signatory": "party 2 name",
             "party_2_date_of_signing_contract": "2022-11-05",
@@ -1026,6 +1034,7 @@ The API will return three error types when requests fail:
 ```
  {
                 "agreement_compliance_type": "eula",
+                "website_or_app_name": "Website Name",
                 "organization_id": "ROD345OS443345OS443OSS",
                 "date_of_execution_of_document": "2025-10-20",
                 "party_details_full_name": "Individual and Company",
@@ -1041,8 +1050,8 @@ The API will return three error types when requests fail:
                 "company_details_nature_of_company": "Individual",
                 "software_product": "Sample 2",
                 "software_product_license_name": "Sample Mix",
-                "software_product_license_name_uc": "",
                 "liability_remedy_amount": 2542.45,
+                "liability_remedy_amount_currency": "USA",
                 "state_law_applies": "India",
                 "jurisdiction_city": "Mobai",
                 "jurisdiction_state": "India",
@@ -1059,6 +1068,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "mou",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_1_entity_type": "Organization",
@@ -1108,6 +1118,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "website-terms-of-use",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "terms_last_updated": "2025-10-20",
     "full_name_of_the_party": "Website Owner",
@@ -1158,6 +1169,7 @@ The API will return three error types when requests fail:
 ```
  {
     "agreement_compliance_type": "non-compete-agreement",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
@@ -1175,11 +1187,24 @@ The API will return three error types when requests fail:
     "will_there_be_a_litigation_matter_in_case_of_dispute": false,
     "which_state_should_abide_litigation_matter": "",
     "will_electronic_notices_be_allowed": "yes",
-    "name_of_witnesses": "Seth",
-    "signature_of_witnesses_detail": {
+
+    "name_of_witnesse_1": "Seth 1",
+    "signature_of_witnesse_1_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
+    "witnesse_1_address_line_1": "",
+    "witnesse_1_address_line_2": "",
+    "witnesse_1_address_line_3": "",
+
+    "name_of_witnesse_2": "Seth 2",
+    "signature_of_witnesse_2_detail": {
+                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
+                "file_extension": "png"
+            },
+    "witnesse_2_address_line_1": "",
+    "witnesse_2_address_line_2": "",
+    "witnesse_2_address_line_3": "",
 
     "company_nature_of_work": "",
     "employee_job_title": ""
@@ -1193,6 +1218,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "cookie-policy",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
@@ -1225,7 +1251,7 @@ The API will return three error types when requests fail:
     "agreement_compliance_type": "app-disclaimer",
     "organization_id": "ROD345OS443345OS443OSS",
     "last_update": "2025-10-20",
-    "app_name": "App"
+    "app_name": "Legal Zard"
 }
 ```
 
@@ -1253,6 +1279,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "nda",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "party_1_full_name": "Party 1 Name 2",
     "party_1_address_line_1": "India Street",
@@ -1382,7 +1409,8 @@ The API will return three error types when requests fail:
     "company_name": "Company Name Test",
     "website_or_app_name": "websiteexample",
     "website_url": "http://websiteexample.com/",
-    "support_email": "access@example.com"
+    "support_email": "access@example.com",
+    "jurisdiction": "India"
 
 }
 ```
@@ -1391,6 +1419,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "statement-of-work",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "client_full_name": "Client Name",
     "jurisdiction": "India Law",
@@ -1418,7 +1447,6 @@ The API will return three error types when requests fail:
     "what_is_the_charges_for_rush_work": 560.0,
     "what_is_the_charges_for_rush_work_currency": "USD",
     "whom_should_the_invoices_be_submitted_to": "flash",
-    "whom_should_the_invoices_be_submitted_to_department_name": "nil",
     "when_should_the_invoices_be_submitted": "2025-10-20",
     "when_will_the_invoices_be_payable_by_after_receipt": "2025-10-20"
 
@@ -1430,6 +1458,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "gdpr-privacy-policy",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "location": "india 1",
     "jurisdictional_laws": "India law",
@@ -1903,6 +1932,142 @@ The API will return three error types when requests fail:
     ]
 }
 ```
+
+
+
+#### GET /api/agreements/?action_type=agreement-compliance-generated-by-orgainization&organization_id={value-here}
+
+- General:
+  - Returns a list of agreement compliance generated by organization objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/agreements/?action_type=agreement-compliance-generated-by-orgainization&organization_id=63cf89a0dcc2a171957b290b` or open link in a browser
+
+```
+{
+    "isSuccess": true,
+    "data": {
+        "app-disclaimer": [
+            {
+                "_id": "63e5f25d11e0c32a598d22f8",
+                "eventId": "FB1010000000167601415557403007",
+                "agreement": {
+                    "agreement_compliance_type": "app-disclaimer",
+                    "last_update": "2023-02-10",
+                    "app_name": "s",
+                    "organization_id": "63cf89a0dcc2a171957b290b",
+                    "event_id": "FB1010000000167601415557403007",
+                    "pdf_document_name": "AGREEMENTSFB1010000000167601415557403007_1676014166619293.pdf",
+                    "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000167601415557403007/"
+                }
+            },
+            {
+                "_id": "63ea263e7f4aa8f650164810",
+                "eventId": "FB1010000000016762895905991901",
+                "agreement": {
+                    "agreement_compliance_type": "app-disclaimer",
+                    "last_update": "2023-02-13",
+                    "app_name": "Legalzard",
+                    "organization_id": "63cf89a0dcc2a171957b290b",
+                    "event_id": "FB1010000000016762895905991901",
+                    "pdf_document_name": "AGREEMENTSFB1010000000016762895905991901_16762895963959544.pdf",
+                    "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000016762895905991901/"
+                }
+            }
+        ],
+        "app-privacy-policy": [
+            {
+                "_id": "63e5e6a7294c17758c8d15ad",
+                "eventId": "FB1010000000167601116059184818",
+                "agreement": {
+                    "agreement_compliance_type": "app-privacy-policy",
+                    "last_update": "2023-02-09",
+                    "company_name": "s",
+                    "app_name": "s",
+                    "app_url": "https://hshs.com",
+                    "website_contact_page_url": "https://hshs.com",
+                    "website_contact_email": "hamza23@gmail.com",
+                    "organization_id": "63cf89a0dcc2a171957b290b",
+                    "event_id": "FB1010000000167601116059184818",
+                    "pdf_document_name": "AGREEMENTSFB1010000000167601116059184818_16760111697079487.pdf",
+                    "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000167601116059184818/"
+                }
+            }
+        ],
+        "cookie-policy": [
+            {
+                "_id": "63e5f32211e0c32a598d238b",
+                "eventId": "FB1010000000016760143545458136",
+                "agreement": {
+                    "agreement_compliance_type": "cookie-policy",
+                    "date_of_execution_of_document": "2023-02-10",
+                    "party_full_name": "z",
+                    "will_the_cookie_store_personal_information": false,
+                    "type_of_personal_information_store_by_cookies": [],
+                    "other_type_of_personal_information_store_by_cookies": "z",
+                    "does_your_website_or_app_use_essential_cookies": false,
+                    "does_your_website_or_app_use_any_perfomance_and_functionality_cookies": false,
+                    "does_your_website_or_app_use_marketing_cookies": false,
+                    "does_your_website_or_app_use_analytic_and_customization_cookies": false,
+                    "does_your_website_or_app_use_social_media_cookies": false,
+                    "does_your_website_or_app_use_third_party_cookies": false,
+                    "personal_information_store_by_third_party_cookies": [],
+                    "does_your_website_or_app_show_ads": false,
+                    "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": false,
+                    "which_medium_can_website_users_raise_question_regarding_cookies": {
+                        "email": "",
+                        "website": "z"
+                    },
+                    "provide_situations_where_cookies_may_be_collected_without_consent_of_users": "z",
+                    "name_of_third_party_cookies": "z",
+                    "owner_of_third_party_cookies": "z",
+                    "organization_id": "63cf89a0dcc2a171957b290b",
+                    "event_id": "FB1010000000016760143545458136",
+                    "pdf_document_name": "AGREEMENTSFB1010000000016760143545458136_16760143647682867.pdf",
+                    "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000016760143545458136/"
+                }
+            },
+            {
+                "_id": "63ec9faa2c177b4ce20ba1ed",
+                "eventId": "FB1010000000167645174757588892",
+                "agreement": {
+                    "agreement_compliance_type": "cookie-policy",
+                    "date_of_execution_of_document": "2023-02-15",
+                    "party_full_name": "john",
+                    "will_the_cookie_store_personal_information": false,
+                    "type_of_personal_information_store_by_cookies": [],
+                    "other_type_of_personal_information_store_by_cookies": "detailss",
+                    "does_your_website_or_app_use_essential_cookies": false,
+                    "does_your_website_or_app_use_any_perfomance_and_functionality_cookies": false,
+                    "does_your_website_or_app_use_marketing_cookies": false,
+                    "does_your_website_or_app_use_analytic_and_customization_cookies": false,
+                    "does_your_website_or_app_use_social_media_cookies": false,
+                    "does_your_website_or_app_use_third_party_cookies": true,
+                    "personal_information_store_by_third_party_cookies": [
+                        "IP Addresses",
+                        "User Behavior"
+                    ],
+                    "does_your_website_or_app_show_ads": false,
+                    "website_uses_other_technologies_to_perform_other_functions_achieved_via_cookie": false,
+                    "which_medium_can_website_users_raise_question_regarding_cookies": {
+                        "email": "sdsd@gmail.com",
+                        "website": ""
+                    },
+                    "provide_situations_where_cookies_may_be_collected_without_consent_of_users": "situations",
+                    "name_of_third_party_cookies": "sdsd",
+                    "owner_of_third_party_cookies": "sdsd",
+                    "organization_id": "63cf89a0dcc2a171957b290b",
+                    "event_id": "FB1010000000167645174757588892",
+                    "pdf_document_name": "AGREEMENTSFB1010000000167645174757588892_16764517535753999.pdf",
+                    "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000167645174757588892/"
+                }
+            }
+        ]
+    }
+}
+```
+
+
+
+
 
 ### Attibutes
 
@@ -2611,6 +2776,268 @@ The API will return three error types when requests fail:
     "event_id": "FB1010000000166909595159447637"
 }
 ```
+
+
+#### GET /api/licenses/?collection_type=license-compatibility-history
+
+- General:
+  - Returns a list of license comparison checked history objects, and success value
+- Sample: `curl http://127.0.0.1:8000/api/comparisons/` or open link in a browser
+- `curl http://127.0.0.1:8000/api/licenses/?collection_type=license-compatibility-history&user_id=4585&organization_id=ROD345OS443345OS443OSS`
+- `curl http://127.0.0.1:8000/api/licenses/?collection_type=license-compatibility-history&organization_id=ROD345OS443345OS443OSS`
+
+
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "640e49cebab572e4dba34861",
+            "eventId": "FB1010000000167865799253114822",
+            "license_compatibility_history": {
+                "organization_id": "ROD345OS443345OS443OSS",
+                "user_id": 4585,
+                "comparison_detail": {
+                    "is_compatible": false,
+                    "license_comparison": {
+                        "attribute_type": "comparisions",
+                        "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453,FB1010000000016618418385506453-FB1010000000166184126356826496",
+                        "license_1_event_id": "FB1010000000166184126356826496",
+                        "license_2_event_id": "FB1010000000016618418385506453",
+                        "license_1_logo_url": "https://100080.pythonanywhere.com/media/img/img_11630806-873b-4cc3-aa0d-9a302f7955bd.png",
+                        "license_2_logo_url": "https://100080.pythonanywhere.com/media/img/img_503d90b2-86e9-4f4d-aa82-2c09606ac1ca.wine",
+                        "license_1_name": "Apache License v2.0",
+                        "license_2_name": "Mozilla Public License v2.0",
+                        "license_1_version": "v2.0",
+                        "license_2_version": "v2.0",
+                        "comparisons": [
+                            {
+                                "category": "Code Is Protected By Copy Right",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "d38b9497-c207-4288-a1f0-31ca8e9a1fad"
+                            },
+                            {
+                                "category": "Code can be used in Closed Source Project",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "7909a62d-ccbe-4a30-9e86-3e9521cbbad5"
+                            },
+                            {
+                                "category": "Program that uses the Software can be sold Commercially",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "23d48791-07cc-47b5-8470-b59bba76773b"
+                            },
+                            {
+                                "category": "Sources to bug fixes and modification must be released",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "732966db-0795-478a-b28a-2e2ee145d818"
+                            },
+                            {
+                                "category": "Provides Explicit Patent License",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "bc2ddd40-3945-4616-aec5-7c324ac4d43f"
+                            },
+                            {
+                                "category": "Permissions in Addition to Commercial Use, Distribution, and Modification (Patent use)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "34e77361-cedf-4331-8fd2-ba8bc8b09626"
+                            },
+                            {
+                                "category": "Permissions in Addition to Commercial Use, Distribution, and Modification (Patent Grant)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "84cc1686-c078-4486-9226-12cb3e1bc89a"
+                            },
+                            {
+                                "category": "Conditions (Disclose Source)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "391c4189-5d0c-493f-9a85-81a269dde50a"
+                            },
+                            {
+                                "category": "Conditions (License and Copyright Notice)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "_id": "27cb5555-4a7f-494f-b829-cafb7e7bb16a"
+                            },
+                            {
+                                "category": "Conditions (Network Use is for Distribution)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "32edc941-b042-4b94-9a6a-383f3e7d38bd"
+                            },
+                            {
+                                "category": "Conditions (Release under Same License)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "Yes",
+                                    "additional_value": "condition- files"
+                                },
+                                "_id": "6863bf56-9a4e-4d0e-b0c3-d3de269147a2"
+                            },
+                            {
+                                "category": "Conditions (State Changes)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "Yes",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "58e4a2e1-9bbb-4c2c-8b07-faf7902852f1"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Liability)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "6a70e86d-7e88-4cc8-a5d9-421be2c799dd"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Warranty)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "22db40ff-16a3-41c1-91a6-1e910d32232c"
+                            },
+                            {
+                                "category": "Limitations/ Disclaimer (Trademark Use)",
+                                "licence_1": {
+                                    "name": "Apache License<V.2.0>",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "licence_2": {
+                                    "name": "Mozilla Public License",
+                                    "comparison_value": "No",
+                                    "additional_value": ""
+                                },
+                                "_id": "e7647966-339f-4ee6-ba9f-45d2e03b05b8"
+                            }
+                        ],
+                        "percentage_of_compatibility": 80,
+                        "recommendation": "The MPL is a simple weak copyleft license while Apache License 2.0 is a permissive license. The boundary between these two licenses is close to being different kinds of licenses.\nBoth the licenses can be used freely, modified, distributed and be sublicensed.\nBoth Apache and Mozilla Public License are OSI approved licenses.\nMozilla Foundation has created its own open source license, the Mozilla Public License.\nApache License allows you to do whatever you like to do with the software as long as you include the required notice.\n\nThe MPL's file-level copyleft is designed to encourage contributors to share modifications they make to your code, while still allowing them to combine your code with code under other licenses (open or proprietary) with minimal restrictions.\nThe MPL only creates obligations in case you want to distribute the software outside your organization.\nUnder Mozilla Public License the new code files can be kept proprietary or released under a different license. This is sometimes referred to as file-based copyleft. Including the full license text is not necessary.\n\nApache allows the software to be made proprietary which means that a person can combine his license, which is a permissive open source license with his own code and also choose to not make it open source after combining.\n\nMPL Vs Apache: Which is better?\nMPL 2.0 like the Apache 2.0 license protects from patent trolling and provides protections over patent lawsuits.\nJudge declarations due to inquiring about rights is allowed under MPL 2.0, but there's no specific reference of this in the Apache 2.0 license. MPL 2.0 has better defined clauses.\nApache 2.0 also requires modifications that aren't of its license to be indicated. MPL keeps modifications per file under its license terms.\nCode modifications applied to files under MPL 2.0, must be kept under this license, unlike Apache License 2.0. Also if the author keeps the MPL’d code in separate files, they can combine that code with closed-source code to create an aggregate work.\n\nWhy are earlier versions of Apache and MPL not compatible?\nSoftware with permissive (BSD-style) licenses can be incorporated into MPL 2.0, Apache License 2.0 and other licensed code. While MPL 2.0 and Apache License 2.0 can be used together, it adds to limitations on compatibility with other licenses that are incompatible with either.\nVersion 2.0 of Mozilla Public License is, by default, compatible with LGPL and GPL version 2 or greater.\nSoftware using previous MPL versions can be upgraded to MPL 2.0 without requiring the authors' consent. With this upgrade, putting the code under the newer license, allows Apache licensed code to be used with the software. The original authors' consent would still be required to opt-in to certain parts of MPL 2.0.",
+                        "recommendation_details": "",
+                        "disclaimer": "MPL 2.0\nLimitation of Liability\n\nUnder no circumstances and under no legal theory, whether tort (including negligence), contract, or otherwise, shall any Contributor, or anyone who distributes Covered Software as permitted above, be liable to You for any direct, indirect, special, incidental, or consequential damages of any character including, without limitation, damages for lost profits, loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses, even if such party shall have been informed of the possibility of such damages. This limitation of liability shall not apply to liability for death or personal injury resulting from such party's negligence to the extent applicable law prohibits such limitation. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so this exclusion and limitation may not apply to You.\n\nAPACHE 2.0\n\nLimitation of Liability.\nIn no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.",
+                        "is_active": true
+                    },
+                    "identifier": "FB1010000000166184126356826496-FB1010000000016618418385506453"
+                }
+            }
+        }
+    ]
+}
+```
+
+
+
 
 
 

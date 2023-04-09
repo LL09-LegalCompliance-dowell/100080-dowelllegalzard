@@ -76,15 +76,31 @@ class AgreementComplianceList(APIView):
 
             limit = int(request.GET.get("limit", "10"))
             offset = int(request.GET.get("offset", "0"))
+            action_type = request.GET.get("action_type", "")
+            organization_id = request.GET.get("organization_id", "")
+
 
             # Retrieve agreement on remote server
-            response_json = fetch_document(
-                collection=SOFTWARE_AGREEMENT_COLLECTION,
-                document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
-                fields={}
-            )
+            if action_type == "agreement-compliance-generated-by-orgainization":
+                response_json = fetch_document(
+                    collection=SOFTWARE_AGREEMENT_COLLECTION,
+                    document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                    fields={"agreement.organization_id": organization_id}
+                )
 
-            response_json = AgreementComplianceList.add_document_url(request, response_json)
+                response_json = AgreementComplianceList.sort_and_categorize_agreement_compliance(request, response_json)
+
+
+
+            else:
+
+                response_json = fetch_document(
+                    collection=SOFTWARE_AGREEMENT_COLLECTION,
+                    document=SOFTWARE_AGREEMENT_DOCUMENT_NAME,
+                    fields={}
+                )
+                response_json = AgreementComplianceList.add_document_url(request, response_json)
+
 
             return Response(response_json,
                             status=status.HTTP_200_OK
@@ -717,7 +733,6 @@ class AgreementComplianceList(APIView):
         # return result
         return response_json, status_code
 
-
     def create_gdpr_privacy_policy(self, request_data, response_json, status_code):
 
         from datetime import date
@@ -751,25 +766,21 @@ class AgreementComplianceList(APIView):
     def add_document_url(request, response_data):
         data_list = response_data['data']
         new_data_list = []
-        # preview_doc_url
-        # download_doc_url
 
         for data in data_list:
             agreement = data['agreement']
             # this code only execute
             # if the agreement object
             # does not have logo_detail field
-            if "pdf_document_name" not in agreement:
-                new_data_list.append(data)
-                continue
 
-            # agreement['preview_doc_url'] = f'{BASE_DOC_URL}{agreement["pdf_document_name"]}'
+            try:
 
-            agreement['html_doc_url'] = request.build_absolute_uri(
-                reverse('load_public_agreement_compliance', kwargs={'event_id': data["eventId"]}))
+                agreement['html_doc_url'] = request.build_absolute_uri(
+                    reverse('load_public_agreement_compliance', kwargs={'event_id': data["eventId"]}))
+                
+            except Exception as err:
+                print(str(err))
 
-            # agreement['download_doc_url'] = request.build_absolute_uri(
-            #     f'/download/?fn={agreement["pdf_document_name"]}')
 
             # add agreement to new data list
             data['agreement'] = agreement
@@ -779,6 +790,32 @@ class AgreementComplianceList(APIView):
             response_data['data'] = new_data_list
 
         return response_data
+
+
+    @staticmethod
+    def add_single_document_url(request, data):
+
+
+        agreement = data['agreement']
+        # this code only execute
+        # if the agreement object
+        # does not have logo_detail field
+
+
+        try:
+
+            agreement['html_doc_url'] = request.build_absolute_uri(
+                reverse('load_public_agreement_compliance', kwargs={'event_id': data["eventId"]}))
+            
+        except Exception as err:
+            print(str(err))
+
+
+        # add agreement to new data list
+        data['agreement'] = agreement
+
+        return data
+
 
 
     @staticmethod
@@ -824,6 +861,40 @@ class AgreementComplianceList(APIView):
         except Exception as err:
             print(str(err))
             return context
+
+
+
+    @staticmethod
+    def sort_and_categorize_agreement_compliance(request, response_data):
+        data_list = response_data['data']
+        data_list_sorted = sorted(data_list, key=lambda x: x["agreement"]["agreement_compliance_type"])
+
+        data_category = {}
+
+        # Categorize sorted data
+        for data in data_list_sorted:
+
+            agreement = data["agreement"]
+
+            # Add agreement compliance type as key to data_category
+            if agreement["agreement_compliance_type"] not in data_category:
+                data_category[agreement["agreement_compliance_type"]] = []
+
+
+            data = AgreementComplianceList.add_single_document_url(request, data)
+            data_category[agreement["agreement_compliance_type"]].append(data)
+
+        
+
+
+        # Update data
+        response_data["data"] = data_category
+
+        return response_data
+
+
+
+
 
 
 
@@ -1595,8 +1666,8 @@ def load_public_agreement_compliance(request, event_id:str):
         agreement = format_content(agreement)
 
         content = content.substitute(**agreement, base_url=base_url, eventId=data["eventId"])
-        # return html context
 
+        # return html context
         if format == "html":
             return HttpResponse(content= content)
 
@@ -1650,6 +1721,7 @@ def check_and_format_money(data:dict):
 
 def split_date_and_format_data(data):
     from datetime import date, datetime
+    form_datetime = ""
 
     if "date" in data:
         date_c = date.fromisoformat(data["date"])
@@ -1738,10 +1810,11 @@ def split_date_and_format_data(data):
             data["company_signatory_date"] = form_datetime
 
     if "employee_signatory_date" in data:
+        
         if data["employee_signatory_date"]:
             date_c = date.fromisoformat(data["employee_signatory_date"])
             form_datetime = date_c.strftime("%d/%m/%Y")
-            data["employee_signatory_date"] = form_datetime
+        data["employee_signatory_date"] = form_datetime
 
 
 
@@ -1863,19 +1936,37 @@ def format_content(data):
         data["employee_signatory_scanned_extension"] = employee_signatory_scanned_extension
 
 
-    if "signature_of_witnesses_detail" in data:
-        signature_of_witnesses_detail = data["signature_of_witnesses_detail"]
+    if "signature_of_witnesse_1_detail" in data:
+        signature_of_witnesse_1_detail = data["signature_of_witnesse_1_detail"]
         file_extension = "png"
         filename = ""
 
-        if "file_extension" in signature_of_witnesses_detail:
-            file_extension = signature_of_witnesses_detail["file_extension"].lower()
+        if "file_extension" in signature_of_witnesse_1_detail:
+            file_extension = signature_of_witnesse_1_detail["file_extension"].lower()
         
-        if "filename" in signature_of_witnesses_detail:
-            filename = signature_of_witnesses_detail["filename"]
+        if "filename" in signature_of_witnesse_1_detail:
+            filename = signature_of_witnesse_1_detail["filename"]
 
-        data["signature_of_witnesses_detail_file_extension"] = file_extension
-        data["signature_of_witnesses_detail_filename"] = filename
+        data["signature_of_witnesse_1_detail_file_extension"] = file_extension
+        data["signature_of_witnesse_1_detail_filename"] = filename
+
+
+
+    if "signature_of_witnesse_2_detail" in data:
+        signature_of_witnesse_2_detail = data["signature_of_witnesse_2_detail"]
+        file_extension = "png"
+        filename = ""
+
+        if "file_extension" in signature_of_witnesse_2_detail:
+            file_extension = signature_of_witnesse_2_detail["file_extension"].lower()
+        
+        if "filename" in signature_of_witnesse_2_detail:
+            filename = signature_of_witnesse_2_detail["filename"]
+
+        data["signature_of_witnesse_2_detail_file_extension"] = file_extension
+        data["signature_of_witnesse_2_detail_filename"] = filename
+
+
 
 
     if "party_1_signatory_scanned_copy_detail" in data:

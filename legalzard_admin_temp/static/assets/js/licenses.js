@@ -4,6 +4,56 @@ let fileData = {};
 let licenseTagAddCount = 0;
 let licenseReferenceAddCount = 0;
 let responseStatus = 400;
+let licensePermissionAddCount = 0;
+let licenseConditionAddCount = 0;
+let licenseLimitationAddCount = 0;
+let licenseLawAddCount = 0;
+let licenseSourceAddCount = 0;
+let licenseMustIncludeAddCount = 0;
+
+const permissionData = [
+    "Commercial Use",
+    "Distribute",
+    "Distribution",
+    "Modification",
+    "Patent Use",
+    "Patent Grant",
+    "Private Use",
+    "Place Warranty",
+    "Trademark Grant"
+]
+let permissionSelectOption = "";
+
+const conditionData = [
+    "Network Use is for Distribution",
+    "Release Under Same License",
+    "License and Copyright Notice",
+    "State Changes",
+    "Include Original",
+    "Disclose Source",
+    "Include Copyright",
+    "Include License",
+    "Include Notice",
+    "Give Credit"
+]
+let conditionSelectOption = "";
+
+const limitationData = [
+    "Liability",
+    "Warranty",
+    "Trademark use",
+    "Sublicense",
+    "Hold Liable"
+]
+let limitationSelectOption = "";
+
+const sourceData = [
+    "FSF",
+    "OSI"
+]
+let sourceSelectOption = "";
+
+
 
 document.addEventListener("DOMContentLoaded", function(event){
 
@@ -12,14 +62,32 @@ document.addEventListener("DOMContentLoaded", function(event){
     const licenseBtnSaveEl = document.getElementById("btn-save-license");
     const licenseTagAddEl = document.getElementById("btn-add-license-tag");
     const licenseReferenceAddEl = document.getElementById("btn-add-references");
+    const licensePermissionAddEl = document.getElementById("btn-add-permissions");
+    const licenseConditionAddEl = document.getElementById("btn-add-conditions");
+    const licenseLimitationAddEl = document.getElementById("btn-add-limitations");
+    const licenseSourceAddEl = document.getElementById("btn-add-source");
 
 
     
     if(licenseImageEl){
         licenseImageEl.onchange = uploadFile;
 
-        loadLicenseDropdown();
-        loadCommonAttributeDropdown();
+        // Load license detail
+        // methodType is PUT
+        const licenseFormEl = document.getElementById("license-form");
+        const methodType = licenseFormEl.getAttribute("data-method-type")
+        if(licenseFormEl){
+
+            if(methodType === "PUT"){
+                const licenseEventId = licenseFormEl.getAttribute("data-event-id");
+                loadLicenseDetailForUpdate(licenseEventId);
+            }else{
+                document.getElementById("license-form").style.display = "block";
+                document.getElementById("page-spinner").style.display = "none";
+            }
+
+        }
+
     }
 
 
@@ -38,6 +106,31 @@ document.addEventListener("DOMContentLoaded", function(event){
             formatAddReference("", "");
         };
     }
+    // 
+    if(licensePermissionAddEl){
+        licensePermissionAddEl.onclick = function(event){
+            formatAddPermission("", "");
+        };
+    }
+
+    if(licenseConditionAddEl){
+        licenseConditionAddEl.onclick = function(event){
+            formatAddCondition("", "");
+        };
+    }
+
+    if(licenseLimitationAddEl){
+        licenseLimitationAddEl.onclick = function(event){
+            formatAddLimitation("", "");
+        };
+    }
+
+    if(licenseSourceAddEl){
+        licenseSourceAddEl.onclick = function(event){
+            formatAddSource("", "");
+        };
+    }
+
 
     if(tableBodyEl){
         loadTable();
@@ -89,13 +182,29 @@ document.addEventListener("DOMContentLoaded", function(event){
             // END delete of license detail
 
     }
-  
 
 
 
+    // Select Option Content
+    permissionSelectOption = permissionData.map((data, index) => {
 
+        return `<option value="${data}">${data}</option>`;
+    })
 
+    conditionSelectOption = conditionData.map((data, index) => {
 
+        return `<option value="${data}">${data}</option>`;
+    })
+
+    limitationSelectOption = limitationData.map((data, index) => {
+
+        return `<option value="${data}">${data}</option>`;
+    })
+
+    sourceSelectOption = sourceData.map((data, index) => {
+
+        return `<option value="${data}">${data}</option>`;
+    })
 
 
 })
@@ -161,7 +270,6 @@ const saveDataToDatabase = (event) =>{
     const errorContentEl = document.querySelector("#error-content");
     const licenseEventId = formEl.getAttribute("data-event-id");
     const methodType = formEl.getAttribute("data-method-type");
- 
     const licenseDescription = document.querySelector("#license-description").value;
     const shortDescription = document.querySelector("#short-description").value;
     const licenseName = document.querySelector("#license-name").value;
@@ -171,15 +279,10 @@ const saveDataToDatabase = (event) =>{
     const disclaimer = document.querySelector("#disclaimer").value;
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license").value;
     const limitationOfLiability = document.querySelector("#limitation-of-liability").value;
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
-    const licenseAttribute = document.querySelectorAll('#license-attribute option:checked');
-    const licenseCompatibleWith = document.querySelectorAll('#license-compatible-with option:checked');
-    const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
-    let otherLicenseAttribute = document.querySelector("#other-license-attribute").value;
     const btnSaveData = document.querySelector("#btn-save-license");
-    const permissions = document.querySelectorAll('#permissions option:checked');
-    const conditions = document.querySelectorAll('#conditions option:checked');
-    const limitations = document.querySelectorAll('#limitations option:checked');
+    const mustIncludes = document.querySelectorAll('#must-includes option:checked');
+    const laws = document.querySelector("#law").value;
+
 
 
 
@@ -198,52 +301,12 @@ const saveDataToDatabase = (event) =>{
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
 
-        const licenseNotCompatibleWithList = [];
-        for (let option of licenseNotCompatibleWith) {
-            licenseNotCompatibleWithList.push(option.value);
-        } 
-        
-        const licenseCompatibleWithList = [];
-        for (let option of licenseCompatibleWith) {
-            licenseCompatibleWithList.push(option.value);
+
+        const mustIncludesList = [];
+        for (let option of mustIncludes) {
+            mustIncludesList.push(option.value);
         }
 
-        const licenseAttributeList = [];
-        const otherLicenseAttributeList = [];
-        for (let option of licenseAttribute) {
-            licenseAttributeList.push(option.value);
-        }
-
-        console.log(otherLicenseAttribute)
-        // Other attributes
-        otherLicenseAttribute = otherLicenseAttribute.trim();
-        if (otherLicenseAttribute !== ""){
-            if (otherLicenseAttribute.includes(",")){
-
-                for (let attribute of otherLicenseAttribute.split(",")){
-                    licenseAttributeList.push(sanitizeText(attribute.trim()));
-                    otherLicenseAttributeList.push(sanitizeText(attribute.trim()));
-                }
-            }else{
-                licenseAttributeList.push(otherLicenseAttribute);
-                otherLicenseAttributeList.push(otherLicenseAttribute);
-            }
-        }
-
-        const permissionsList = [];
-        for (let option of permissions) {
-            permissionsList.push(option.value);
-        }
-
-        const conditionsList = [];
-        for (let option of conditions) {
-            conditionsList.push(option.value);
-        }
-
-        const limitationsList = [];
-        for (let option of limitations) {
-            limitationsList.push(option.value);
-        }
 
 
         // Format data
@@ -267,16 +330,12 @@ const saveDataToDatabase = (event) =>{
                 url: ""
             },
             recommendation: " ",
-            license_attributes: {
-                heading: sanitizeText(licenseAttributeHeading),
-                attributes: licenseAttributeList
-            },
-            license_compatible_with_lookup: licenseCompatibleWithList,
-            license_not_compatible_with_lookup: licenseNotCompatibleWithList,
-            other_attributes: otherLicenseAttributeList,
-            permissions: permissionsList,
-            conditions: conditionsList,
-            limitations: limitationsList,
+            permissions: getLicenseCompatibilityAttributeContent("permission"),
+            conditions: getLicenseCompatibilityAttributeContent("condition"),
+            limitations: getLicenseCompatibilityAttributeContent("limitation"),
+            sources: getLicenseCompatibilityAttributeContent("source"),
+            must_includes: mustIncludesList,
+            laws: laws,
             references: getLicenseReferenceContent()
             
         }
@@ -308,13 +367,18 @@ const saveDataToDatabase = (event) =>{
 
         }).then(jsonData => {
 
-                // set error 
-                errorContainerEl.style.display = "block";
-                errorContentEl.textContent = jsonData.error_msg;
+            if(typeof jsonData === 'undefined') {
+                console.log('Return object is either the special value `undefined`, or it has not been declared');
+            }else{
+               // set error 
+               errorContainerEl.style.display = "block";
+               errorContentEl.textContent = jsonData.error_msg;
 
-                // deactivate loading
-                btnSaveData.innerHTML = "Save";
-                btnSaveData.disabled = false;
+               // deactivate loading
+               btnSaveData.innerHTML = "Save";
+               btnSaveData.disabled = false;
+            }
+ 
 
         }).catch(function(err){
 
@@ -375,12 +439,6 @@ const loadTable = () => {
         tableSpinnerEl.style.display = "none";
 
     })
-
-
-   
-
-    
-
 }
 
 const loadLicenseDetailForUpdate = (licenseEventId) => {
@@ -396,7 +454,6 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
     const disclaimer = document.querySelector("#disclaimer")
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license")
     const limitationOfLiability = document.querySelector("#limitation-of-liability")
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading")
 
 
     const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
@@ -406,6 +463,7 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     }).then(function(response){
+
         if (response.status === 200){
             return response.json();
         }else{
@@ -428,16 +486,13 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         disclaimer.value = license.disclaimer;
         riskForChoosingLicense.value = license.risk_for_choosing_license;
         limitationOfLiability.value = license.limitation_of_liability;
-        licenseAttributeHeading.value = license.license_attributes.heading;
         licenseImageViewEl.setAttribute("src", license.logo_detail.url);
         licenseImageViewContainerEl.style.display = "block";
 
-        $("#license-attribute").val(license.license_attributes.attributes);
-        $("#license-compatible-with").val(license.license_compatible_with_lookup);
-        $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
-        $("#permissions").val(license.permissions);
-        $("#conditions").val(license.conditions);
-        $("#limitations").val(license.limitations);
+
+        $("#must-includes").val(license.must_includes);
+        $("#law").val(license.laws);
+
 
         // display license tags
         if(license["license_tags"] !== undefined){
@@ -459,7 +514,46 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
                 formatAddReference(action, permission);
             })
         }
+
+        // display license permissions
+        if(license["permissions"] !== undefined){
+
+            license.permissions.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddPermission(action, permission);
+            })
+        }
+
+        // display license conditions
+        if(license["conditions"] !== undefined){
+
+            license.conditions.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddCondition(action, permission);
+            })
+        }
+
+        // display license limitations
+        if(license["limitations"] !== undefined){
+
+            license.limitations.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddLimitation(action, permission);
+            })
+        }
         
+        // display license source
+        if(license["sources"] !== undefined){
+
+            license.sources.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddSource(action, permission);
+            })
+        }
 
         document.getElementById("page-spinner").style.display = "none";
         document.getElementById("license-form").style.display = "block";
@@ -554,6 +648,25 @@ const loadCommonAttributeDropdown = () => {
         }
 
         licenseAttributeEl.innerHTML = content;
+
+
+        // Load license detail
+        // methodType is PUT
+        const licenseFormEl = document.getElementById("license-form");
+        const methodType = licenseFormEl.getAttribute("data-method-type")
+        if(licenseFormEl){
+
+            if(methodType === "PUT"){
+                const licenseEventId = licenseFormEl.getAttribute("data-event-id");
+                loadLicenseDetailForUpdate(licenseEventId);
+            }else{
+                document.getElementById("license-form").style.display = "block";
+                document.getElementById("page-spinner").style.display = "none";
+            }
+
+        }
+
+
         
 
     }).catch(function(err){
@@ -584,12 +697,10 @@ const tableContent = (index, data) => {
                   <td>${license.version}</td>
                   <td><img src="${imageUrl}" height="50px" alt="${license.license_name}"></td>
                   <td style="width: 10px;">
-
                     <div class="btn-group" role="group" aria-label="action">
                         <a href="/temp-admin/license-edit/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
                         <a href="#" data-license-version="${license.version}" data-license-name="${license.license_name}"   data-id="${data.eventId}" data-bs-toggle="modal" data-bs-target="#delete-license-modal" class="btn btn-danger delete-license">Delete</a>
                     </div>
-
                   </td>
             </tr>    
             `
@@ -600,31 +711,18 @@ const tableContent = (index, data) => {
 const validateInput = () => {
     let isValid = true;
 
-    // const licenseDescription = document.querySelector("#license-description").value;
+
     const licenseName = document.querySelector("#license-name").value;
     const version = document.querySelector("#version").value;
     const typeOfLicense = document.querySelector("#type-of-license").value;
     const licenseUrl = document.querySelector("#license-url").value;
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
-    const licenseAttribute = document.querySelectorAll("#license-attribute  option:checked");
-    
-
-    const licenseAttributeList = [];
-    for (let option of licenseAttribute) {
-        licenseAttributeList.push(option.value);
-    }
-
-
 
     const licenseNameErrorEl = document.querySelector("#license-name-error");
     const versionErrorEl = document.querySelector("#version-error");
     const typeOfLicenseErrorEl = document.querySelector("#type-of-license-error");
     const licenseUrlErrorEl = document.querySelector("#license-url-error");
-    const licenseAttributeHeadingErrorEl = document.querySelector("#license-attribute-heading-error");
-    const licenseAttributeErrorEl = document.querySelector("#license-attribute-error");
-    const licenseCompatibleWithErrorEl = document.querySelector("#license-compatible-with-error");
-    // const descriptionErrorEl = document.querySelector("#description-error");
     const licenseImageErrorEl = document.querySelector("#license-image-error");
+
 
     if (licenseName === ""){
         isValid = false;
@@ -647,35 +745,12 @@ const validateInput = () => {
         typeOfLicenseErrorEl.style.display = "none";
     }
 
-
     if (licenseUrl === ""){
         isValid = false;
         licenseUrlErrorEl.style.display = "block";
     }else{
         licenseUrlErrorEl.style.display = "none";
     }
-
-    if (licenseAttributeHeading === ""){
-        isValid = false;
-        licenseAttributeHeadingErrorEl.style.display = "block";
-    }else{
-        licenseAttributeHeadingErrorEl.style.display = "none";
-    }
-
-
-    if (licenseAttributeList){
-        licenseAttributeErrorEl.style.display = "none";
-    }else{
-        isValid = false;
-        licenseAttributeErrorEl.style.display = "block";
-    }
-
-    // if (licenseDescription === ""){
-    //     isValid = false;
-    //     descriptionErrorEl.style.display = "block";
-    // }else{
-    //     descriptionErrorEl.style.display = "none";
-    // }
 
     if (fileData){
         licenseImageErrorEl.style.display = "none";
@@ -685,8 +760,8 @@ const validateInput = () => {
     }
 
 
-
     return isValid;
+
 }
 
 
@@ -783,6 +858,7 @@ const getLicenseReferenceContent = () => {
     return licenseReferences;
 }
 
+
 const formatAddReference = (action="", permission="") => {
     licenseReferenceAddCount += 1;
     const divEl = document.createElement('div')
@@ -828,8 +904,6 @@ const deleteLicenseReference = () => {
 }
 
 
-
-
 const deleteLicense = () => {
     console.log("worl")
     const deleteBtnEls = document.querySelectorAll(".delete-license");
@@ -856,6 +930,249 @@ const deleteLicense = () => {
 
 const sanitizeText = (text) => {
     return text.replace(/["${}]/g,"");
+}
+
+
+
+// Permission
+const formatAddPermission = (action="", permission="") => {
+    licensePermissionAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-permission-${licensePermissionAddCount}-key">
+            ${permissionSelectOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-permission-${licensePermissionAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+        <button type="button" data-tag-id="license-permission-${licensePermissionAddCount}" class="btn btn-outline-danger license-permission-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-permission-${licensePermissionAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-permission-${licensePermissionAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-permission`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-permission-container")
+    containerEl.appendChild(divEl);
+
+    if(action){
+        document.getElementById(`license-permission-${licensePermissionAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-permission-${licensePermissionAddCount}-value`).value = permission;
+    }
+
+    deleteLicensePermission();
+}
+
+const deleteLicensePermission = () => {
+    const deleteEl = document.querySelectorAll(".license-permission-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            console.log(tagId)
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+const getLicenseCompatibilityAttributeContent = (selected) => {
+
+    const licenseOtherAttributes = [];
+    console.log(selected)
+    
+    const licenseReferenceEl = document.querySelectorAll(`.license-${selected}`);
+    licenseReferenceEl.forEach(element => {
+        const id = element.getAttribute(`data-tag-id`);
+        console.log(id)
+        let key = document.querySelector(`#${id}-key`).value;
+        const value = document.querySelector(`#${id}-value`).value;
+
+        if (value && key){
+
+            // format data
+            key = key.replace(":", "").trim();
+            const data = {};
+            data["action"] = key.trim();
+            data["permission"] = value.trim();
+
+            licenseOtherAttributes.push(data);
+
+        }
+
+
+    })
+
+    return licenseOtherAttributes;
+}
+
+
+// Condition
+const formatAddCondition = (action="", permission="") => {
+    licenseConditionAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-condition-${licenseConditionAddCount}-key">
+            ${conditionSelectOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-condition-${licenseConditionAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+            <button type="button" data-tag-id="license-condition-${licenseConditionAddCount}" class="btn btn-outline-danger license-condition-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-condition-${licenseConditionAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-condition-${licenseConditionAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-condition`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-condition-container")
+    containerEl.appendChild(divEl);
+
+    if(action){
+        document.getElementById(`license-condition-${licenseConditionAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-condition-${licenseConditionAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseCondition();
+}
+
+const deleteLicenseCondition = () => {
+    const deleteEl = document.querySelectorAll(".license-condition-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            console.log(tagId)
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+
+// Limitation
+const formatAddLimitation = (action="", permission="") => {
+    licenseLimitationAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-limitation-${licenseLimitationAddCount}-key">
+            ${limitationSelectOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-limitation-${licenseLimitationAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+            <button type="button" data-tag-id="license-limitation-${licenseLimitationAddCount}" class="btn btn-outline-danger license-limitation-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-limitation-${licenseLimitationAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-limitation-${licenseLimitationAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-limitation`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-limitation-container")
+    containerEl.appendChild(divEl);
+
+
+    if(action){
+        document.getElementById(`license-limitation-${licenseLimitationAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-limitation-${licenseLimitationAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseLimitation();
+}
+
+const deleteLicenseLimitation = () => {
+    const deleteEl = document.querySelectorAll(".license-limitation-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
+
+// Limitation
+const formatAddSource = (action="", permission="") => {
+    licenseSourceAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-source-${licenseSourceAddCount}-key">
+            ${sourceSelectOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-source-${licenseSourceAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+            <button type="button" data-tag-id="license-source-${licenseSourceAddCount}" class="btn btn-outline-danger license-source-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-source-${licenseSourceAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-source-${licenseSourceAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-source`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-source-container")
+    containerEl.appendChild(divEl);
+
+
+    if(action){
+        document.getElementById(`license-source-${licenseSourceAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-source-${licenseSourceAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseSource();
+}
+
+const deleteLicenseSource = () => {
+    const deleteEl = document.querySelectorAll(".license-source-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
 }
 
 

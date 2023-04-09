@@ -197,120 +197,112 @@
         </div>
 
 
-
         <div class="col-lg-12">
 
           <div class="card">
-            <div   class="card-body">
-              <h5 class="card-title">License attributes</h5>
-
-              <div  class="col-12 other-info">
-                <label for="license-attribute-heading" class="form-label">Attribute Heading <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" value="TERMS AND CONDITIONS" id="license-attribute-heading">
-                <p id="license-attribute-heading-error" style="color: red; display: none;">Attribute Heading required</p>
-              </div>
-
-
-              <div class="col-12 other-info">
-                <label for="type-of-license" class="form-label">Attributes <span style="color: red;">*</span></label>
-                <select required multiple size="8" id="license-attribute" class="form-select selectpicker">
-                  <option value="0" selected disabled>--please choose--</option>
-                </select>
-                <p id="license-attribute-error" style="color: red; display: none;">Attributes required</p>
-              </div>
-
-              <div class="col-md-12 other-info">
-                <br><label for="other-license-attribute" class="form-label">Other Attribute</label>
-                <br><small>seperate attributes with comma i.e (sample1,sample2)</small>
-                <textarea class="form-control" id="other-license-attribute" rows="3"></textarea>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div   class="card-body">
-              <h5 class="card-title">Compatible Licenses</h5>
-
-              <div class="col-12 other-info">
-                <select  required multiple size="8" id="license-compatible-with" class="form-select">
-                  <option value="0" selected disabled>--please choose--</option>
-                </select>
-                <p id="license-compatible-with-error" style="color: red; display: none;">License compatible with required</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div   class="card-body">
-              <h5 class="card-title">Incompatible Licenses</h5>
-
-              <div class="col-12 other-info">
-                <select required multiple size="8" id="license-not-compatible-with" class="form-select">
-                  <option value="0" selected disabled>--please choose--</option>
-                </select>
-                <p id="license-not-compatible-with-error" style="color: red; display: none;">License not compatible with required</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div   class="card-body">
+            <div class="card-body">
               <h5 class="card-title">Permissions</h5>
+              <div id="license-permission-container" class="col-lg-12">
 
-              <div class="col-12 other-info">
-                <select required multiple size="8" id="permissions" class="form-select">
-                  <option value="0" selected disabled>--please choose--</option>
-                  <option value="Commercial Use">Commercial Use</option>
-                  <option value="Distribute">Distribute</option>
-                  <option value="Distribution">Distribution</option>
-                  <option value="Modify">Modify</option>
-                  <option value="Modification">Modification</option>
-                  <option value="Patent Use">Patent Use</option>
-                  <option value="Private Use">Private Use</option>
-                  <option value="Place Warranty">Place Warranty</option>
-                  <option value="Sublicense">Sublicense</option>
-                  <option value="Use Patent Claims">Use Patent Claims</option>
-                  
-                </select>
-                <p id="permissions-error" style="color: red; display: none;">Permissions required</p>
+                <!--TAGS ARE DISPLAY HERE-->
+
+
               </div>
 
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-permissions" class="btn btn-outline-primary">Add permission</button>
+              </div>
             </div>
           </div>
+
+
         </div>
+
+
 
         <div class="col-lg-12">
 
           <div class="card">
-            <div   class="card-body">
+            <div class="card-body">
               <h5 class="card-title">Conditions</h5>
+              <div id="license-condition-container" class="col-lg-12">
+
+                <!--TAGS ARE DISPLAY HERE-->
+
+
+              </div>
+
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-conditions" class="btn btn-outline-primary">Add condition</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Limitations</h5>
+              <div id="license-limitation-container" class="col-lg-12">
+
+                <!--TAGS ARE DISPLAY HERE-->
+
+
+              </div>
+
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-limitations" class="btn btn-outline-primary">Add limitation</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Source</h5>
+              <div id="license-source-container" class="col-lg-12">
+
+                <!--TAGS ARE DISPLAY HERE-->
+
+
+              </div>
+
+              <div class="col-6 other-info">
+                <button type="button" id="btn-add-source" class="btn btn-outline-primary">Add source</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div   class="card-body">
+              <h5 class="card-title">Must Include</h5>
 
               <div class="col-12 other-info">
-                <select required multiple size="8" id="conditions" class="form-select">
+                <select required multiple size="8" id="must-includes" class="form-select">
                   <option value="0" selected disabled>--please choose--</option>
-                  <option value="License and Copyright notice">License and Copyright notice</option>
-                  <option value="State Changes">State Changes</option>
-                  <option value="Include Original">Include Original</option>
-                  <option value="Disclose Source">Disclose Source</option>
-                  <option value="Include Copyright">Include Copyright</option>
-                  <option value="Include License">Include License</option>
-                  <option value="Include Notice">Include Notice</option>
-                  <option value="Give Credit">Give Credit</option>
+                  <option value="License">License</option>
+                  <option value="Copyright Notice">Copyright Notice</option>                  
                 </select>
-                <p id="conditions-error" style="color: red; display: none;">Conditions required</p>
+                <p id="must-includes-error" style="color: red; display: none;">Must include required</p>
               </div>
 
             </div>
@@ -321,23 +313,21 @@
 
           <div class="card">
             <div   class="card-body">
-              <h5 class="card-title">Limitations</h5>
+              <h5 class="card-title">Law</h5>
 
               <div class="col-12 other-info">
-                <select required multiple size="8" id="limitations" class="form-select">
+                <select required id="law" class="form-select">
                   <option value="0" selected disabled>--please choose--</option>
-                  <option value="Liability">Liability</option>
-                  <option value="Use Trademark">Use Trademark</option>
-                  <option value="Warranty">Warranty</option>
-                  <option value="Sublicense">Sublicense</option>
-                  <option value="Hold Liable">Hold Liable</option>
+                  <option value="Fixed">Fixed</option>
+                  <option value="Not Fixed">Not Fixed</option>                  
                 </select>
-                <p id="limitations-error" style="color: red; display: none;">Limitations required</p>
+                <p id="law-error" style="color: red; display: none;">Law required</p>
               </div>
 
             </div>
           </div>
         </div>
+
 
 
         <div class="col-lg-12">
@@ -357,7 +347,6 @@
               </div>
             </div>
           </div>
-
 
         </div>
 
