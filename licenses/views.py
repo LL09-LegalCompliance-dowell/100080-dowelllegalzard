@@ -128,16 +128,8 @@ class SoftwareLicenseList(APIView):
                 response_json, status_code = self.check_license_compatibility(
                     request, format)
             else:
+
                 request_data["is_active"] = True
-
-                # Create other license attributes
-                if "other_attributes" in request_data:
-                    if request_data['other_attributes']:
-                        _thread.start_new_thread(
-                            SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
-
-
-
                 serializer = SoftwareLicenseSerializer(data=request_data)
 
                 # Commit data to database
@@ -213,31 +205,37 @@ class SoftwareLicenseList(APIView):
                 license_comparison = license_comparison_json["data"][0]["attributes"]
 
             
-            # license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
-            percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
-            if percentage_of_compatibility >= 60:
-                is_compatible = True
 
-
-            # Update percentage_of_compatibility
-            license_comparison['percentage_of_compatibility'] = percentage_of_compatibility
             
 
-            comparison_detail = {
-                "is_compatible": is_compatible,
-                "license_comparison": license_comparison,
-                "identifier": identifier
-            }
+            comparison_detail = {}
+            if license_comparison:
+
+                # license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
+                percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
+                if percentage_of_compatibility >= 60:
+                    is_compatible = True
 
 
-
-            # log current comparison to history
-            _thread.start_new_thread(
-                SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
+                # Update percentage_of_compatibility
+                license_comparison['percentage_of_compatibility'] = percentage_of_compatibility
 
 
+                comparison_detail = {
+                    "is_compatible": is_compatible,
+                    "license_comparison": license_comparison,
+                    "identifier": identifier
+                }
 
-            return (comparison_detail), status.HTTP_200_OK
+                # log current comparison to history
+                _thread.start_new_thread(
+                    SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
+                
+                return (comparison_detail), status.HTTP_200_OK
+            
+            else:
+                return ({}), status.HTTP_500_INTERNAL_SERVER_ERROR
+
 
         # The code below will
         # execute when error occur
@@ -408,12 +406,6 @@ class SoftwareLicenseDetail(APIView):
         try:
             from datetime import date
             request_data = request.data
-
-
-            # Create other license attributes
-            if request_data['other_attributes']:
-                _thread.start_new_thread(
-                    SoftwareLicenseList.create_other_attribute,(request_data['other_attributes'],))
 
 
             # Update and Commit data into database

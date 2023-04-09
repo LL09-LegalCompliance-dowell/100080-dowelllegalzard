@@ -919,6 +919,7 @@ The API will return three error types when requests fail:
 ```
 {
             "agreement_compliance_type": "software-license-policy",
+            "website_or_app_name": "Website Name",
             "organization_id": "ROD345OS443345OS443OSS",
             "date_of_execution_of_document": "2025-10-20",
             "party_1_entity_type": "Individual",
@@ -1007,7 +1008,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
             "party_1_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_1_signatory": "party 1 name",
             "party_1_date_of_signing_contract": "2022-11-02",
@@ -1016,7 +1017,7 @@ The API will return three error types when requests fail:
             "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
             "party_2_signatory_scanned_copy_detail": {
                 "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                "file_extension": "png",
+                "file_extension": "png"
             },
             "full_name_of_party_2_signatory": "party 2 name",
             "party_2_date_of_signing_contract": "2022-11-05",
@@ -1033,6 +1034,7 @@ The API will return three error types when requests fail:
 ```
  {
                 "agreement_compliance_type": "eula",
+                "website_or_app_name": "Website Name",
                 "organization_id": "ROD345OS443345OS443OSS",
                 "date_of_execution_of_document": "2025-10-20",
                 "party_details_full_name": "Individual and Company",
@@ -1066,6 +1068,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "mou",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_1_entity_type": "Organization",
@@ -1115,6 +1118,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "website-terms-of-use",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "terms_last_updated": "2025-10-20",
     "full_name_of_the_party": "Website Owner",
@@ -1165,6 +1169,7 @@ The API will return three error types when requests fail:
 ```
  {
     "agreement_compliance_type": "non-compete-agreement",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
@@ -1213,6 +1218,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "cookie-policy",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "date_of_execution_of_document": "2025-10-20",
     "party_full_name": "Individual and Company",
@@ -1273,6 +1279,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "nda",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "party_1_full_name": "Party 1 Name 2",
     "party_1_address_line_1": "India Street",
@@ -1412,6 +1419,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "statement-of-work",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "client_full_name": "Client Name",
     "jurisdiction": "India Law",
@@ -1450,6 +1458,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "gdpr-privacy-policy",
+    "website_or_app_name": "Website Name",
     "organization_id": "ROD345OS443345OS443OSS",
     "location": "india 1",
     "jurisdictional_laws": "India law",

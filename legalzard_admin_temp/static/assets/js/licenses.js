@@ -72,8 +72,22 @@ document.addEventListener("DOMContentLoaded", function(event){
     if(licenseImageEl){
         licenseImageEl.onchange = uploadFile;
 
-        // loadLicenseDropdown();
-        loadCommonAttributeDropdown();
+        // Load license detail
+        // methodType is PUT
+        const licenseFormEl = document.getElementById("license-form");
+        const methodType = licenseFormEl.getAttribute("data-method-type")
+        if(licenseFormEl){
+
+            if(methodType === "PUT"){
+                const licenseEventId = licenseFormEl.getAttribute("data-event-id");
+                loadLicenseDetailForUpdate(licenseEventId);
+            }else{
+                document.getElementById("license-form").style.display = "block";
+                document.getElementById("page-spinner").style.display = "none";
+            }
+
+        }
+
     }
 
 
@@ -172,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 
     // Select Option Content
-
     permissionSelectOption = permissionData.map((data, index) => {
 
         return `<option value="${data}">${data}</option>`;
@@ -192,10 +205,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 
         return `<option value="${data}">${data}</option>`;
     })
-
-
-
-
 
 
 })
@@ -261,7 +270,6 @@ const saveDataToDatabase = (event) =>{
     const errorContentEl = document.querySelector("#error-content");
     const licenseEventId = formEl.getAttribute("data-event-id");
     const methodType = formEl.getAttribute("data-method-type");
- 
     const licenseDescription = document.querySelector("#license-description").value;
     const shortDescription = document.querySelector("#short-description").value;
     const licenseName = document.querySelector("#license-name").value;
@@ -271,11 +279,6 @@ const saveDataToDatabase = (event) =>{
     const disclaimer = document.querySelector("#disclaimer").value;
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license").value;
     const limitationOfLiability = document.querySelector("#limitation-of-liability").value;
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
-    const licenseAttribute = document.querySelectorAll('#license-attribute option:checked');
-    const licenseCompatibleWith = document.querySelectorAll('#license-compatible-with option:checked');
-    const licenseNotCompatibleWith = document.querySelectorAll('#license-not-compatible-with option:checked');
-    let otherLicenseAttribute = document.querySelector("#other-license-attribute").value;
     const btnSaveData = document.querySelector("#btn-save-license");
     const mustIncludes = document.querySelectorAll('#must-includes option:checked');
     const laws = document.querySelector("#law").value;
@@ -298,37 +301,6 @@ const saveDataToDatabase = (event) =>{
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
 
-        const licenseNotCompatibleWithList = [];
-        for (let option of licenseNotCompatibleWith) {
-            licenseNotCompatibleWithList.push(option.value);
-        } 
-        
-        const licenseCompatibleWithList = [];
-        for (let option of licenseCompatibleWith) {
-            licenseCompatibleWithList.push(option.value);
-        }
-
-        const licenseAttributeList = [];
-        const otherLicenseAttributeList = [];
-        for (let option of licenseAttribute) {
-            licenseAttributeList.push(option.value);
-        }
-
-        console.log(otherLicenseAttribute)
-        // Other attributes
-        otherLicenseAttribute = otherLicenseAttribute.trim();
-        if (otherLicenseAttribute !== ""){
-            if (otherLicenseAttribute.includes(",")){
-
-                for (let attribute of otherLicenseAttribute.split(",")){
-                    licenseAttributeList.push(sanitizeText(attribute.trim()));
-                    otherLicenseAttributeList.push(sanitizeText(attribute.trim()));
-                }
-            }else{
-                licenseAttributeList.push(otherLicenseAttribute);
-                otherLicenseAttributeList.push(otherLicenseAttribute);
-            }
-        }
 
         const mustIncludesList = [];
         for (let option of mustIncludes) {
@@ -358,13 +330,6 @@ const saveDataToDatabase = (event) =>{
                 url: ""
             },
             recommendation: " ",
-            license_attributes: {
-                heading: sanitizeText(licenseAttributeHeading),
-                attributes: licenseAttributeList
-            },
-            license_compatible_with_lookup: licenseCompatibleWithList,
-            license_not_compatible_with_lookup: licenseNotCompatibleWithList,
-            other_attributes: otherLicenseAttributeList,
             permissions: getLicenseCompatibilityAttributeContent("permission"),
             conditions: getLicenseCompatibilityAttributeContent("condition"),
             limitations: getLicenseCompatibilityAttributeContent("limitation"),
@@ -402,13 +367,18 @@ const saveDataToDatabase = (event) =>{
 
         }).then(jsonData => {
 
-                // set error 
-                errorContainerEl.style.display = "block";
-                errorContentEl.textContent = jsonData.error_msg;
+            if(typeof jsonData === 'undefined') {
+                console.log('Return object is either the special value `undefined`, or it has not been declared');
+            }else{
+               // set error 
+               errorContainerEl.style.display = "block";
+               errorContentEl.textContent = jsonData.error_msg;
 
-                // deactivate loading
-                btnSaveData.innerHTML = "Save";
-                btnSaveData.disabled = false;
+               // deactivate loading
+               btnSaveData.innerHTML = "Save";
+               btnSaveData.disabled = false;
+            }
+ 
 
         }).catch(function(err){
 
@@ -469,12 +439,6 @@ const loadTable = () => {
         tableSpinnerEl.style.display = "none";
 
     })
-
-
-   
-
-    
-
 }
 
 const loadLicenseDetailForUpdate = (licenseEventId) => {
@@ -490,7 +454,6 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
     const disclaimer = document.querySelector("#disclaimer")
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license")
     const limitationOfLiability = document.querySelector("#limitation-of-liability")
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading")
 
 
     const licenseImageViewContainerEl = document.getElementById("license-image-view-container");
@@ -500,6 +463,7 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     }).then(function(response){
+
         if (response.status === 200){
             return response.json();
         }else{
@@ -522,13 +486,10 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         disclaimer.value = license.disclaimer;
         riskForChoosingLicense.value = license.risk_for_choosing_license;
         limitationOfLiability.value = license.limitation_of_liability;
-        licenseAttributeHeading.value = license.license_attributes.heading;
         licenseImageViewEl.setAttribute("src", license.logo_detail.url);
         licenseImageViewContainerEl.style.display = "block";
 
-        $("#license-attribute").val(license.license_attributes.attributes);
-        $("#license-compatible-with").val(license.license_compatible_with_lookup);
-        $("#license-not-compatible-with").val(license.license_not_compatible_with_lookup);
+
         $("#must-includes").val(license.must_includes);
         $("#law").val(license.laws);
 
@@ -736,12 +697,10 @@ const tableContent = (index, data) => {
                   <td>${license.version}</td>
                   <td><img src="${imageUrl}" height="50px" alt="${license.license_name}"></td>
                   <td style="width: 10px;">
-
                     <div class="btn-group" role="group" aria-label="action">
                         <a href="/temp-admin/license-edit/${data.eventId}/" data-id="${data.eventId}"  class="btn btn-primary">Edit</a>
                         <a href="#" data-license-version="${license.version}" data-license-name="${license.license_name}"   data-id="${data.eventId}" data-bs-toggle="modal" data-bs-target="#delete-license-modal" class="btn btn-danger delete-license">Delete</a>
                     </div>
-
                   </td>
             </tr>    
             `
@@ -752,31 +711,18 @@ const tableContent = (index, data) => {
 const validateInput = () => {
     let isValid = true;
 
-    // const licenseDescription = document.querySelector("#license-description").value;
+
     const licenseName = document.querySelector("#license-name").value;
     const version = document.querySelector("#version").value;
     const typeOfLicense = document.querySelector("#type-of-license").value;
     const licenseUrl = document.querySelector("#license-url").value;
-    const licenseAttributeHeading = document.querySelector("#license-attribute-heading").value;
-    const licenseAttribute = document.querySelectorAll("#license-attribute  option:checked");
-    
-
-    const licenseAttributeList = [];
-    for (let option of licenseAttribute) {
-        licenseAttributeList.push(option.value);
-    }
-
-
 
     const licenseNameErrorEl = document.querySelector("#license-name-error");
     const versionErrorEl = document.querySelector("#version-error");
     const typeOfLicenseErrorEl = document.querySelector("#type-of-license-error");
     const licenseUrlErrorEl = document.querySelector("#license-url-error");
-    const licenseAttributeHeadingErrorEl = document.querySelector("#license-attribute-heading-error");
-    const licenseAttributeErrorEl = document.querySelector("#license-attribute-error");
-    const licenseCompatibleWithErrorEl = document.querySelector("#license-compatible-with-error");
-    // const descriptionErrorEl = document.querySelector("#description-error");
     const licenseImageErrorEl = document.querySelector("#license-image-error");
+
 
     if (licenseName === ""){
         isValid = false;
@@ -799,35 +745,12 @@ const validateInput = () => {
         typeOfLicenseErrorEl.style.display = "none";
     }
 
-
     if (licenseUrl === ""){
         isValid = false;
         licenseUrlErrorEl.style.display = "block";
     }else{
         licenseUrlErrorEl.style.display = "none";
     }
-
-    if (licenseAttributeHeading === ""){
-        isValid = false;
-        licenseAttributeHeadingErrorEl.style.display = "block";
-    }else{
-        licenseAttributeHeadingErrorEl.style.display = "none";
-    }
-
-
-    if (licenseAttributeList){
-        licenseAttributeErrorEl.style.display = "none";
-    }else{
-        isValid = false;
-        licenseAttributeErrorEl.style.display = "block";
-    }
-
-    // if (licenseDescription === ""){
-    //     isValid = false;
-    //     descriptionErrorEl.style.display = "block";
-    // }else{
-    //     descriptionErrorEl.style.display = "none";
-    // }
 
     if (fileData){
         licenseImageErrorEl.style.display = "none";
@@ -837,8 +760,8 @@ const validateInput = () => {
     }
 
 
-
     return isValid;
+
 }
 
 
