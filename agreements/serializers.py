@@ -1080,6 +1080,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
     agreement_compliance_type = serializers.CharField(max_length=200)
     last_update = serializers.DateField()
     app_name = serializers.CharField(max_length=150)
+    website_or_app_name = serializers.CharField(max_length=100,allow_blank=True, required=False, default="")
     organization_id = serializers.CharField(max_length=250)
     event_id = serializers.CharField(max_length=250)
     pdf_document_name = serializers.CharField(max_length=500, allow_blank=True, required=False, default="")
@@ -1093,6 +1094,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
 
         validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
         validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        validated_data['website_or_app_name'] = validated_data['app_name']
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1132,6 +1134,7 @@ class AppDisclaimerSerializer(serializers.Serializer):
         else:
             validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
         validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        validated_data['website_or_app_name'] = validated_data['app_name']
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1262,6 +1265,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
     last_update = serializers.DateField()
     company_name = serializers.CharField(max_length=150)
     app_name = serializers.CharField(max_length=150)
+    website_or_app_name = serializers.CharField(max_length=100,allow_blank=True, required=False, default="")
     app_url = serializers.URLField()
     website_contact_page_url = serializers.URLField()
     website_contact_email = serializers.CharField(max_length=255)
@@ -1278,6 +1282,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
 
         validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
         validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        validated_data['website_or_app_name'] = validated_data['app_name']
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1316,6 +1321,7 @@ class AppPrivacyPolicySerializer(serializers.Serializer):
         else:
             validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
         validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        validated_data['website_or_app_name'] = validated_data['app_name']
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1614,6 +1620,7 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
     jurisdiction = serializers.CharField(max_length=300)
     company_name = serializers.CharField(max_length=300)
     website_name = serializers.CharField(max_length=150)
+    website_or_app_name = serializers.CharField(max_length=100,allow_blank=True, required=False, default="")
     website_url = serializers.URLField()
     website_contact_email = serializers.EmailField()
     organization_id = serializers.CharField(max_length=250)
@@ -1629,6 +1636,7 @@ class DisclaimerForWebsiteSerializer(serializers.Serializer):
 
         validated_data['policy_created_datetime'] = datetime.utcnow().isoformat()
         validated_data['policy_updated_datetime'] = datetime.utcnow().isoformat()
+        validated_data['website_or_app_name'] = validated_data['website_name']
 
         # format date back to iso format
         validated_data["last_update"]\
@@ -1921,7 +1929,6 @@ class GDPRPrivacyPolicySerializer(serializers.Serializer):
     """
 
     agreement_compliance_type = serializers.CharField(max_length=200)
-    website_or_app_name = serializers.CharField(max_length=100,allow_blank=True, required=False, default="")
     location = serializers.CharField(max_length=300)
     jurisdictional_laws = serializers.CharField(max_length=300)
     privacy_policy_will_be_used_for = serializers.CharField(max_length=300)
