@@ -82,8 +82,8 @@ def calculate_percentage(data_1, data_2, type_of_data):
                 # check if item exist
                 if key in data_2_formated:
                     # check if value is equal
-                    if value and data_2_formated[key]:
-                        # if all value are true
+                    if value == data_2_formated[key]:
+                        # if all value are true or false
                         result += score
                     elif value != data_2_formated[key]:
                         # if one of the value is true
@@ -94,8 +94,8 @@ def calculate_percentage(data_1, data_2, type_of_data):
                 # check if item exist
                 if key in data_1_formated:
                     # check if value is equal
-                    if value and data_1_formated[key]:
-                        # if all value are true
+                    if value == data_1_formated[key]:
+                        # if all value are true or false
                         result += score
                     elif value != data_1_formated[key]:
                         # if one of the value is true
