@@ -235,7 +235,8 @@ class SoftwareLicenseList(APIView):
             
             else:
                 return ({
-                    "message": f"{license_one['license_name']}  {license_two['license_name']}"
+                    "isSuccess": True,
+                    "message": f"{license_one['license_name']} was not link with {license_two['license_name']} for comparison"
                 }), status.HTTP_200_OK
 
 
