@@ -82,25 +82,42 @@ def calculate_percentage(data_1, data_2, type_of_data):
                 # check if item exist
                 if key in data_2_formated:
                     # check if value is equal
-                    if value == data_2_formated[key]:
+                    if value['status'] == data_2_formated[key]['status']:
                         # if all value are true or false
                         result += score
-                    elif value != data_2_formated[key]:
+
+                    elif value['status'] != data_2_formated[key]['status']:
                         # if one of the value is true
                         result += (float(score) / float(2))
+
+                
+                    result = decrease_result_if_has_condition(
+                        result, value['has_other_condition'], data_2_formated[key]['has_other_condition'])
 
         else:
             for key, value in data_2_formated.items():
                 # check if item exist
                 if key in data_1_formated:
                     # check if value is equal
-                    if value == data_1_formated[key]:
+                    if value['status'] == data_1_formated[key]['status']:
                         # if all value are true or false
                         result += score
-                    elif value != data_1_formated[key]:
+                    elif value['status'] != data_1_formated[key]['status']:
                         # if one of the value is true
                         result += (float(score) / float(2))
 
+                    result = decrease_result_if_has_condition(
+                        result, value['has_other_condition'], data_1_formated[key]['has_other_condition'])
+
+
+    return result
+
+def decrease_result_if_has_condition(result, has_other_condition_1, has_other_condition_2):
+
+    if has_other_condition_1 and has_other_condition_2:
+        result -= 2
+    elif has_other_condition_1 or has_other_condition_2:
+        result -= 1
 
     return result
 
@@ -109,14 +126,18 @@ def format_data(data_list)-> dict:
     """ Convert data from list to dict
     and return result
     """
+    # 
     formated_data = {}
 
     for data in data_list:
         if isinstance(data, dict):
-            formated_data[data["action"]] = True if data["permission"].lower() == "yes" else False
+            formated_data[data["action"]] = {
+                "status": True if data["permission"].lower() == "yes" else False,
+                "has_other_condition": data["has_other_condition"] if "has_other_condition" in data else False
+            }
 
         elif isinstance(data, str):
-            formated_data[data.lower()] = True
+            formated_data[data.lower()] = {"status": True, "has_other_condition": False}
 
     return formated_data
 
@@ -131,12 +152,12 @@ if __name__ == "__main__":
     # Permission Percentage
     permission_1 = [
         
-        {"action": "Patent Use", "permission": "Yes"},
+        {"action": "Patent Use", "permission": "Yes", "has_other_condition": True},
         {"action": "Patent Grant", "permission": "Yes"},
         {"action": "trademark Grant", "permission": "Yes"}
     ]
     permission_2 = [
-        {"action": "Patent Use", "permission": "Yes"},
+        {"action": "Patent Use", "permission": "Yes", "has_other_condition": True},
         {"action": "Patent Grant", "permission": "No"},
         {"action": "trademark Grant", "permission": "No"}
     ]
@@ -145,7 +166,7 @@ if __name__ == "__main__":
 
     # Condition Percentage
     condition_1 = [
-        {"action": "Disclose Source", "permission": "Yes"},
+        {"action": "Disclose Source", "permission": "Yes", "has_other_condition": True},
         {"action": "Network Use is for Distribution", "permission": "No"},
         {"action": "Release Under Same License", "permission": "No"},
         {"action": "State changes", "permission": "Yes"},
