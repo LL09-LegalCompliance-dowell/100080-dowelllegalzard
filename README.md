@@ -1206,6 +1206,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "employment-contract",
+    "policy_reference": "sample-contact",
     "organization_id": "ROD345OS443345OS443OSS",
     "company_name": "company 1",
     "company_address_line_1": "India Mubai street",
