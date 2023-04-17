@@ -234,7 +234,10 @@ class SoftwareLicenseList(APIView):
                 return (comparison_detail), status.HTTP_200_OK
             
             else:
-                return ({}), status.HTTP_500_INTERNAL_SERVER_ERROR
+                return ({
+                    "isSuccess": True,
+                    "message": f"{license_one['license_name']} was not link with {license_two['license_name']} for comparison"
+                }), status.HTTP_200_OK
 
 
         # The code below will

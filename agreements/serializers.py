@@ -1711,6 +1711,7 @@ class EmploymentContractSerializer(serializers.Serializer):
     """
 
     agreement_compliance_type = serializers.CharField(max_length=200)
+    policy_reference = serializers.CharField(max_length=150, allow_blank=True, required=False, default="")
     company_name = serializers.CharField(max_length=150)
     company_address_line_1 = serializers.CharField(max_length=300)
     company_address_line_2 = serializers.CharField(max_length=300, allow_blank=True, required=False, default="")
