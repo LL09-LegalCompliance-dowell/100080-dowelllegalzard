@@ -191,40 +191,39 @@ class SoftwareLicenseList(APIView):
             
             # Get licence comparision
             identifier = f"{license_event_id_one}-{license_event_id_two}"
-            license_comparison_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={
-                    "attributes.identifier":{"$regex": identifier, "$options": "i"},
-                    "attributes.attribute_type": "comparisions"
-                    })
+            # license_comparison_json = fetch_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     fields={
+            #         "attributes.identifier":{"$regex": identifier, "$options": "i"},
+            #         "attributes.attribute_type": "comparisions"
+            #         })
 
 
-            license_comparison = {}
-            if license_comparison_json["data"]:
-                license_comparison = license_comparison_json["data"][0]["attributes"]
+            # license_comparison = {}
+            # if license_comparison_json["data"]:
+            #     license_comparison = license_comparison_json["data"][0]["attributes"]
 
             
 
             
 
             comparison_detail = {}
-            if license_comparison:
+            if license_one and license_two:
 
-                # license_compatible_with_lookup = license_two["license_compatible_with_lookup"]
                 percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
                 if percentage_of_compatibility >= 60:
                     is_compatible = True
 
 
-                # Update percentage_of_compatibility
-                license_comparison['percentage_of_compatibility'] = percentage_of_compatibility
-
-
                 comparison_detail = {
                     "is_compatible": is_compatible,
-                    "license_comparison": license_comparison,
-                    "identifier": identifier
+                    "percentage_of_compatibility": int(percentage_of_compatibility),
+                    "license_1_event_id": license_event_id_one,
+                    "license_2_event_id": license_event_id_two,
+                    "identifier": identifier,
+                    "license_1": license_one,
+                    "license_2": license_two
                 }
 
                 # log current comparison to history
