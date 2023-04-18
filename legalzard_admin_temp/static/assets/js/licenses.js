@@ -27,7 +27,7 @@ let permissionSelectOption = "";
 const conditionData = [
     "Network Use is for Distribution",
     "Release Under Same License",
-    "License and Copyright Notice",
+    "Code can be used in closed source project",
     "State Changes",
     "Include Original",
     "Disclose Source",
@@ -521,7 +521,11 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
             license.permissions.forEach(data => {
                 const action = data["action"];
                 const permission = data["permission"];
-                formatAddPermission(action, permission);
+                let hasOtherCondition = false;
+                if (data["has_other_condition"] !== undefined){
+                    hasOtherCondition = data["has_other_condition"];
+                }
+                formatAddPermission(action, permission, hasOtherCondition);
             })
         }
 
@@ -531,7 +535,11 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
             license.conditions.forEach(data => {
                 const action = data["action"];
                 const permission = data["permission"];
-                formatAddCondition(action, permission);
+                let hasOtherCondition = false;
+                if (data["has_other_condition"] !== undefined){
+                    hasOtherCondition = data["has_other_condition"];
+                }
+                formatAddCondition(action, permission, hasOtherCondition);
             })
         }
 
@@ -541,7 +549,11 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
             license.limitations.forEach(data => {
                 const action = data["action"];
                 const permission = data["permission"];
-                formatAddLimitation(action, permission);
+                let hasOtherCondition = false;
+                if (data["has_other_condition"] !== undefined){
+                    hasOtherCondition = data["has_other_condition"];
+                }
+                formatAddLimitation(action, permission, hasOtherCondition);
             })
         }
         
@@ -935,22 +947,32 @@ const sanitizeText = (text) => {
 
 
 // Permission
-const formatAddPermission = (action="", permission="") => {
+const formatAddPermission = (action="", permission="", has_other_condition=false) => {
     licensePermissionAddCount += 1;
     const divEl = document.createElement('div')
     const content = `
-        <div style="display: inline-block;" class="col-7 other-info">
+        <div style="display: inline-block;" class="col-4 other-info">
             <select required class="form-select" id="license-permission-${licensePermissionAddCount}-key">
             ${permissionSelectOption}
             </select>
         </div>
 
-        <div style="display: inline-block;" class="col-3 other-info">
+        <div style="display: inline-block;" class="col-2 other-info">
             <select required class="form-select" id="license-permission-${licensePermissionAddCount}-value">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
         </div>
+
+        <div style="display: inline-block; margin-left: 20px;" class="col-4 other-info">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="license-permission-${licensePermissionAddCount}-has-condition">
+                <label class="form-check-label" for="gridCheck1">
+                    Has condition
+                </label>
+            </div>
+        </div>
+
         <div style="display: inline-block;" class="col-1 other-info">
         <button type="button" data-tag-id="license-permission-${licensePermissionAddCount}" class="btn btn-outline-danger license-permission-delete">X</button>
         </div>
@@ -969,6 +991,7 @@ const formatAddPermission = (action="", permission="") => {
     if(permission){
         document.getElementById(`license-permission-${licensePermissionAddCount}-value`).value = permission;
     }
+    document.getElementById(`license-permission-${licensePermissionAddCount}-has-condition`).checked = has_other_condition;
 
     deleteLicensePermission();
 }
@@ -989,7 +1012,6 @@ const deleteLicensePermission = () => {
 const getLicenseCompatibilityAttributeContent = (selected) => {
 
     const licenseOtherAttributes = [];
-    console.log(selected)
     
     const licenseReferenceEl = document.querySelectorAll(`.license-${selected}`);
     licenseReferenceEl.forEach(element => {
@@ -997,6 +1019,7 @@ const getLicenseCompatibilityAttributeContent = (selected) => {
         console.log(id)
         let key = document.querySelector(`#${id}-key`).value;
         const value = document.querySelector(`#${id}-value`).value;
+        const hasConditon = document.querySelector(`#${id}-has-condition`);
 
         if (value && key){
 
@@ -1005,7 +1028,9 @@ const getLicenseCompatibilityAttributeContent = (selected) => {
             const data = {};
             data["action"] = key.trim();
             data["permission"] = value.trim();
-
+            if(hasConditon){
+                data["has_other_condition"] = hasConditon.checked;
+            }
             licenseOtherAttributes.push(data);
 
         }
@@ -1018,22 +1043,32 @@ const getLicenseCompatibilityAttributeContent = (selected) => {
 
 
 // Condition
-const formatAddCondition = (action="", permission="") => {
+const formatAddCondition = (action="", permission="", has_other_condition=false) => {
     licenseConditionAddCount += 1;
     const divEl = document.createElement('div')
     const content = `
-        <div style="display: inline-block;" class="col-7 other-info">
+        <div style="display: inline-block;" class="col-4 other-info">
             <select required class="form-select" id="license-condition-${licenseConditionAddCount}-key">
             ${conditionSelectOption}
             </select>
         </div>
 
-        <div style="display: inline-block;" class="col-3 other-info">
+        <div style="display: inline-block;" class="col-2 other-info">
             <select required class="form-select" id="license-condition-${licenseConditionAddCount}-value">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
         </div>
+
+        <div style="display: inline-block; margin-left: 20px;" class="col-4 other-info">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="license-condition-${licenseConditionAddCount}-has-condition">
+                <label class="form-check-label" for="gridCheck1">
+                    Has condition
+                </label>
+            </div>
+        </div>
+
         <div style="display: inline-block;" class="col-1 other-info">
             <button type="button" data-tag-id="license-condition-${licenseConditionAddCount}" class="btn btn-outline-danger license-condition-delete">X</button>
         </div>
@@ -1052,6 +1087,7 @@ const formatAddCondition = (action="", permission="") => {
     if(permission){
         document.getElementById(`license-condition-${licenseConditionAddCount}-value`).value = permission;
     }
+    document.getElementById(`license-condition-${licenseConditionAddCount}-has-condition`).checked = has_other_condition;
 
     deleteLicenseCondition();
 }
@@ -1071,22 +1107,32 @@ const deleteLicenseCondition = () => {
 
 
 // Limitation
-const formatAddLimitation = (action="", permission="") => {
+const formatAddLimitation = (action="", permission="", has_other_condition=false) => {
     licenseLimitationAddCount += 1;
     const divEl = document.createElement('div')
     const content = `
-        <div style="display: inline-block;" class="col-7 other-info">
+        <div style="display: inline-block;" class="col-4 other-info">
             <select required class="form-select" id="license-limitation-${licenseLimitationAddCount}-key">
             ${limitationSelectOption}
             </select>
         </div>
 
-        <div style="display: inline-block;" class="col-3 other-info">
+        <div style="display: inline-block;" class="col-2 other-info">
             <select required class="form-select" id="license-limitation-${licenseLimitationAddCount}-value">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
         </div>
+
+        <div style="display: inline-block; margin-left: 20px;" class="col-4 other-info">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="license-limitation-${licenseLimitationAddCount}-has-condition">
+                <label class="form-check-label" for="gridCheck1">
+                    Has condition
+                </label>
+            </div>
+        </div>
+
         <div style="display: inline-block;" class="col-1 other-info">
             <button type="button" data-tag-id="license-limitation-${licenseLimitationAddCount}" class="btn btn-outline-danger license-limitation-delete">X</button>
         </div>
@@ -1106,6 +1152,7 @@ const formatAddLimitation = (action="", permission="") => {
     if(permission){
         document.getElementById(`license-limitation-${licenseLimitationAddCount}-value`).value = permission;
     }
+    document.getElementById(`license-limitation-${licenseLimitationAddCount}-has-condition`).checked = has_other_condition;
 
     deleteLicenseLimitation();
 }
@@ -1123,7 +1170,7 @@ const deleteLicenseLimitation = () => {
 }
 
 
-// Limitation
+// Source
 const formatAddSource = (action="", permission="") => {
     licenseSourceAddCount += 1;
     const divEl = document.createElement('div')

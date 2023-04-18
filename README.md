@@ -676,119 +676,24 @@ The API will return three error types when requests fail:
     "isSuccess": true,
     "data": [
         {
-            "_id": "63076817b171c30837335384",
-            "eventId": "785455899666558884",
+            "_id": "64375da85475929831f6b124",
+            "eventId": "FB1010000000168135004958256936",
             "agreement": {
-                            "agreement_compliance_type": "software-license-policy",
-                            "organization_id": "ROD345OS443345OS443OSS",
-                            "date_of_execution_of_document": "2025-10-20",
-                            "party_1_entity_type": "Individual",
-                            "party_1_full_name": "Party 1 Name 1",
-                            "party_1_postal_address": "P.O.BOX 45, India",
-                            "party_1_jurisdiction_incorporated": "sample law",
-                            "party_1_registration_number": "RS5428888",
-                            "party_1_registrar_office_address_1": "sample office address",
-                            "party_1_registrar_office_address_2": "",
-                            "party_1_registrar_office_address_3": "",
-                            "party_1_principal_place_of_business": "India",
-                            "party_2_entity_type": "Organization",
-                            "party_2_full_name": "Party 2 Name",
-                            "party_2_postal_address": "P.O.BOX 45, USA",
-                            "party_2_jurisdiction_incorporated": "USA",
-                            "party_2_registration_number": "RS5428845888",
-                            "party_2_registrar_office_address_1": "sample office address",
-                            "party_2_registrar_office_address_2": "badu street",
-                            "party_2_registrar_office_address_3": "",
-                            "party_2_principal_place_of_business": "USA",
-                            "charges_payable": 3000.15,
-                            "software_document_identification": "software",
-                            "contract_effective_date": "2023-02-20",
-                            "minimum_terms_apply": 45,
-                            "minimum_terms_apply_unit": "Days",
-                            "is_software_form_specified": true,
-                            "software_form": "software spic",
-                            "is_non_material_defects_count_as_software_defects": false,
-                            "ways_defect_affect_software": "example",
-                            "is_set_of_exclusions_included": false,
-                            "exclusions_apply": "",
-                            "software_specification": "87 linux",
-                            "can_software_specification_be_varied_by_the_parties": true,
-                            "terms_of_contract_duration": 50,
-                            "terms_of_contract_duration_unit": "Months",
-                            "is_inline_copy_right_remove": false,
-                            "is_term_of_contract_indefinite": false,
-                            "contract_termination_date": "2022-10-20",
-                            "events_that_will_cause_contract_to_be_terminated": "Nil",
-                            "number_of_license_to_be_deliver": 4,
-                            "number_of_license_to_be_deliver_unit": "pcs",
-                            "software_delivery_channel": "Email",
-                            "within_what_period_must_software_be_delivered": 12,
-                            "within_what_period_must_software_be_delivered_unit": "Days",
-                            "what_did_licensor_supply_to_the_licensee": "software",
-                            "purpose_by_reference_to_which_sub_licensing_is_permitted": "Use For",
-                            "when_should_invoice_be_issued": "Nil",
-                            "invoicing_date": "2022-10-20",
-                            "period_for_payment_of_invoices": 85,
-                            "period_for_payment_of_invoices_unit": "Days",
-                            "effective_date_for_invoice_payment": "2022-10-20",
-                            "invoice_payment_method": "Nil",
-                            "interest_rate_apply_to_late_payment": 2450.55,
-                            "optional_element": "",
-                            "is_warranty_relate_to_a_specific_period": true,
-                            "scope_of_warranty": "Nil",
-                            "jurisdictional_coverage_of_warranty": "Nil",
-                            "period_apply_to_warranty": 3,
-                            "period_apply_to_warranty_unit": "Months",
-                            "circumstances_in_which_licensor_may_exercise_its_rights": "Nil",
-                            "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
-                            "are_there_limitations_on_right_to_modify": false,
-                            "limitations_on_right_to_modify_specification": "Nil",
-                            "termination_notice_period_apply": 3,
-                            "termination_notice_period_apply_unit": "Months",
-                            "is_termination_period_expirable": false,
-                            "relevant_termination_period": 0,
-                            "relevant_termination_period_unit": "Days",
-                            "relevant_termination_period_date": "2022-10-20",
-                            "circumstances_in_which_a_party_may_terminate_for_breach": "Nil",
-                            "time_frame_for_the_notice_period": 0,
-                            "time_frame_for_the_notice_period_unit": "Months",
-                            "sent_contractual_notices_to_the_licensor_name": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_1": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_2": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_3": "Nil",
-                            "sent_contractual_notices_to_the_licensor_contact_details": "Nil",
-                            "sent_contractual_notices_to_the_licensee_name": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_1": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_2": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_3": "Nil",
-                            "sent_contractual_notices_to_the_licensee_contact_details": "Nil",
-                            "law_governs_document": "Nil",
-                            "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "Nil",
-                            "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
-                            "party_1_signatory_scanned_copy_detail": {
-                                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                                "actual_filename": "AFL.png",
-                                "file_extension": "png",
-                                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                            },
-                            "full_name_of_party_1_signatory": "party 1 name",
-                            "party_1_date_of_signing_contract": "2022-11-02",
-                            "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
-                            "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
-                            "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
-                            "party_2_signatory_scanned_copy_detail": {
-                                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                                "actual_filename": "AFL.png",
-                                "file_extension": "png",
-                                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                            },
-                            "full_name_of_party_2_signatory": "party 2 name",
-                            "party_2_date_of_signing_contract": "2022-11-05",
-                            "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
-                            "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
-
-                        }
-
+                "agreement_compliance_type": "app-privacy-policy",
+                "last_update": "2025-10-20",
+                "company_name": "Sample Ltd",
+                "app_name": "App 1",
+                "website_or_app_name": "App 1",
+                "app_url": "http://app.com/app",
+                "website_contact_page_url": "http://website.com/contact",
+                "website_contact_email": "app@website.com",
+                "organization_id": "ROD345OS443345OS443OSS",
+                "event_id": "FB1010000000168135004958256936",
+                "pdf_document_name": "nil",
+                "policy_created_datetime": "2023-04-13T01:40:53.470505",
+                "policy_updated_datetime": "2023-04-13T01:40:53.470514",
+                "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000168135004958256936/"
+            }
         }
     ]
 }
@@ -799,119 +704,53 @@ The API will return three error types when requests fail:
 - General:
   - Creates a new software agreement using the submitted json data, Returns the detail of the created agreement, success value, and event id.
 - `curl http://127.0.0.1:8000/api/agreements/ -X POST -H "Content-Type: application/json" -d '{
-                "agreement_compliance_type": "software-license-policy",
-                "date_of_execution_of_document": "2025-10-20",
-                "party_1_entity_type": "Individual",
-                "party_1_full_name": "Party 1 Name 1",
-                "party_1_postal_address": "P.O.BOX 45, India",
-                "party_1_jurisdiction_incorporated": "sample law",
-                "party_1_registration_number": "RS5428888",
-                "party_1_registrar_office_address_1": "sample office address",
-                "party_1_registrar_office_address_2": "",
-                "party_1_registrar_office_address_3": "",
-                "party_1_principal_place_of_business": "India",
-                "party_2_entity_type": "Organization",
-                "party_2_full_name": "Party 2 Name",
-                "party_2_postal_address": "P.O.BOX 45, USA",
-                "party_2_jurisdiction_incorporated": "USA",
-                "party_2_registration_number": "RS5428845888",
-                "party_2_registrar_office_address_1": "sample office address",
-                "party_2_registrar_office_address_2": "badu street",
-                "party_2_registrar_office_address_3": "",
-                "party_2_principal_place_of_business": "USA",
-                "charges_payable": 3000.15,
-                "software_document_identification": "software",
-                "contract_effective_date": "2023-02-20",
-                "minimum_terms_apply": 45,
-                "minimum_terms_apply_unit": "Days",
-                "is_software_form_specified": true,
-                "software_form": "software spic",
-                "is_non_material_defects_count_as_software_defects": false,
-                "ways_defect_affect_software": "example",
-                "is_set_of_exclusions_included": false,
-                "exclusions_apply": "",
-                "software_specification": "87 linux",
-                "can_software_specification_be_varied_by_the_parties": true,
-                "terms_of_contract_duration": 50,
-                "terms_of_contract_duration_unit": "Months",
-                "is_inline_copy_right_remove": false,
-                "is_term_of_contract_indefinite": false,
-                "contract_termination_date": "2022-10-20",
-                "events_that_will_cause_contract_to_be_terminated": "Nil",
-                "number_of_license_to_be_deliver": 4,
-                "number_of_license_to_be_deliver_unit": "pcs",
-                "software_delivery_channel": "Email",
-                "within_what_period_must_software_be_delivered": 12,
-                "within_what_period_must_software_be_delivered_unit": "Days",
-                "what_did_licensor_supply_to_the_licensee": "software",
-                "purpose_by_reference_to_which_sub_licensing_is_permitted": "Use For",
-                "when_should_invoice_be_issued": "Nil",
-                "invoicing_date": "2022-10-20",
-                "period_for_payment_of_invoices": 85,
-                "period_for_payment_of_invoices_unit": "Days",
-                "effective_date_for_invoice_payment": "2022-10-20",
-                "invoice_payment_method": "Nil",
-                "interest_rate_apply_to_late_payment": 2450.55,
-                "optional_element": "",
-                "is_warranty_relate_to_a_specific_period": true,
-                "scope_of_warranty": "Nil",
-                "jurisdictional_coverage_of_warranty": "Nil",
-                "period_apply_to_warranty": 3,
-                "period_apply_to_warranty_unit": "Months",
-                "circumstances_in_which_licensor_may_exercise_its_rights": "Nil",
-                "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
-                "are_there_limitations_on_right_to_modify": false,
-                "limitations_on_right_to_modify_specification": "Nil",
-                "termination_notice_period_apply": 3,
-                "termination_notice_period_apply_unit": "Months",
-                "is_termination_period_expirable": false,
-                "relevant_termination_period": 0,
-                "relevant_termination_period_unit": "Days",
-                "relevant_termination_period_date": "2022-10-20",
-                "circumstances_in_which_a_party_may_terminate_for_breach": "Nil",
-                "time_frame_for_the_notice_period": 0,
-                "time_frame_for_the_notice_period_unit": "Months",
-                "sent_contractual_notices_to_the_licensor_name": "Nil",
-                "sent_contractual_notices_to_the_licensor_address_1": "Nil",
-                "sent_contractual_notices_to_the_licensor_address_2": "Nil",
-                "sent_contractual_notices_to_the_licensor_address_3": "Nil",
-                "sent_contractual_notices_to_the_licensor_contact_details": "Nil",
-                "sent_contractual_notices_to_the_licensee_name": "Nil",
-                "sent_contractual_notices_to_the_licensee_address_1": "Nil",
-                "sent_contractual_notices_to_the_licensee_address_2": "Nil",
-                "sent_contractual_notices_to_the_licensee_address_3": "Nil",
-                "sent_contractual_notices_to_the_licensee_contact_details": "Nil",
-                "law_governs_document": "Nil",
-                "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "Nil",
-                "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
-                "party_1_signatory_scanned_copy_detail": {
-                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                    "actual_filename": "AFL.png",
-                    "file_extension": "png",
-                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                },
-                "full_name_of_party_1_signatory": "party 1 name",
-                "party_1_date_of_signing_contract": "2022-11-02",
-                "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
-                "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
-                "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
-                "party_2_signatory_scanned_copy_detail": {
-                    "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                    "actual_filename": "AFL.png",
-                    "file_extension": "png",
-                    "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                },
-                "full_name_of_party_2_signatory": "party 2 name",
-                "party_2_date_of_signing_contract": "2022-11-05",
-                "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
-                "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
-
-            }
-
-
+    "agreement_compliance_type": "app-privacy-policy",
+    "organization_id": "ROD345OS443345OS443OSS",
+    "last_update": "2025-10-20",
+    "company_name": "Sample Ltd",
+    "app_name": "App 1",
+    "app_url": "http://app.com/app",
+    "website_contact_page_url": "http://website.com/contact",
+    "website_contact_email": "app@website.com"
+}
 '`
-
 - You can also open the link `http://127.0.0.1:8000/api/agreements/` in a browser and perform the post operation
+
+- Response:
+```
+{
+    "isSuccess": true,
+    "data": [
+        {
+            "_id": "64375da85475929831f6b124",
+            "eventId": "FB1010000000168135004958256936",
+            "agreement": {
+                "agreement_compliance_type": "app-privacy-policy",
+                "last_update": "2025-10-20",
+                "company_name": "Sample Ltd",
+                "app_name": "App 1",
+                "website_or_app_name": "App 1",
+                "app_url": "http://app.com/app",
+                "website_contact_page_url": "http://website.com/contact",
+                "website_contact_email": "app@website.com",
+                "organization_id": "ROD345OS443345OS443OSS",
+                "event_id": "FB1010000000168135004958256936",
+                "pdf_document_name": "nil",
+                "policy_created_datetime": "2023-04-13T01:40:53.470505",
+                "policy_updated_datetime": "2023-04-13T01:40:53.470514",
+                "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000168135004958256936/"
+            }
+        }
+    ]
+}
+
+```
+
+
+
+
+
+
 
 ## Request body
 
@@ -1367,6 +1206,7 @@ The API will return three error types when requests fail:
 ```
 {
     "agreement_compliance_type": "employment-contract",
+    "policy_reference": "sample-contact",
     "organization_id": "ROD345OS443345OS443OSS",
     "company_name": "company 1",
     "company_address_line_1": "India Mubai street",
@@ -1557,380 +1397,87 @@ The API will return three error types when requests fail:
 
 
 
-
-
-
-
-
-
-
-
 #### GET /api/agreements/{event_id}/
 
 - General:
   - Returns a list of software agreement objects, and success value
-- Sample: `curl http://127.0.0.1:8000/api/agreements/785455899666558884/` or open link in a browser
+- Sample: `curl http://127.0.0.1:8000/api/agreements/FB1010000000168135004958256936/` or open link in a browser
 
 ```
 {
     "isSuccess": true,
     "data": [
         {
-            "_id": "63076817b171c30837335384",
-            "eventId": "785455899666558884",
+            "_id": "64375da85475929831f6b124",
+            "eventId": "FB1010000000168135004958256936",
             "agreement": {
-                            "agreement_compliance_type": "software-license-policy",
-                            "date_of_execution_of_document": "2025-10-20",
-                            "party_1_entity_type": "Individual",
-                            "party_1_full_name": "Party 1 Name 1",
-                            "party_1_postal_address": "P.O.BOX 45, India",
-                            "party_1_jurisdiction_incorporated": "sample law",
-                            "party_1_registration_number": "RS5428888",
-                            "party_1_registrar_office_address_1": "sample office address",
-                            "party_1_registrar_office_address_2": "",
-                            "party_1_registrar_office_address_3": "",
-                            "party_1_principal_place_of_business": "India",
-                            "party_2_entity_type": "Organization",
-                            "party_2_full_name": "Party 2 Name",
-                            "party_2_postal_address": "P.O.BOX 45, USA",
-                            "party_2_jurisdiction_incorporated": "USA",
-                            "party_2_registration_number": "RS5428845888",
-                            "party_2_registrar_office_address_1": "sample office address",
-                            "party_2_registrar_office_address_2": "badu street",
-                            "party_2_registrar_office_address_3": "",
-                            "party_2_principal_place_of_business": "USA",
-                            "charges_payable": 3000.15,
-                            "software_document_identification": "software",
-                            "contract_effective_date": "2023-02-20",
-                            "minimum_terms_apply": 45,
-                            "minimum_terms_apply_unit": "Days",
-                            "is_software_form_specified": true,
-                            "software_form": "software spic",
-                            "is_non_material_defects_count_as_software_defects": false,
-                            "ways_defect_affect_software": "example",
-                            "is_set_of_exclusions_included": false,
-                            "exclusions_apply": "",
-                            "software_specification": "87 linux",
-                            "can_software_specification_be_varied_by_the_parties": true,
-                            "terms_of_contract_duration": 50,
-                            "terms_of_contract_duration_unit": "Months",
-                            "is_inline_copy_right_remove": false,
-                            "is_term_of_contract_indefinite": false,
-                            "contract_termination_date": "2022-10-20",
-                            "events_that_will_cause_contract_to_be_terminated": "Nil",
-                            "number_of_license_to_be_deliver": 4,
-                            "number_of_license_to_be_deliver_unit": "pcs",
-                            "software_delivery_channel": "Email",
-                            "within_what_period_must_software_be_delivered": 12,
-                            "within_what_period_must_software_be_delivered_unit": "Days",
-                            "what_did_licensor_supply_to_the_licensee": "software",
-                            "purpose_by_reference_to_which_sub_licensing_is_permitted": "Use For",
-                            "when_should_invoice_be_issued": "Nil",
-                            "invoicing_date": "2022-10-20",
-                            "period_for_payment_of_invoices": 85,
-                            "period_for_payment_of_invoices_unit": "Days",
-                            "effective_date_for_invoice_payment": "2022-10-20",
-                            "invoice_payment_method": "Nil",
-                            "interest_rate_apply_to_late_payment": 2450.55,
-                            "optional_element": "",
-                            "is_warranty_relate_to_a_specific_period": true,
-                            "scope_of_warranty": "Nil",
-                            "jurisdictional_coverage_of_warranty": "Nil",
-                            "period_apply_to_warranty": 3,
-                            "period_apply_to_warranty_unit": "Months",
-                            "circumstances_in_which_licensor_may_exercise_its_rights": "Nil",
-                            "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
-                            "are_there_limitations_on_right_to_modify": false,
-                            "limitations_on_right_to_modify_specification": "Nil",
-                            "termination_notice_period_apply": 3,
-                            "termination_notice_period_apply_unit": "Months",
-                            "is_termination_period_expirable": false,
-                            "relevant_termination_period": 0,
-                            "relevant_termination_period_unit": "Days",
-                            "relevant_termination_period_date": "2022-10-20",
-                            "circumstances_in_which_a_party_may_terminate_for_breach": "Nil",
-                            "time_frame_for_the_notice_period": 0,
-                            "time_frame_for_the_notice_period_unit": "Months",
-                            "sent_contractual_notices_to_the_licensor_name": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_1": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_2": "Nil",
-                            "sent_contractual_notices_to_the_licensor_address_3": "Nil",
-                            "sent_contractual_notices_to_the_licensor_contact_details": "Nil",
-                            "sent_contractual_notices_to_the_licensee_name": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_1": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_2": "Nil",
-                            "sent_contractual_notices_to_the_licensee_address_3": "Nil",
-                            "sent_contractual_notices_to_the_licensee_contact_details": "Nil",
-                            "law_governs_document": "Nil",
-                            "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "Nil",
-                            "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
-                            "party_1_signatory_scanned_copy_detail": {
-                                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                                "actual_filename": "AFL.png",
-                                "file_extension": "png",
-                                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                            },
-                            "full_name_of_party_1_signatory": "party 1 name",
-                            "party_1_date_of_signing_contract": "2022-11-02",
-                            "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
-                            "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
-                            "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
-                            "party_2_signatory_scanned_copy_detail": {
-                                "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                                "actual_filename": "AFL.png",
-                                "file_extension": "png",
-                                "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                            },
-                            "full_name_of_party_2_signatory": "party 2 name",
-                            "party_2_date_of_signing_contract": "2022-11-05",
-                            "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
-                            "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
-
-                        }
-
-
-
+                "agreement_compliance_type": "app-privacy-policy",
+                "last_update": "2025-10-20",
+                "company_name": "Sample Ltd",
+                "app_name": "App 1",
+                "website_or_app_name": "App 1",
+                "app_url": "http://app.com/app",
+                "website_contact_page_url": "http://website.com/contact",
+                "website_contact_email": "app@website.com",
+                "organization_id": "ROD345OS443345OS443OSS",
+                "event_id": "FB1010000000168135004958256936",
+                "pdf_document_name": "nil",
+                "policy_created_datetime": "2023-04-13T01:40:53.470505",
+                "policy_updated_datetime": "2023-04-13T01:40:53.470514",
+                "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000168135004958256936/"
+            }
         }
     ]
 }
+
 ```
 
 #### PUT /api/agreements/{event_id}/
 
 - General:
   - Fully update the software agreement of the given ID if it exists. Returns the updated data, success value, to update the frontend.
-- `curl http://127.0.0.1:8000/api/agreements/785455899666558884/ -X PUT -H "Content-Type: application/json" -d ' {
-    "agreement_compliance_type": "software-license-policy",
-                    "date_of_execution_of_document": "2025-10-20",
-                    "party_1_entity_type": "Individual",
-                    "party_1_full_name": "Party 1 Name 1",
-                    "party_1_postal_address": "P.O.BOX 45, India",
-                    "party_1_jurisdiction_incorporated": "sample law",
-                    "party_1_registration_number": "RS5428888",
-                    "party_1_registrar_office_address_1": "sample office address",
-                    "party_1_registrar_office_address_2": "",
-                    "party_1_registrar_office_address_3": "",
-                    "party_1_principal_place_of_business": "India",
-                    "party_2_entity_type": "Organization",
-                    "party_2_full_name": "Party 2 Name",
-                    "party_2_postal_address": "P.O.BOX 45, USA",
-                    "party_2_jurisdiction_incorporated": "USA",
-                    "party_2_registration_number": "RS5428845888",
-                    "party_2_registrar_office_address_1": "sample office address",
-                    "party_2_registrar_office_address_2": "badu street",
-                    "party_2_registrar_office_address_3": "",
-                    "party_2_principal_place_of_business": "USA",
-                    "charges_payable": 3000.15,
-                    "software_document_identification": "software",
-                    "contract_effective_date": "2023-02-20",
-                    "minimum_terms_apply": 45,
-                    "minimum_terms_apply_unit": "Days",
-                    "is_software_form_specified": true,
-                    "software_form": "software spic",
-                    "is_non_material_defects_count_as_software_defects": false,
-                    "ways_defect_affect_software": "example",
-                    "is_set_of_exclusions_included": false,
-                    "exclusions_apply": "",
-                    "software_specification": "87 linux",
-                    "can_software_specification_be_varied_by_the_parties": true,
-                    "terms_of_contract_duration": 50,
-                    "terms_of_contract_duration_unit": "Months",
-                    "is_inline_copy_right_remove": false,
-                    "is_term_of_contract_indefinite": false,
-                    "contract_termination_date": "2022-10-20",
-                    "events_that_will_cause_contract_to_be_terminated": "Nil",
-                    "number_of_license_to_be_deliver": 4,
-                    "number_of_license_to_be_deliver_unit": "pcs",
-                    "software_delivery_channel": "Email",
-                    "within_what_period_must_software_be_delivered": 12,
-                    "within_what_period_must_software_be_delivered_unit": "Days",
-                    "what_did_licensor_supply_to_the_licensee": "software",
-                    "purpose_by_reference_to_which_sub_licensing_is_permitted": "Use For",
-                    "when_should_invoice_be_issued": "Nil",
-                    "invoicing_date": "2022-10-20",
-                    "period_for_payment_of_invoices": 85,
-                    "period_for_payment_of_invoices_unit": "Days",
-                    "effective_date_for_invoice_payment": "2022-10-20",
-                    "invoice_payment_method": "Nil",
-                    "interest_rate_apply_to_late_payment": 2450.55,
-                    "optional_element": "",
-                    "is_warranty_relate_to_a_specific_period": true,
-                    "scope_of_warranty": "Nil",
-                    "jurisdictional_coverage_of_warranty": "Nil",
-                    "period_apply_to_warranty": 3,
-                    "period_apply_to_warranty_unit": "Months",
-                    "circumstances_in_which_licensor_may_exercise_its_rights": "Nil",
-                    "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
-                    "are_there_limitations_on_right_to_modify": false,
-                    "limitations_on_right_to_modify_specification": "Nil",
-                    "termination_notice_period_apply": 3,
-                    "termination_notice_period_apply_unit": "Months",
-                    "is_termination_period_expirable": false,
-                    "relevant_termination_period": 0,
-                    "relevant_termination_period_unit": "Days",
-                    "relevant_termination_period_date": "2022-10-20",
-                    "circumstances_in_which_a_party_may_terminate_for_breach": "Nil",
-                    "time_frame_for_the_notice_period": 0,
-                    "time_frame_for_the_notice_period_unit": "Months",
-                    "sent_contractual_notices_to_the_licensor_name": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_1": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_2": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_3": "Nil",
-                    "sent_contractual_notices_to_the_licensor_contact_details": "Nil",
-                    "sent_contractual_notices_to_the_licensee_name": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_1": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_2": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_3": "Nil",
-                    "sent_contractual_notices_to_the_licensee_contact_details": "Nil",
-                    "law_governs_document": "Nil",
-                    "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "Nil",
-                    "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
-                    "party_1_signatory_scanned_copy_detail": {
-                        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                        "actual_filename": "AFL.png",
-                        "file_extension": "png",
-                        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                    },
-                    "full_name_of_party_1_signatory": "party 1 name",
-                    "party_1_date_of_signing_contract": "2022-11-02",
-                    "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
-                    "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
-                    "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
-                    "party_2_signatory_scanned_copy_detail": {
-                        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                        "actual_filename": "AFL.png",
-                        "file_extension": "png",
-                        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                    },
-                    "full_name_of_party_2_signatory": "party 2 name",
-                    "party_2_date_of_signing_contract": "2022-11-05",
-                    "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
-                    "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
+- `curl http://127.0.0.1:8000/api/agreements/785455899666558884/ -X PUT -H "Content-Type: application/json" -d '{
+                "agreement_compliance_type": "app-privacy-policy",
+                "last_update": "2025-10-20",
+                "company_name": "Sample Ltd",
+                "app_name": "App 20",
+                "website_or_app_name": "App 20",
+                "app_url": "http://app.com/app",
+                "website_contact_page_url": "http://website.com/contact",
+                "website_contact_email": "app@website.com",
+                "organization_id": "ROD345OS443345OS443OSS",
+                "event_id": "FB1010000000168135004958256936",
+                "pdf_document_name": "nil"
+            }'`
 
-                }'`
-
+- Response: 
 ```
 {
     "isSuccess": true,
     "data": [
         {
-            "_id": "63076817b171c30837335384",
-            "eventId": "785455899666558884",
+            "_id": "64375da85475929831f6b124",
+            "eventId": "FB1010000000168135004958256936",
             "agreement": {
-                    "agreement_compliance_type": "software-license-policy",
-                    "date_of_execution_of_document": "2025-10-20",
-                    "party_1_entity_type": "Individual",
-                    "party_1_full_name": "Party 1 Name 1",
-                    "party_1_postal_address": "P.O.BOX 45, India",
-                    "party_1_jurisdiction_incorporated": "sample law",
-                    "party_1_registration_number": "RS5428888",
-                    "party_1_registrar_office_address_1": "sample office address",
-                    "party_1_registrar_office_address_2": "",
-                    "party_1_registrar_office_address_3": "",
-                    "party_1_principal_place_of_business": "India",
-                    "party_2_entity_type": "Organization",
-                    "party_2_full_name": "Party 2 Name",
-                    "party_2_postal_address": "P.O.BOX 45, USA",
-                    "party_2_jurisdiction_incorporated": "USA",
-                    "party_2_registration_number": "RS5428845888",
-                    "party_2_registrar_office_address_1": "sample office address",
-                    "party_2_registrar_office_address_2": "badu street",
-                    "party_2_registrar_office_address_3": "",
-                    "party_2_principal_place_of_business": "USA",
-                    "charges_payable": 3000.15,
-                    "software_document_identification": "software",
-                    "contract_effective_date": "2023-02-20",
-                    "minimum_terms_apply": 45,
-                    "minimum_terms_apply_unit": "Days",
-                    "is_software_form_specified": true,
-                    "software_form": "software spic",
-                    "is_non_material_defects_count_as_software_defects": false,
-                    "ways_defect_affect_software": "example",
-                    "is_set_of_exclusions_included": false,
-                    "exclusions_apply": "",
-                    "software_specification": "87 linux",
-                    "can_software_specification_be_varied_by_the_parties": true,
-                    "terms_of_contract_duration": 50,
-                    "terms_of_contract_duration_unit": "Months",
-                    "is_inline_copy_right_remove": false,
-                    "is_term_of_contract_indefinite": false,
-                    "contract_termination_date": "2022-10-20",
-                    "events_that_will_cause_contract_to_be_terminated": "Nil",
-                    "number_of_license_to_be_deliver": 4,
-                    "number_of_license_to_be_deliver_unit": "pcs",
-                    "software_delivery_channel": "Email",
-                    "within_what_period_must_software_be_delivered": 12,
-                    "within_what_period_must_software_be_delivered_unit": "Days",
-                    "what_did_licensor_supply_to_the_licensee": "software",
-                    "purpose_by_reference_to_which_sub_licensing_is_permitted": "Use For",
-                    "when_should_invoice_be_issued": "Nil",
-                    "invoicing_date": "2022-10-20",
-                    "period_for_payment_of_invoices": 85,
-                    "period_for_payment_of_invoices_unit": "Days",
-                    "effective_date_for_invoice_payment": "2022-10-20",
-                    "invoice_payment_method": "Nil",
-                    "interest_rate_apply_to_late_payment": 2450.55,
-                    "optional_element": "",
-                    "is_warranty_relate_to_a_specific_period": true,
-                    "scope_of_warranty": "Nil",
-                    "jurisdictional_coverage_of_warranty": "Nil",
-                    "period_apply_to_warranty": 3,
-                    "period_apply_to_warranty_unit": "Months",
-                    "circumstances_in_which_licensor_may_exercise_its_rights": "Nil",
-                    "should_there_be_an_express_requirement_for_licensor_to_act_reasonably": false,
-                    "are_there_limitations_on_right_to_modify": false,
-                    "limitations_on_right_to_modify_specification": "Nil",
-                    "termination_notice_period_apply": 3,
-                    "termination_notice_period_apply_unit": "Months",
-                    "is_termination_period_expirable": false,
-                    "relevant_termination_period": 0,
-                    "relevant_termination_period_unit": "Days",
-                    "relevant_termination_period_date": "2022-10-20",
-                    "circumstances_in_which_a_party_may_terminate_for_breach": "Nil",
-                    "time_frame_for_the_notice_period": 0,
-                    "time_frame_for_the_notice_period_unit": "Months",
-                    "sent_contractual_notices_to_the_licensor_name": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_1": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_2": "Nil",
-                    "sent_contractual_notices_to_the_licensor_address_3": "Nil",
-                    "sent_contractual_notices_to_the_licensor_contact_details": "Nil",
-                    "sent_contractual_notices_to_the_licensee_name": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_1": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_2": "Nil",
-                    "sent_contractual_notices_to_the_licensee_address_3": "Nil",
-                    "sent_contractual_notices_to_the_licensee_contact_details": "Nil",
-                    "law_governs_document": "Nil",
-                    "court_of_jurisdiction_which_has_exclusive_right_to_adjudicate_disputes_on_document": "Nil",
-                    "which_entity_will_sign_contract_on_behalf_of_party_1": "Contractor",
-                    "party_1_signatory_scanned_copy_detail": {
-                        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                        "actual_filename": "AFL.png",
-                        "file_extension": "png",
-                        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                    },
-                    "full_name_of_party_1_signatory": "party 1 name",
-                    "party_1_date_of_signing_contract": "2022-11-02",
-                    "full_name_of_the_person_sign_on_behalf_of_party_1": "witness 1 name",
-                    "date_contract_was_sign_on_behalf_of_party_1": "2022-11-02",
-                    "which_entity_will_sign_contract_on_behalf_of_party_2": "Contractor",
-                    "party_2_signatory_scanned_copy_detail": {
-                        "filename": "img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png",
-                        "actual_filename": "AFL.png",
-                        "file_extension": "png",
-                        "url": "https://100080.pythonanywhere.com/media/img/img_47dbffd8-50c1-4f5c-af54-819db6d902ab.png"
-                    },
-                    "full_name_of_party_2_signatory": "party 2 name",
-                    "party_2_date_of_signing_contract": "2022-11-05",
-                    "full_name_of_the_person_sign_on_behalf_of_party_2": "witness 2 name",
-                    "date_contract_was_sign_on_behalf_of_party_2": "2022-11-05"
-
-                }
-
-
-
+                "agreement_compliance_type": "app-privacy-policy",
+                "last_update": "2025-10-20",
+                "company_name": "Sample Ltd",
+                "app_name": "App 1",
+                "website_or_app_name": "App 1",
+                "app_url": "http://app.com/app",
+                "website_contact_page_url": "http://website.com/contact",
+                "website_contact_email": "app@website.com",
+                "organization_id": "ROD345OS443345OS443OSS",
+                "event_id": "FB1010000000168135004958256936",
+                "pdf_document_name": "nil",
+                "policy_created_datetime": "2023-04-13T01:40:53.470505",
+                "policy_updated_datetime": "2023-04-13T01:40:53.470514",
+                "html_doc_url": "http://127.0.0.1:8000/agreement-compliance/FB1010000000168135004958256936/"
+            }
         }
     ]
 }
+
 ```
 
 
@@ -2064,6 +1611,11 @@ The API will return three error types when requests fail:
     }
 }
 ```
+
+
+
+
+
 
 
 
