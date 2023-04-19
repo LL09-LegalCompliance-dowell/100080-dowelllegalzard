@@ -43,7 +43,8 @@ const limitationData = [
     "Warranty",
     "Trademark use",
     "Sublicense",
-    "Hold Liable"
+    "Hold Liable",
+    "Redistribution"
 ]
 let limitationSelectOption = "";
 
