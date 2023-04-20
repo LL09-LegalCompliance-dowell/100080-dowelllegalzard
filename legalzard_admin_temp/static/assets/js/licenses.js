@@ -12,29 +12,28 @@ let licenseSourceAddCount = 0;
 let licenseMustIncludeAddCount = 0;
 
 const permissionData = [
-    "Commercial Use",
-    "Distribute",
+    "Patent Use",
+    "Private Use",
+    "Patent Grant",
     "Distribution",
     "Modification",
-    "Patent Use",
-    "Patent Grant",
-    "Private Use",
+    "Commercial Use",
     "Place Warranty",
     "Trademark Grant"
 ]
 let permissionSelectOption = "";
 
 const conditionData = [
-    "Network Use is for Distribution",
-    "Release Under Same License",
-    "Code can be used in closed source project",
+    "Copied",
+    "Modified",
+    "Reproduced",
+    "Distributed",
     "State Changes",
-    "Include Original",
-    "Disclose Source",
-    "Include Copyright",
-    "Include License",
-    "Include Notice",
-    "Give Credit"
+    "Commercial Used",
+    "Disclose Source Code",
+    "Release Under Same License",
+    "Network Use is for Distribution",
+    "Code can be used in closed source project"
 ]
 let conditionSelectOption = "";
 
@@ -42,15 +41,13 @@ const limitationData = [
     "Liability",
     "Warranty",
     "Trademark use",
-    "Sublicense",
-    "Hold Liable",
     "Redistribution"
 ]
 let limitationSelectOption = "";
 
 const sourceData = [
-    "FSF",
-    "OSI"
+    "FSF Approved",
+    "OSI Approved"
 ]
 let sourceSelectOption = "";
 
