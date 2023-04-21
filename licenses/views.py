@@ -177,6 +177,7 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_one}
             )
+            license_one_json = SoftwareLicenseList.add_license_logo_url(license_one_json)
             license_one = license_one_json["data"][0]['softwarelicense']
 
 
@@ -186,27 +187,12 @@ class SoftwareLicenseList(APIView):
                 document=SOFTWARE_LICENSE_DOCUMENT_NAME,
                 fields={"eventId": license_event_id_two}
             )
+            license_two_json = SoftwareLicenseList.add_license_logo_url(license_two_json)
             license_two = license_two_json["data"][0]['softwarelicense']
 
             
             # Get licence comparision
             identifier = f"{license_event_id_one}-{license_event_id_two}"
-            # license_comparison_json = fetch_document(
-            #     collection=ATTRIBUTE_COLLECTION,
-            #     document=ATTRIBUTE_DOCUMENT_NAME,
-            #     fields={
-            #         "attributes.identifier":{"$regex": identifier, "$options": "i"},
-            #         "attributes.attribute_type": "comparisions"
-            #         })
-
-
-            # license_comparison = {}
-            # if license_comparison_json["data"]:
-            #     license_comparison = license_comparison_json["data"][0]["attributes"]
-
-            
-
-            
 
             comparison_detail = {}
             if license_one and license_two:
