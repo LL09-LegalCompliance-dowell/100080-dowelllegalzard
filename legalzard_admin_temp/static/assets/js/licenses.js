@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     const licenseConditionAddEl = document.getElementById("btn-add-conditions");
     const licenseLimitationAddEl = document.getElementById("btn-add-limitations");
     const licenseSourceAddEl = document.getElementById("btn-add-source");
+    const licenseMustIncludeAddEl = document.getElementById("btn-add-must-include");
 
 
     
@@ -132,6 +133,12 @@ document.addEventListener("DOMContentLoaded", function(event){
     if(licenseSourceAddEl){
         licenseSourceAddEl.onclick = function(event){
             formatAddSource("", "");
+        };
+    }
+
+    if(licenseMustIncludeAddEl){
+        licenseMustIncludeAddEl.onclick = function(event){
+            formatAddMustInclude("", "");
         };
     }
 
@@ -560,7 +567,7 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         // display license must_includes
         if(license["must_includes"] !== undefined){
 
-            license.sources.forEach(data => {
+            license.must_includes.forEach(data => {
                 const action = data["action"];
                 const permission = data["permission"];
                 formatAddMustInclude(action, permission);
