@@ -198,7 +198,7 @@ class SoftwareLicenseList(APIView):
             if license_one and license_two:
 
                 percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
-                if percentage_of_compatibility >= 60:
+                if percentage_of_compatibility >= 50:
                     is_compatible = True
 
 
@@ -249,7 +249,7 @@ class SoftwareLicenseList(APIView):
                 }
 
                 # Create log
-                response_json = save_document(
+                save_document(
                     collection=COMPARISON_HISTORY_COLLECTION,
                     document=COMPARISON_HISTORY_DOCUMENT_NAME,
                     key=COMPARISON_HISTORY_KEY,
