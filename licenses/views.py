@@ -68,10 +68,9 @@ class SoftwareLicenseList(APIView):
 
 
                 elif collection_type == "license-compatibility-history":
-                    user_id = int(user_id)
 
                     if organization_id and user_id:
-                        print("working")
+                        user_id = int(user_id)
                         response_json = fetch_document(
                             collection=COMPARISON_HISTORY_COLLECTION,
                             document=COMPARISON_HISTORY_DOCUMENT_NAME,
@@ -198,7 +197,7 @@ class SoftwareLicenseList(APIView):
             if license_one and license_two:
 
                 percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
-                if percentage_of_compatibility >= 60:
+                if percentage_of_compatibility >= 50:
                     is_compatible = True
 
 
@@ -248,13 +247,24 @@ class SoftwareLicenseList(APIView):
                     "comparison_detail": comparison_detail
                 }
 
-                # Create log
-                response_json = save_document(
+                response_json = fetch_document(
                     collection=COMPARISON_HISTORY_COLLECTION,
                     document=COMPARISON_HISTORY_DOCUMENT_NAME,
-                    key=COMPARISON_HISTORY_KEY,
-                    value=data
+                    fields={
+                        "license_compatibility_history.organization_id": organization_id,
+                        "license_compatibility_history.comparison_detail.identifier": comparison_detail['identifier']
+                        }
                 )
+
+
+                if not response_json["data"]:
+                    # Create log
+                    save_document(
+                        collection=COMPARISON_HISTORY_COLLECTION,
+                        document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        key=COMPARISON_HISTORY_KEY,
+                        value=data
+                    )
             
         # The code below will
         # execute when error occur

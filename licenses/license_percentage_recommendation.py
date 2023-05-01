@@ -31,7 +31,7 @@ def calculate_percentage_recommendation(license_1:dict, license_2:dict) -> int:
     if "laws" in license_1 and "laws" in license_2:
         # Get factor
         factor = PERCENTAGE_FACTOR["law"]
-        if license_1['laws'].lower() == "fixed" and license_2['laws'].lower() == "fixed":
+        if license_1['laws'].lower() == license_2['laws'].lower():
             # if all value are fixed
             law_percentage = factor
         elif license_1['laws'].lower() != license_2['laws'].lower():
@@ -42,6 +42,17 @@ def calculate_percentage_recommendation(license_1:dict, license_2:dict) -> int:
         source_percentage = calculate_percentage(license_1['sources'], license_2['sources'], "source")
     if "must_includes" in license_1 and "must_includes" in license_2:
         must_include_percentage = calculate_percentage(license_1['must_includes'], license_2['must_includes'], "must include")
+
+
+
+    print({
+        "permission_percentage": permission_percentage,
+        "condition_percentage": condition_percentage,
+        "must_include_percentage": must_include_percentage,
+        "limitation_percentage": limitation_percentage,
+        "law_percentage": law_percentage,
+        "source_percentage": source_percentage,
+    })
 
 
     return int(sum(
@@ -60,13 +71,9 @@ def calculate_percentage(data_1, data_2, type_of_data):
     # Get factor
     factor = PERCENTAGE_FACTOR[type_of_data]
 
-
-    data_1_length = len(data_1)
-    data_2_length = len(data_2)
-
     # format data 
-    data_1_formated = format_data(data_1)
-    data_2_formated = format_data(data_2)
+    data_1_formated, data_1_length = format_data(data_1)
+    data_2_formated, data_2_length = format_data(data_2)
     
 
     # Get longest items
@@ -108,6 +115,9 @@ def calculate_percentage(data_1, data_2, type_of_data):
 
                     result = decrease_result_if_has_condition(
                         result, value['has_other_condition'], data_1_formated[key]['has_other_condition'])
+                    
+    else:
+        result += factor
 
 
     return result
@@ -139,7 +149,7 @@ def format_data(data_list)-> dict:
         elif isinstance(data, str):
             formated_data[data.lower()] = {"status": True, "has_other_condition": False}
 
-    return formated_data
+    return formated_data, len(formated_data.keys())
 
 
 
