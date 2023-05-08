@@ -1239,7 +1239,6 @@ The API will return three error types when requests fail:
 }
 ```
 
-
 ### Terms and Conditions
 ```
 {

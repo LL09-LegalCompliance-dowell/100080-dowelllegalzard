@@ -239,8 +239,11 @@ class SoftwareLicenseList(APIView):
 
             user_id = request.data.get("user_id", 0)
             organization_id = request.data.get("organization_id", "")
+            print("user_id: ", user_id, "  organization_id: ", organization_id)
 
             if user_id and organization_id:
+                print("user_id1: ", user_id, "  organization_id: ", organization_id)
+
                 data = {
                     "organization_id": organization_id,
                     "user_id": user_id,
@@ -256,8 +259,9 @@ class SoftwareLicenseList(APIView):
                         }
                 )
 
-
+                print(response_json)
                 if not response_json["data"]:
+                    print(response_json)
                     # Create log
                     save_document(
                         collection=COMPARISON_HISTORY_COLLECTION,
