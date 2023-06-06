@@ -51,6 +51,12 @@ const sourceData = [
 ]
 let sourceSelectOption = "";
 
+const mustIncludeData = [
+    "License",
+    "Copyright Notice"
+]
+let mustIncludeOption = "";
+
 
 
 document.addEventListener("DOMContentLoaded", function(event){
@@ -64,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     const licenseConditionAddEl = document.getElementById("btn-add-conditions");
     const licenseLimitationAddEl = document.getElementById("btn-add-limitations");
     const licenseSourceAddEl = document.getElementById("btn-add-source");
+    const licenseMustIncludeAddEl = document.getElementById("btn-add-must-include");
 
 
     
@@ -126,6 +133,12 @@ document.addEventListener("DOMContentLoaded", function(event){
     if(licenseSourceAddEl){
         licenseSourceAddEl.onclick = function(event){
             formatAddSource("", "");
+        };
+    }
+
+    if(licenseMustIncludeAddEl){
+        licenseMustIncludeAddEl.onclick = function(event){
+            formatAddMustInclude("", "");
         };
     }
 
@@ -204,6 +217,11 @@ document.addEventListener("DOMContentLoaded", function(event){
         return `<option value="${data}">${data}</option>`;
     })
 
+    mustIncludeOption = mustIncludeData.map((data, index) => {
+
+        return `<option value="${data}">${data}</option>`;
+    })
+
 
 })
 
@@ -278,7 +296,7 @@ const saveDataToDatabase = (event) =>{
     const riskForChoosingLicense = document.querySelector("#risk-for-choosing-license").value;
     const limitationOfLiability = document.querySelector("#limitation-of-liability").value;
     const btnSaveData = document.querySelector("#btn-save-license");
-    const mustIncludes = document.querySelectorAll('#must-includes option:checked');
+    // const mustIncludes = document.querySelectorAll('#must-includes option:checked');
     const laws = document.querySelector("#law").value;
 
 
@@ -299,14 +317,6 @@ const saveDataToDatabase = (event) =>{
         btnSaveData.innerHTML = loading;
         btnSaveData.disabled = true;
 
-
-        const mustIncludesList = [];
-        for (let option of mustIncludes) {
-            mustIncludesList.push(option.value);
-        }
-
-
-
         // Format data
         const data = {
             features: [],
@@ -315,7 +325,7 @@ const saveDataToDatabase = (event) =>{
             version: version,
             license_url: licenseUrl,
             type_of_license: typeOfLicense,
-            license_tags: getLicenseTagContent(),
+            license_tags: [],
             short_description: sanitizeText(shortDescription),
             description: sanitizeText(licenseDescription),
             disclaimer: sanitizeText(disclaimer),
@@ -332,7 +342,7 @@ const saveDataToDatabase = (event) =>{
             conditions: getLicenseCompatibilityAttributeContent("condition"),
             limitations: getLicenseCompatibilityAttributeContent("limitation"),
             sources: getLicenseCompatibilityAttributeContent("source"),
-            must_includes: mustIncludesList,
+            must_includes: getLicenseCompatibilityAttributeContent("must-include"),
             laws: laws,
             references: getLicenseReferenceContent()
             
@@ -492,17 +502,6 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
         $("#law").val(license.laws);
 
 
-        // display license tags
-        if(license["license_tags"] !== undefined){
-
-            license.license_tags.forEach(data => {
-                const key = Object.keys(data)[0];
-                const value = data[key];
-                formatAddTag(key, value);
-            })
-        }
-
-
         // display license references
         if(license["references"] !== undefined){
 
@@ -564,6 +563,17 @@ const loadLicenseDetailForUpdate = (licenseEventId) => {
                 formatAddSource(action, permission);
             })
         }
+
+        // display license must_includes
+        if(license["must_includes"] !== undefined){
+
+            license.must_includes.forEach(data => {
+                const action = data["action"];
+                const permission = data["permission"];
+                formatAddMustInclude(action, permission);
+            })
+        }
+
 
         document.getElementById("page-spinner").style.display = "none";
         document.getElementById("license-form").style.display = "block";
@@ -1219,5 +1229,59 @@ const deleteLicenseSource = () => {
 
     });
 }
+
+
+// Must Include
+const formatAddMustInclude = (action="", permission="") => {
+    licenseMustIncludeAddCount += 1;
+    const divEl = document.createElement('div')
+    const content = `
+        <div style="display: inline-block;" class="col-7 other-info">
+            <select required class="form-select" id="license-must-include-${licenseMustIncludeAddCount}-key">
+            ${mustIncludeOption}
+            </select>
+        </div>
+
+        <div style="display: inline-block;" class="col-3 other-info">
+            <select required class="form-select" id="license-must-include-${licenseMustIncludeAddCount}-value">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div style="display: inline-block;" class="col-1 other-info">
+            <button type="button" data-tag-id="license-must-include-${licenseMustIncludeAddCount}" class="btn btn-outline-danger license-must-include-delete">X</button>
+        </div>
+    `
+
+    divEl.setAttribute('id', `license-must-include-${licenseMustIncludeAddCount}`);
+    divEl.setAttribute('data-tag-id', `license-must-include-${licenseMustIncludeAddCount}`);
+    divEl.setAttribute('class', `col-12 other-info license-must-include`);
+    divEl.innerHTML = content;
+    const containerEl = document.getElementById("license-must-include-container")
+    containerEl.appendChild(divEl);
+
+
+    if(action){
+        document.getElementById(`license-must-include-${licenseMustIncludeAddCount}-key`).value = action;
+    }
+    if(permission){
+        document.getElementById(`license-must-include-${licenseMustIncludeAddCount}-value`).value = permission;
+    }
+
+    deleteLicenseMustInclude();
+}
+
+const deleteLicenseMustInclude = () => {
+    const deleteEl = document.querySelectorAll(".license-must-include-delete");
+    deleteEl.forEach(element => {
+
+        element.onclick = function(event){
+            const tagId = element.getAttribute("data-tag-id");
+            document.querySelector(`#${tagId}`).remove();
+        }
+
+    });
+}
+
 
 
