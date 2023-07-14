@@ -1,12 +1,14 @@
 from urllib import response
 from django.shortcuts import render
 import requests
+import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
 from storage.upload import upload_img
 import uuid
+from .validateapi import validateApikey
 from utils.dowell import (
     fetch_document,
     update_document,
@@ -32,6 +34,18 @@ class ComparisionList(APIView):
     """
 
     def get(self, request, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
 
             limit = RECORD_PER_PAGE
@@ -65,6 +79,18 @@ class ComparisionList(APIView):
             )
 
     def post(self, request, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
             response_json = {}
             status_code = 500
@@ -137,6 +163,18 @@ class ComparisionList(APIView):
     def get_license(event_id):
         
         # Retrieve license
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         response_json = fetch_document(
             collection=SOFTWARE_LICENSE_COLLECTION,
             document=SOFTWARE_LICENSE_DOCUMENT_NAME,
@@ -157,6 +195,18 @@ class ComparisionDetail(APIView):
     """
 
     def get(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
 
             # Get comparision
@@ -179,6 +229,18 @@ class ComparisionDetail(APIView):
             )
 
     def put(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
 
             request_data = request.data
@@ -339,6 +401,18 @@ class ComparisionDetail(APIView):
 
 
     def delete(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
 
             request_data = request.data

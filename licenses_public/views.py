@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import _thread
 import uuid
+from .validateapi import validateApikey
 from utils.dowell import (
     fetch_document,
     save_document,
@@ -21,15 +22,26 @@ from utils.dowell import (
 )
 from licenses.serializers import SoftwareLicenseSerializer
 from licenses.license_percentage_recommendation import calculate_percentage_recommendation
-
+import json
 
 class SoftwareLicenseList(APIView):
     """ List all and create software license
     """
 
     def get(self, request, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
-
             limit = RECORD_PER_PAGE
             offset = int(request.GET.get("offset", "0"))
             action_type = request.GET.get("action_type", "")
@@ -115,6 +127,19 @@ class SoftwareLicenseList(APIView):
             )
 
     def post(self, request, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
+        
         try:
             response_json = {}
             status_code = 500
@@ -167,6 +192,18 @@ class SoftwareLicenseList(APIView):
         """ Check for two licnese and return True if 
             license_one == license_two
         """
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         is_compatible = False
         try:
 
@@ -290,6 +327,18 @@ class SoftwareLicenseList(APIView):
     def search_license(self, request, format=None):
         """ Load linceses base on search term
         """
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
 
             limit = RECORD_PER_PAGE
@@ -383,6 +432,18 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
     def get(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
             # # Localhost
             # license = SoftwareLicense.objects.get(license_id = license_id)
@@ -412,6 +473,18 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def put(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
             from datetime import date
             request_data = request.data
@@ -446,6 +519,18 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def delete(self, request, event_id, format=None):
+        user_api_key = request.META.get('HTTP_API_KEY')
+        validate_api_count = validateApikey(user_api_key)
+        data_count = json.loads(validate_api_count)
+        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+            status_code = 422
+            return Response(
+                {
+                    "isSuccess": False,
+                    "Error Message": "API Key not found or is Invalid!",
+                },
+                status=status_code
+            )
         try:
             from datetime import date
             from utils.dowell import (
