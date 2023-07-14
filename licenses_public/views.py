@@ -29,7 +29,7 @@ class SoftwareLicenseList(APIView):
     """
 
     def get(self, request, format=None):
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -127,7 +127,7 @@ class SoftwareLicenseList(APIView):
             )
 
     def post(self, request, format=None):
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -192,7 +192,7 @@ class SoftwareLicenseList(APIView):
         """ Check for two licnese and return True if 
             license_one == license_two
         """
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -327,7 +327,7 @@ class SoftwareLicenseList(APIView):
     def search_license(self, request, format=None):
         """ Load linceses base on search term
         """
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -432,7 +432,7 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
     def get(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -473,7 +473,7 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def put(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -519,7 +519,7 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def delete(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTPS_API_KEY')
+        user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
