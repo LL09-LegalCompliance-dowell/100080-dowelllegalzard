@@ -95,9 +95,13 @@ class SoftwareLicenseList(APIView):
 
                     status_code = status.HTTP_200_OK
 
-
+            response_json["count"] = len(response_json["data"])
             return Response(
-                response_json,
+                {
+                    "isSuccess": response_json["isSuccess"],
+                    "count": len(response_json["data"]),
+                    "data": response_json["data"]
+                },
                 status=status_code)
 
         # The code below will
@@ -237,31 +241,32 @@ class SoftwareLicenseList(APIView):
         """
         try:
 
+            print("Get user and organization id")
             user_id = request.data.get("user_id", 0)
             organization_id = request.data.get("organization_id", "")
-            print("user_id: ", user_id, "  organization_id: ", organization_id)
+            print("User and organization retrieved: ", {"user_id": user_id, "organization_id": organization_id})
 
             if user_id and organization_id:
-                print("user_id1: ", user_id, "  organization_id: ", organization_id)
-
                 data = {
                     "organization_id": organization_id,
                     "user_id": user_id,
                     "comparison_detail": comparison_detail
                 }
 
+                print("Getting history data")
                 response_json = fetch_document(
                     collection=COMPARISON_HISTORY_COLLECTION,
                     document=COMPARISON_HISTORY_DOCUMENT_NAME,
                     fields={
                         "license_compatibility_history.organization_id": organization_id,
+                        "license_compatibility_history.user_id": user_id,
                         "license_compatibility_history.comparison_detail.identifier": comparison_detail['identifier']
                         }
                 )
-
-                print(response_json)
+                print("Received history data: ", response_json)
+                print("Checking if history exist")
                 if not response_json["data"]:
-                    print(response_json)
+                    print("Adding new history: ",data)
                     # Create log
                     save_document(
                         collection=COMPARISON_HISTORY_COLLECTION,
@@ -269,11 +274,13 @@ class SoftwareLicenseList(APIView):
                         key=COMPARISON_HISTORY_KEY,
                         value=data
                     )
+                else:
+                    print("History exist: ", response_json)
             
         # The code below will
         # execute when error occur
         except Exception as e:
-            print(f"{e}")
+            print(f"Main Error: {e}")
 
 
 
