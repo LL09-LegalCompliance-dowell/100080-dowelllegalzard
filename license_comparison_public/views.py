@@ -34,7 +34,7 @@ class ComparisionList(APIView):
     """
 
     def get(self, request, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -79,7 +79,7 @@ class ComparisionList(APIView):
             )
 
     def post(self, request, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -160,10 +160,10 @@ class ComparisionList(APIView):
             )
 
     @staticmethod
-    def get_license(event_id):
+    def get_license(self, request, event_id):
         
         # Retrieve license
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -195,7 +195,7 @@ class ComparisionDetail(APIView):
     """
 
     def get(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -229,7 +229,7 @@ class ComparisionDetail(APIView):
             )
 
     def put(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
@@ -401,7 +401,7 @@ class ComparisionDetail(APIView):
 
 
     def delete(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        user_api_key = request.META.get('HTTPS_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
