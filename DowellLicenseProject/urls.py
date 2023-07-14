@@ -24,11 +24,13 @@ from agreements.views import load_public_agreement_compliance, index, download_f
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('licenses.urls')),
+    path('api/public/', include('licenses_public.urls')),
     path('api/', include('agreements.urls')),
     path('api/', include('attributes.urls')),
     path('api/', include('attachments.urls')),
     path('api/', include('contacts.urls')),
     path('api/', include('license_comparision.urls')),
+    path('api/public/', include('license_comparison_public.urls')),
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
     path('download/', download_file, name="agreements_download"),
     path('temp-admin/', include('legalzard_admin_temp.urls')),
