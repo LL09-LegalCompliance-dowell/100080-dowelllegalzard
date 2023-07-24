@@ -7,18 +7,11 @@ import _thread
 import uuid
 from utils.dowell import (
     fetch_document,
-    save_document,
     
     SOFTWARE_LICENSE_COLLECTION,
-    ATTRIBUTE_COLLECTION,
-
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-    ATTRIBUTE_DOCUMENT_NAME,
     RECORD_PER_PAGE,
-    BASE_IMAGE_URL,
-    COMPARISON_HISTORY_COLLECTION,
-    COMPARISON_HISTORY_DOCUMENT_NAME,
-    COMPARISON_HISTORY_KEY
+    BASE_IMAGE_URL
 )
 from licenses.serializers import SoftwareLicenseSerializer
 from licenses.license_percentage_recommendation import calculate_percentage_recommendation
@@ -269,6 +262,7 @@ class SoftwareLicenseList(APIView):
                         collection=db.COMPARISON_HISTORY_COLLECTION,
                         value=data
                     )
+                    print(f"Comparison history saved for: {comparison_detail['identifier']}")
                 else:
                     print("History exist: ", response_json)
             
