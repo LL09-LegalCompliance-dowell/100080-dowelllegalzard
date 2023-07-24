@@ -252,9 +252,8 @@ class SoftwareLicenseList(APIView):
                 }
 
                 print("Getting history data")
-                response_json = fetch_document(
-                    collection=COMPARISON_HISTORY_COLLECTION,
-                    document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                response_json = db.fetch_document(
+                    collection=db.COMPARISON_HISTORY_COLLECTION,
                     fields={
                         "license_compatibility_history.organization_id": organization_id,
                         "license_compatibility_history.user_id": user_id,
@@ -266,10 +265,8 @@ class SoftwareLicenseList(APIView):
                 if not response_json["data"]:
                     print("Adding new history: ",data)
                     # Create log
-                    save_document(
-                        collection=COMPARISON_HISTORY_COLLECTION,
-                        document=COMPARISON_HISTORY_DOCUMENT_NAME,
-                        key=COMPARISON_HISTORY_KEY,
+                    db.save_document(
+                        collection=db.COMPARISON_HISTORY_COLLECTION,
                         value=data
                     )
                 else:
