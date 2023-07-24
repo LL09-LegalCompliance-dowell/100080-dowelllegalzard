@@ -1,4 +1,5 @@
 import requests
+import utils.dowell_db_call as db
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -71,25 +72,22 @@ class SoftwareLicenseList(APIView):
 
                     if organization_id and user_id:
                         user_id = int(user_id)
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={
                                 "license_compatibility_history.organization_id": organization_id,
                                 "license_compatibility_history.user_id": user_id
                                 }
                         )
                     elif organization_id and user_id == "":
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={"license_compatibility_history.organization_id": organization_id}
                         )
 
                     elif organization_id == "" and user_id == "":
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={}
                         )
 
