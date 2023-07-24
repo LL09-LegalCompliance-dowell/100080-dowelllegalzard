@@ -33,11 +33,13 @@ INSTALLED_APPS = [
     'rest_framework',
     # project apps    
     'licenses',
+    'licenses_public',
     'agreements',
     'attributes',
     'attachments',
     'contacts',
     'license_comparision',
+    'license_comparison_public',
     'legalzard_admin_temp',
 ]
 
