@@ -1,4 +1,5 @@
 import requests
+import utils.dowell_db_call as db
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,18 +7,11 @@ import _thread
 import uuid
 from utils.dowell import (
     fetch_document,
-    save_document,
     
     SOFTWARE_LICENSE_COLLECTION,
-    ATTRIBUTE_COLLECTION,
-
     SOFTWARE_LICENSE_DOCUMENT_NAME,
-    ATTRIBUTE_DOCUMENT_NAME,
     RECORD_PER_PAGE,
-    BASE_IMAGE_URL,
-    COMPARISON_HISTORY_COLLECTION,
-    COMPARISON_HISTORY_DOCUMENT_NAME,
-    COMPARISON_HISTORY_KEY
+    BASE_IMAGE_URL
 )
 from licenses.serializers import SoftwareLicenseSerializer
 from licenses.license_percentage_recommendation import calculate_percentage_recommendation
@@ -71,25 +65,22 @@ class SoftwareLicenseList(APIView):
 
                     if organization_id and user_id:
                         user_id = int(user_id)
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={
                                 "license_compatibility_history.organization_id": organization_id,
                                 "license_compatibility_history.user_id": user_id
                                 }
                         )
                     elif organization_id and user_id == "":
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={"license_compatibility_history.organization_id": organization_id}
                         )
 
                     elif organization_id == "" and user_id == "":
-                        response_json = fetch_document(
-                            collection=COMPARISON_HISTORY_COLLECTION,
-                            document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                        response_json = db.fetch_document(
+                            collection=db.COMPARISON_HISTORY_COLLECTION,
                             fields={}
                         )
 
@@ -254,9 +245,8 @@ class SoftwareLicenseList(APIView):
                 }
 
                 print("Getting history data")
-                response_json = fetch_document(
-                    collection=COMPARISON_HISTORY_COLLECTION,
-                    document=COMPARISON_HISTORY_DOCUMENT_NAME,
+                response_json = db.fetch_document(
+                    collection=db.COMPARISON_HISTORY_COLLECTION,
                     fields={
                         "license_compatibility_history.organization_id": organization_id,
                         "license_compatibility_history.user_id": user_id,
@@ -268,12 +258,11 @@ class SoftwareLicenseList(APIView):
                 if not response_json["data"]:
                     print("Adding new history: ",data)
                     # Create log
-                    save_document(
-                        collection=COMPARISON_HISTORY_COLLECTION,
-                        document=COMPARISON_HISTORY_DOCUMENT_NAME,
-                        key=COMPARISON_HISTORY_KEY,
+                    db.save_document(
+                        collection=db.COMPARISON_HISTORY_COLLECTION,
                         value=data
                     )
+                    print(f"Comparison history saved for: {comparison_detail['identifier']}")
                 else:
                     print("History exist: ", response_json)
             
