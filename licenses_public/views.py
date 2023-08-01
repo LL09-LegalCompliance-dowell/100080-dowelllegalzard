@@ -25,7 +25,7 @@ class SoftwareLicenseList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -120,7 +120,7 @@ class SoftwareLicenseList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -185,7 +185,7 @@ class SoftwareLicenseList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -318,7 +318,7 @@ class SoftwareLicenseList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -423,7 +423,7 @@ class SoftwareLicenseDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -464,7 +464,7 @@ class SoftwareLicenseDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -510,7 +510,7 @@ class SoftwareLicenseDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
