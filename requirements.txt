@@ -54,3 +54,5 @@ webdriver-manager==3.8.5
 webencodings==0.5.1
 wsproto==1.2.0
 xhtml2pdf==0.2.8
+Opensource-License-Compatibility-from-DoWell==0.3.0
+PyGithub==1.59.1
