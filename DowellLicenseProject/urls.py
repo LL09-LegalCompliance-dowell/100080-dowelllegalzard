@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/', include('attachments.urls')),
     path('api/', include('contacts.urls')),
     path('api/', include('license_comparision.urls')),
+    path('api/', include('github_webhook.urls')),
     path('api/public/', include('license_comparison_public.urls')),
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
     path('download/', download_file, name="agreements_download"),

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'license_comparision',
     'license_comparison_public',
     'legalzard_admin_temp',
+    'github_webhook',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,9 @@ MEDIA_ROOT = str(os.path.join(get_storage_path(DEBUG), 'media'))
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Github webhook settings
+LEGALZARD_BOT_APP_ID=00000
+LEGALZARD_BOT_KEY_PATH=""
+LEGALZARD_API_KEY=""
