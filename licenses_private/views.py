@@ -215,7 +215,7 @@ class SoftwareLicenseList(APIView):
                 
                 # send email        
                 license_1 = license_one["license_name"],
-                license_2 = icense_two["license_name"],
+                license_2 = license_two["license_name"],
                 message = " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
 
                 subject = "Dowell Open Source License Compatibility Test Information"
