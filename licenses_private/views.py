@@ -221,7 +221,7 @@ class SoftwareLicenseList(APIView):
                 subject = "Dowell Open Source License Compatibility Test Information"
                 title = "Compatibility Results" 
                 email_content = EMAIL_FROM_WEBSITE.format(title,license_1,license_2, is_compatible,is_compatible, percentage_of_compatibility, identifier, message)
-                send_content_email = send_email("Dowell UX Living Lab", "georgekibew@gmail.com", subject,email_content)
+                send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
                 
                 return (comparison_detail), status.HTTP_200_OK
             
