@@ -4,7 +4,8 @@ from .views import (
     SoftwareLicenseDetail
 )
 
-app_name = "licenses"
+app_name = "licenses_private"
+
 urlpatterns = [
     path('licenses/', SoftwareLicenseList.as_view(), name="licenses"),
     path('licenses/<str:event_id>/',

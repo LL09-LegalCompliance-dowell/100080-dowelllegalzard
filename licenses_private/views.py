@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import _thread
+from licenses_private.send_email import send_email, EMAIL_FROM_WEBSITE
 import uuid
 from utils.dowell import (
     fetch_document,
@@ -190,6 +191,7 @@ class SoftwareLicenseList(APIView):
 
             comparison_detail = {}
             if license_one and license_two:
+                print(license_one)
 
                 percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
                 if percentage_of_compatibility >= 50:
@@ -199,16 +201,27 @@ class SoftwareLicenseList(APIView):
                 comparison_detail = {
                     "is_compatible": is_compatible,
                     "percentage_of_compatibility": int(percentage_of_compatibility),
-                    "license_1_event_id": license_event_id_one,
-                    "license_2_event_id": license_event_id_two,
+                    # "license_1_event_id": license_event_id_one,
+                    # "license_2_event_id": license_event_id_two,
                     "identifier": identifier,
-                    "license_1": license_one,
-                    "license_2": license_two
+                    "license_1": license_one["license_name"],
+                    "license_2": license_two["license_name"],
+                    "message": " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
                 }
 
                 # log current comparison to history
                 _thread.start_new_thread(
                     SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
+                
+                # send email        
+                license_1 = license_one["license_name"],
+                license_2 = icense_two["license_name"],
+                message = " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
+
+                subject = "Dowell Open Source License Compatibility Test Information"
+                title = "Compatibility Results" 
+                email_content = EMAIL_FROM_WEBSITE.format(title,license_1,license_2, is_compatible,is_compatible, percentage_of_compatibility, identifier, message)
+                send_content_email = send_email("Dowell UX Living Lab", "georgekibew@gmail.com", subject,email_content)
                 
                 return (comparison_detail), status.HTTP_200_OK
             

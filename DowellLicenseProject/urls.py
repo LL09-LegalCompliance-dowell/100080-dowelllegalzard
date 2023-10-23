@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('licenses.urls')),
     path('api/public/', include('licenses_public.urls')),
+    path('api/private/', include('licenses_private.urls')),
     path('api/', include('agreements.urls')),
     path('api/', include('attributes.urls')),
     path('api/', include('attachments.urls')),

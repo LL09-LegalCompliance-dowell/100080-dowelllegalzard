@@ -3,7 +3,7 @@ from django.db import models
 from DowellLicenseProject import settings
 import uuid
 
-# Preset common attributes
+# Preset common attributes_private
 class CommonAttribute(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     document = models.JSONField()
