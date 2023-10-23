@@ -159,6 +159,10 @@ class SoftwareLicenseList(APIView):
         """ Check for two licnese and return True if 
             license_one == license_two
         """
+        request_data = request.data
+        user_email = ""
+        if "user_email" in request_data:
+            user_email = request_data["user_email"]
         is_compatible = False
         try:
 
@@ -218,9 +222,9 @@ class SoftwareLicenseList(APIView):
                 license_2 = license_two["license_name"],
                 message = " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
 
-                subject = "Dowell Open Source License Compatibility Test Information"
+                subject = "Samanta campaign was used in uxlivinglab.org"
                 title = "Compatibility Results" 
-                email_content = EMAIL_FROM_WEBSITE.format(title,license_1,license_2, is_compatible,is_compatible, percentage_of_compatibility, identifier, message)
+                email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2, is_compatible,is_compatible, percentage_of_compatibility, identifier, message)
                 send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
                 
                 return (comparison_detail), status.HTTP_200_OK

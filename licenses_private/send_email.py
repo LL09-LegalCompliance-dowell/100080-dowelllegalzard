@@ -28,6 +28,7 @@ EMAIL_FROM_WEBSITE = """
           <div style="border-bottom:1px solid #eee">
             <a href="#" style="font-size:1.2em;color: #00466a;text-decoration:none;font-weight:600">Dowell UX Living Lab</a>
           </div>
+          <p style="font-size:1.1em">Email : {},</p>
           <p style="font-size:1.1em">Title : {}</p>
           <p style="font-size:1.1em">License One : {} VS License Two : {}</p>
           <p style="font-size:1.1em">Are the Two Licenses Compatible? : {}</p>
