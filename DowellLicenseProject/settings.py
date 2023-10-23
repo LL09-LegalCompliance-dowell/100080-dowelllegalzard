@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # project apps    
     'licenses',
+    'licenses_private',
     'licenses_public',
     'agreements',
     'attributes',
