@@ -35,8 +35,10 @@ class ComparisionList(APIView):
 
     def get(self, request, format=None):
         user_api_key = request.META.get('HTTP_API_KEY')
+        print("API KEY: ", user_api_key)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
+        print("Data Count: ", data_count)
         if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
             status_code = 422
             return Response(
@@ -82,7 +84,7 @@ class ComparisionList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -166,7 +168,7 @@ class ComparisionList(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -198,7 +200,7 @@ class ComparisionDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -232,7 +234,7 @@ class ComparisionDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {
@@ -404,7 +406,7 @@ class ComparisionDetail(APIView):
         user_api_key = request.META.get('HTTP_API_KEY')
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
-        if not user_api_key or not data_count['success'] or not data_count['count'] >=  0:
+        if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
             status_code = 422
             return Response(
                 {

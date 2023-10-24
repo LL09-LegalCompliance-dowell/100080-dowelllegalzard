@@ -79,7 +79,7 @@ class SoftwareLicenseAgreement(models.Model):
 
 
     def __str__(self) -> str:
-        return f"<Documet: {self.software_document_identification}, First Party: {self.party_1_full_name}, Second Party: {self.party_2_full_name}>"
+        return f"<Document: {self.software_document_identification}, First Party: {self.party_1_full_name}, Second Party: {self.party_2_full_name}>"
 
 
     def __repr__(self) -> str:
