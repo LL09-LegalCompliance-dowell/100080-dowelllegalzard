@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import _thread
-from licenses_private.send_email import send_email, EMAIL_FROM_WEBSITE
+from licenses_private.send_email import send_email, EMAIL_FROM_WEBSITE, is_valid_email
 import uuid
 from utils.dowell import (
     fetch_document,
@@ -163,6 +163,13 @@ class SoftwareLicenseList(APIView):
         user_email = ""
         if "user_email" in request_data:
             user_email = request_data["user_email"]
+        # validate user email
+        if not is_valid_email(user_email) or not user_email:
+            return ({
+                    "isSuccess": True,
+                    "message": f"Email: {user_email} is invalid or not accepted. Use a valid email"
+                }), status.HTTP_422_UNPROCESSABLE_ENTITY            
+        
         is_compatible = False
         try:
 
@@ -216,15 +223,19 @@ class SoftwareLicenseList(APIView):
                 # log current comparison to history
                 _thread.start_new_thread(
                     SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
-                
+                message = ""
                 # send email        
                 license_1 = license_one["license_name"],
                 license_2 = license_two["license_name"],
-                message = " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
-
-                subject = "Samanta campaign was used in uxlivinglab.org"
-                title = "Compatibility Results" 
-                email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2, is_compatible,is_compatible, percentage_of_compatibility, identifier, message)
+                subject = "Dowell Open Source License Compatibility Test Information"
+                title = "Open Source License Compatibility Results" 
+                if percentage_of_compatibility > 70:
+                    message = "Highly recommended"
+                elif percentage_of_compatibility >= 50:
+                    message = "Recommended"
+                else :
+                    message = "Not Recommended"                
+                email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2,message, percentage_of_compatibility)
                 send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
                 
                 return (comparison_detail), status.HTTP_200_OK
