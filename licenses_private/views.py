@@ -3,6 +3,7 @@ import utils.dowell_db_call as db
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+import datetime
 import _thread
 from licenses_private.send_email import send_email, EMAIL_FROM_WEBSITE, is_valid_email
 import uuid
@@ -186,7 +187,6 @@ class SoftwareLicenseList(APIView):
             license_one_json = SoftwareLicenseList.add_license_logo_url(license_one_json)
             license_one = license_one_json["data"][0]['softwarelicense']
 
-
             # Get license two
             license_two_json = fetch_document(
                 collection=SOFTWARE_LICENSE_COLLECTION,
@@ -202,39 +202,41 @@ class SoftwareLicenseList(APIView):
 
             comparison_detail = {}
             if license_one and license_two:
-                print(license_one)
-
+                # print(license_one)
                 percentage_of_compatibility = calculate_percentage_recommendation(license_one, license_two)
+                message = ""
+                if percentage_of_compatibility > 70:
+                    message = "Highly recommended"
+                elif percentage_of_compatibility >= 50:
+                    message = "Recommended"
+                else :
+                    message = "Not Recommended"  
                 if percentage_of_compatibility >= 50:
                     is_compatible = True
-
 
                 comparison_detail = {
                     "is_compatible": is_compatible,
                     "percentage_of_compatibility": int(percentage_of_compatibility),
                     # "license_1_event_id": license_event_id_one,
                     # "license_2_event_id": license_event_id_two,
-                    "identifier": identifier,
+                    # "identifier": identifier,
                     "license_1": license_one["license_name"],
                     "license_2": license_two["license_name"],
+                    "recommend_status": message,
                     "message": " Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance"
                 }
 
                 # log current comparison to history
                 _thread.start_new_thread(
                     SoftwareLicenseList.log_comparison_history,(request, comparison_detail))
-                message = ""
+                
                 # send email        
+                date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 license_1 = license_one["license_name"],
                 license_2 = license_two["license_name"],
-                subject = "Dowell Open Source License Compatibility Test Information"
+                subject = f"{user_email}, result from Dowell Open Source License Compatibility on {date_time}"
                 title = "Open Source License Compatibility Results" 
-                if percentage_of_compatibility > 70:
-                    message = "Highly recommended"
-                elif percentage_of_compatibility >= 50:
-                    message = "Recommended"
-                else :
-                    message = "Not Recommended"                
+                              
                 email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2,message, percentage_of_compatibility)
                 send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
                 
