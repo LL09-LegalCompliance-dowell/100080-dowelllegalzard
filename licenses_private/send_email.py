@@ -31,7 +31,7 @@ EMAIL_FROM_WEBSITE = """
           <p style="font-size:1.1em">Email : {},</p>
           <p style="font-size:1.1em">Title : {}</p>
           <p style="font-size:1.1em">License One : <strong>{}</strong>&nbsp;&nbsp; VS License Two : <strong>{}</strong></p>
-          <p style="font-size:1.1em">Recommend using on the same project : {}</p>
+          <p style="font-size:1.1em">Recommend using on the same Project/Repository : {}</p>
           <p style="font-size:1.1em"> Percentage of compatibility: {}%</p>
           <p style="font-size:1.1em">Consult your legal team for license amendments, If not fully compatible, follow conditions and add required liabilities & copyright notices for compliance</p>
         </div>
