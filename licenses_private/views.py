@@ -232,10 +232,11 @@ class SoftwareLicenseList(APIView):
                 
                 # send email        
                 date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                license_1 = license_one["license_name"],
-                license_2 = license_two["license_name"],
+                license_1 = license_one["license_name"].replace('(', '').replace(')', '').replace("'", '')
+                license_2 = license_two["license_name"].replace('(', '').replace(')', '').replace("'", '')
                 subject = f"{user_email}, result from Dowell Open Source License Compatibility on {date_time}"
                 title = "Open Source License Compatibility Results" 
+                print(license_1, license_2)
                               
                 email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2,message, percentage_of_compatibility)
                 send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
