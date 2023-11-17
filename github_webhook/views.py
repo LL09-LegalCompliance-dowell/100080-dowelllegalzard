@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from doWellOpensourceLicenseCompatibility import doWellOpensourceLicenseCompatibility
 from github import Github
 from github import GithubIntegration
+import smtplib
+from email.mime.text import MIMEText
 
 
 @csrf_exempt
@@ -26,6 +28,15 @@ def legalzard_webhook(request):
     # repository details
     owner = payload['repository']['owner']['login']
     repo_name = payload['repository']['name']
+
+
+     #get the email from the github users endpoint, using the repo owner's name
+    user_info = requests.get(f'https://api.github.com/users/{owner}')
+
+    #email_string = user_info.json()['email']
+
+    #owner_email = sanitizeEmail(email_string)
+    owner_email = user_info.json()['email']
 
     # Read the bot certificate
     app_id = settings.LEGALZARD_BOT_APP_ID
@@ -46,6 +57,16 @@ def legalzard_webhook(request):
     github_auth = git_integration.get_access_token(git_integration.get_installation(owner, repo_name).id).token
     git_connection = Github(login_or_token=github_auth)
     repo = git_connection.get_repo(f"{owner}/{repo_name}")
+   
+    #getting a list of all the repo collaborators and then formatting by adding `@` before each name
+   #to simulate mentions. This will ensure each member gets notified via email
+    members = repo.get_collaborators()
+    for c in members:
+        collaborators.append(c)
+
+    collaborators = add_prefix(remove_prefix(collaborators))
+   
+   
     # get repo dependencies
     sbom_request = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/dependency-graph/sbom',
                                 headers={'Authorization': f'Bearer {github_auth}',
@@ -77,11 +98,12 @@ def legalzard_webhook(request):
     licenses = spdx_request.json().get('licenses')
     # use the compatibility library
     legalzard_api = doWellOpensourceLicenseCompatibility(api_key=settings.LEGALZARD_API_KEY)
-    repo_license = legalzard_api.search(repo_license_id).get("data")[0]
+    repo_license = legalzard_api.search(repo_license_id['key']).get("data")[0]
     repo_license_event_id = repo_license.get("eventId")
 
     #  initialize issues
     incompatible_licenses = ""
+    truth = False
     # run comparison with package licenses
     for l_id in package_license_ids:
         try:
@@ -101,7 +123,53 @@ def legalzard_webhook(request):
             incompatible_licenses += f"{l_name}\n"
         except Exception as e:
             pass
+    
+    if len(incompatible_licenses) > 0:
+         #format the table
+        table_rows = [f"<tr><td>Licence Detail</td><td>{i}</td></tr>" for i in incompatible_licenses]
+        table_html = "<table>" + "".join(table_rows) + "</table>"
+        truth = True
+    
     # prepare and write issue
-    issue = f"Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}"
+    issue= f"{collaborators} Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}" if truth == True else f"{collaborators} Legalzard found no license compatibility issues in your dependencies"
     repo.create_issue(title="Incompatible Licenses", body=issue)
+    html_p = f"<p>Legalzard found no licence in your repo</p>"
+
+    #set email payload
+    subject = "Incompatible Licenses - Legalzard Bot"
+    body = table_html if truth == True else html_p
+    sender = "marvin.wekesa@gmail.com"
+    password = settings.GOOGLE_APP_PASSWORD
+
+    #some of the emails are not shared, in this case the repo owner will 
+    # have to explicitly enable email notifications on all their repos
+    if owner_email == None:
+        pass
+    send_email(subject, body, sender, owner_email, password)
     return HttpResponse('OK', status=200)
+
+def send_email(subject, body, sender, owner_email, password):
+    msg = MIMEText(body, "html")
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = owner_email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login(sender, password)
+       smtp_server.sendmail(sender, owner_email, msg.as_string())
+
+def sanitizeEmail(string):
+        return string.replace(',','').replace('"','')
+
+
+def remove_prefix(users):
+    cleaned_users = []
+    for user in users:
+        login = user.login.replace('NamedUser(login="', '')
+        cleaned_users.append(login)
+    return cleaned_users
+
+def add_prefix(names):
+    prefixed_names = []
+    for name in names:
+        prefixed_names.append('@' + name)
+    return ' '.join(prefixed_names)
