@@ -239,7 +239,7 @@ class SoftwareLicenseList(APIView):
                 print(license_1, license_2)
                               
                 email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2,message, percentage_of_compatibility)
-                send_content_email = send_email("Dowell UX Living Lab", "georgekibew@gmail.com", subject,email_content)
+                send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
                 
                 return (comparison_detail), status.HTTP_200_OK
             
