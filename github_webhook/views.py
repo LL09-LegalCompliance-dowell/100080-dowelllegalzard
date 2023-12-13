@@ -8,25 +8,33 @@ from django.views.decorators.csrf import csrf_exempt
 from doWellOpensourceLicenseCompatibility import doWellOpensourceLicenseCompatibility
 from github import Github
 from github import GithubIntegration
-from . import send_email
+from github_webhook.send_email import send_email, EMAIL_FROM_WEBSITE
+import json
 
 
 @csrf_exempt
 def legalzard_webhook(request):
-    print("Github webhook accesed!")
-    print(request.method)
     if request.method != 'POST':
         return HttpResponse('Method not allowed', status=400)
 
     # get github payload
-    payload = request.body.decode()
-    print("Github webhook accesed!")
-    # get license information
-    repo_license_id = payload.get('repository').get('license')
-    if not repo_license_id:
-        return HttpResponse('OK', status=200)
-    print('Payload: ', payload)
+    payload = json.loads(request.body.decode('utf-8'))
 
+    print(payload["check_suite"])
+    print("Progressing on well")
+    print(payload["action"])
+
+    # get license information
+    sender_email = payload["check_suite"]["head_commit"]["author"]["email"] or 'test@gmail.com'
+
+    repo_license_id = payload['repository']['license']
+    if not repo_license_id:
+        print(sender_email)
+        subject="DowelUX Living Lab Bot Alert"
+        email_content="You need to First Add a License to your Repository Before we can check Compatibility!"
+        send_email('Dowell UX Living Legalzard Bot Alert!', sender_email, subject, email_content)
+        return HttpResponse('OK', status=200)
+    print("License", repo_license_id)
     # repository details
     owner = payload['repository']['owner']['login']
     repo_name = payload['repository']['name']
@@ -60,16 +68,17 @@ def legalzard_webhook(request):
     github_auth = git_integration.get_access_token(git_integration.get_installation(owner, repo_name).id).token
     git_connection = Github(login_or_token=github_auth)
     repo = git_connection.get_repo(f"{owner}/{repo_name}")
-   
+
     #getting a list of all the repo collaborators and then formatting by adding `@` before each name
-   #to simulate mentions. This will ensure each member gets notified via email
+    #to simulate mentions. This will ensure each member gets notified via email
+    collaborators = []
     members = repo.get_collaborators()
     for c in members:
         collaborators.append(c)
 
     collaborators = add_prefix(remove_prefix(collaborators))
-   
-   
+
+
     # get repo dependencies
     sbom_request = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/dependency-graph/sbom',
                                 headers={'Authorization': f'Bearer {github_auth}',
@@ -125,24 +134,25 @@ def legalzard_webhook(request):
             # log incompatible licenses
             incompatible_licenses += f"{l_name}\n"
         except Exception as e:
+            print(e)
             pass
-    
+
     if len(incompatible_licenses) > 0:
          #format the table
         table_rows = [f"<tr><td>Licence Detail</td><td>{i}</td></tr>" for i in incompatible_licenses]
         table_html = "<table>" + "".join(table_rows) + "</table>"
         truth = True
-    
+
     # prepare and write issue
     issue= f"{collaborators} Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}" if truth == True else f"{collaborators} Legalzard found no license compatibility issues in your dependencies"
     repo.create_issue(title="Incompatible Licenses", body=issue)
-    html_p = f"<p>Legalzard found no licence in your repo</p>"
+    html_p = "<p>Legalzard found no licence in your repo</p>"
 
     #set email payload
     subject = "Incompatible Licenses - Legalzard Bot"
     email_content = table_html if truth == True else html_p
     send_email('Dowell UX Living Legalzard Bot Alert!',owner_email,subject,email_content)
-    
+
     return HttpResponse('OK', status=200)
 
 def sanitizeEmail(string):
