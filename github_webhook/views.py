@@ -18,11 +18,12 @@ def legalzard_webhook(request):
 
     # get github payload
     payload = request.body.decode()
-
+    print("Github webhook accesed!")
     # get license information
     repo_license_id = payload.get('repository').get('license')
     if not repo_license_id:
         return HttpResponse('OK', status=200)
+    print('Payload: ', payload)
 
     # repository details
     owner = payload['repository']['owner']['login']
@@ -31,6 +32,7 @@ def legalzard_webhook(request):
 
      #get the email from the github users endpoint, using the repo owner's name
     user_info = requests.get(f'https://api.github.com/users/{owner}')
+    print("User Information", user_info.json())
 
     #email_string = user_info.json()['email']
 
