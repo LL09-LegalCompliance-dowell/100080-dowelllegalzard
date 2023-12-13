@@ -13,6 +13,8 @@ from . import send_email
 
 @csrf_exempt
 def legalzard_webhook(request):
+    print("Github webhook accesed!")
+    print(request.method)
     if request.method != 'POST':
         return HttpResponse('Method not allowed', status=400)
 
