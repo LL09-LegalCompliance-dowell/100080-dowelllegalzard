@@ -136,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Github webhook settings
 LEGALZARD_BOT_APP_ID=388851
-LEGALZARD_BOT_KEY_PATH=f"{BASE_DIR}/github_webhook/bin/dowell-legalzard-bot.2023-09-15.private-key.pem"
+LEGALZARD_BOT_KEY_PATH=f"{BASE_DIR}/github_webhook/bin/legalzardbot-private-key.pem"
 LEGALZARD_API_KEY=""
 GOOGLE_APP_PASSWORD = "tntccgeyrevydnve"
 
