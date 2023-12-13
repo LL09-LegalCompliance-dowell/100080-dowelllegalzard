@@ -8,8 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from doWellOpensourceLicenseCompatibility import doWellOpensourceLicenseCompatibility
 from github import Github
 from github import GithubIntegration
-import smtplib
-from email.mime.text import MIMEText
+from . import send_email
 
 
 @csrf_exempt
@@ -137,25 +136,10 @@ def legalzard_webhook(request):
 
     #set email payload
     subject = "Incompatible Licenses - Legalzard Bot"
-    body = table_html if truth == True else html_p
-    sender = "marvin.wekesa@gmail.com"
-    password = settings.GOOGLE_APP_PASSWORD
-
-    #some of the emails are not shared, in this case the repo owner will 
-    # have to explicitly enable email notifications on all their repos
-    if owner_email == None:
-        pass
-    send_email(subject, body, sender, owner_email, password)
+    email_content = table_html if truth == True else html_p
+    send_email('Dowell UX Living Legalzard Bot Alert!',owner_email,subject,email_content)
+    
     return HttpResponse('OK', status=200)
-
-def send_email(subject, body, sender, owner_email, password):
-    msg = MIMEText(body, "html")
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = owner_email
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-       smtp_server.login(sender, password)
-       smtp_server.sendmail(sender, owner_email, msg.as_string())
 
 def sanitizeEmail(string):
         return string.replace(',','').replace('"','')
