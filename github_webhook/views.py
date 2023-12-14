@@ -47,15 +47,8 @@ def legalzard_webhook(request):
         # repository details
         owner = payload['repository']['owner']['login']
         repo_name = payload['repository']['name']
-
-
-        #get the email from the github users endpoint, using the repo owner's name
-        user_info = requests.get(f'https://api.github.com/users/{owner}')
-        print("User Information", user_info.json())
-        
-        #owner_email = sanitizeEmail(email_string)
-        owner_email = user_info.json()['email']
-        print("Owner Email", owner_email)
+        print("Owner: ", owner)
+        print("Repo: ", repo_name)
 
         # Read the bot certificate
         app_id = settings.LEGALZARD_BOT_APP_ID
@@ -79,20 +72,20 @@ def legalzard_webhook(request):
 
         #getting a list of all the repo collaborators and then formatting by adding `@` before each name
         #to simulate mentions. This will ensure each member gets notified via email
-        print("so far so good")
-        print(github_auth)
-        collaborators = []
+        print("Github Auth: ", github_auth)
         members = repo.get_collaborators()
         for c in members:
             collaborators.append(c)
 
         collaborators = add_prefix(remove_prefix(collaborators))
+        print("Collaborators: ", collaborators)
 
 
         # get repo dependencies
         sbom_request = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/dependency-graph/sbom',
                                     headers={'Authorization': f'Bearer {github_auth}',
                                             'X-GitHub-Api-Version': '2022-11-28'})
+        print("SBOM Request: ", sbom_request.json())
         if sbom_request.status_code != 200:
             return HttpResponse('OK', status=200)
 
@@ -108,16 +101,21 @@ def legalzard_webhook(request):
             for l in re.sub(r'\([^()]*\)', '', p_license).split(" "):
                 if l not in ["AND", "OR"]:
                     package_license_ids.add(l)
-
+        
         # Empty set guard clause
         if len(package_license_ids) == 0:
+            subject="Dowell UX Living Lab Legalzard Github Bot Alert"
+            email_content="Your repository does not seem to have additional licenses. You may no have used additional libraries or you have a missing package.json file or requirements.txt file!"
+            send_email('Repository Owner', sender_email, subject, email_content)
             return HttpResponse('OK', status=200)
+        
         # Get spdx license data
         spdx_request = requests.get("https://spdx.org/licenses/licenses.json")
         if spdx_request.status_code != 200:
             return HttpResponse('OK', status=200)
 
         licenses = spdx_request.json().get('licenses')
+        print("Licenses: ", licenses)
         # use the compatibility library
         legalzard_api = doWellOpensourceLicenseCompatibility(api_key=settings.LEGALZARD_API_KEY)
         repo_license = legalzard_api.search(repo_license_id['key']).get("data")[0]
@@ -159,9 +157,9 @@ def legalzard_webhook(request):
         html_p = "<p>Legalzard found no licence in your repo</p>"
 
         #set email payload and send email
-        subject = "Legalzard Bot Alert: Incompatible Licensest"
+        subject = "Legalzard Bot Alert: Incompatible Licenses"
         email_content = table_html if truth == True else html_p
-        send_email('Dowell UX Living Legalzard Bot Alert!',owner_email,subject,email_content)
+        send_email('Dowell UX Living Legalzard Bot Alert!', sender_email, subject, email_content)
 
         return HttpResponse('OK', status=200)
     
