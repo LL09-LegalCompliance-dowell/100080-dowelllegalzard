@@ -5,11 +5,32 @@ import requests
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from doWellOpensourceLicenseCompatibility import doWellOpensourceLicenseCompatibility
 from github import Github
 from github import GithubIntegration
 from github_webhook.send_email import send_email, EMAIL_FROM_WEBSITE
 import json
+
+
+def search_license(search_term):
+    response = requests.get(f'https://100080.pythonanywhere.com/api/licenses/?search_term={search_term}&action_type=search')
+    license_data = response.json()['data'][0]
+    print("Event ID", license_data['eventId'])
+    return license_data['eventId']
+
+
+def check_compatibility(event1, event2):
+    api_url = "https://100080.pythonanywhere.com/api/licenses/"
+    json_payload = {
+    "action_type": "check-compatibility",
+    "license_event_id_one": event1,
+    "license_event_id_two": event2,
+    }
+    response = requests.post(api_url, json=json_payload)
+    is_compatible = response.json()['is_compatible']
+    percentage_of_compatibility = response.json()['percentage_of_compatibility']
+    print("is_compatible: ", is_compatible)
+    print("percentage_of_compatibility: ", percentage_of_compatibility)
+    return is_compatible
 
 def remove_prefix(users):
     cleaned_users = []
@@ -28,13 +49,13 @@ def add_prefix(names):
 def legalzard_webhook(request):
     # Only post method is allowed from the github bot
     if request.method != 'POST':
-        return HttpResponse('Method not allowed', status=400)    
+        return HttpResponse('Method not allowed', status=400)
     try:
         # get github payload
         payload = json.loads(request.body.decode('utf-8'))
         # get license information
         sender_email = payload["check_suite"]["head_commit"]["author"]["email"] or 'test@gmail.com'
-        
+
         repo_license_id = payload['repository']['license']
         # Send email to user telling them to add their primary licnese
         if not repo_license_id:
@@ -45,6 +66,7 @@ def legalzard_webhook(request):
             return HttpResponse('OK', status=200)
         # print("License", repo_license_id)
         # repository details
+        repo_license_key = payload['repository']['license']['key']
         owner = payload['repository']['owner']['login']
         repo_name = payload['repository']['name']
         print("Owner: ", owner)
@@ -73,6 +95,7 @@ def legalzard_webhook(request):
         #getting a list of all the repo collaborators and then formatting by adding `@` before each name
         #to simulate mentions. This will ensure each member gets notified via email
         print("Github Auth: ", github_auth)
+        collaborators = []
         members = repo.get_collaborators()
         for c in members:
             collaborators.append(c)
@@ -85,13 +108,14 @@ def legalzard_webhook(request):
         sbom_request = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/dependency-graph/sbom',
                                     headers={'Authorization': f'Bearer {github_auth}',
                                             'X-GitHub-Api-Version': '2022-11-28'})
-        print("SBOM Request: ", sbom_request.json())
+        # print("SBOM Request: ", sbom_request.json())
         if sbom_request.status_code != 200:
             return HttpResponse('OK', status=200)
 
         sbom = sbom_request.json()
         packages = sbom.get('sbom').get('packages', [])
         package_license_ids = set()
+        print("packages", packages)
 
         for p in packages:
             p_license = p.get('licenseConcluded', None)
@@ -101,46 +125,31 @@ def legalzard_webhook(request):
             for l in re.sub(r'\([^()]*\)', '', p_license).split(" "):
                 if l not in ["AND", "OR"]:
                     package_license_ids.add(l)
-        
+
+        print("package_license_ids", package_license_ids)
         # Empty set guard clause
         if len(package_license_ids) == 0:
             subject="Dowell UX Living Lab Legalzard Github Bot Alert"
             email_content="Your repository does not seem to have additional licenses. You may no have used additional libraries or you have a missing package.json file or requirements.txt file!"
             send_email('Repository Owner', sender_email, subject, email_content)
             return HttpResponse('OK', status=200)
-        
-        # Get spdx license data
-        spdx_request = requests.get("https://spdx.org/licenses/licenses.json")
-        if spdx_request.status_code != 200:
-            return HttpResponse('OK', status=200)
 
-        licenses = spdx_request.json().get('licenses')
-        print("Licenses: ", licenses)
-        # use the compatibility library
-        legalzard_api = doWellOpensourceLicenseCompatibility(api_key=settings.LEGALZARD_API_KEY)
-        repo_license = legalzard_api.search(repo_license_id['key']).get("data")[0]
-        repo_license_event_id = repo_license.get("eventId")
-
+        repo_license_event_id = search_license(repo_license_key)
         #  initialize issues
         incompatible_licenses = ""
         truth = False
         # run comparison with package licenses
-        for l_id in package_license_ids:
+        for license_id in package_license_ids:
             try:
                 # get license
-                l_name = next(lnc for lnc in licenses if lnc["licenseId"] == l_id)["name"]
-                # prepare comparison data
-                _pkg_license = legalzard_api.search(l_name).get("data")[0]
-                _pkg_license_event_id = _pkg_license.get("eventId")
-                compatibility = legalzard_api.check_compatibility({
-                    "license_event_id_one": repo_license_event_id,
-                    "license_event_id_two": _pkg_license_event_id,
-                })["is_compatible"]
+                license_event_id = search_license(license_id)
+                compatibility = check_compatibility(repo_license_event_id, license_event_id)
                 # skip compatible licenses
                 if compatibility:
+                    print("Is compatible")
                     continue
                 # log incompatible licenses
-                incompatible_licenses += f"{l_name}\n"
+                incompatible_licenses += f"{license_event_id}\n"
             except Exception as e:
                 print(e)
                 pass
@@ -162,7 +171,7 @@ def legalzard_webhook(request):
         send_email('Dowell UX Living Legalzard Bot Alert!', sender_email, subject, email_content)
 
         return HttpResponse('OK', status=200)
-    
+
     except KeyError:
         return HttpResponse('OK', status=422)
     except Exception as e:
