@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from rest_framework import status
 import datetime
 import _thread
-from licenses_private.send_email import send_email, EMAIL_FROM_WEBSITE, is_valid_email
+import json
+from licenses_experienced.send_email import send_email, EMAIL_FROM_WEBSITE, is_valid_email
+from licenses_experienced.experience_database import experience_database_services, save_experienced_product_data, update_user_usage
 import uuid
+from threading import Thread
 from utils.dowell import (
     fetch_document,
     
@@ -164,6 +167,11 @@ class SoftwareLicenseList(APIView):
         user_email = ""
         if "user_email" in request_data:
             user_email = request_data["user_email"]
+        
+        occurrences = 0
+        if "occurrences" in request_data:
+            occurrences = request_data["occurrences"]
+        
         # validate user email
         if not is_valid_email(user_email) or not user_email:
             return ({
@@ -172,6 +180,16 @@ class SoftwareLicenseList(APIView):
                 }), status.HTTP_422_UNPROCESSABLE_ENTITY            
         
         is_compatible = False
+        
+        experience_database_service_response = json.loads(experience_database_services(user_email, occurrences))
+        print(experience_database_service_response)
+        if not experience_database_service_response.get("success"):
+            return ({
+                "isSuccess": False,
+                "message": "Error Checking compatibility or Validating Email"
+            }), status.HTTP_400_BAD_REQUEST  
+
+        occurrences += 1
         try:
 
             license_event_id_one = request.data.get("license_event_id_one", "")
@@ -240,6 +258,16 @@ class SoftwareLicenseList(APIView):
                               
                 email_content = EMAIL_FROM_WEBSITE.format(user_email, title,license_1,license_2,message, percentage_of_compatibility)
                 send_content_email = send_email("Dowell UX Living Lab", "dowell@dowellresearch.uk", subject,email_content)
+                
+                print("-------SO FAR SO GOOD -------------")
+                experienced_data = Thread(target=self.save_experienced_data, args=(user_email, comparison_detail))
+                experienced_data.daemon = True
+                experienced_data.start()
+
+                experienced_reduce = Thread(target=self.reduce_experienced_counts, args=(user_email, occurrences))
+                experienced_reduce.daemon = True
+                experienced_reduce.start()
+                print("-------------------------------",)
                 
                 return (comparison_detail), status.HTTP_200_OK
             
@@ -394,7 +422,31 @@ class SoftwareLicenseList(APIView):
 
         except Exception as err:
             print(str(err))
+    
+    
+    def save_experienced_data(self, email, data):
+        print(data)
+        try:
+            save_experienced_product_data(
+                "LEGALZARD",
+                email,
+                {
+                    "Is Compatible": data["is_compatible"],
+                    "percentage_of_compatibility": data["percentage_of_compatibility"],
+                    "License One": data["license_1"],
+                    "License Two": data["license_2"],
+                    "Recommend Status": data["recommend_status"],
+                    "Message": data["message"]
+                }
+            )
+        except Exception as e:
+            print(f"Error in save_experienced_data: {str(e)}")
 
+    def reduce_experienced_counts(self, email, occurrences):
+        try:
+            update_user_usage(email, occurrences)
+        except Exception as e:
+            print(f"Error in reduce_experienced_counts: {str(e)}")
 
 
 

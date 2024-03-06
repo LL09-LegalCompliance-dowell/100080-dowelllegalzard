@@ -67,6 +67,10 @@ def index(request):
         "message": "Welcome to legalzard"
     })
 
+# @method_decorator(csrf_exempt, name='dispatch')
+class health_check(APIView):
+    def get(self, request ):
+        return Response("Sever is running fine. Stop Doubting server!",status=status.HTTP_200_OK)
 class AgreementComplianceList(APIView):
     """ List all and create software agreements policy
     """

@@ -19,13 +19,14 @@ from django.urls import path, re_path, include
 from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
-from agreements.views import load_public_agreement_compliance, index, download_file
+from agreements.views import load_public_agreement_compliance, index, download_file, health_check
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('licenses.urls')),
     path('api/public/', include('licenses_public.urls')),
     path('api/private/', include('licenses_private.urls')),
+    path('api/experienced/', include('licenses_experienced.urls')),
     path('api/', include('agreements.urls')),
     path('api/', include('attributes.urls')),
     path('api/', include('attachments.urls')),
@@ -36,7 +37,7 @@ urlpatterns = [
     path('agreement-compliance/<str:event_id>/', load_public_agreement_compliance, name= "load_public_agreement_compliance"),
     path('download/', download_file, name="agreements_download"),
     path('temp-admin/', include('legalzard_admin_temp.urls')),
-    path('', index, name="index")
+    path('', health_check.as_view(), name="index")
 ]\
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
