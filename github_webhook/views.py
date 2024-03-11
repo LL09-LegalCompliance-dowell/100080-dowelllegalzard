@@ -54,7 +54,9 @@ def legalzard_webhook(request):
         # get github payload
         payload = json.loads(request.body.decode('utf-8'))
         # get license information
-        sender_email = payload["check_suite"]["head_commit"]["author"]["email"] or 'test@gmail.com'
+        print("Payload: ", payload)
+        # sender_email = payload["check_suite"]["head_commit"]["author"]["email"]
+        sender_email = payload["head_commit"]["author"]["email"]
 
         repo_license_id = payload['repository']['license']
         # Send email to user telling them to add their primary licnese
@@ -74,6 +76,8 @@ def legalzard_webhook(request):
 
         # Read the bot certificate
         app_id = settings.LEGALZARD_BOT_APP_ID
+        print("App_ID:", app_id)
+        print("Bot Key path", settings.LEGALZARD_BOT_KEY_PATH)
         with open(
                 os.path.normpath(os.path.expanduser(settings.LEGALZARD_BOT_KEY_PATH)),
                 'r'
@@ -108,7 +112,7 @@ def legalzard_webhook(request):
         sbom_request = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/dependency-graph/sbom',
                                     headers={'Authorization': f'Bearer {github_auth}',
                                             'X-GitHub-Api-Version': '2022-11-28'})
-        # print("SBOM Request: ", sbom_request.json())
+        print("SBOM Request: ", sbom_request.json())
         if sbom_request.status_code != 200:
             return HttpResponse('OK', status=200)
 
@@ -172,8 +176,9 @@ def legalzard_webhook(request):
 
         return HttpResponse('OK', status=200)
 
-    except KeyError:
-        return HttpResponse('OK', status=422)
+    #except KeyError as e:
+    #    print(f"KeyError encountered: {e}")
+    #    return HttpResponse('OK', status=422)
     except Exception as e:
         print("Error Handling User Request", e)
         return HttpResponse('Internal Server Error', status=500)

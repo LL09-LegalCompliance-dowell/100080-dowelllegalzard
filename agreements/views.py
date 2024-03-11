@@ -122,6 +122,7 @@ class AgreementComplianceList(APIView):
 
 
     def post(self, request: Request, format=None):
+        # print("Request data:", request.data)
         try:
             request_data = request.data
             response_json = {}
@@ -241,6 +242,7 @@ class AgreementComplianceList(APIView):
                     response_json,
                     status_code)
 
+            print("Response json before HTML doc url:", response_json)
             response_json = AgreementComplianceList.add_document_url(request, response_json)
             return Response(response_json, status=status_code)
 
