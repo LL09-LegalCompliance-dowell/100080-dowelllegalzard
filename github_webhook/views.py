@@ -55,24 +55,31 @@ def legalzard_webhook(request):
         payload = json.loads(request.body.decode('utf-8'))
         # get license information
         print("Payload: ", payload)
-        # sender_email = payload["check_suite"]["head_commit"]["author"]["email"]
-        sender_email = payload["head_commit"]["author"]["email"]
+        sender_email = "test@gmail.com"
+        try:
+            sender_email = payload["check_suite"]["head_commit"]["author"]["email"]
+        except Exception as e:
+            print(f"Error: An unexpected error occurred - {e}")        
+        else:
+            sender_email = payload["head_commit"]["author"]["email"]
+        finally:
+            print("Division operation completed.")
 
-        repo_license_id = payload['repository']['license']
-        # Send email to user telling them to add their primary licnese
-        if not repo_license_id:
-            print(sender_email)
-            subject="Dowell UX Living Lab Legalzard Github Bot Alert"
-            email_content="You need to First Add a License to your Repository Before we can check Compatibility!"
-            send_email('Repository Owner', sender_email, subject, email_content)
-            return HttpResponse('OK', status=200)
-        # print("License", repo_license_id)
         # repository details
-        repo_license_key = payload['repository']['license']['key']
-        owner = payload['repository']['owner']['login']
-        repo_name = payload['repository']['name']
-        print("Owner: ", owner)
-        print("Repo: ", repo_name)
+        repo_license_key = ""
+        owner = ""
+        repo_name = ""
+        try:
+            # repository details
+            repo_license_key = payload['repository']['license'].get('key')
+            owner = payload['repository']['owner'].get('login')
+            repo_name = payload['repository'].get('name')
+            print("Owner: ", owner)
+            print("Repo: ", repo_name)
+        except KeyError:
+            print("Error: Missing required data in the request payload")
+        except Exception as e:
+            print("Error:", e)
 
         # Read the bot certificate
         app_id = settings.LEGALZARD_BOT_APP_ID
@@ -88,14 +95,14 @@ def legalzard_webhook(request):
             app_id,
             app_key,
         )
-
+        print("Github integration done!")
         # Get a git connection as our bot
         # Here is where we are getting the permission to talk as our bot and not
         # as a Python webservice
         github_auth = git_integration.get_access_token(git_integration.get_installation(owner, repo_name).id).token
         git_connection = Github(login_or_token=github_auth)
         repo = git_connection.get_repo(f"{owner}/{repo_name}")
-
+        
         #getting a list of all the repo collaborators and then formatting by adding `@` before each name
         #to simulate mentions. This will ensure each member gets notified via email
         print("Github Auth: ", github_auth)
@@ -106,6 +113,23 @@ def legalzard_webhook(request):
 
         collaborators = add_prefix(remove_prefix(collaborators))
         print("Collaborators: ", collaborators)
+        
+        repo_license_id = payload['repository']['license']
+        # Send email to user telling them to add their primary licnese
+        if not repo_license_id:
+            print(sender_email)
+            print(collaborators)
+            subject="Dowell UX Living Lab Legalzard Github Bot Alert"
+            email_content="You need to First Add a License to your Repository Before we can check Compatibility!"
+            issue= f"{collaborators} Attention! You need to First Add a License to your Repository Before we can check Compatibility!"        
+            try:
+                repo.create_issue(title="Incompatible Licenses", body=issue)
+                print("issue created. Trying to send email...")
+                send_email('Repository Owner', sender_email, subject, email_content)
+            except Exception as e:
+                print(f"Error: An unexpected error occurred - {e}")
+            return HttpResponse('OK', status=200)
+
 
 
         # get repo dependencies
@@ -167,8 +191,8 @@ def legalzard_webhook(request):
         # prepare and write issue
         issue= f"{collaborators} Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}" if truth == True else f"{collaborators} Legalzard found no license compatibility issues in your dependencies"
         repo.create_issue(title="Incompatible Licenses", body=issue)
+        
         html_p = "<p>Legalzard found no licence in your repo</p>"
-
         #set email payload and send email
         subject = "Legalzard Bot Alert: Incompatible Licenses"
         email_content = table_html if truth == True else html_p
