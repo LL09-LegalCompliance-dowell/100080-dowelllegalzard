@@ -4,7 +4,13 @@ repo_license_key = payload['repository']['license']
 owner = payload['repository']['owner']['login']
 repo_name = payload['repository']['name']
 
+info_test=""
 print("Repo License Key: ", repo_license_key)
 print("Owner: ", owner)
 print("Repo: ", repo_name)
 # print(payload["repository"])
+
+if info_test:
+    print("Info test: ", info_test)
+else:
+    print("Info test is empty")

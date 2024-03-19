@@ -107,8 +107,8 @@ def legalzard_webhook(request):
         repo_license_id = payload['repository']['license']
         # Send email to user telling them to add their primary licnese
         if not repo_license_id:
-            print(sender_email)
-            print(collaborators)
+            # print(sender_email)
+            # print(collaborators)
             subject="Dowell UX Living Lab Legalzard Github Bot Alert"
             email_content="You need to First Add a License to your Repository Before we can check Compatibility!"
             issue= f"{collaborators} Attention! You need to First Add a License to your Repository Before we can check Compatibility!"        
@@ -117,6 +117,7 @@ def legalzard_webhook(request):
                 print("issue created. Trying to send email...")
                 if sender_email:
                     send_email('Repository Owner', sender_email, subject, email_content)
+                    print("Email sent...")
             except Exception as e:
                 print(f"Error: An unexpected error occurred - {e}")
             return HttpResponse('OK', status=200)
@@ -132,7 +133,7 @@ def legalzard_webhook(request):
         sbom = sbom_request.json()
         packages = sbom.get('sbom').get('packages', [])
         package_license_ids = set()
-        print("packages", packages)
+        #print("packages", packages)
 
         for p in packages:
             p_license = p.get('licenseConcluded', None)
@@ -143,7 +144,7 @@ def legalzard_webhook(request):
                 if l not in ["AND", "OR"]:
                     package_license_ids.add(l)
 
-        # print("package_license_ids", package_license_ids)
+        print("package_license_ids", package_license_ids)
         # Empty set guard clause
         if len(package_license_ids) == 0:
             subject="Dowell UX Living Lab Legalzard Github Bot Alert"
