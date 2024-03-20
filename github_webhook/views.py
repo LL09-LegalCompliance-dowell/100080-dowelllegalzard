@@ -57,19 +57,18 @@ def legalzard_webhook(request):
         # print("Payload: ", payload)
         sender_email = ""
         try:
-            sender_email = payload["check_suite"]["head_commit"]["author"]["email"]
+            # sender_email = payload["check_suite"]["head_commit"]["author"]["email"]
+            sender_email = payload["head_commit"]["author"]["email"]
         except Exception as e:
             print(f"Error: An unexpected error occurred - {e}")        
         else:
             sender_email = payload["head_commit"]["author"]["email"]
         finally:
-            print("Division operation completed.")
+            print("User email asignment done!")
 
         # repository details
-        repo_license_key = payload['repository']['license']['key']
-        owner = payload['repository']['owner']['login']
-        repo_name = payload['repository']['name']
-        print("Repo license Key: ", repo_license_key)
+        owner = payload['repository'].get('owner', {}).get('login')
+        repo_name = payload['repository'].get('name')
         print("repo name: ", repo_name)
 
         # Read the bot certificate
@@ -153,10 +152,11 @@ def legalzard_webhook(request):
             email_content="Your repository does not seem to have additional licenses. You may no have used additional libraries or you have a missing package.json file or requirements.txt file!"
             send_email('Repository Owner', sender_email, subject, email_content)
             return HttpResponse('OK', status=200)
-
-        print("Repo license key: ", repo_license_key)
+        
+        repo_license_key = payload['repository']['license']['key']
+        # print("Repo license key: ", repo_license_key)
         repo_license_event_id = search_license(repo_license_key)
-        print("Repo license event id: ", repo_license_event_id)
+        # print("Repo license event id: ", repo_license_event_id)
         #  initialize issues
         incompatible_licenses = ""
         truth = False
