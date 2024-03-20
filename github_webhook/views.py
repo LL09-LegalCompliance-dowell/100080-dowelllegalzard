@@ -115,10 +115,10 @@ def legalzard_webhook(request):
             issue= f"{collaborators} Attention! No license added to the repository. Add a license to proceed!"        
             try:
                 repo.create_issue(title="No License Found", body=issue)
-                print("issue created. Trying to send email...")
-                if sender_email:
-                    send_email('Repository Owner', sender_email, subject, email_content)
-                    print("Email sent...")
+                # print("issue created. Trying to send email...")
+                # if sender_email:
+                #     send_email('Repository Owner', sender_email, subject, email_content)
+                #     print("Email sent...")
             except Exception as e:
                 print(f"Error: An unexpected error occurred - {e}")
             return HttpResponse('OK', status=200)
