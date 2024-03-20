@@ -111,8 +111,8 @@ def legalzard_webhook(request):
             # print(sender_email)
             # print(collaborators)
             subject="Dowell UX Living Lab Legalzard Github Bot Alert"
-            email_content="You need to First Add a License to your Repository Before we can check Compatibility!"
-            issue= f"{collaborators} Attention! You need to First Add a License to your Repository Before we can check Compatibility!"        
+            email_content="No license added to the repository. Add a license to proceed!"
+            issue= f"{collaborators} Attention! No license added to the repository. Add a license to proceed!"        
             try:
                 repo.create_issue(title="No License Found", body=issue)
                 print("issue created. Trying to send email...")
