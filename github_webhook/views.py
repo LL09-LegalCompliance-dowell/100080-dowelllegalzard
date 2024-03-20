@@ -66,9 +66,11 @@ def legalzard_webhook(request):
             print("Division operation completed.")
 
         # repository details
-        repo_license_key = payload['repository']['license']
+        repo_license_key = payload['repository']['license']['key']
         owner = payload['repository']['owner']['login']
         repo_name = payload['repository']['name']
+        print("Repo license Key: ", repo_license_key)
+        print("repo name: ", repo_name)
 
         # Read the bot certificate
         app_id = settings.LEGALZARD_BOT_APP_ID
@@ -152,12 +154,15 @@ def legalzard_webhook(request):
             send_email('Repository Owner', sender_email, subject, email_content)
             return HttpResponse('OK', status=200)
 
+        print("Repo license key: ", repo_license_key)
         repo_license_event_id = search_license(repo_license_key)
+        print("Repo license event id: ", repo_license_event_id)
         #  initialize issues
         incompatible_licenses = ""
         truth = False
         # run comparison with package licenses
         for license_id in package_license_ids:
+            print("license Id: ",license_id)
             try:
                 # get license
                 license_event_id = search_license(license_id)
@@ -181,17 +186,19 @@ def legalzard_webhook(request):
         # prepare and write issue
         issue= ""
         if truth == True:
-            f"{collaborators} Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}" 
+            issue = f"{collaborators} Legalzard found licenses in your dependencies that are incompatible with your repository license\n\n {incompatible_licenses}" 
         else:
-            f"{collaborators} Legalzard found no license compatibility issues in your dependencies"
+            issue = f"{collaborators} Legalzard found no license compatibility issues in your dependencies"
         
-        repo.create_issue(title="Incompatible Licenses", body=issue)
         
-        html_p = "<p>Legalzard found no licence in your repo</p>"
-        #set email payload and send email
-        subject = "Legalzard Bot Alert: Incompatible Licenses"
-        email_content = table_html if truth == True else html_p
-        send_email('Dowell UX Living Legalzard Bot Alert!', sender_email, subject, email_content)
+        if truth:
+            # if there is an incompatibility create an issue in the repo and send email
+            repo.create_issue(title="Incompatible Licenses Alert! ", body=issue)        
+            html_p = "<p>Legalzard found no licence in your repo</p>"
+            #set email payload and send email
+            subject = "Legalzard Bot Alert: Incompatible Licenses"
+            email_content = table_html if truth == True else html_p
+            send_email('Dowell UX Living Legalzard Bot Alert!', sender_email, subject, email_content)
 
         return HttpResponse('OK', status=200)
 

@@ -14,3 +14,9 @@ if info_test:
     print("Info test: ", info_test)
 else:
     print("Info test is empty")
+
+license_set = {'Python-2.0.1', 'BSD-2-Clause', 'BSD-3-Clause'}
+
+for license in license_set:
+    print(license)
+print(len(license_set))
