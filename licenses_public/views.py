@@ -2,6 +2,8 @@ import requests
 import utils.dowell_db_call as db
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 import _thread
 import uuid
@@ -17,6 +19,7 @@ from licenses.serializers import SoftwareLicenseSerializer
 from licenses.license_percentage_recommendation import calculate_percentage_recommendation
 import json
 
+@method_decorator(csrf_exempt, name='dispatch')
 class SoftwareLicenseList(APIView):
     """ List all and create software license
     """
@@ -416,7 +419,7 @@ class SoftwareLicenseList(APIView):
 
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class SoftwareLicenseDetail(APIView):
     """
      Retrieve , update and delete software license
