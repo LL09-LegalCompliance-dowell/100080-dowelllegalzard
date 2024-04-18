@@ -19,13 +19,39 @@ from licenses.serializers import SoftwareLicenseSerializer
 from licenses.license_percentage_recommendation import calculate_percentage_recommendation
 import json
 
+from rest_framework.response import Response
+from rest_framework import status
+
+class InvalidTokenException(Exception):
+    pass
+
+def authorization_check(api_key):
+    """
+    Checks the validity of the API key.
+
+    :param api_key: The API key to be validated.
+    :return: The extracted token if the API key is valid.
+    :raises InvalidTokenException: If the API key is missing, invalid, or has an incorrect format.
+    """
+    if not api_key or not api_key.startswith('Bearer '):
+        
+        raise InvalidTokenException("Bearer token is missing or invalid")
+    try:
+        _, token = api_key.split(' ')
+    except ValueError:
+        raise InvalidTokenException("Invalid Authorization header format")
+    
+    return token
 @method_decorator(csrf_exempt, name='dispatch')
 class SoftwareLicenseList(APIView):
     """ List all and create software license
     """
 
     def get(self, request, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         print("API KEY: ", user_api_key)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
@@ -122,7 +148,10 @@ class SoftwareLicenseList(APIView):
             )
 
     def post(self, request, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
@@ -187,7 +216,10 @@ class SoftwareLicenseList(APIView):
         """ Check for two licnese and return True if 
             license_one == license_two
         """
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
@@ -320,7 +352,10 @@ class SoftwareLicenseList(APIView):
     def search_license(self, request, format=None):
         """ Load linceses base on search term
         """
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
@@ -425,7 +460,10 @@ class SoftwareLicenseDetail(APIView):
      Retrieve , update and delete software license
     """
     def get(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
@@ -466,7 +504,10 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def put(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
@@ -512,7 +553,10 @@ class SoftwareLicenseDetail(APIView):
             )
 
     def delete(self, request, event_id, format=None):
-        user_api_key = request.META.get('HTTP_API_KEY')
+        try:
+            user_api_key = authorization_check(request.headers.get('Authorization'))
+        except InvalidTokenException as e:
+            return Response("Invalid authorization", status.HTTP_401_UNAUTHORIZED)
         validate_api_count = validateApikey(user_api_key)
         data_count = json.loads(validate_api_count)
         if not user_api_key or not data_count['success'] or not data_count['total_credits'] >=  0:
