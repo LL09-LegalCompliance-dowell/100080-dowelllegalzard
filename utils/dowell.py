@@ -105,7 +105,7 @@ def save_document(
     
     ):
     
-    url = "http://100002.pythonanywhere.com/"
+    url = "http://uxlivinglab.pythonanywhere.com"
     if not event_id:
         event_id = get_event_id()
 
@@ -133,7 +133,7 @@ def save_document(
 
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
-    json_data = response.json()
+    json_data = json.loads(response.json())
     json_data['event_id'] = event_id
     return json_data
 
@@ -146,7 +146,7 @@ def update_document(
     id="",
     event_id=""
 ):
-    url = "http://100002.pythonanywhere.com/"
+    url = "http://uxlivinglab.pythonanywhere.com"
 
     # Build request data or payload
     payload = json.dumps({
@@ -172,7 +172,7 @@ def update_document(
 
     # Send POST request to server
     response = requests.request("POST", url, headers=headers, data=payload)
-    return response.json()
+    return json.loads(response.json())
 
 
 def fetch_document(
@@ -180,7 +180,7 @@ def fetch_document(
     document: str,
     fields: dict,
 ):
-    url = "http://100002.pythonanywhere.com/"
+    url = "http://uxlivinglab.pythonanywhere.com"
 
     # Build request data or payload
     payload = json.dumps({
@@ -192,10 +192,8 @@ def fetch_document(
         "function_ID": get_function_id(collection),
         "command": "fetch",
         "field": fields,
-
         "update_field": {"update_field": "nil"},
         "platform": "bangalore"
-
     })
 
     # Setup request headers
@@ -204,8 +202,8 @@ def fetch_document(
     }
 
     # Send POST request to server
-    response = requests.request("POST", url, headers=headers, data=payload)
-    return response.json()
+    response = requests.post(url, headers=headers, data=payload)
+    return json.loads(response.json())
 
 
 def targeted_population(collection, fields, period):

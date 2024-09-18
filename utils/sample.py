@@ -40,7 +40,7 @@ def get_event_id():
 
 
 def save_licenses():  # license
-    url = "http://100002.pythonanywhere.com/"
+    url = "http://uxlivinglab.pythonanywhere.com"
     agreement = {
         "name": "Worlako vs George",
         "title": "License agreement",
@@ -68,7 +68,7 @@ def save_licenses():  # license
         'Content-Type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
+    return json.loads(response.json())
 
 
 save_licenses()
