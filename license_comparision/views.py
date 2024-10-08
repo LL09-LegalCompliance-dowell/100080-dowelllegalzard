@@ -21,11 +21,20 @@ from utils.dowell import (
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
 )
+from utils.datacube import (
+    datacube_data_retrieval,
+    datacube_data_update,
+)
 
 
 from .serializers import ComparisionSerializer
 from licenses.views import SoftwareLicenseList
 
+
+API_KEY = "1b834e07-c68b-4bf6-96dd-ab7cdc62f07f"
+DATABASE_NAME = "legalservice"
+COLLECTION_NAME = "licensecomparison"
+LIMIT = 10000
 
 class ComparisionList(APIView):
     """ List all and create comparision
@@ -41,11 +50,20 @@ class ComparisionList(APIView):
             status_code = 500
 
             # Retrieve comparision
-            response_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={"attributes.attribute_type": "comparisions"}
+            # response_json = fetch_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     fields={"attributes.attribute_type": "comparisions"}
+            # )
+
+            response_json = datacube_data_retrieval(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                data={"attributes.attribute_type": "comparisions"},
+                payment=False
             )
+
 
             status_code = status.HTTP_200_OK
 
@@ -137,11 +155,19 @@ class ComparisionList(APIView):
     def get_license(event_id):
         
         # Retrieve license
-        response_json = fetch_document(
-            collection=SOFTWARE_LICENSE_COLLECTION,
-            document=SOFTWARE_LICENSE_DOCUMENT_NAME,
-            fields={"eventId": event_id}
-        )
+        # response_json = fetch_document(
+        #     collection=SOFTWARE_LICENSE_COLLECTION,
+        #     document=SOFTWARE_LICENSE_DOCUMENT_NAME,
+        #     fields={"eventId": event_id}
+        # )
+
+        response_json = datacube_data_retrieval(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                data={"eventId": event_id},
+                payment=False
+            )
 
         response_json = SoftwareLicenseList.add_license_logo_url(
             response_json)
@@ -160,10 +186,18 @@ class ComparisionDetail(APIView):
         try:
 
             # Get comparision
-            response_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={"eventId": event_id, "attributes.attribute_type": "comparisions"}
+            # response_json = fetch_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     fields={"eventId": event_id, "attributes.attribute_type": "comparisions"}
+            # )
+
+            response_json = datacube_data_retrieval(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                data={"eventId": event_id, "attributes.attribute_type": "comparisions"},
+                payment=False
             )
             return Response(response_json, status=status.HTTP_200_OK)
 
@@ -188,10 +222,18 @@ class ComparisionDetail(APIView):
                 action_type = request_data["action_type"]
 
             # Get license comparision 
-            response_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+            # response_json = fetch_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     fields={"eventId": event_id}
+            # )
+
+            response_json = datacube_data_retrieval(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                data={"eventId": event_id},
+                payment=False
             )
             license_comparison = response_json["data"][0]["attributes"]
 
@@ -348,10 +390,18 @@ class ComparisionDetail(APIView):
                 action_type = request_data["action_type"]
 
             # Get license comparision 
-            response_json = fetch_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                fields={"eventId": event_id}
+            # response_json = fetch_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     fields={"eventId": event_id}
+            # )
+
+            response_json = datacube_data_retrieval(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                data={"eventId": event_id},
+                payment=False
             )
             
             license_comparison = response_json["data"][0]["attributes"]
@@ -360,12 +410,20 @@ class ComparisionDetail(APIView):
             # Update comparision
             license_comparison['is_active'] = False
             license_comparison['identifier'] = ""
-            response_json = update_document(
-                collection=ATTRIBUTE_COLLECTION,
-                document=ATTRIBUTE_DOCUMENT_NAME,
-                key=ATTRIBUTE_MAIN_KEY,
-                new_value=license_comparison,
-                event_id=event_id
+            # response_json = update_document(
+            #     collection=ATTRIBUTE_COLLECTION,
+            #     document=ATTRIBUTE_DOCUMENT_NAME,
+            #     key=ATTRIBUTE_MAIN_KEY,
+            #     new_value=license_comparison,
+            #     event_id=event_id
+            # )
+
+            response_json = datacube_data_update(
+                api_key=API_KEY,
+                database_name=DATABASE_NAME,
+                collection_name=COLLECTION_NAME,
+                query={"_id": event_id},
+                update_data=license_comparison,
             )
 
             return Response(
