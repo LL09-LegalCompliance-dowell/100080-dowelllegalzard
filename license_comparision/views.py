@@ -21,7 +21,11 @@ from utils.dowell import (
     RECORD_PER_PAGE,
     BASE_IMAGE_URL
 )
-from utils.datacube import (
+# from utils.datacube import (
+#     datacube_data_retrieval,
+#     datacube_data_update,
+# )
+from utils.datacube_v2 import (
     datacube_data_retrieval,
     datacube_data_update,
 )
@@ -56,12 +60,19 @@ class ComparisionList(APIView):
             #     fields={"attributes.attribute_type": "comparisions"}
             # )
 
+            # response_json = datacube_data_retrieval(
+            #     api_key=API_KEY,
+            #     database_name=DATABASE_NAME,
+            #     collection_name=COLLECTION_NAME,
+            #     data={"attributes.attribute_type": "comparisions"},
+            #     payment=False
+            # )
+
             response_json = datacube_data_retrieval(
                 api_key=API_KEY,
                 database_name=DATABASE_NAME,
                 collection_name=COLLECTION_NAME,
                 data={"attributes.attribute_type": "comparisions"},
-                payment=False
             )
 
 
@@ -161,12 +172,19 @@ class ComparisionList(APIView):
         #     fields={"eventId": event_id}
         # )
 
+        # response_json = datacube_data_retrieval(
+        #         api_key=API_KEY,
+        #         database_name=DATABASE_NAME,
+        #         collection_name=COLLECTION_NAME,
+        #         data={"eventId": event_id},
+        #         payment=False
+        #     )
+
         response_json = datacube_data_retrieval(
                 api_key=API_KEY,
                 database_name=DATABASE_NAME,
                 collection_name=COLLECTION_NAME,
                 data={"eventId": event_id},
-                payment=False
             )
 
         response_json = SoftwareLicenseList.add_license_logo_url(
@@ -192,12 +210,19 @@ class ComparisionDetail(APIView):
             #     fields={"eventId": event_id, "attributes.attribute_type": "comparisions"}
             # )
 
+            # response_json = datacube_data_retrieval(
+            #     api_key=API_KEY,
+            #     database_name=DATABASE_NAME,
+            #     collection_name=COLLECTION_NAME,
+            #     data={"eventId": event_id, "attributes.attribute_type": "comparisions"},
+            #     payment=False
+            # )
+
             response_json = datacube_data_retrieval(
                 api_key=API_KEY,
                 database_name=DATABASE_NAME,
                 collection_name=COLLECTION_NAME,
                 data={"eventId": event_id, "attributes.attribute_type": "comparisions"},
-                payment=False
             )
             return Response(response_json, status=status.HTTP_200_OK)
 
@@ -228,12 +253,19 @@ class ComparisionDetail(APIView):
             #     fields={"eventId": event_id}
             # )
 
+            # response_json = datacube_data_retrieval(
+            #     api_key=API_KEY,
+            #     database_name=DATABASE_NAME,
+            #     collection_name=COLLECTION_NAME,
+            #     data={"eventId": event_id},
+            #     payment=False
+            # )
+
             response_json = datacube_data_retrieval(
                 api_key=API_KEY,
                 database_name=DATABASE_NAME,
                 collection_name=COLLECTION_NAME,
                 data={"eventId": event_id},
-                payment=False
             )
             license_comparison = response_json["data"][0]["attributes"]
 
@@ -396,12 +428,19 @@ class ComparisionDetail(APIView):
             #     fields={"eventId": event_id}
             # )
 
+            # response_json = datacube_data_retrieval(
+            #     api_key=API_KEY,
+            #     database_name=DATABASE_NAME,
+            #     collection_name=COLLECTION_NAME,
+            #     data={"eventId": event_id},
+            #     payment=False
+            # )
+
             response_json = datacube_data_retrieval(
                 api_key=API_KEY,
                 database_name=DATABASE_NAME,
                 collection_name=COLLECTION_NAME,
                 data={"eventId": event_id},
-                payment=False
             )
             
             license_comparison = response_json["data"][0]["attributes"]
@@ -416,6 +455,14 @@ class ComparisionDetail(APIView):
             #     key=ATTRIBUTE_MAIN_KEY,
             #     new_value=license_comparison,
             #     event_id=event_id
+            # )
+
+            # response_json = datacube_data_update(
+            #     api_key=API_KEY,
+            #     database_name=DATABASE_NAME,
+            #     collection_name=COLLECTION_NAME,
+            #     query={"_id": event_id},
+            #     update_data=license_comparison,
             # )
 
             response_json = datacube_data_update(
